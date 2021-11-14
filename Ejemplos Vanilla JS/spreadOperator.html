@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <script>
+
+        //===================================================================================================>>>>>
+        // Los Parámetros REST son como los varargs en java y permiten agregar ninguno, uno o muchos parametros. Se hace con los ...
+
+        function sumar(a, b, ...c) {
+            let resultado = a + b;
+
+            c.forEach(function (n) {
+                resultado += n;
+            });
+            return resultado;
+        }
+
+        console.log(sumar(1, 2));           // 1 + 2 = 3
+        console.log(sumar(1, 2, 3));        // 1 + 2 + 3 = 6
+        console.log(sumar(1, 2, 3, 4));     // 1 + 2 + 3 + 4 = 10
+
+        //===================================================================================================>>>>>
+        // El Operador Spread se usa cuando una expresion la tengamos que expandir
+
+        /*
+        const arreglo1 = [1, 2, 3, 4, 5];
+        const arreglo2 = [6, 7, 8, 9, 0];
+        const arreglo3 = [...arreglo1, ...arreglo2];  // Con esto fusiono los dos arreglos en uno solo
+        console.log(arreglo3);
+        */
+
+        const arreglo1 = [{ id: 0, nombre: "cero" }, { id: 1, nombre: "uno" }, { id: 2, nombre: "dos" }, { id: 3, nombre: "tres" }, { id: 4, nombre: "cuatro" }];
+        const arreglo2 = [{ id: 5, nombre: "cinco" }, { id: 6, nombre: "seis" }, { id: 7, nombre: "siete" }];
+        let arreglo3 = [...arreglo1, ...arreglo2];  // Con esto fusiono los dos arreglos en uno solo
+
+        arreglo3 = [...arreglo3, { id: 8, nombre: "ocho" }, { id: 9, nombre: "nueve" }, { id: 123456, nombre: "" }];  // Agrego mas elementos
+
+        arreglo3 = arreglo3.map(x => x.id == 123456 ? { ...x, id: 10, nombre: "diez" } : x);  // Busco el elemento con el id 123456 y lo cambio a { id: 10, nombre: "diez" }
+
+        arreglo3 = [...arreglo3.filter(c => c.id != 0)];  // Elimino del arreglo el elemento con el id 0
+
+        console.log(arreglo3);
+
+        //===================================================================================================>>>>>
+
+        // Ver este porfa en adelante:  https://www.youtube.com/watch?v=m7AgxJSCMVw&list=PLvq-jIkSeTUZ6QgYYO3MwG9EMqC-KoLXA&index=46
+
+    </script>
+</body>
+
+</html>

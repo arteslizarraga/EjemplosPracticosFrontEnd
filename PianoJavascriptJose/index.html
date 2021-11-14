@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<link rel="stylesheet" href="piano.css"/>
+</head>
+<body>
+
+<table border="2">
+	<thead>
+		<tr>
+			<th>Acorde</th>
+			<th>Opciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			
+				<ul id="piano">
+
+					<!--===================================================================================-->
+					<!-- Octava 0 con las notas que tenia -->
+				
+					<li>
+						<div id="LA_0" sonido="sonidos_piano/220-A.mp3" class="anchor tecla"></div> <!-- la -->
+					</li>
+					<li>
+						<div id="SI_0" sonido="sonidos_piano/246-B.mp3" class="anchor tecla"></div> <!-- si -->
+						<span id="LA_0_sostenido" sonido="sonidos_piano_extra/0As.mp3" class="tecla"></span> <!-- la# -->
+					</li>
+				
+					<!--===================================================================================-->
+					<!-- Octava 1 -->
+				
+					<li><div id="DO_1" sonido="sonidos_piano/261-C.mp3" class="anchor tecla"></div></li> <!-- do -->
+					<li>
+						<div id="RE_1" sonido="sonidos_piano/293-D.mp3" class="anchor tecla"></div> <!-- re -->
+						<span id="DO_1_sostenido" sonido="sonidos_piano/277-C-sharp.mp3" class="tecla"></span> <!-- do# -->
+					</li>
+					<li>
+						<div id="MI_1" sonido="sonidos_piano/329-E.mp3" class="anchor tecla"></div> <!-- mi -->
+						<span id="RE_1_sostenido" sonido="sonidos_piano/311-D-sharp.mp3" class="tecla"></span> <!-- re# -->
+					</li>
+					<li><div id="FA_1" sonido="sonidos_piano/349-F.mp3" class="anchor tecla"></div></li> <!-- fa -->
+					<li>
+						<div id="SOL_1" sonido="sonidos_piano/391-G.mp3" class="anchor tecla"></div> <!-- sol -->
+						<span id="FA_1_sostenido" sonido="sonidos_piano/369F-sharp.mp3" class="tecla"></span> <!-- fa# -->  
+					</li>
+					<li>
+						<div id="LA_1" sonido="sonidos_piano/440-A.mp3" class="anchor tecla"></div> <!-- la -->
+						<span id="SOL_1_sostenido" sonido="sonidos_piano/415-G-sharp.mp3" class="tecla"></span> <!-- sol# -->
+					</li>
+					<li>
+						<div id="SI_1" sonido="sonidos_piano/495-B.mp3" class="anchor tecla"></div> <!-- si -->
+						<span id="LA_1_sostenido" sonido="sonidos_piano/466-A-sharp.mp3" class="tecla"></span> <!-- la# -->
+					</li>
+
+					
+					<!--===================================================================================-->
+					<!-- Octava 2 -->
+					
+					<li><div id="DO_2" sonido="sonidos_piano/523-C.mp3" class="anchor tecla"></div></li> <!-- do -->
+					<li>
+						<div id="RE_2" sonido="sonidos_piano/587-D.mp3" class="anchor tecla"></div> <!-- re -->
+						<span id="DO_2_sostenido" sonido="sonidos_piano/545-C-sharp.mp3" class="tecla"></span> <!-- do# -->
+					</li>
+					<li>
+						<div id="MI_2" sonido="sonidos_piano/659-E.mp3" class="anchor tecla"></div> <!-- mi -->
+						<span id="RE_2_sostenido" sonido="sonidos_piano/622-D-sharp.mp3" class="tecla"></span> <!-- re# -->
+					</li>
+					<li><div id="FA_2" sonido="sonidos_piano/698-F.mp3" class="anchor tecla"></div></li> <!-- fa -->
+					<li>
+						<div id="SOL_2" sonido="sonidos_piano/783-G.mp3" class="anchor tecla"></div> <!-- sol -->
+						<span id="FA_2_sostenido" sonido="sonidos_piano/698-F-sharp.mp3" class="tecla"></span> <!-- fa# -->  
+					</li>
+					<li>
+						<div id="LA_2" sonido="sonidos_piano/880-A.mp3" class="anchor tecla"></div> <!-- la -->
+						<span id="SOL_2_sostenido" sonido="sonidos_piano/830-G-sharp.mp3" class="tecla"></span> <!-- sol# -->
+					</li>
+					<li>
+						<div id="SI_2" sonido="sonidos_piano/987-B.mp3" class="anchor tecla"></div> <!-- si -->
+						<span id="LA_2_sostenido" sonido="sonidos_piano/932-A-sharp.mp3" class="tecla"></span> <!-- la# -->
+					</li>
+					
+					
+					<!--===================================================================================-->
+					<!-- Octava 3 -->
+					
+					<li><div id="DO_3" sonido="sonidos_piano/1046-C.mp3" style="background: red;" class="anchor tecla"></div></li> <!-- do -->
+					<li>
+						<div id="RE_3" sonido="sonidos_parche/D4.OGG" class="anchor tecla"></div>  <!-- re -->   
+						<span id="DO_3_sostenido" sonido="sonidos_parche/Db4.OGG" class="tecla"></span> <!-- do# -->
+					</li>
+					<li>
+						<div id="MI_3" sonido="sonidos_piano_extra/3E.mp3" class="anchor tecla"></div> <!-- mi -->
+						<span id="RE_3_sostenido" sonido="sonidos_piano_extra/3Ds.mp3" class="tecla"></span> <!-- re# --> 
+					</li>
+					<li><div id="FA_3" sonido="sonidos_piano_extra/3F.mp3" class="anchor tecla"></div></li> <!-- fa -->
+					<li>
+						<div id="SOL_3" sonido="sonidos_piano_extra/3G.mp3" class="anchor tecla"></div> <!-- sol -->
+						<span id="FA_3_sostenido" sonido="sonidos_piano_extra/3Fs.mp3" class="tecla"></span> <!-- fa# -->  
+					</li>
+					<li>
+						<div id="LA_3" sonido="sonidos_piano_extra/3A.mp3" class="anchor tecla"></div> <!-- la -->
+						<span id="SOL_3_sostenido" sonido="sonidos_piano_extra/3Gs.mp3" class="tecla"></span> <!-- sol# -->
+					</li>
+					<li>
+						<div id="SI_3" sonido="sonidos_piano_extra/3B.mp3" class="anchor tecla"></div> <!-- si -->
+						<span id="LA_3_sostenido" sonido="sonidos_piano_extra/3As.mp3" class="tecla"></span> <!-- la# -->
+					</li>
+					
+					<!--===================================================================================-->
+					<!-- Octava 4 -->
+					
+					<li><div id="DO_4" sonido="sonidos_piano_extra/4C.mp3" class="anchor tecla"></div></li> <!-- do -->
+					<li>
+						<div id="RE_4" sonido="sonidos_piano_extra/4D.mp3" class="anchor tecla"></div>  <!-- re -->   
+						<span id="DO_4_sostenido" sonido="sonidos_piano_extra/4Cs.mp3" class="tecla"></span> <!-- do# -->
+					</li>
+					<li>
+						<div id="MI_4" sonido="sonidos_piano_extra/4E.mp3" class="anchor tecla"></div> <!-- mi -->
+						<span id="RE_4_sostenido" sonido="sonidos_piano_extra/4Ds.mp3" class="tecla"></span> <!-- re# --> 
+					</li>
+					<li><div id="FA_4" sonido="sonidos_piano_extra/4F.mp3" class="anchor tecla"></div></li> <!-- fa -->
+					<li>
+						<div id="SOL_4" sonido="sonidos_piano_extra/4G.mp3" class="anchor tecla"></div> <!-- sol -->
+						<span id="FA_4_sostenido" sonido="sonidos_piano_extra/4Fs.mp3" class="tecla"></span> <!-- fa# -->  
+					</li>
+					<li>
+						<div id="LA_4" sonido="sonidos_piano_extra/4A.mp3" class="anchor tecla"></div> <!-- la -->
+						<span id="SOL_4_sostenido" sonido="sonidos_piano_extra/4Gs.mp3" class="tecla"></span> <!-- sol# -->
+					</li>
+					<li>
+						<div id="SI_4" sonido="sonidos_piano_extra/4B.mp3" class="anchor tecla"></div> <!-- si -->
+						<span id="LA_4_sostenido" sonido="sonidos_piano_extra/4As.mp3" class="tecla"></span> <!-- la# -->
+					</li>
+					
+					<!--===================================================================================-->
+					<!-- Octava 5 -->
+					
+					<li><div id="DO_5" sonido="sonidos_piano_extra/5C.mp3" class="anchor tecla"></div></li> <!-- do -->
+					<li>
+						<div id="RE_5" sonido="sonidos_piano_extra/5D.mp3" class="anchor tecla"></div>  <!-- re -->   
+						<span id="DO_5_sostenido" sonido="sonidos_piano_extra/5Cs.mp3" class="tecla"></span> <!-- do# -->
+					</li>
+					<li>
+						<div id="MI_5" sonido="sonidos_piano_extra/5E.mp3" class="anchor tecla"></div> <!-- mi -->
+						<span id="RE_5_sostenido" sonido="sonidos_piano_extra/5Ds.mp3" class="tecla"></span> <!-- re# --> 
+					</li>
+					<li><div id="FA_5" sonido="sonidos_piano_extra/5F.mp3" class="anchor tecla"></div></li> <!-- fa -->
+					<li>
+						<div id="SOL_5" sonido="sonidos_piano_extra/5G.mp3" class="anchor tecla"></div> <!-- sol -->
+						<span id="FA_5_sostenido" sonido="sonidos_piano_extra/5Fs.mp3" class="tecla"></span> <!-- fa# -->  
+					</li>
+					<li>
+						<div id="LA_5" sonido="sonidos_piano_extra/5A.mp3" class="anchor tecla"></div> <!-- la -->
+						<span id="SOL_5_sostenido" sonido="sonidos_piano_extra/5Gs.mp3" class="tecla"></span> <!-- sol# -->
+					</li>
+					<li>
+						<div id="SI_5" sonido="sonidos_piano_extra/5B.mp3" class="anchor tecla"></div> <!-- si -->
+						<span id="LA_5_sostenido" sonido="sonidos_piano_extra/5As.mp3" class="tecla"></span> <!-- la# -->
+					</li>
+					
+					<!--===================================================================================-->
+					<!-- Octava 6 con las notas que tenia-->
+					
+					<li><div id="DO_6" sonido="sonidos_piano_extra/6C.mp3" class="anchor tecla"></div></li> <!-- do -->
+					
+					<!--===================================================================================-->
+
+				</ul>
+
+			</td>
+			<td>  
+				<button type="button" onclick="tocarAcorde(1)">Tocar Acorde</button>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</tfoot>
+</table> 
+
+
+<script>
+
+var acordesComposicion = [
+	{
+		id: 1,
+		notas: ['FA_1','FA_2','LA_2','DO_3','MI_3','FA_3','LA_3'],
+		orden: 1,
+		composicionId: 1
+	}
+];
+
+function tocarAcorde(idAcorde)
+{
+	acordesComposicion.find(c=> c.id == idAcorde).notas.forEach(nota=> 
+	{ 
+		console.log(nota);
+	});
+}
+
+/*
+function tocarAcorde(notasAcorde)
+{
+	notasAcorde.forEach(nota=> {
+		//console.log(nota);
+		var audio = new Audio(document.getElementById(nota).getAttribute("sonido"));
+		audio.play();
+	})
+}
+*/
+
+Array.from(document.querySelectorAll(".tecla")).forEach(c => 
+{
+	c.addEventListener("click", function(evento) 
+	{
+		console.log(evento.target.id);
+		
+		//console.log("audio: " + evento.target.getAttribute("sonido"));
+		
+		var audio = new Audio(evento.target.getAttribute("sonido"));
+		audio.play();
+	});
+});
+
+</script>
+
+
+</body>
+</html>

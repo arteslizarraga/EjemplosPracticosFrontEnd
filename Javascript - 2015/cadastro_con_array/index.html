@@ -1,0 +1,64 @@
+<!-- Lo ideal es que se carguen primero los estilos junto con el html. Los archivos javascript deben ir 
+abajo para que no traben la carga de html y css.
+
+Mientras mas scripts tenga, mas rendimiento exige al navegador -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>	
+  <meta charset="utf-8"/>	
+  <title> </title>	
+  <meta name="description" content=" Aprendiendo javascript"/>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>	
+<body>
+ 
+<article class="article_1">
+ <div class="contenido">
+	<form name="form_nombre">
+			
+		<label> Nombre: </label> <br/>
+			<input id="edt_nombre" type="text"/> <br/><br/>
+			
+		<label> Edad: </label> <br/>	 
+			<input id="edt_edad" type="text"/> <br/><br/>
+			
+		<label> Genero: </label> <br/>	
+			<select id="slc-genero" >                
+				<option> Masculino </option>
+				<option> Femenino </option>
+			</select>
+			
+			
+		<input id="btn_grabar" type="button" value=" Grabar " />  
+		
+	</form> <br/><br/><br/>
+
+	<select id="slc-resultados" size="10">
+		
+	</select>
+  </div>
+</article>
+
+<aside class="aside_1">
+ <div class="contenido">
+ 
+  <input id="btn-mostrar-resultados" type="button" value=" Mostrar Resultado " /> <br /><br />
+  
+	<h3 id="us-mas-viejo"></h3>
+	<h3 id="us-mas-joven"></h3>
+	<h3 id="cantidad-hombres"></h3>
+	<h3 id="cantidad-mujeres"></h3>
+	<h3 id="mayoria-de-edad"></h3>
+	<h3 id="menor-de-edad"></h3>
+	
+  </div>	
+</aside>
+ 
+<script src="js/calculo.js"> </script>
+
+
+
+
+</body>
+</html>

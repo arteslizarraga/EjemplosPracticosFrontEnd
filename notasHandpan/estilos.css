@@ -1,0 +1,44 @@
+#outer-circle {
+	background: #385a94;
+	border-radius: 50%;
+	height: 560px;          /* height: 500px; */   
+	width: 700px;           /* height: 600px; */    
+	position: relative;
+}
+
+#inner-circle {
+	position: absolute;
+	background: #a9aaab;
+	border-radius: 50%;
+	height: 280px;
+	width: 350px;       
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%); 
+	
+	/* margin: -150px 0px 0px -150px;     separacionDeArriba  noSe  noSe  seCorreAlaIzquierda */
+}
+
+/*
+#outer-circle {
+	background: #385a94;
+	border-radius: 50%;
+	height: 560px;             
+	width: 700px;              
+	position: relative;
+}
+
+#inner-circle {
+	position: absolute;
+	background: #a9aaab;
+	border-radius: 50%;
+	height: 280px;
+	width: 350px;       
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%); 
+}
+*/ 
+
+
+

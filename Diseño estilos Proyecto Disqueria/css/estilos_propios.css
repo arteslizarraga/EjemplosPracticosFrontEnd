@@ -1,0 +1,238 @@
+/*  http://www.cssmatic.com/es/gradient-generator   */
+
+/*===============================================================================================*/
+
+/* IMPORTANTE: ASI EL BODY QUEDA SEPARADO A AMBOS LADOS DE LA PANTALLA */
+
+body 
+{
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+/* IMPORTANTE: CON ESTO MANEJO LA CLASE container-fluid DE BOOTSTRAP(QUE OCUPA TODA LA PANTALLA) 
+   PARA QUE TENGA MARGENES INTERNOS A CADA LADO Y LOS OBJETOS NO QUEDEN PEGADOS A LOS BORDES EXTERNOS */
+
+.container-fluid  
+{
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+
+/*===============================================================================================*/
+/* IMPORTANTE: CON ESTO MANEJO EL NAVBAR DE BOOTSTRAP  */
+
+.navbar-nav {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/*===============================================================================================*/
+
+.caja-gris 
+{
+	background-color: #efefef;
+	-moz-box-shadow: 0 0 3px 1px #666666;
+	-webkit-box-shadow: 0 0 3px 1px #666666;
+	box-shadow: 0 0 3px 1px #666666;
+	
+}
+
+
+.caja-gris input[type=submit], .caja-gris input[type=button] 
+{
+	background-position: 0.7em center;
+	background-repeat: no-repeat;
+	text-indent: 25px;
+}
+
+.caja-gris .delete {
+	background-image: url(../img/database_delete.png);
+}
+
+.caja-gris .edit {
+	background-image: url(../img/database_edit.png);
+}
+
+
+.caja-gris .save {
+	background-image: url(../img/database_save.png);
+}
+
+/*===============================================================================================*/
+/* Menu de navegacion interno de los mantenedores de grails adaptado */
+
+.navegacion-mantenedor a.home 
+{
+	background-image: url(../img/house.png);
+}
+
+.navegacion-mantenedor a.list 
+{
+	background-image: url(../img/database_table.png);
+}
+
+.navegacion-mantenedor a.create 
+{
+	background-image: url(../img/database_add.png);
+}
+
+.navegacion-mantenedor a.excel 
+{
+	background-image: url(../img/excel_icon.png);
+}
+
+
+/*===============================================================================================*/
+/* Esto es para las tablas con paginacion */
+
+.tabla-resultados tr {   border: 0;  }
+
+.tabla-resultados tr>td:first-child, tr>th:first-child {
+	padding-left: 1.25em;
+}
+
+.tabla-resultados tr>td:last-child, tr>th:last-child {
+	padding-right: 1.25em;
+}
+
+.tabla-resultados td, th {
+	line-height: 1.5em;
+	padding: 0.5em 0.6em;
+	text-align: left;
+	vertical-align: top;
+}
+
+.tabla-resultados th 
+{
+	background-color: #383836;
+	background-image: -moz-linear-gradient(top, #50504e, #383836);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #50504e), color-stop(1, #383836));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#50504e', EndColorStr = '#383836');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#50504e', EndColorStr='#383836')";
+	color: #ffffff;
+	font-weight: bold;
+	line-height: 1.7em;
+	padding: 0.2em 0.6em;
+}
+
+
+/*===============================================================================================*/
+/* Esto es para la tabla metalizada */
+
+.tabla-metalizada{
+  background-color: lightgrey;  /* ========>>> Color de fondo de la tabla  */	  
+  border-radius: 1em;
+  color: black;
+  font-weight: bold;
+  padding: .25em;
+  width: 100%;
+  text-align: center;
+  
+}
+
+.tabla-metalizada td{  
+    word-wrap: break-word; /* Si la palabra no cabe en la celda, rompe la celda y crea un segundo reglon */ 
+} 
+
+/*===============================================================================================*/
+
+.alinear-horizontal{        /* Esta clase se usa solo para reunir dos o mas elementos y alinearlos horizontalmente  */
+    display: inline-block;
+}
+
+.margen-izquierdo{
+	margin-left: 5em;
+}
+
+.margen-derecho{
+	margin-right: 5em;
+}
+
+.margen-interno{
+	padding: 1em;
+}
+
+
+.redondear-todo{
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border: 0px solid #000000;
+}
+
+
+.redondear-arriba{
+	border-radius: 10px 10px 0px 0px;
+	-moz-border-radius: 10px 10px 0px 0px;
+	-webkit-border-radius: 10px 10px 0px 0px;
+	border: 0px solid #000000;
+}
+
+
+.redondear-abajo{
+	border-radius: 0px 0px 10px 10px;
+	-moz-border-radius: 0px 0px 10px 10px;
+	-webkit-border-radius: 0px 0px 10px 10px;
+	border: 0px solid #000000;
+}
+
+
+.redondear-izquierda{
+	border-radius: 10px 0px 0px 10px;
+	-moz-border-radius: 10px 0px 0px 10px;
+	-webkit-border-radius: 10px 0px 0px 10px;
+	border: 0px solid #000000;
+}
+
+.redondear-derecha{	
+	border-radius: 0px 10px 10px 0px;
+	-moz-border-radius: 0px 10px 10px 0px;
+	-webkit-border-radius: 0px 10px 10px 0px;
+	border: 0px solid #000000;
+}
+
+.submenu_form{
+	
+	padding: 1em;
+}
+
+
+.color-metal{
+
+	background: rgba(76,76,76,1);
+	background: -moz-linear-gradient(left, rgba(76,76,76,1) 0%, rgba(128,124,128,1) 12%, rgba(122,122,122,1) 25%, rgba(31,31,31,1) 38%, rgba(13,13,13,1) 44%, rgba(8,8,8,1) 51%, rgba(20,20,20,1) 64%, rgba(79,75,79,1) 76%, rgba(41,41,41,1) 91%, rgba(19,19,19,1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(76,76,76,1)), color-stop(12%, rgba(128,124,128,1)), color-stop(25%, rgba(122,122,122,1)), color-stop(38%, rgba(31,31,31,1)), color-stop(44%, rgba(13,13,13,1)), color-stop(51%, rgba(8,8,8,1)), color-stop(64%, rgba(20,20,20,1)), color-stop(76%, rgba(79,75,79,1)), color-stop(91%, rgba(41,41,41,1)), color-stop(100%, rgba(19,19,19,1)));
+	background: -webkit-linear-gradient(left, rgba(76,76,76,1) 0%, rgba(128,124,128,1) 12%, rgba(122,122,122,1) 25%, rgba(31,31,31,1) 38%, rgba(13,13,13,1) 44%, rgba(8,8,8,1) 51%, rgba(20,20,20,1) 64%, rgba(79,75,79,1) 76%, rgba(41,41,41,1) 91%, rgba(19,19,19,1) 100%);
+	background: -o-linear-gradient(left, rgba(76,76,76,1) 0%, rgba(128,124,128,1) 12%, rgba(122,122,122,1) 25%, rgba(31,31,31,1) 38%, rgba(13,13,13,1) 44%, rgba(8,8,8,1) 51%, rgba(20,20,20,1) 64%, rgba(79,75,79,1) 76%, rgba(41,41,41,1) 91%, rgba(19,19,19,1) 100%);
+	background: -ms-linear-gradient(left, rgba(76,76,76,1) 0%, rgba(128,124,128,1) 12%, rgba(122,122,122,1) 25%, rgba(31,31,31,1) 38%, rgba(13,13,13,1) 44%, rgba(8,8,8,1) 51%, rgba(20,20,20,1) 64%, rgba(79,75,79,1) 76%, rgba(41,41,41,1) 91%, rgba(19,19,19,1) 100%);
+	background: linear-gradient(to right, rgba(76,76,76,1) 0%, rgba(128,124,128,1) 12%, rgba(122,122,122,1) 25%, rgba(31,31,31,1) 38%, rgba(13,13,13,1) 44%, rgba(8,8,8,1) 51%, rgba(20,20,20,1) 64%, rgba(79,75,79,1) 76%, rgba(41,41,41,1) 91%, rgba(19,19,19,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313', GradientType=1 );
+		
+}
+
+
+.color-metal-suave{
+			
+	background: rgba(153,153,153,1);
+	background: -moz-linear-gradient(left, rgba(153,153,153,1) 0%, rgba(117,117,117,1) 36%, rgba(148,148,148,1) 50%, rgba(140,140,140,1) 51%, rgba(171,171,171,1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(153,153,153,1)), color-stop(36%, rgba(117,117,117,1)), color-stop(50%, rgba(148,148,148,1)), color-stop(51%, rgba(140,140,140,1)), color-stop(100%, rgba(171,171,171,1)));
+	background: -webkit-linear-gradient(left, rgba(153,153,153,1) 0%, rgba(117,117,117,1) 36%, rgba(148,148,148,1) 50%, rgba(140,140,140,1) 51%, rgba(171,171,171,1) 100%);
+	background: -o-linear-gradient(left, rgba(153,153,153,1) 0%, rgba(117,117,117,1) 36%, rgba(148,148,148,1) 50%, rgba(140,140,140,1) 51%, rgba(171,171,171,1) 100%);
+	background: -ms-linear-gradient(left, rgba(153,153,153,1) 0%, rgba(117,117,117,1) 36%, rgba(148,148,148,1) 50%, rgba(140,140,140,1) 51%, rgba(171,171,171,1) 100%);
+	background: linear-gradient(to right, rgba(153,153,153,1) 0%, rgba(117,117,117,1) 36%, rgba(148,148,148,1) 50%, rgba(140,140,140,1) 51%, rgba(171,171,171,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#999999', endColorstr='#ababab', GradientType=1 );
+		
+}
+
+.sombra-arriba-derecha{
+	-webkit-box-shadow: 38px -33px 19px -11px rgba(0,0,0,0.75);
+	-moz-box-shadow: 38px -33px 19px -11px rgba(0,0,0,0.75);
+	box-shadow: 38px -33px 19px -11px rgba(0,0,0,0.75);
+}
+
+
+
+
+

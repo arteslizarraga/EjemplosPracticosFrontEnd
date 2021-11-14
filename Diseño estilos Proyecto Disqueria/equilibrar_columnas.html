@@ -1,0 +1,184 @@
+<!--
+
+https://vsn4ik.github.io/bootstrap-submenu/
+
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/estilos_grails.css">
+  <link rel="stylesheet" href="css/estilos_propios.css">
+  <link rel="stylesheet" href="css/bootstrap-submenu.min.css"> <!-- Esto es para las sub subopciones -->
+
+
+  <script src="js/jquery.js" defer></script>
+  <script src="js/bootstrap.min.js" defer></script>
+  <script src="js/bootstrap_submenu.js" defer></script> <!-- Si esto las sub opciones del submenu no funcionan -->
+  
+  <style>
+
+
+	.caja-gris 
+	{
+		background-color: #efefef;
+		-moz-box-shadow: 0 0 3px 1px #666666;
+		-webkit-box-shadow: 0 0 3px 1px #666666;
+		box-shadow: 0 0 3px 1px #666666;
+	}
+	
+	
+	.caja-gris input[type=submit], .caja-gris input[type=button] 
+	{
+		background-position: 0.7em center;
+		background-repeat: no-repeat;
+		text-indent: 25px;
+	}
+	
+	.caja-gris .delete {
+		background-image: url(img/database_delete.png);
+	}
+
+	.caja-gris .edit {
+		background-image: url(img/database_edit.png);
+	}
+
+
+	.caja-gris .save {
+		background-image: url(img/database_save.png);
+	}
+	
+}
+  
+  </style>
+
+</head>
+
+<body>
+
+
+<br/><br/>
+
+
+<div class="container">
+
+
+<div class="row">
+
+	<div class="col-sm-12 col-md-6 panel">
+        
+		<div class="row">   <!-- style="background-color: black;" -->
+		
+			<section class="col-xs-12 caja-gris margen-interno">
+
+			
+				<h1> Datos de la venta(Cabecera) </h1> <br>
+
+				<table>
+					<tbody>
+						<tr>
+							<td> <b> Rut: </b> </td> <td> 12.222.343-5 </td>
+							<td> <b> Razon Social: </b> </td> <td> El Arrayan S.A. </td>
+						</tr>
+						<tr>
+							<td> <b> Local: </b> </td> <td> Local las parcelas </td>
+							<td> <b> Fecha Venta: </b> </td> <td> 01/01/2018 </td>
+						</tr>
+						<!-- =============== -->
+						<tr>
+							<td> <b> Rut: </b> </td> <td> 12.222.343-5 </td>
+							<td> <b> Razon Social: </b> </td> <td> El Arrayan S.A. </td>
+						</tr>
+						<tr>
+							<td> <b> Local: </b> </td> <td> Local las parcelas </td>
+							<td> <b> Fecha Venta: </b> </td> <td> 01/01/2018 </td>
+						</tr>
+					</tbody>
+				</table>
+
+			<br/>
+
+			</section>
+		</div>
+    </div>
+	
+	
+	
+    <div class="col-sm-12 col-md-6 panel ">
+        
+		<div class="row">   <!-- style="background-color: black;" -->
+		
+			<section class="col-sm-0 col-md-1"></section>  <!-- Esto es para un espacio en blanco -->
+			
+			<section class="col-sm-12 col-md-11 caja-gris margen-interno">
+			
+				
+
+				<form method="post" action="">
+
+					<h1> Guardar (Detalle) </h1> 
+					<br/>
+		
+					<div class="fieldcontain">     
+						<label> Nombre <span class="required-indicator">*</span> </label> 
+						<input name="nombreCompleto" value="" required="" type="text">
+					</div>
+
+					<br/>
+					
+					<div class="pull-right">
+					
+						<div class="dropdown pull-left" style="z-index: 1;">
+						
+							<button aria-expanded="false" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" data-submenu="">
+							   Opciones <span class="caret"></span>
+							</button>
+							
+							<ul class="dropdown-menu">
+							  <li class="dropdown-submenu">
+								  <a tabindex="0">Accion 1</a>
+								  <ul class="dropdown-menu">
+									<li>
+										<a href="index.html" tabindex="0"> Sub Accion 1 </a>
+									</li>
+								  </ul>
+							   </li>
+							   <li> <a href="index.html" tabindex="0"> Volver al Inicio </a> </li>
+							</ul>
+
+						</div>
+					
+					
+					
+						<input class="save btn btn-default" value="Guardar" type="submit" style="margin-left: 1em;"> 
+						<input class="delete btn btn-default" value="Cancelar" type="submit" style="margin-left: 1em;"> 
+					</div>
+					
+					<br/><br/>
+					
+
+				</form>
+			
+			</section>
+		</div>
+    </div>
+ 
+</div>
+
+
+</div>
+
+
+
+<br/><br/>
+
+
+
+
+
+</body>
+</html>

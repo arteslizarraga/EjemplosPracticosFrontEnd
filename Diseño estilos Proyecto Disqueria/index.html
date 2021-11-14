@@ -1,0 +1,431 @@
+<!--
+
+https://vsn4ik.github.io/bootstrap-submenu/
+
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/estilos_grails.css">
+  <link rel="stylesheet" href="css/estilos_propios.css">
+  <link rel="stylesheet" href="css/bootstrap-submenu.min.css"> <!-- Esto es para las sub subopciones -->
+
+
+  <script src="js/jquery.js" defer></script>
+  <script src="js/bootstrap.min.js" defer></script>
+  <script src="js/bootstrap_submenu.js" defer></script> <!-- Si esto las sub opciones del submenu no funcionan -->
+
+</head>
+
+<body>
+
+<div id="banner-inicio" style="background: red;">
+
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+
+
+    <!-- Menú de Navegación -->
+	
+    <nav id="menu-navegacion" class="navbar navbar-inverse" role="navigation">  <!-- class="navbar navbar-inverse navbar-fixed-top" -->
+        <div class="container">
+        <!--===================================-->  
+		    <!--  Este Menu queda escondido y aparece solo cuando la pantalla es muy pequeña...son las Barritas -->
+		
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.php"> Arteslizarraga </a>
+            </div>
+	    <!--===================================-->		
+            
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+				
+					<li> <a href="index.html"> Inicio </a> </li> 
+                    <li> <a href="show.html"> Ejemplo de show </a> </li>  
+					<li> <a href="cabecera_ordenada.html"> Cabecera ordenada </a> </li> 
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Opciones <b class="caret"></b></a>
+                        <ul class="dropdown-menu">						
+							<li> <a href="menu-negro.html"> Ir al menu negro </a> </li>
+							<li> <a href="menu-gris.html"> Ir al menu gris </a> </li>
+                        </ul>
+                    </li>       
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+	
+	<!-- Fin Menú de Navegación -->
+
+<!-- =================================================================== -->	
+			
+			
+
+<div class="container">
+
+<br/><br/><br/>
+
+
+<h1> Tabla dentro de la clase container </h1> <br/>
+
+
+<div class="table-responsive">
+	<table class="tabla-resultados">
+		<thead>
+			<tr>
+				<th> Id </th>
+				<th> Nombre Completo </th>
+				<th> Sexo </th>
+				<th> Pais </th>
+			</tr>
+		</thead>
+		<tbody>
+	 
+	        <tr>
+				<td> <input name="idArtista" value="" type="number"> </td>
+				<td> <input name="nombre" value="" type="text"> </td>
+				<td>                 
+					<select name="sexo">
+						<option value=""> -Todos- </option>
+							<option value="F"> Femenino </option>
+							<option value="M"> Masculino </option>   
+					</select>
+	            </td>
+	                            
+	            <td>
+	                                
+	                <select name="idPais">
+	                    <option value=""> -Todos- </option>
+	                    <option value="158"> Mexico </option>
+						<option value="158"> Argentina </option>
+					</select>
+
+	            </td>
+	        </tr>
+
+	        <tr class="even">
+					<td> <a href=""> 3 </a>  </td>
+					<td> shakira </td>
+					<td> Femenino </td>
+					<td> Mexico </td>
+	            </tr>
+				<tr class="odd">
+					<td> <a href=""> 3 </a>  </td>
+					<td> Gustavo cerati </td>
+					<td> Masculino </td>
+					<td> Argentina </td>
+	        </tr>
+	    </tbody>
+	</table>
+</div>
+
+
+<br/><br/>
+
+
+<h1> Contenido dentro de la clase container </h1>
+
+<div class="col-sm-12 col-md-6 panel">
+        
+		<div class="row">   <!-- style="background-color: black;" -->
+		
+			<section class="caja-gris margen-interno">
+
+			
+				<h1> Datos de la venta(Cabecera) </h1> <br>
+
+				<table>
+					<tbody>
+						<tr>
+							<td> <b> Rut: </b> </td> <td> 12.222.343-5 </td>
+							<td> <b> Razon Social: </b> </td> <td> El Arrayan S.A. </td>
+						</tr>
+						<tr>
+							<td> <b> Local: </b> </td> <td> Local las parcelas </td>
+							<td> <b> Fecha Venta: </b> </td> <td> 01/01/2018 </td>
+						</tr>
+						<!-- =============== -->
+						<tr>
+							<td> <b> Rut: </b> </td> <td> 12.222.343-5 </td>
+							<td> <b> Razon Social: </b> </td> <td> El Arrayan S.A. </td>
+						</tr>
+						<tr>
+							<td> <b> Local: </b> </td> <td> Local las parcelas </td>
+							<td> <b> Fecha Venta: </b> </td> <td> 01/01/2018 </td>
+						</tr>
+					</tbody>
+				</table>
+
+			<br/>
+
+			</section>
+		</div>
+    </div>
+	
+	
+	
+    <div class="col-sm-12 col-md-6 panel ">
+        
+		<div class="row">   <!-- style="background-color: black;" -->
+		
+			<section class="col-sm-0 col-md-1"></section>  <!-- Esto es para un espacio en blanco -->
+			
+			<section class="col-sm-12 col-md-11 caja-gris margen-interno">
+			
+				
+
+				<form method="post" action="">
+
+					<h1> Guardar (Detalle) </h1> 
+					<br/>
+		
+					<div class="fieldcontain">     
+						<label> Nombre <span class="required-indicator">*</span> </label> 
+						<input name="nombreCompleto" value="" required="" type="text">
+					</div>
+
+					<br/>
+					
+					<div class="pull-right">
+						<input class="save btn btn-default" value="Guardar" type="submit" style="margin-left: 1em;"> 
+						<input class="delete btn btn-default" value="Cancelar" type="submit" style="margin-left: 1em;"> 
+					</div>
+					
+					<br/><br/>
+					
+
+				</form>
+			
+			</section>
+		</div>
+    </div>
+	
+	
+ 
+</div>
+
+
+
+<!--
+   	<div class="table-responsive">  <br/>	
+
+	
+	<br/><br/>	
+				  	
+		<table class="table table-bordered table-hover tabla-metalizada">  
+			<thead class="color-metal-suave"> 
+				<tr>
+					<td>Nombre</td>
+					<td>Apellido</td>
+					<td>Edad</td>
+					<td>Sexo</td>
+					<td>Pais</td>
+					<td></td>
+					<td></td>				
+				</tr>
+			</thead> 
+			<tbody>
+
+				<tr>
+					<td>${artista.nombre}</td>
+					<td>${artista.apellido}</td>
+					<td>${artista.edad}</td>
+					<td>Masculino</td>
+					<td>
+						nombres_Paises[i]											
+					 </td>
+
+
+					<td>
+						<form>
+							<input type="hidden" name="id_artista" value="${artista.id}" />	
+							<input type="hidden" name="operacion" value="mostrar_form" />	
+							<input type="submit" value="   Alterar   " class="btn btn-default transision-btn" />
+						</form> 
+					</td>
+					<td>	
+						<form>
+							<input type="hidden" name="id_artista" value="${artista.id}" />	
+							<input type="hidden" name="nombre_artista" value="${artista.nombre}" />		
+							<input type="submit" value="   Borrar   " class="btn btn-default transision-btn " />
+						</form>  
+					</td>	
+
+				</tr>
+				
+			</tbody>
+			
+			
+			<tfoot class="color-metal">
+		        <tr>
+		            <td colspan="8" class="text-center">  
+		                <br/> Ojo: colspan es el numero de columnas, y esto debe tener ese numero <br/>               
+		            </td>
+		        </tr>
+      		</tfoot>
+			
+			
+		</table>
+	</div>
+
+-->
+
+<br/><br/>
+
+
+
+
+<div class="container-fluid">
+
+
+
+<h1> Tabla dentro de la clase container-fluid </h1> <br/>
+
+
+<div class="table-responsive">
+	<table class="tabla-resultados">
+		<thead>
+			<tr>
+				<th> Id </th>
+				<th> Nombre Completo </th>
+				<th> Sexo </th>
+				<th> Pais </th>
+			</tr>
+		</thead>
+		<tbody>
+	 
+	        <tr>
+				<td> <input name="idArtista" value="" type="number"> </td>
+				<td> <input name="nombre" value="" type="text"> </td>
+				<td>                 
+					<select name="sexo">
+						<option value=""> -Todos- </option>
+							<option value="F"> Femenino </option>
+							<option value="M"> Masculino </option>   
+					</select>
+	            </td>
+	                            
+	            <td>
+	                                
+	                <select name="idPais">
+	                    <option value=""> -Todos- </option>
+	                    <option value="158"> Mexico </option>
+						<option value="158"> Argentina </option>
+					</select>
+
+	            </td>
+	        </tr>
+
+	        <tr class="even">
+					<td> <a href=""> 3 </a>  </td>
+					<td> shakira </td>
+					<td> Femenino </td>
+					<td> Mexico </td>
+	            </tr>
+				<tr class="odd">
+					<td> <a href=""> 3 </a>  </td>
+					<td> Gustavo cerati </td>
+					<td> Masculino </td>
+					<td> Argentina </td>
+	        </tr>
+	    </tbody>
+	</table>
+</div>
+
+
+
+<br/><br/>
+
+
+<h1> Contenido dentro de la clase container-fluid</h1>
+
+<br/><br/>
+
+           	
+	<section class="main row">   <!-- Al poner row signigica que el section main es toda una fila. Cada fila tiene un total de 12 columnas  -->
+
+	    <article class="col-xs-12 col-sm-8 col-md-9 col-lg-9 caja-gris">	
+                
+                <h3> Article </h3>
+                <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+
+									
+	    </article>	
+
+            <aside class="col-xs-12 col-sm-4 col-md-3 col-lg-3 caja-gris">   
+                <h3> Aside </h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. 
+                </p>
+            </aside>
+            
+	</section>
+
+
+
+<br/><br/>
+
+<div class="message" > Mensaje warning </div>  <br/><br/>
+
+<br/><br/><br/><br/><br/>
+
+
+	
+
+	
+ 
+</div>
+
+
+
+<br/><br/><br/>
+
+
+
+
+
+
+<script>
+
+
+window.addEventListener("load", function(){  
+
+	var altura_banner_inicio = $("#banner-inicio").height() // Esto capta la altura del banner
+
+	
+	$(window).scroll(function(){
+		if (window.pageYOffset >= altura_banner_inicio) { // Si al bajar con el scroll el banner quedo oculto, entonces
+			 $("#menu-navegacion").addClass("navbar-fixed-top");  // Le pongo al menu la clase bootstrap para que quede fijo
+		} else{
+			$("#menu-navegacion").removeClass("navbar-fixed-top"); // Le quito al menu la clase bootstrap para que quede fijo
+		}
+	});
+
+});
+
+</script>
+
+
+</body>
+</html>

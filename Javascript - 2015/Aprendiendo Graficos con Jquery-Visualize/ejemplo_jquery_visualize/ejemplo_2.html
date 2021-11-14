@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>Interaction demo page</title>
+		<link type="text/css" rel="stylesheet" href="css/jquery-visualize/visualize.css"/>
+		<!-- <link type="text/css" rel="stylesheet" href="css/visualize-dark.css"/> -->
+		<link type="text/css" rel="stylesheet" href="css/jquery-visualize/demopage.css"/>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+		<!--[if IE]><script type="text/javascript" src="excanvas.compiled.js"></script><![endif]-->
+		<script type="text/javascript" src="js/jquery-visualize/visualize.jQuery.js"></script>
+		<script src="tooltip.visualize.jQuery.js" type="text/javascript" charset="utf-8"></script>
+		
+
+	</head>
+	<body>
+
+
+<h2>Charts from the same data</h2>
+
+
+<br/>
+
+
+<table id="mi-tabla" style="display: none;">
+	
+</table>
+
+
+<script>
+
+	$(function()
+	{
+		var tabla = "";
+
+		tabla += "<table>";
+			tabla += "<caption>2009 Employee Sales by Department</caption>";
+			tabla += "<thead>";
+				tabla += "<tr>";
+					tabla += "<td></td>";
+					tabla += "<th>food</th>";
+					tabla += "<th>auto</th>";
+					tabla += "<th>household</th>";
+				tabla += "</tr>";
+			tabla += "</thead>";
+			tabla += "<tbody>";
+				tabla += "<tr>";
+					tabla += "<th>Mary</th>";
+					tabla += "<td>190</td>";
+					tabla += "<td>0</td>";
+					tabla += "<td>40</td>";
+				tabla += "</tr>";
+				tabla += "<tr>";
+					tabla += "<th>Tom</th>";
+					tabla += "<td>-3</td>";
+					tabla += "<td>40</td>";
+					tabla += "<td>30</td>";
+				tabla += "</tr>";
+				tabla += "<tr>";
+					tabla += "<th>Brad</th>";
+					tabla += "<td>10</td>";
+					tabla += "<td>180</td>";
+					tabla += "<td>10</td>";
+				tabla += "</tr>";
+			tabla += "</tbody>";
+		tabla += "</table>";
+
+		document.getElementById("mi-tabla").innerHTML = tabla;
+		
+		
+		$('#mi-tabla').visualize({
+			type: 'pie',
+			pieMargin: 10,
+			title: '2009 Total Sales by Individual',
+			interaction: true,
+			tooltip: true
+		});	
+		
+		/*
+		// Asi muestro otro grafico
+		
+		$('table.line').visualize({
+			type: 'line',
+			lineDots: 'double',
+			lineMargin: 0,
+			interaction: true,
+			tooltip: true
+		});
+		*/
+	
+	});
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

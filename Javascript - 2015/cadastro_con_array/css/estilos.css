@@ -1,0 +1,33 @@
+*{
+	margin: 0px;
+    padding: 0px;
+}
+
+body{
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#slc-resultados{     /* Combobox con los resutados */
+	width: 200px;
+}
+
+.article_1, .aside_1{
+   background: lightblue;
+   border-radius: 0.5em;
+   display: inline-block;  /* Esto hace que article y aside queden alineados */
+   min-height: 400px; 
+   vertical-align: top;
+   width: 66.5%;
+}
+   
+.aside_1 {
+    width: 33.1%;
+}	
+
+.contenido{
+   margin-left: 20px;
+   margin-right: 20px;
+   margin-top: 20px;
+   margin-bottom: 20px; 
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <script>
+
+    class Mascota
+    {
+        constructor (id, nombre) {
+            this.id = id;
+            this.nombre = nombre;
+        }
+    }
+
+    class Persona
+    {
+        constructor (nombre, apellidoPaterno, apellidoMaterno) {
+            this.nombre = nombre;
+            this.apellidoPaterno = apellidoPaterno;
+            this.apellidoMaterno = apellidoMaterno;
+        }
+    }
+
+    class Ciudadano extends Persona
+    {
+        cualquiercosa;
+
+        constructor (nombre, apellidoPaterno, apellidoMaterno, rutNumero, rutDigito) 
+        {
+            super(nombre, apellidoPaterno, apellidoMaterno);
+            this.rutNumero = rutNumero;
+            this.rutDigito = rutDigito;
+            this.listaMascotas = []; 
+        }
+
+        agregarMascota(idMascota, nombreMascota) {
+            //this.listaMascotas.push( new Mascota(idMascota, nombreMascota) );  // Solucion rapida
+            this.listaMascotas = [...this.listaMascotas, new Mascota(idMascota, nombreMascota)];  // Con Spread Operator
+        }
+
+        actualizarMascota(idMascota, nombreMascota) 
+        {
+            // this.listaMascotas.find(x => x.id == idMascota).nombre = nombreMascota;  // Solucion rapida
+            this.listaMascotas = this.listaMascotas.map(x => x.id == idMascota ? {...x, nombre : nombreMascota} : x);  // Con Spread Operator
+            /*
+            // Con Spread Operator (Forma Larga)
+            let arreglo = [...this.listaMascotas];
+            arreglo.find(a => a.id == idMascota).nombre = nombreMascota;
+            this.listaMascotas = arreglo;
+            */
+            /*
+            // Con map
+            this.listaMascotas.map(a => { 
+                if (a.id == idMascota) { a.nombre = nombreMascota; } 
+                return a; 
+            });
+            */ 
+        }
+
+        quitarMascota(nombreMascota) {
+            //this.listaMascotas.splice(this.listaMascotas.findIndex(c => c.nombre == nombreMascota), 1);  // Solucion rapida
+            this.listaMascotas = [...this.listaMascotas.filter(c => c.nombre != nombreMascota)];  // Con Spread Operator
+        }
+    }
+
+    let ciudadano = new Ciudadano("Jose", "Lizarraga", "Veloso", 16710250, "6");
+    ciudadano.apellidoPaterno = "Lizarraga";
+    ciudadano.cualquiercosa = "Una cosa poca";
+
+    ciudadano.agregarMascota(1, "Bruno");     ciudadano.agregarMascota(2, "Canario");       ciudadano.agregarMascota(3, "Brigitt");
+    ciudadano.actualizarMascota(3, "Brigitte");
+    ciudadano.quitarMascota("Canario");
+
+    console.log(ciudadano);
+	ciudadano.listaMascotas.forEach(c => console.log(c));
+
+    console.log("==============================================================>>>>>>");
+    
+    /*
+    let arreglo = ["a","b"];
+    let arreglo2 = [...arreglo, "c","d"];  // arreglo2 sera:    [ "a", "b", "c", "d" ]        
+    console.log(arreglo2);
+    */
+   
+    </script>
+</body>
+</html>
