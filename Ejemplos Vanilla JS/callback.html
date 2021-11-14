@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <script>
+        // Javascript trabaja con algo que se llama Event Loop, y es un lenguaje single thread, es decir, trabaja en un solo hilo de proceso.
+        // Un callback (llamada de vuelta) es una función que recibe como argumento otra función y la ejecuta.
+
+        function cuadradoCallback(valor, callback)   // Va a recibir como parametros, un valor, y una funcion a ejecutar que se llama callback
+        {
+            setTimeout(() => {
+                let valorAlCuadrado = valor * valor;
+                callback(valor, valorAlCuadrado);
+            }, 1000);
+        }
+
+        cuadradoCallback(1, (entrada, salida) => 
+        {
+            console.log("Inicia el Callback");
+            console.log(`${entrada} al cuadrado es: ${salida}`);
+
+            cuadradoCallback(2, (entrada, salida) => {
+                console.log(`${entrada} al cuadrado es: ${salida}`);
+
+                cuadradoCallback(3, (entrada, salida) => {
+                    console.log(`${entrada} al cuadrado es: ${salida}`);
+                    console.log("Termina el Callback");
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

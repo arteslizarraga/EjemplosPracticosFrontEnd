@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <script>
+        
+        function cuadradoPromise(valor) 
+        {
+            if (typeof valor !== "number")
+                return Promise.reject(`Error, el valor "${valor}" ingresado no es un número`);
+
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    let valorAlCuadrado = valor * valor;
+                    resolve({ valor, resultado: valorAlCuadrado });
+                }, 1000);
+            });
+        }
+
+        cuadradoPromise(0)
+        .then(obj => {
+            console.log("Inicio promise");
+            console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+            return cuadradoPromise(1);
+        })
+        .then(obj => {
+            console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+            // return cuadradoPromise("2");  Esto cae en el catch
+            return cuadradoPromise(2);
+        })
+        .then(obj => {
+            console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+            return cuadradoPromise(3);
+        })
+        .then(obj => {
+            console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+            console.log("Fin Promise");
+        })
+        .catch(err => console.error(err));
+
+    </script>
+</body>
+</html>
