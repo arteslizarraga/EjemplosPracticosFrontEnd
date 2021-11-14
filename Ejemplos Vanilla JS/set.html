@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <script>
+
+        const set = new Set([1, 2, 3, true, true, false, false, "jajajja"]);  // Un set es una estructura de datos que no tiene elementos repetidos
+        set.add("hola");
+        set.add("HOla");
+        set.delete("jajajja");  // Elimina un dato
+        // set.clear();         // Vacia el set
+
+        console.log("El set es", set);
+        console.log("El tamaño del set es", set.size);
+
+        if (set.has("hola"))
+            console.log("El set tiene la palabra hola");
+
+        // for (item of set) { console.log(item); }
+        set.forEach(item => console.log(item));
+
+        let arreglo = Array.from(set);
+        console.log("El set convertido a arreglo es", arreglo);
+
+    </script>
+</body>
+
+</html>

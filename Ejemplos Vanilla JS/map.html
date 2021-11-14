@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <script>
+        /*
+        let mapa = new Map([
+            ["nombre", "Jose"],
+            ["apellido", "Lizárraga"],
+            ["edad", "29"]
+        ]);
+        */
+        
+        let mapa = new Map();
+        mapa.set("nombre", "Jose");
+        mapa.set("apellido", "Lizárraga");
+        mapa.set("edad", "29");
+        mapa.set("correo", "jose@gmail.com");
+
+        console.log("El tamaño del mapa es", mapa.size);
+
+        if (mapa.has("nombre"))
+            console.log("El mapa tiene el key nombre y su valor es: " + mapa.get("nombre"));
+
+        mapa.set("edad", "33");
+        mapa.delete("correo");
+
+        console.log("El mapa es", mapa);
+
+        const llavesMapa = [...mapa.keys()];
+        const valoresMapa = [...mapa.values()];
+
+        console.log("llavesMapa", llavesMapa);
+        console.log("valoresMapa", valoresMapa);
+
+    </script>
+</body>
+</html>
