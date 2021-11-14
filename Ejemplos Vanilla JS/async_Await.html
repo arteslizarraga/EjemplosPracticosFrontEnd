@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <script>
+
+        function cuadradoPromise(valor) 
+        {
+            if (typeof valor !== "number")
+                return Promise.reject(`Error, el valor "${valor}" ingresado no es un número`);
+
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    let valorAlCuadrado = valor * valor;
+                    resolve({ valor, resultado: valorAlCuadrado });
+                }, 1000);
+            });
+        }
+
+        async function funcionAsincronaDeclarada()
+        {
+            try {
+                console.log("Inicio funcion async declarada");
+
+                let obj = await cuadradoPromise(0);
+                console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+
+                obj = await cuadradoPromise(1);
+                console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+
+                // obj = await cuadradoPromise("2");   Esto cae en el catch
+                obj = await cuadradoPromise(2);
+                console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+
+                console.log("Fin funcion async declarada");
+            } 
+            catch (err) {
+                console.error(err);
+            }
+        }
+
+        const funcionAsincronaExpresada = async () =>
+        {
+            try {
+                console.log("Inicio funcion async expresada");
+
+                let obj = await cuadradoPromise(3);
+                console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+
+                obj = await cuadradoPromise(4);
+                console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+
+                obj = await cuadradoPromise(5);
+                console.log(`${obj.valor} al cuadrado es: ${obj.resultado}`);
+
+                console.log("Fin funcion async expresada");
+            } 
+            catch (err) {
+                console.error(err);
+            }
+        }
+
+        //===============================================>>>>
+        // Asi las dos funciones se ejecutan simultaneamente
+        /*
+        funcionAsincronaDeclarada();
+        funcionAsincronaExpresada();
+        */
+        //===============================================>>>>
+        // Asi las dos funciones se ejecutan una despues de la otra
+
+        (async () => {
+            await funcionAsincronaDeclarada();
+            await funcionAsincronaExpresada();
+            console.log("Ha terminado todo :)");
+        })();
+
+        //===============================================>>>>
+
+    </script>
+</body>
+</html>
