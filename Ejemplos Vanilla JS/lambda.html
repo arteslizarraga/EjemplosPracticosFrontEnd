@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <script>
+
+        let arregloSucio = [
+            { id: 1, nombre: "pedro", apellido: "jara", otroDato: "aaaaaaaa" },
+            { id: 2, nombre: "juana", apellido: "martinez", otroDato: "bbbb" }
+        ];
+
+        let arregloLimpio = arregloSucio.map(c => { return { id: c.id, nombreCompleto: `${c.nombre} ${c.apellido}` } });
+        console.log( arregloLimpio );
+        console.log( Array.from(arregloLimpio, c => c.id).join(",") );  // Imprimir cadena separada por comas de solo un atributo del arreglo
+
+        // arregloLimpio = JSON.parse(`[{"id":1,"nombreCompleto":"pedro jara"},{"id":2,"nombreCompleto":"juana martinez"}]`);  // Obtener el json array de una cadena
+
+        arregloLimpio.forEach((elemento, index) => console.log(`${index}: ${JSON.stringify(elemento)}`));
+
+        console.log( arregloLimpio.find(c => c.id == 2) );
+
+        const contar = (lambda) => {
+            let arregloFiltrado = arregloLimpio.filter(lambda);
+            return (arregloFiltrado != null) ? arregloFiltrado.length : 0;
+        };
+
+        if (arregloLimpio.some(c => c.nombreCompleto.includes("juana"))) 
+        {
+            let cantidad = contar(x => x.nombreCompleto.includes("juana"));
+            console.log(`Se ${cantidad > 1 ? `encontraron ${cantidad} personas` : "encontró una persona"} cuyo nombre completo incluye la palabra juana`);
+        }
+            
+        // arregloLimpio = [...arregloLimpio, { id: 3, nombreCompleto: "j" }, { id: 4, nombreCompleto: null }];  // Agrego mas elementos para validar
+
+        if (arregloLimpio.every(c => c.nombreCompleto != null && c.nombreCompleto.length > 1))
+            console.log("Todos los nombres de las personas tienen más de una letra");
+        else 
+        {
+            let cantidad = contar(x => x.nombreCompleto == null || x.nombreCompleto.length <= 1);
+            console.log(`Se ${cantidad > 1 ? `encontraron ${cantidad} personas` : "encontró una persona"} cuyo nombre es nulo o tiene solo una sola letra`);
+        }
+
+    </script>
+</body>
+
+</html>
