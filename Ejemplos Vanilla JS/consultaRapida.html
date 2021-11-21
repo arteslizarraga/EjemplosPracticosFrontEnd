@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <title> Consulta rapida </title>
+  </head>
+  <body>
+
+	<div class="container">
+
+		<br/><br/>
+
+		<div class="row"> 
+			<div class="col-md-4"> 
+				<div class="form-group"> 
+					<label class="control-label"> Buscar </label> 
+					<input id="txt_buscador" type="text" onkeyup="desplegarTabla()" class="form-control" autocomplete="off" /> 			
+				</div> 
+			</div> 
+		</div> 
+
+		<br/><br/>
+		<div id="tabla"></div> 
+
+	</div>
+
+	<script> 
+
+	let arregloJson = [
+		{nombre: "jose", rut: "11829141-7", fechaNacimiento: "21-12-1988", edad: 32, activo: true},
+		{nombre: "juana", rut: "9442321-k", fechaNacimiento: "14-01-1990", edad: 30, activo: true},
+		{nombre: "pedro", rut: "8021507-k", fechaNacimiento: "05-07-2007", edad: 14, activo: false}
+	];
+
+	const obtenerArregloFiltrado = () => 
+	{ 
+		let arregloKeys = [];
+
+		if (arregloJson != null && arregloJson.length > 0)
+		{
+			let objeto = arregloJson[0];  		// { nombre: "jose", rut: "11829141-7", fechaNacimiento: "21-12-1988", edad: 32, activo: true }
+			arregloKeys = Object.keys(objeto);  // [ "nombre", "rut", "fechaNacimiento", "edad", "activo" ]
+		}	
+		//===================================>>>>
+
+		let retorno = [];
+		let valorTxt = document.querySelector("#txt_buscador").value;
+
+		if (valorTxt != null && valorTxt != "") 
+		{
+			arregloKeys.forEach(key => 
+			{
+				let arregloProvisorio = arregloJson.filter(c => (c[key].toString().toLowerCase().includes(valorTxt.toLowerCase()) ));  // Aplica criterios de busqueda 
+
+				if (arregloProvisorio.length > 0) 
+				{
+					arregloProvisorio.forEach(c=> 
+					{
+						if (! retorno.some(x=> x[key] == c[key])) {
+							retorno.push(c);
+						}
+					});
+				}
+			});
+		} 
+		else {
+			retorno = arregloJson;
+		}
+
+		return retorno;
+	} 
+
+	const desplegarTabla = () => 
+	{
+		let arregloFiltrado = obtenerArregloFiltrado(); 
+
+		var cadena = ` 
+		<table border="3" width="100%"> 
+			<thead> 
+				<tr> 
+					<th> Nombre </th> 
+					<th> Rut </th> 
+					<th> Fecha de nacimiento </th>
+					<th> Edad </th>
+					<th> Activo </th>
+				</tr> 
+			</thead> 
+			<tbody> 
+				${arregloFiltrado.map(atributo => 
+				{ 
+					return `<tr> 
+						<td> ${atributo.nombre} </td> 
+						<td> ${atributo.rut} </td> 
+						<td> ${atributo.fechaNacimiento} </td> 
+						<td> ${atributo.edad} </td> 
+						<td> ${atributo.activo} </td> 
+					</tr> 
+					` 
+				}).join("")} 
+			</tbody> 
+		</table>`; 
+
+		document.querySelector("#tabla").innerHTML = cadena; 
+	}
+
+	desplegarTabla();  // Al cargar la pagina, despliega la tabla
+
+	</script> 
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
