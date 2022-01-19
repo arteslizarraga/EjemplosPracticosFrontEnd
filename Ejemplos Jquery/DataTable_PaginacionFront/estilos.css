@@ -1,0 +1,42 @@
+
+
+.circleBtn {
+    border-radius: 50%;
+    background-color: #b2b2b2;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+.circleBtn span {
+    font-size: 30px;
+    line-height: 3rem;
+    color: white;
+}
+span.circle {
+    display: inline-block;
+    color: #fff;
+    border-radius: 50%;
+    background: #999;
+    width: 1.5rem;
+    height: 1.5rem;
+    text-align: center;
+    line-height: 1.5rem;
+    margin-right: 0.5rem;
+}
+.table .see td{ 
+    font-weight: bold;
+}
+.table .see td i{
+    color: #000;
+}
+.table td i{ 
+    color: #999;
+}
+@media (min-width: 768px){
+    .circleBtn {
+        border-radius: 50%;
+        background-color: #b2b2b2;
+        width: 50px;
+        height: 50px;
+    }
+}
