@@ -1,0 +1,120 @@
+
+1- Instalar node js para poder usar NPM
+Verificar la version de node instalada en cmd:		node -v
+
+
+2- Instalar el Angular CLI(commmand line interface) para poder crear proyectos en angular:
+	npm install -g @angular/cli
+	ng --version                 // Asi se verifica la version instalada de angular
+	
+3- Agregar dependencias necesarias al proyecto en el archivo   		src/app/app.module.ts
+
+	Importar lo siguiente:
+		import { FormsModule, ReactiveFormsModule } from '@angular/forms';  
+		import {HttpClientModule} from '@angular/common/http';              
+
+	Agregar esto en el arreglo imports:
+		FormsModule,                  // Esto es para el ng form en las vistas
+		ReactiveFormsModule,          // Esto es para el ng form en las vistas
+		HttpClientModule	          // Esto es para hacer llamadas get, post, put, delete, etc.
+		
+4- Crear proyecto:
+	cd Documents\Aprendiendo Angular
+	ng new UsarApiSpringBoot
+		//Cuando pregunte "Would you like to add Angular routing? (y/N)"  Poner Si(y)
+		// Cuando pregunte "Which stylesheet format would you like to use? (Use arrow keys)" Solo apretar enter 
+			
+5- Iniciar la aplicacion		
+	cd Documents\Aprendiendo Angular\SistemaVentasJava2019
+	ng serve   					// Esto es para iniciar la aplicacion	
+	control + shift + c 		// Es para detener la aplicacion  
+	
+6- Publicar Proyecto para produccion
+	ng build --prod               // Esto genera la carpeta dist con el proyecto 
+	
+7- Publicar Proyecto para produccion con los nombres de archivos sin cambiar
+	ng build --prod --output-hashing none
+	
+	Ir al index.html y dejar esta linea asi, para poder poner la carpeta en el servidor
+		<base href="./">
+	
+	
+Las librerias como el CDN de bootstrap se colocan en el archivo src/index.html
+ 
+
+6- Crear los componentes (Es necesario detener el proyecto)
+
+	ng generate component Territorios/MaestroRegion     // Tambien se puede asi:	ng g c Territorios/MaestroRegion
+	
+	Al crear un componente:
+	
+		- Hay que poner la llamada al componente dentro del archivo  	src/app/app-routing.module.ts   dentro del arreglo routes
+			Dentro de dicho arreglo, el campo path sera como es llamado el componente a traves de la url y los links
+		
+		- Para poner un link (<a href) en el menu principal que llame al componente creado hay que ir al archivo   src/app/app.component.html
+		- Se agrega automaticamente su referencia en el archivo   		src/app/app.module.ts
+	
+	Si deseas borrar un componente, ademas de eliminarlo, hay que quitar su referencia del archivo  src/app/app.module.ts
+	
+7- Crear los servicios (Se encargan de hacer la conexion con el Backend)
+
+	// Esto genera la carpeta service y dos archivos dentro de ella. Si la carpeta ya existe, entonces solo coloca los archivos dentro
+	ng generate service Servicios/Usuario    // Tambien se puede asi:    ng g s Servicios/Usuario	
+	
+8- Hacer referencia a los componentes creados en el proyecto 
+
+Angular funciona mediante enrutamiento. Para eso es el archivo que esta en app/app-routing.module.ts  ... en ese archivo se hace referencia a 
+todos los componentes que se usaran. Dentro del arreglo   const routes   se colocan los componentes.
+
+=====================================================================================>>>>>>>
+https://www.youtube.com/watch?v=36kd3uR-hG8
+Modulos:
+	Todo lo que tiene el decorador @NgModule es un modulo, incluyendo el app.module.ts 
+	Una aplicacion grande hecha en angular esta dividida en modulos, y cada modulo se encarga de una parte de la aplicacion.
+	El comando para crear un modulo llamado ventas es:
+	
+	ng generate module ventas         // Tambien se puede asi:	ng g m ventas
+	
+		Para crear un componente dentro del modulo ventas es asi:
+			ng generate component ventas/miComponent
+		Para crear un componente dentro del modulo ventas, y dentro de una carpeta, es asi:
+			ng generate component ventas/miCarpeta/miComponent	// Ejemplo:	 ng generate component ventas/CabeceraVenta/ListarCabeceraVenta
+		El componente creado deberia quedar declarado automaticamente dentro de   ventas.module.ts    en el arreglo declarations
+		
+		Permitir que el proyecto pueda acceder al modulo que creaste:
+			Dentro del modulo creado agregar el arreglo  exports   y poner dentro el componente creado
+			Dentro de   app.module.ts  agregar el modulo creado dentro del arreglo   imports
+			Copiar el   selector   que esta en el componente creado y pegarlo en el html principal  // app-listar-cabecera-venta
+
+Proceso de arranque(Bootstrap) de la aplicacion:
+	Al arrancar el proyecto se va al app.module.ts, los otros modulos creados por mi no tienen el bootstrap
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		

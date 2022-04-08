@@ -1,0 +1,106 @@
+<!DOCTYPE HTML> 
+<html> 
+	<head> 
+		<meta charset="UTF-8"> 
+	</head> 
+<body> 
+
+<div id="tabla"></div> 
+
+<script> 
+
+/*
+let unidadesDeAprendizaje = [
+	{
+		nombre: "Unidad A",
+		aprendizajesEsperados: [
+			{ nombre: "Aprendizaje A1" },
+			{ nombre: "Aprendizaje A2" },
+			{ nombre: "Aprendizaje A3" }
+		]
+	},
+	{
+		nombre: "Unidad B",
+		aprendizajesEsperados: [
+			{ nombre: "Aprendizaje B1" },
+			{ nombre: "Aprendizaje B2" }
+		]
+	}
+];
+*/ 
+
+let unidadesDeAprendizaje = [ 
+	{ 
+		"nombre": "Unidad A",
+		"aprendizajesEsperados": [ 
+			{ "nombre": "Aprendizaje Esperado 1A", "contenidos": [], "criterios": [ "Criterio 1AA", "Criterio 1AB" ] }, 
+			{ "nombre": "Aprendizaje Esperado 2A", "contenidos": [], "criterios": [ "Criterio 2AA", "Criterio 2AB" ] } 
+		]
+	}, 
+	{ 
+		"nombre": "Unidad B",
+		"aprendizajesEsperados": [ 
+			{ "nombre": "Aprendizaje Esperado 1B", "contenidos": [], "criterios": [ "Criterio 1BA", "Criterio 1BB" ]}, 
+			{ "nombre": "Aprendizaje Esperado 2B", "contenidos": [], "criterios": [ "Criterio 2BA", "Criterio 2BB" ] } 
+		] 
+	} 
+];
+
+
+var cadena = ` 
+<table border="3" width="50%"> 
+	<thead> 
+		<tr style="background-color: #b39393;"> 
+			<th> Unidades de Aprendizaje </th> 
+			<th> Aprendizajes Esperados </th> 
+			<th> Criterios de Evaluación </th> 
+			<th> Contenidos </th>
+		</tr> 
+	</thead> 
+	<tbody> 
+
+		${unidadesDeAprendizaje.map((unidad, indexUnidad) => 
+		{ 
+			return ` 
+				${unidad.aprendizajesEsperados.map((aprendizaje, indexAprendizaje) => 
+				{ 
+					return `
+					<tr style="background-color: ${indexUnidad % 2 == 0 ? "#eee4e4;" : "#dbc4c2;"}"> 
+
+						${(indexAprendizaje + 1) == 1 ? 
+							`<td rowspan="${unidad.aprendizajesEsperados.length}"> ${unidad.nombre} </td>` 
+							: ""} 
+
+						<td> ${aprendizaje.nombre} </td> 
+						<td> 
+							<table border="2" width="100%">
+								<tr> <td>reemplazar</td> </tr>
+								<tr> <td>reemplazar</td> </tr>
+								<tr> <td>reemplazar</td> </tr>
+							</table>
+						</td> 
+						<td> 
+							<table border="2" width="100%">
+								<tr> <td>reemplazar</td> </tr>
+								<tr> <td>reemplazar</td> </tr>
+								<tr> <td>reemplazar</td> </tr>
+								<tr> <td>reemplazar</td> </tr>
+							</table>
+						</td> 
+					</tr> 
+					` 
+				}).join("")} 
+			` 
+		}).join("")} 
+
+	</tbody> 
+</table>`; 
+
+document.querySelector("#tabla").innerHTML = cadena; 
+
+
+</script> 
+
+</body> 
+</html> 
+
