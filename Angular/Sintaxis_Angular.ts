@@ -64,30 +64,24 @@ async ngAfterViewInit()
 
 //=====================================>>>>>
 
-getPeriodo() : Promise<number>
+getPeriodo() : Promise<RespuestaBackend<number>>
 {
-    return new Promise((resolve, reject) => 
-    {
-        this.http.post<RespuestaBackend<number>>(`${this.urlBackend}/Formulario/GetPeriodo`, null).subscribe(
-          (res) => 
-          {
-            if (res.status == 200)
-              resolve(res.objeto);
-          },
-          (error) => reject(0)
-        );
-    });
+  return new Promise((resolve) => 
+  {
+	  this.http.post<RespuestaBackend<number>>(`${this.urlBackend}/Formulario/GetPeriodo`, null).subscribe(
+		res => resolve(res)
+	  );
+  });
 }
 
 ngAfterViewInit()
 {
-  getPeriodo()
-  .then(periodo => 
-  {
-    console.log(periodo);
-  })
-  .catch(error => { console.log("Se encontró un error al obtener el período") })
-  .finally(() => console.log("Fin proceso")); 
+	let res = await this.service.getPeriodo();
+    
+	if (res.status != 200)
+	  return this.excepciones.mostrarErroresRespuestaBackend(res);
+
+	alert(res.objeto);
 }
 
 //=================================================================================================================>>>>>>
