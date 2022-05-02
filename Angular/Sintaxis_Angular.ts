@@ -17,9 +17,29 @@
 </ng-container>
 */
 //=================================================================================================================>>>>>>
+// Switch case para el manejo de condiciones en la Vista
+/*
+<div [ngSwitch]="objeto.etapa">
+
+	<div *ngSwitchCase="'Observado'">
+		Solicitud de Curso con Observaciones
+	</div>
+	<ng-container *ngSwitchDefault>
+
+		<div [ngSwitch]="objeto.estado">
+			<div *ngSwitchCase="'Pendiente'"> Solicitud de Curso Pendiente de Aprobación </div>
+			<div *ngSwitchCase="'Rechazado'"> Solicitud de Curso Rechazada </div>
+			<div *ngSwitchCase="'Aprobado'"> Solicitud de Curso Aprobada </div>
+		</div>
+
+	</ng-container>
+	
+</div>
+*/
+//=================================================================================================================>>>>>>
 // Llamadas por post
 
-getDetalle() : Observable < ReporteAdministrativo >   // Con FormData
+getDetalle() : Observable <ReporteAdministrativo>   // Con FormData
 {
   const formData = new FormData();
   formData.append('param1', 12);
