@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tabla Fusión Columnas 1</title>
+
+	<style>
+		.fila-cabecera {
+			background-color: gray; color: white;
+		}
+
+		.fila-detalle td {
+			padding-bottom: 1em;
+            word-wrap: break-word;
+		}
+
+        table, tr, td, th, tbody, thead, tfoot {
+            page-break-inside: avoid !important;
+        }
+
+        .tabla-reporte { 
+            table-layout: fixed;
+            width:100%;
+        }
+
+        .tabla-reporte th, td {
+            border: 1px solid black;
+        }
+	</style>
+
+</head>
+<body>
+	
+	<table class="tabla-reporte">
+
+		<tr class="fila-cabecera">
+			<td colspan="3">Código</td>
+		</tr>
+		<tr class="fila-detalle">
+			<td colspan="3">{{objeto.codigo}}</td>
+		</tr>
+
+		<tr class="fila-cabecera">
+			<td>Nombre de Capacitación</td>
+			<td>Canal de Formación</td>
+			<td>Modalidad</td>
+		</tr>
+		<tr class="fila-detalle">
+			<td>{{objeto.nombreCapacitacion}}</td>
+			<td>{{objeto.canalFormacion}}</td>
+			<td>{{objeto.modalidad}}</td>
+		</tr>
+		<tr class="fila-cabecera">
+			<td>Área Académica</td>
+			<td>Programas de Estudio</td>
+			<td>Asignaturas</td>
+		</tr>
+		<tr class="fila-detalle">
+			<td>{{objeto.areasAcademicas | json}}</td>
+			<td>{{objeto.programasEstudio | json}}</td>
+			<td>{{objeto.asignaturas | json}}</td>
+		</tr>
+		<tr class="fila-cabecera">
+			<td>Institución</td>
+			<td>Período</td>
+			<td>Cantidad de Docentes Impactados</td>
+		</tr>
+		<tr class="fila-detalle">
+			<td>{{objeto.instituciones | json}}</td>
+			<td>{{objeto.periodo}}</td>
+			<td>{{objeto.cantidadDocentes}}</td>
+		</tr>
+		<tr class="fila-cabecera">
+			<td>Costo del Curso</td>
+			<td>Responsable Costo</td>
+			<td>Horas Totales de Capacitación</td>
+		</tr>
+		<tr class="fila-detalle">
+			<td>{{objeto.costoCurso}}</td>
+			<td>{{objeto.responsableCosto}}</td>
+			<td>{{objeto.horas}}</td>
+		</tr>
+
+	
+		<tr class="fila-cabecera">
+			<td colspan="3">Descripción detallada de la Actividad</td>
+		</tr>
+		<tr class="fila-detalle">
+			<td colspan="3">{{objeto.descripcion}}</td>
+		</tr>
+	  
+
+		<tr class="fila-cabecera">
+			<td>Incluye Certificación</td>
+			<td>Nombre Certificación</td>
+			<td></td>
+		</tr>
+		<tr class="fila-detalle">
+			<td>{{objeto.incluyeCertificacion}}</td>
+			<td>{{objeto.nombreCapacitacion}}</td>
+			<td></td>
+		</tr>
+		<tr class="fila-cabecera">
+			<td>Quién Ejecuta</td>
+			<td>Nombre Empresa</td>
+			<td>Código Sence</td>
+		</tr>
+		<tr class="fila-detalle">
+			<td>{{objeto.quienEjecuta}}</td>
+			<td>{{objeto.nombreEmpresa}}</td>
+			<td>{{objeto.codigoSence}}</td>
+		</tr>
+
+		<tr class="fila-cabecera">
+			<td colspan="3">Curso Pre requisito</td>
+		</tr>
+		<tr class="fila-detalle">
+			<td colspan="3">{{objeto.cursoPreRequisito}}</td>
+		</tr>
+
+	</table>
+
+</body>
+</html>
