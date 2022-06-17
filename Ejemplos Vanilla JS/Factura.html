@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+       
+        table {
+            border-collapse: collapse;
+        }
+        thead {
+            background-color: lightgray;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <br/><br/>
+
+    <table width="60%" border="1">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Sub Total</th>
+                <th>Descuento %</th>
+                <th>Total Venta</th>
+                <th>Total Recaudado</th>
+            </tr>
+        </thead>
+        <tbody id="contenido">
+        </tbody>
+
+    </table>
+
+    <script>
+
+        let ventas = [
+            { 
+                cliente: "José", 
+                detalles: [
+                    { producto: "Chocolate", cantidad: 1, precioUnitario: 1500, descuento: 0 }, 
+                    { producto: "Galletas saladas", cantidad: 4, precioUnitario: 800, descuento: 0 },
+                    //{ producto: "Papas fritas", cantidad: 1, precioUnitario: 2300, descuento: 0 }
+                ]
+            }, 
+            { 
+                cliente: "Juana", 
+                detalles: [
+                    { producto: "Agua mineral", cantidad: 2, precioUnitario: 1200, descuento: 20 }, 
+                    { producto: "Bebida Energetica", cantidad: 3, precioUnitario: 3000, descuento: 0 },
+                    //{ producto: "Azucar", cantidad: 1, precioUnitario: 1000, descuento: 0 }
+                ]
+            }
+        ];
+
+        const obtenerTotalRecaudado = () => ventas.map(
+            venta => venta.detalles.map(x => x.precioUnitario * x.cantidad).reduce((a, b) => a + b, 0)
+        ).reduce((a, b) => a + b, 0); 
+
+
+        const obtenerCantidadTotalDetalles = () => ventas.map(x => x.detalles.length).reduce((a, b) => a + b, 0); 
+
+        let cadena = `
+
+        ${ventas.map((venta, x) => 
+        { 
+            return `
+            ${venta.detalles.map((detalle, y) => 
+            { 
+                return `
+                <tr>
+                    ${y == 0 ? ` 
+                        <td rowspan="${venta.detalles.length}"> ${venta.cliente} </td>
+                    ` : ""} 
+
+                    <td> ${detalle.producto} </td>
+                    <td> ${detalle.cantidad} </td>
+                    <td> ${detalle.precioUnitario} </td>
+                    <td> ${detalle.precioUnitario * detalle.cantidad} </td>
+
+                    <td> ${detalle.descuento} </td>
+
+                    ${y == 0 ? ` 
+                        <td rowspan="${venta.detalles.length}"> 
+                            ${venta.detalles.map(x => x.precioUnitario * x.cantidad).reduce((a, b) => a + b, 0)} 
+                        </td>
+                    ` : ""} 
+
+                    ${x == 0 && y == 0 ? ` 
+                        <td rowspan="${obtenerCantidadTotalDetalles()}"> ${obtenerTotalRecaudado()}</td>
+                    ` : ""} 
+                </tr>
+                `;
+
+            }).join("")} 
+            `;
+
+        }).join("")} 
+
+        `;
+
+        document.querySelector("#contenido").innerHTML = cadena;
+
+    </script>
+
+</body>
+
+</html>
