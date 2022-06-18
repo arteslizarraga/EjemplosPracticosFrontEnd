@@ -19,17 +19,21 @@
 
     <br/><br/>
 
-    <table width="60%" border="1">
+    <table width="100%" border="1">
         <thead>
             <tr>
                 <th>Cliente</th>
                 <th>Producto</th>
                 <th>Cantidad</th>
                 <th>Precio Unitario</th>
-                <th>Sub Total</th>
+                <th>Sub Total (Sin Descuento)</th>
                 <th>Descuento %</th>
-                <th>Total Venta</th>
-                <th>Total Recaudado</th>
+                <th>Valor Descuento</th>
+                <th>Sub Total con Descuento</th>
+                <th>Total Venta (Sin Descuento)</th>
+                <th>Total Venta (Con Descuento)</th>
+                <th>Suma Subtotales (Sin Descuentos)</th>
+                <th>Total Recaudado (Con Descuentos)</th>
             </tr>
         </thead>
         <tbody id="contenido">
@@ -45,7 +49,7 @@
                 detalles: [
                     { producto: "Chocolate", cantidad: 1, precioUnitario: 1500, descuento: 0 }, 
                     { producto: "Galletas saladas", cantidad: 4, precioUnitario: 800, descuento: 0 },
-                    //{ producto: "Papas fritas", cantidad: 1, precioUnitario: 2300, descuento: 0 }
+                    { producto: "Papas fritas", cantidad: 1, precioUnitario: 2300, descuento: 0 }
                 ]
             }, 
             { 
@@ -53,15 +57,33 @@
                 detalles: [
                     { producto: "Agua mineral", cantidad: 2, precioUnitario: 1200, descuento: 20 }, 
                     { producto: "Bebida Energetica", cantidad: 3, precioUnitario: 3000, descuento: 0 },
-                    //{ producto: "Azucar", cantidad: 1, precioUnitario: 1000, descuento: 0 }
+                    { producto: "Azucar", cantidad: 1, precioUnitario: 1000, descuento: 0 }
                 ]
             }
         ];
 
-        const obtenerTotalRecaudado = () => ventas.map(
-            venta => venta.detalles.map(x => x.precioUnitario * x.cantidad).reduce((a, b) => a + b, 0)
+        const obtenerSumaSubtotalesSinDescuentos = () => ventas.map(
+            venta => venta.detalles.map(detalle => detalle.precioUnitario * detalle.cantidad).reduce((a, b) => a + b, 0)
         ).reduce((a, b) => a + b, 0); 
 
+        const obtenerPorcentaje = (numero, porcentaje) => 
+        {
+            let valorDescuento = (numero * porcentaje) / 100;
+            return Math.round(valorDescuento);                  // Math.round convierte   633.0239999999999   en   633
+        };
+
+        const obtenerSumaSubtotalesConDescuentos = () =>
+        {
+            return ventas.map(
+                venta => venta.detalles.map(detalle => 
+                { 
+                    let subTotal = detalle.precioUnitario * detalle.cantidad;
+                    let valorDescuento = obtenerPorcentaje(subTotal, detalle.descuento);
+                    return subTotal - valorDescuento;  // Sub Total con Descuento
+                })
+                .reduce((a, b) => a + b, 0)
+            ).reduce((a, b) => a + b, 0);
+        }
 
         const obtenerCantidadTotalDetalles = () => ventas.map(x => x.detalles.length).reduce((a, b) => a + b, 0); 
 
@@ -72,6 +94,9 @@
             return `
             ${venta.detalles.map((detalle, y) => 
             { 
+                let subTotal = detalle.precioUnitario * detalle.cantidad;
+                let valorDescuento = obtenerPorcentaje(subTotal, detalle.descuento);
+
                 return `
                 <tr>
                     ${y == 0 ? ` 
@@ -81,19 +106,39 @@
                     <td> ${detalle.producto} </td>
                     <td> ${detalle.cantidad} </td>
                     <td> ${detalle.precioUnitario} </td>
-                    <td> ${detalle.precioUnitario * detalle.cantidad} </td>
+                    <td> ${subTotal} </td>
 
                     <td> ${detalle.descuento} </td>
+
+                    <td> ${valorDescuento} </td>
+                    <td> ${subTotal - valorDescuento}  </td> <!-- Sub Total con Descuento -->
 
                     ${y == 0 ? ` 
                         <td rowspan="${venta.detalles.length}"> 
                             ${venta.detalles.map(x => x.precioUnitario * x.cantidad).reduce((a, b) => a + b, 0)} 
                         </td>
+                    ` : ""}  <!-- Total Venta (Sin Descuento) -->
+
+                    ${y == 0 ? ` 
+                        <td rowspan="${venta.detalles.length}"> 
+                            ${venta.detalles.map(x => 
+                            { 
+                                let subTotalRecorrido = x.precioUnitario * x.cantidad;
+                                let valorDescuentoRecorrido = obtenerPorcentaje(subTotalRecorrido, x.descuento);
+                                return subTotalRecorrido - valorDescuentoRecorrido; 
+                            })
+                            .reduce((a, b) => a + b, 0)} 
+                        </td>
+                    ` : ""}  <!-- Total Venta (Con Descuento) -->
+
+                    ${x == 0 && y == 0 ? ` 
+                        <td rowspan="${obtenerCantidadTotalDetalles()}"> ${obtenerSumaSubtotalesSinDescuentos()}</td>
                     ` : ""} 
 
                     ${x == 0 && y == 0 ? ` 
-                        <td rowspan="${obtenerCantidadTotalDetalles()}"> ${obtenerTotalRecaudado()}</td>
+                        <td rowspan="${obtenerCantidadTotalDetalles()}"> ${obtenerSumaSubtotalesConDescuentos()}</td>
                     ` : ""} 
+
                 </tr>
                 `;
 
