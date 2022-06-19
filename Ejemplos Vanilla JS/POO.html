@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo Ventas POO</title>
+</head>
+
+<body>
+    <script>
+
+        class Persona   // Clase Abstracta     https://codesandbox.io/s/abstract-class-and-method-clvze
+        {
+            #rut 
+            #nombreCompleto
+
+            constructor(rut, nombreCompleto) {
+                if (this.constructor === Persona) {
+                    throw new Error("La clase Persona no puede ser instanciada")
+                }
+
+                this.#rut = rut
+                this.#nombreCompleto = nombreCompleto
+            }
+
+            get rut() { return this.#rut }
+            get nombreCompleto() { return this.#nombreCompleto }
+
+            toString() { throw new Error("El método toString debe ser implementado") }
+        }
+
+        class Vendedor extends Persona   // Clase Concreta
+        {
+            constructor(rut, nombreCompleto) {
+                super(rut, nombreCompleto)
+            }
+
+            toString() {
+                return `El rut del vendedor es ${this.rut} y su nombre completo es ${this.nombreCompleto}`
+            }
+        }
+
+        class Cliente extends Persona   // Clase Concreta
+        {
+            constructor(rut, nombreCompleto) {
+                super(rut, nombreCompleto)
+            }
+
+            toString() {
+                return `El rut del cliente es ${this.rut} y su nombre completo es ${this.nombreCompleto}`
+            }
+        }
+
+        class Producto {
+            #nombre 
+            constructor(nombre) { this.#nombre = nombre }
+            get nombre() { return this.#nombre }
+        }
+
+        class Item {
+            #producto
+            #cantidad
+            #precioUnitario
+            #descuento
+
+            constructor(item) {
+                this.#producto = item.producto
+                this.#cantidad = item.cantidad
+                this.#precioUnitario = item.precioUnitario
+                this.#descuento = item.descuento
+            }
+
+            get producto() { return this.#producto }
+        }
+
+        class Venta {
+            #cliente
+            #vendedor
+            #detalles
+
+            constructor() {
+                this.#detalles = []
+            }
+
+            get cliente() { return this.#cliente }
+            set cliente(cliente) { this.#cliente = cliente }
+
+            get vendedor() { return this.#vendedor }
+            set vendedor(vendedor) { this.#vendedor = vendedor }
+
+            agregarDetalle(d) { this.#detalles.push(new Item(d)) }
+            get detalles() { return this.#detalles }
+        }
+
+        //let cliente = new Persona("1-9", "José")  // La clase Persona no puede ser instanciada
+
+        let venta = new Venta()
+        venta.cliente = new Cliente("1-9", "José")
+        venta.vendedor = new Vendedor("2-1", "Sofía");
+        //venta.#detalles = [];       // No se puede porque es privado
+
+        let chocolate = new Producto("Chocolate")
+        let galletasSaladas = new Producto("Galletas saladas")
+        let papasFritas = new Producto("Papas fritas")
+
+        venta.agregarDetalle({ producto: chocolate, cantidad: 1, precioUnitario: 1500, descuento: 0 })
+        venta.agregarDetalle({ producto: galletasSaladas, cantidad: 4, precioUnitario: 800, descuento: 0 })
+        venta.agregarDetalle({ producto: papasFritas, cantidad: 1, precioUnitario: 2300, descuento: 0 })
+
+        //console.log(`${venta.cliente.rut} ${venta.cliente.nombreCompleto}`)
+        console.log(venta.cliente.toString())
+        console.log(venta.vendedor.toString())
+
+        venta.detalles.forEach(detalle => console.log(detalle.producto.nombre))
+
+    </script>
+
+</body>
+
+</html>
