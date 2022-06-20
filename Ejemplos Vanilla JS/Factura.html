@@ -33,8 +33,10 @@
                 <th>Total Venta (Sin Descuento)</th>
                 <th>Total Venta (Con Descuento)</th>
                 <th>IVA</th>
-                <th>Suma Subtotales (Sin Descuentos)</th>
-                <th>Total Recaudado (Con Descuentos)</th>
+                <th>Total Venta (Con Descuento e IVA)</th>
+                <th>Suma Subtotales sin descuentos</th>
+                <th>Ganancias (Suma Subtotales con descuentos)</th>
+                <th>Total IVA Recaudado</th>
             </tr>
         </thead>
         <tbody id="contenido">
@@ -48,6 +50,7 @@
         let ventas = [
             { 
                 cliente: "José", 
+                porcentajeIVA: 18,
                 detalles: [
                     { producto: "COCA-COLA PET 250x12 PR", cantidad: 1, precioUnitario: 2016, descuento: 31.40 },
                     { producto: "FANTA PET PET 250x12 PROM", cantidad: 1, precioUnitario: 2016, descuento: 31.40 },
@@ -57,11 +60,12 @@
                 ]
             }
         ];
-        */    
-       
+        */  
+        
         let ventas = [
             { 
                 cliente: "José", 
+                porcentajeIVA: 18,
                 detalles: [
                     { producto: "Chocolate", cantidad: 1, precioUnitario: 1500, descuento: 0 }, 
                     { producto: "Galletas saladas", cantidad: 4, precioUnitario: 800, descuento: 0 },
@@ -70,6 +74,7 @@
             }, 
             { 
                 cliente: "Juana", 
+                porcentajeIVA: 18,
                 detalles: [
                     { producto: "Agua mineral", cantidad: 2, precioUnitario: 1200, descuento: 20 }, 
                     { producto: "Bebida Energetica", cantidad: 3, precioUnitario: 3000, descuento: 0 },
@@ -77,50 +82,46 @@
                 ]
             }
         ];
-
-
-        const obtenerSumaSubtotalesSinDescuentos = () => ventas.map(
-            venta => venta.detalles.map(detalle => detalle.precioUnitario * detalle.cantidad).reduce((a, b) => a + b, 0)
-        ).reduce((a, b) => a + b, 0); 
+     
 
         const obtenerPorcentaje = (numero, porcentaje) => 
         {
             let valorDescuento = (numero * porcentaje) / 100;
             return Math.round(valorDescuento);                  // Math.round convierte   633.0239999999999   en   633
         };
+ 
+        const obtenerTotalVentaConDescuentos = (venta) => venta.detalles.map(detalle =>   // Recibe una venta y obtiene su total neto
+        { 
+            let subTotal = detalle.precioUnitario * detalle.cantidad;
+            let valorDescuento = obtenerPorcentaje(subTotal, detalle.descuento);
+            return subTotal - valorDescuento;   // Sub Total - Porcentaje de Descuento
+        })
+        .reduce((a, b) => a + b, 0);
 
-        const obtenerSumaSubtotalesConDescuentos = () =>
-        {
-            return ventas.map(
-                venta => venta.detalles.map(detalle => 
-                { 
-                    let subTotal = detalle.precioUnitario * detalle.cantidad;
-                    let valorDescuento = obtenerPorcentaje(subTotal, detalle.descuento);
-                    return subTotal - valorDescuento;  // Sub Total con Descuento
-                })
-                .reduce((a, b) => a + b, 0)
-            ).reduce((a, b) => a + b, 0);
-        }
 
-        const obtenerCantidadTotalDetalles = () => ventas.map(x => x.detalles.length).reduce((a, b) => a + b, 0); 
+        let sumaSubtotalesSinDescuentos = ventas.map(
+            venta => venta.detalles.map(detalle => detalle.precioUnitario * detalle.cantidad).reduce((a, b) => a + b, 0)
+        ).reduce((a, b) => a + b, 0); 
+
+        let sumaSubtotalesConDescuentos = ventas.map(venta => obtenerTotalVentaConDescuentos(venta)).reduce((a, b) => a + b, 0);
+
+        let sumaIvaRecaudado = ventas.map(venta => 
+        { 
+            let totalVentaConDescuentos = obtenerTotalVentaConDescuentos(venta);   // Obtiene el total neto de la venta recorrida
+            return Math.round((totalVentaConDescuentos * venta.porcentajeIVA) / 100); 
+        })
+        .reduce((a, b) => a + b, 0); 
+
+        let cantidadTotalDetalles = ventas.map(x => x.detalles.length).reduce((a, b) => a + b, 0); 
 
         let cadena = `
 
         ${ventas.map((venta, x) => 
         { 
             let totalVentaSinDescuentos = venta.detalles.map(x => x.precioUnitario * x.cantidad).reduce((a, b) => a + b, 0);
-
-            let totalVentaConDescuentos = venta.detalles.map(x =>   // Este es el total neto
-            { 
-                let subTotalRecorrido = x.precioUnitario * x.cantidad;
-                let valorDescuentoRecorrido = obtenerPorcentaje(subTotalRecorrido, x.descuento);
-                return subTotalRecorrido - valorDescuentoRecorrido; 
-            })
-            .reduce((a, b) => a + b, 0);
-
-            let porcentajeIVA = 18;   // Actualmente es el 19%
-            let iva = (totalVentaConDescuentos * porcentajeIVA) / 100;
-            iva = Math.round(iva);
+            let totalVentaConDescuentos = obtenerTotalVentaConDescuentos(venta);   // Obtiene el total neto de la venta recorrida
+            let iva = Math.round((totalVentaConDescuentos * venta.porcentajeIVA) / 100);
+            let cantidadDetallesVenta = venta.detalles.length;
 
             return `
             ${venta.detalles.map((detalle, y) => 
@@ -131,7 +132,7 @@
                 return `
                 <tr>
                     ${y == 0 ? ` 
-                        <td rowspan="${venta.detalles.length}"> ${venta.cliente} </td>
+                        <td rowspan="${cantidadDetallesVenta}"> ${venta.cliente} </td>
                     ` : ""} 
 
                     <td> ${detalle.producto} </td>
@@ -145,17 +146,21 @@
                     <td> ${subTotal - valorDescuento}  </td> <!-- Sub Total con Descuento -->
 
                     ${y == 0 ? ` 
-                        <td rowspan="${venta.detalles.length}"> ${totalVentaSinDescuentos} </td>  <!-- Total Venta (Sin Descuento) -->
+                        <td rowspan="${cantidadDetallesVenta}"> ${totalVentaSinDescuentos} </td>  <!-- Total Venta (Sin Descuento) -->
 
-                        <td rowspan="${venta.detalles.length}"> ${totalVentaConDescuentos} </td>  <!-- Total Venta (Con Descuento) -->
+                        <td rowspan="${cantidadDetallesVenta}"> ${totalVentaConDescuentos} </td>  <!-- Total Venta (Con Descuento) -->
 
-                        <td rowspan="${venta.detalles.length}"> ${iva} </td>  <!-- IVA -->
+                        <td rowspan="${cantidadDetallesVenta}"> ${iva} (${venta.porcentajeIVA}%) </td>  <!-- IVA -->
+
+                        <td rowspan="${cantidadDetallesVenta}"> ${totalVentaConDescuentos + iva} </td>  <!-- Total Venta (Con Descuento e IVA) -->
                     ` : ""}  
 
                     ${x == 0 && y == 0 ? ` 
-                        <td rowspan="${obtenerCantidadTotalDetalles()}"> ${obtenerSumaSubtotalesSinDescuentos()}</td>  <!-- Suma Subtotales (Sin Descuentos) -->
+                        <td rowspan="${cantidadTotalDetalles}"> ${sumaSubtotalesSinDescuentos}</td>  <!-- Suma Subtotales (Sin Descuentos) -->
 
-                        <td rowspan="${obtenerCantidadTotalDetalles()}"> ${obtenerSumaSubtotalesConDescuentos()}</td>  <!-- Total Recaudado (Con Descuentos) -->
+                        <td rowspan="${cantidadTotalDetalles}"> ${sumaSubtotalesConDescuentos}</td>  <!-- Total Recaudado (Con Descuentos) -->
+
+                        <td rowspan="${cantidadTotalDetalles}"> ${sumaIvaRecaudado} </td>  <!-- Total IVA Recaudado-->
                     ` : ""} 
                 </tr>
                 `;
@@ -168,18 +173,6 @@
         `;
 
         document.querySelector("#contenido").innerHTML = cadena;
-
-        // //==================================>>>>>
-        // // Probando
-
-        // let subTotal = 2016;
-        // let porcentajeDescuento = 31.40;
-        // let totalConDescuento = (subTotal * porcentajeDescuento) / 100;
-
-        // totalConDescuento = Math.round(totalConDescuento);      // 633.0239999999999
-        // console.log("descuento", totalConDescuento);    // 633
-
-        // //==================================>>>>>
 
     </script>
 
