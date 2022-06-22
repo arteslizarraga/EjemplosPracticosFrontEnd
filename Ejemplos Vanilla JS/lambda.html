@@ -1,57 +1,61 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos Lambda</title>
 </head>
-
 <body>
     <script>
 
-        let arregloSucio = [
-            { edad: 5, descripcion: "Zenaida", sexo: "F" },
-            { edad: 1, descripcion: "Andrés", sexo: "M" },
-            { edad: 3, descripcion: "José" },                   // Esta repetido pero con distinta edad
-            { edad: 2, descripcion: "José", sexo: "M" },        // Esta repetido pero con distinta edad
-            { edad: 4, descripcion: "Juana" }
+        //========================================================================================================================>>>>>>
+
+        // Si a lo largo del flujo de la aplicacion o tu programa, el valor de una variable va a cambiar. Ej: Si una variable 
+        // es un alfanumerico, pero después pasa a ver un número, y después pasa a ser un objeto, entonces usa let
+
+        // Si tu variable va a ser un arreglo, agregandole y quitandole elementos, o tu variable va a ser un objeto con más o con menos propiedades,
+        // o va a ser una cadena de texto que no va a cambiar, o cualquier dato primitivo (ej: número) que no va a cambiar, entonces usa const
+
+        //========================================================================================================================>>>>>>
+
+        const arreglo = [
+            { edad: 5, nombre: "Zenaida", fechaNacimiento: "12-10-1940" },
+            { edad: 1, nombre: "Andrés", fechaNacimiento: "24-03-1990" },
+            { edad: 3, nombre: "José" },
+            { edad: 2, nombre: "José", fechaNacimiento: "31-12-1989" },
+            { edad: 4, nombre: "Juana" }
         ];
 
-        let arregloLimpio = arregloSucio.map(c => { return { edad: c.edad, nombre: `${c.descripcion}`, sexo: c.sexo } });
+        arreglo.sort((a, b) => a.edad - b.edad);                      // Ordena por edad asc
+        //arreglo.sort((a, b) => b.edad - a.edad);                    // Ordena por edad desc
+        arreglo.sort((a, b) => a.nombre.localeCompare(b.nombre));     // Ordena alfabeticamente
 
-        arregloLimpio.sort((a, b) => a.edad - b.edad);                      // Ordena por edad asc
-        // arregloLimpio.sort((a, b) => b.edad - a.edad);                   // Ordena por edad desc
-        arregloLimpio.sort((a, b) => a.nombre.localeCompare(b.nombre));     // Ordena alfabeticamente
+        //console.log(arreglo.find(c => c.edad == 2));
 
-        console.log(arregloLimpio);
+        const contar = (lambda) => arreglo.filter(lambda).length;
 
-        let arregloNombresSinRepetir = Array.from(arregloLimpio, c => c.nombre).filter((v, i, a) => a.indexOf(v) === i);
-        console.log("Los nombres sin repetir son:", arregloNombresSinRepetir.join(","));   // Imprimir cadena separada por comas de solo un atributo del arreglo
+        let expresionLambda = x => x.nombre.toLowerCase().includes("juana");
+        //let expresionLambda = x => x.apellido?.toLowerCase().includes("juana");   // Lo existe el apellido, por lo tanto, el ? es para que no se caiga
 
-        // Obtener el json array de una cadena
-        // arregloLimpio = JSON.parse(`[{"edad":1,"nombre":"Andrés"},{"edad":2,"nombre":"José"},{"edad":3,"nombre":"José"},{"edad":4,"nombre":"Juana"},{"edad":5,"nombre":"Zenaida"}]`);  
-
-        arregloLimpio.forEach((elemento, index) => console.log(`${index}: ${JSON.stringify(elemento)}`));
-
-        console.log(arregloLimpio.find(c => c.edad == 2));
-
-        const contar = (lambda) => {
-            let arregloFiltrado = arregloLimpio.filter(lambda);
-            return (arregloFiltrado != null) ? arregloFiltrado.length : 0;
-        };
-
-        if (arregloLimpio.some(c => c.nombre.toLowerCase().includes("juana"))) {
-            let cantidad = contar(x => x.nombre.includes("juana"));
+        // if (arreglo.some(x => x.nombre.toLowerCase().includes("juana"))) 
+        if (arreglo.some(expresionLambda))
+        {
+            // let cantidad = contar(x => x.nombre.toLowerCase().includes("juana"));
+            let cantidad = contar(expresionLambda);
             console.log(`Se ${cantidad > 1 ? `encontraron ${cantidad} personas` : "encontró una persona"} cuyo nombre completo incluye la palabra juana`);
         }
 
-        if (arregloLimpio.every(c => c.sexo != null && c.sexo != ""))
-            console.log("Todos las personas tienen el campo sexo con un valor");
+        if (arreglo.every(c => c.fechaNacimiento != null))
+            console.log("Todos las personas tienen el campo fechaNacimiento con un valor");
         else {
-            let cantidad = contar(x => x.sexo == null || x.sexo == "");
-            console.log(`Se ${cantidad > 1 ? `encontraron ${cantidad} personas` : "encontró una persona"} cuyo campo sexo es nulo o está en blanco`);
+            let cantidad = contar(x => x.fechaNacimiento == null);
+            console.log(`Se ${cantidad > 1 ? `encontraron ${cantidad} personas` : "encontró una persona"} cuyo campo fechaNacimiento es nulo`);
         }
+
+        let arregloNombresSinRepetir = arreglo.map(x => x.nombre).filter((valor, index, arreglo) => arreglo.indexOf(valor) == index);
+        console.log(`Los nombres sin repetir son: ${arregloNombresSinRepetir.join(", ")}`);  // Imprimir cadena separada por comas de solo un atributo del arreglo
 
     </script>
 </body>
-
 </html>
