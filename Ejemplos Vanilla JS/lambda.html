@@ -7,6 +7,8 @@
     <title>Ejemplos Lambda</title>
 </head>
 <body>
+
+    <h1>Probando</h1>
     <script>
 
         //========================================================================================================================>>>>>>
@@ -20,11 +22,11 @@
         //========================================================================================================================>>>>>>
 
         const arreglo = [
-            { edad: 5, nombre: "Zenaida", fechaNacimiento: "12-10-1940" },
-            { edad: 1, nombre: "Andrés", fechaNacimiento: "24-03-1990" },
-            { edad: 3, nombre: "José" },
-            { edad: 2, nombre: "José", fechaNacimiento: "31-12-1989" },
-            { edad: 4, nombre: "Juana" }
+            { nombre: "Juana", edad: 4 },
+            { nombre: "Andrés", edad: 28, correo: "andres@gmail.com" },
+            { nombre: "Antonia", edad: 50, correo: "antonia@gmail.com" },
+            { nombre: "José", edad: 33 },
+            { nombre: "José", edad: 2 }
         ];
 
         arreglo.sort((a, b) => a.edad - b.edad);                      // Ordena por edad asc
@@ -46,15 +48,44 @@
             console.log(`Se ${cantidad > 1 ? `encontraron ${cantidad} personas` : "encontró una persona"} cuyo nombre completo incluye la palabra juana`);
         }
 
-        if (arreglo.every(c => c.fechaNacimiento != null))
-            console.log("Todos las personas tienen el campo fechaNacimiento con un valor");
+        if (arreglo.every(c => c.correo != null))
+            console.log("Todos las personas tienen el campo correo con un valor");
         else {
-            let cantidad = contar(x => x.fechaNacimiento == null);
-            console.log(`Se ${cantidad > 1 ? `encontraron ${cantidad} personas` : "encontró una persona"} cuyo campo fechaNacimiento es nulo`);
+            let cantidad = contar(x => x.correo == null);
+            console.log(`Se ${cantidad > 1 ? `encontraron ${cantidad} personas` : "encontró una persona"} cuyo campo correo es nulo`);
         }
 
         let arregloNombresSinRepetir = arreglo.map(x => x.nombre).filter((valor, index, arreglo) => arreglo.indexOf(valor) == index);
         console.log(`Los nombres sin repetir son: ${arregloNombresSinRepetir.join(", ")}`);  // Imprimir cadena separada por comas de solo un atributo del arreglo
+
+        /*
+        let acumulador = 0;
+
+        [2,16,7,9].forEach((valorActual, indice) => {
+            acumulador += valorActual;
+            console.log(`En el indice ${indice} el valor es ${valorActual} y el acumulador es ${acumulador}`);
+        });
+        console.log(acumulador);
+        */
+
+        /*
+        [2,16,7,9].reduce((acumulador, valorActual, indice, arreglo) => {
+            console.log(`En el indice ${indice} el valor es ${valorActual} y el acumulador es ${acumulador}`);
+            // return acumulador;  // Así el acumulador siempre será 2
+            return acumulador + valorActual; 
+        });
+        */
+
+        let sumaEdadesAdultos = arreglo.filter(x => x.edad >= 18).map(x => x.edad)  // [2,16,7,9]
+        .reduce((acumulador, valorActual, indice, arreglo) => 
+        {
+            // En la primera iteracion, el acumulador es igual a la primera posicion del arreglo
+            let suma = acumulador + valorActual;
+            //console.log(`${acumulador} + ${valorActual} = ${suma}`);
+            return suma;
+        });
+
+        console.log(`La suma de las edades de las personas adultas es ${sumaEdadesAdultos}`);
 
     </script>
 </body>
