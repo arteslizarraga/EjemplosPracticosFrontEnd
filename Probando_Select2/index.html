@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Probando Select2</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="funciones.js"></script>
+</head>
+
+<body>
+
+    <div class="page-content">
+        <div class="navbar-overlay"></div>
+
+        <main id="main" class="container">
+            <section>
+                <div class="row">
+                    <div class="card col" id="resultados">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h4 class="float-left heading h4-responsive mb-0">Ejemplo Select2</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">      
+
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group"> 
+                                        <label>Minimal</label> 
+                                        <select id="select2_ejemplo_1"
+                                            class="form-control select2" style="width: 100%;">
+                                            <option selected="selected">Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select>
+                                    </div> 
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group"> 
+                                        <label>Programas de Estudio</label> 
+                                        
+                                        <select id="select2_carreras" class="form-control select2" multiple="" style="width: 100%;">
+                                            <option value="B5 ">Analista Programador</option>
+                                            <option value="T66" selected>Ingeniería Civil Informática</option>
+                                        </select> 
+                                    </div> 
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group"> 
+                                        <label>Asignaturas</label> 
+                                        
+                                        <select id="select2_asignaturas" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                        </select> 
+                                    </div> 
+                                </div>
+
+                            </div> 
+                        </div>
+                    </div>     
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        /*
+        // https://tutorial.eyehunts.com/js/javascript-access-variable-outside-the-callback-example-code/
+
+		function miFuncion(param, callback) 
+        {
+            let respuesta = { mensaje: `${param} como estás` };
+			callback(respuesta);
+		}
+
+        miFuncion("Hola", (res) => {
+            console.log(res);
+        });
+        */
+
+	</script>
+
+    <script>
+        $(document).ready(function () 
+		{
+            $("#select2_ejemplo_1").select2({ closeOnSelect: false });
+			$("#select2_carreras").select2({ allowClear: true, closeOnSelect: false, multiple: true, placeholder: "Seleccione" });
+
+            //=====================================================================================>>>>>
+
+            // $("#select2_asignaturas").val("").trigger("change");    // Limpia select2 de asignaturas
+            // let options = Array.from($("#select2_asignaturas").select2("data"));
+
+            // if ($("#select2_asignaturas").select2("data").length == 0) {
+            //     return toastr.error("Es necesario seleccionar al menos una asignatura")
+            // }
+
+            // this.objeto.asignaturas = $("#select2_asignaturas").select2("val");
+            
+            //=====================================================================================>>>>>
+
+            llenarSelect2({
+                querySelector: "#select2_asignaturas",
+                url: "https://localhost:44303/Combobox/GetAsignaturasSelect2",
+                consultarPorRut: true,
+                maxlength: 15,
+                placeholder: "Seleccione una Asignatura",
+                registrosPorPagina: 10,
+                multiple: true,
+                params: {
+                    i_carr_ccod: () => $("#select2_carreras").select2("val").join(","),
+                    i_seleccionados: () => $("#select2_asignaturas").select2("val").join(","),     // Codigos de las asignaturas seleccionadas
+                },
+                // optionsSeleccionados: [
+                //     { id: "DC0801", text: "DC0801-COMPUTACIÓN APLICADA I" },
+                //     { id: "DC0802", text: "DC0802-COMPUTACIÓN APLICADA II" },
+                //     { id: "DC0804", text: "DC0804-COMPUTACIÓN APLICADA III" },
+                // ],
+                //onclick: () => alert("Click en el select2"),
+                onchange: (x) => 
+                {
+                    // console.log(x);  // Trae todo
+
+                    console.log("El value es: ", x.value);
+                    console.log("El texto seleccionado es: ", x.text);
+                },
+                onblur: (x) => console.log("Onblur | El value seleccionado es:", x.value)
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
