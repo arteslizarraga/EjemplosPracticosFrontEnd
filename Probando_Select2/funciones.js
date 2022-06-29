@@ -24,7 +24,10 @@ function llenarSelect2(datos)
 
     let esMultiple = (datos.multiple != null && datos.multiple);
     let querySelectorSinGato = datos.querySelector.split("#").join("");
-    let params = datos.params ?? {};
+    let params = {};
+
+    if (datos.params != null && typeof datos.params !== "function")  // Si datos.params no es nulo, y no es una funcion
+        params = datos.params
 
     const obtenerInputBuscador = () => 
     {
@@ -118,6 +121,12 @@ function llenarSelect2(datos)
     })
     .on("select2:open", () => 
     {
+        if (datos.params != null && typeof datos.params === "function") 
+        {
+            let retorno = retornoEvento();
+            params = datos.params(retorno);
+        }
+
         if (datos.onclick != null && typeof datos.onclick === "function")
             datos.onclick();
 
