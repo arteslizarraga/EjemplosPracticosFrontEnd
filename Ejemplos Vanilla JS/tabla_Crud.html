@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+       
+        table { border-collapse: collapse; text-align: left; }
+        thead { background-color: lightgray; }
+
+    </style>
+</head>
+
+<body>
+
+    <label>Ingrese un nuevo Nombre</label>
+    <input type="text" id="inputNuevoNombre" />
+    <button type="button" onclick="insertar()">Insertar</button>
+    <br/><br/>
+
+    <table width="50%" border="1">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th style="width: 20%">Operaciones</th>
+            </tr>
+        </thead>
+        <tbody id="contenido">
+        </tbody>
+
+    </table>
+
+    <script>
+        
+        let arreglo = [
+            { id: 1, nombre: "José" }, 
+            { id: 2, nombre: "Sofía" },
+            { id: 3, nombre: "Alberto" },
+        ];
+
+        const insertar = () => 
+        {
+            let inputNuevoNombre = document.querySelector("#inputNuevoNombre");
+
+            arreglo.push({
+                id: arreglo.length > 0 ? ((arreglo.reduce((a, b) => (a.id > b.id) ? a : b).id) + 1) : 1,
+                nombre: inputNuevoNombre.value 
+            });
+
+            cargarTabla();
+            inputNuevoNombre.value = "";
+        }
+
+        const actualizar = (id) => 
+        {
+            let elemento = arreglo.find(x => x.id == id);
+            let nuevoNombrePrompt = prompt("Ingrese el nuevo nombre", elemento.nombre);
+
+            if (nuevoNombrePrompt != null) {
+                elemento.nombre = nuevoNombrePrompt;
+                cargarTabla();
+            } 
+        }
+
+        const eliminar = (id) => 
+        {
+            // arreglo = arreglo.filter(x => x.id != id);               // Funciona
+            // arreglo.splice(arreglo.findIndex(x => x.id == id), 1);   // Funciona
+            arreglo = [...arreglo.filter(x => x.id != id)];             // Con Spread Operator
+
+            cargarTabla();
+        }
+
+        const cargarTabla = () => 
+        {
+            let cadena = `
+
+            ${arreglo.map((elemento, index) => 
+            { 
+                return `
+                <tr>
+                    <td> ${elemento.id} </td>
+                    <td> ${elemento.nombre} </td>
+                    <td> 
+                        <button type="button" onclick="actualizar(${elemento.id})">Actualizar</button>
+                        <button type="button" onclick="eliminar(${elemento.id})">Eliminar</button>
+                    </td>
+                </tr>
+                `;
+
+            }).join("")} 
+
+            `;
+
+            document.querySelector("#contenido").innerHTML = cadena;
+        }
+
+        cargarTabla();
+
+    </script>
+
+</body>
+
+</html>
