@@ -10,6 +10,8 @@ let data = {};
 $("#formEditar").serializeArray().forEach(c => data[c.name] = c.value);
 console.log(data); 
 
+$("#formEditar").trigger("reset");  // Limpia el formulario
+
 //================================================================================================================================>>>>>
 // Construir objeto {} a partir de un formulario
 
@@ -40,5 +42,14 @@ let data = {
 $("#probandoSelect").val("true").trigger("chosen:updated"); 
 
 $("#formEditar [name='activo']").val("A").trigger("chosen:updated");   // Así tambien se puede
+
+// Desmarcar options seleccionados
+$("#formEditar [name='activo']").find("option:first-child").prop("selected", true).trigger("chosen:updated"); 
+
+// Desmarcar options seleccionados de todo un formulario
+
+Array.from($("#formFiltrar").find("select")).forEach(x => {
+    $(`#formFiltrar [name='${x.name}']`).find("option:first-child").prop("selected", true).trigger("chosen:updated");
+});
 
 //================================================================================================================================>>>>>
