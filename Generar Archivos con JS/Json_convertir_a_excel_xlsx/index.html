@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Javascript Excel</title>
+
+    <!-- https://code-boxx.com/create-excel-file-javascript/ -->
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> -->
+
+    <script src="xlsx.full.min.js"></script>
+  </head>
+  <body>
+
+    <button onclick="probando()">Download Demo Excel</button>
+
+    <script>
+
+    function probando() 
+    {
+      var data = [
+        ["Nombre", "Apellido", "Edad", "Ciudad"]
+      ];
+
+      [1,2,3,4,5,6,7,8,9,10].forEach(x => 
+      {
+        data.push([`Nombre ${x}`, `Apellido ${x}`, x, `Ciudad ${x}`]);
+      });
+
+      generarExcel(data, "Jajajajaja");
+    }
+
+    function generarExcel(data, nombreArchivo) 
+    {
+      let workbook = XLSX.utils.book_new(),
+      worksheet = XLSX.utils.aoa_to_sheet(data);
+
+      workbook.SheetNames.push("First");
+      workbook.Sheets["First"] = worksheet;
+
+
+      let xlsbin = XLSX.write(workbook, {
+        bookType: "xlsx",
+        type: "binary"
+      });
+
+      let buffer = new ArrayBuffer(xlsbin.length),
+      array = new Uint8Array(buffer);
+      
+      for (let i=0; i<xlsbin.length; i++) {
+        array[i] = xlsbin.charCodeAt(i) & 0XFF;
+      }
+
+      let xlsblob = new Blob([buffer], {type:"application/octet-stream"});
+      delete array; delete buffer; delete xlsbin;
+
+      let url = window.URL.createObjectURL(xlsblob),
+      anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `${nombreArchivo}.xlsx`;
+      anchor.click();
+      window.URL.revokeObjectURL(url);
+      delete anchor;
+    }
+
+    </script>
+  </body>
+</html>
