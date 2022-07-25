@@ -44,7 +44,10 @@ $("#probandoSelect").val("true").trigger("chosen:updated");
 $("#formEditar [name='activo']").val("A").trigger("chosen:updated");   // Así tambien se puede
 
 // Desmarcar options seleccionados
-$("#formEditar [name='activo']").find("option:first-child").prop("selected", true).trigger("chosen:updated"); 
+$("#formEditar [name='activo']").find("option:first-child").prop("selected", true).trigger("chosen:updated");
+
+// Quitar todos los options de un select, incluyendo los option - Seleccione -
+$(`#formEditar [name="subSectorProductivoNcorr"]`).find("option").remove().end().trigger("chosen:updated"); 
 
 // Desmarcar options seleccionados de todo un formulario
 
