@@ -35,17 +35,24 @@ let table = $("#TablaPrincipal").DataTable({
 
             if (!$("#btnDescargarExcel").length)   // Si no existe, lo crea
             {
-                var tableActionsButtonsReporteAdm =
-                    '<div id="btnDescargarExcel" class="dataTables_actions-buttons">' +
-                    '<button type="button" ' +
-                    'onclick="alert(`Descargar Excel`)" ' +
-                    'class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Descargar Excel">' +
-                    '<i class="material-icons icon-1x">arrow_downward</i>' +
-                    '</button>' +
-                    '</div >'
-                    ;
+                let divBotonesTabla = `
+                <div id="divDescargaReportes" class="dataTables_actions-buttons">
 
-                $('#TablaPrincipal_wrapper .dataTables_actions').append(tableActionsButtonsReporteAdm);
+                    <button type="button" onclick="alert('Descargar Excel')"
+                    class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" data-toggle="tooltip"
+                    data-placement="top" title="Descargar Excel">
+                        <i class="material-icons icon-1x">arrow_downward</i>
+                    </button>
+
+                    <button type="button" class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" 
+                    data-toggle="tooltip" data-placement="top" title="Configurar">
+                        <i class="material-icons icon-1x">settings</i>
+                    </button>
+
+                </div>
+                `;
+
+                $("#TablaPrincipal_wrapper .dataTables_actions").append(divBotonesTabla);
             }
             else {
                 $("#btnDescargarExcel").show();
@@ -78,28 +85,31 @@ $('#TablaPrincipal_wrapper .top').append(tableCustomButtonsReporteAdm);
 //====================================================>>>>
 // Mostrar / Ocultar Columnas
 
-let cadena = "<ul>";
+let cadena = "";
 
 Array.from(table.columns().header()).forEach((x, index) => 
 {
 	if (!x.getAttribute("class").includes("no-ocultar")) 
     {
 		//console.log(`En la posicion ${index} el nombre es ${x.textContent}`);
-        cadena += `<li> <a class="show-hide-column" numero-columna="${index}">${x.textContent}</a> </li>`;
+
+        cadena += `
+        <fieldset class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkbox_show_hide_${index}" checked="checked">
+            <label onclick="mostrarOcultarColumna(${index})" class="form-check-label" for="checkbox_show_hide_${index}">${x.textContent}</label>
+        </fieldset>
+        `;
 	}
 });
 
-cadena += "</ul>";
+cadena += "";
 document.querySelector("#divMostrarOcultarColumnas").innerHTML = cadena;
 
-$("a.show-hide-column").on("click", function (e) 
+function mostrarOcultarColumna(numeroColumna) 
 {
-    e.preventDefault();
-
-    let numeroColumna = e.target.getAttribute("numero-columna");
     let column = table.column(numeroColumna);   // Get the column 
     column.visible(!column.visible());          // Toggle the visibility
-});
+}
 
 //====================================================>>>>
 
