@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <title>Planificaci&oacute;n y Dise&ntilde;o de Programas</title>
-        <link rel="stylesheet" href="mdb.min.css" />
+        <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+        <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css" />
         <link rel="stylesheet" type="text/css" href="estilos.css" />
 
     </head>
@@ -20,7 +21,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-6">
-                                        <h4 class="float-left heading h4-responsive mb-0">Reporte Yos</h4>
+                                        <h4 class="float-left heading h4-responsive mb-0">Reporte Docentes</h4>
                                     </div>
                                 </div>
                             </div>
@@ -30,46 +31,45 @@
                                 <div class="row">
                                     <div class="col-12">
 
-                                        <table id="TablaReporteAdm" class="datatables table table-hover table-striped table-bordered m-0">
+                                        <div id="divMostrarOcultarColumnas"></div>
+                                        <!-- <ul>
+                                            <li> 
+                                                <a class="show-hide-column" numero-columna="0">Name column</a>
+                                            </li>
+                                        </ul> -->
+
+                                        <table id="TablaPrincipal" class="datatables table table-hover table-striped table-bordered m-0">
                                             <thead>
                                                 <tr>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    RUT
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    Nombre
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    Email
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    Sucursal
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    Nombre curso
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    Modalidad
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    &Aacute;rea 
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    Programa 
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    Ramo
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    Fecha Inicio y T&eacute;rmino
-                                                    </th>
-                                                    <th class="align-center text-uppercase font-weight-bold text-nowrap">
-                                                    Ver Detalle
-                                                    </th>
+													<th class="no-ocultar">
+														<fieldset class="form-check">
+															<input class="form-check-input table-check" type="checkbox" id="checkbox_seleccionarTodo">
+															<label class="form-check-label" for="checkbox_seleccionarTodo" 
+															onclick="seleccionarTodo()"></label>
+														</fieldset>
+													</th>
+                                                    <th>RUT Docente</th>
+                                                    <th>Nombre Docente</th>
+                                                    <th>Email Docente</th>
+                                                    <th>Sede</th>
+                                                    <th>Nombre capacitaci&oacute;n</th>
+                                                    <th>Modalidad</th>
+                                                    <th>&Aacute;rea Acad&eacute;mica</th>
+                                                    <th>Programa de estudio Impactado</th>
+                                                    <th>Asignatura</th>
+                                                    <th>Fecha Inicio y T&eacute;rmino</th>
+                                                    <th class="no-ocultar">Ver Detalle</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr class="see">
+													<td>
+														<fieldset class="form-check">
+															<input class="form-check-input table-check" type="checkbox" id="checkbox_1">
+															<label class="form-check-label" for="checkbox_1" 
+															onclick="alert('Probando 2')"></label>
+														</fieldset>
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
@@ -77,7 +77,7 @@
                                                     Antonia Undurraga
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -102,7 +102,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -111,6 +111,13 @@
                                                 
                                                 </tr>
                                                 <tr class="see">
+													<td>
+														<fieldset class="form-check">
+															<input class="form-check-input table-check" type="checkbox" id="checkbox_2">
+															<label class="form-check-label" for="checkbox_2" 
+															onclick="alert('Probando 2')"></label>
+														</fieldset>
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
@@ -118,7 +125,7 @@
                                                     Camilo Cisternas
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -143,7 +150,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -152,14 +159,21 @@
                                                 
                                                 </tr>
                                                 <tr class="see">
+													<td>
+														<fieldset class="form-check">
+															<input class="form-check-input table-check" type="checkbox" id="checkbox_3">
+															<label class="form-check-label" for="checkbox_3" 
+															onclick="alert('Probando 3')"></label>
+														</fieldset>
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -184,7 +198,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -193,14 +207,21 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td>
+														<fieldset class="form-check">
+															<input class="form-check-input table-check" type="checkbox" id="checkbox_4">
+															<label class="form-check-label" for="checkbox_4" 
+															onclick="alert('Probando 4')"></label>
+														</fieldset>
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -225,7 +246,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -234,14 +255,17 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td>
+													
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -266,7 +290,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -275,14 +299,17 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td>
+													
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -307,7 +334,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -316,14 +343,17 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td>
+													
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -348,7 +378,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -357,14 +387,17 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td>
+													
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -389,7 +422,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -398,14 +431,17 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td>
+													
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -430,7 +466,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -439,14 +475,17 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td>
+													
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -471,7 +510,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -480,14 +519,17 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td>
+													
+													</td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -512,7 +554,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -521,14 +563,15 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -553,7 +596,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -562,14 +605,15 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -594,7 +638,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -603,14 +647,15 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -635,7 +680,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -644,14 +689,15 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -676,7 +722,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -685,14 +731,15 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -717,7 +764,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -726,14 +773,15 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -758,7 +806,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -767,14 +815,15 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -799,7 +848,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -808,14 +857,15 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -840,7 +890,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -849,14 +899,15 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo Rivera
+                                                    Emilio Rivera
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -881,7 +932,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -890,6 +941,7 @@
                                                 
                                                 </tr>
                                                 <tr>
+													<td></td>
                                                     <td class="text-nowrap">
                                                     10.000.232-3
                                                     </td>
@@ -897,7 +949,7 @@
                                                     Zulema Santana
                                                     </td>
                                                     <td class="text-nowrap">
-                                                    Yo@yo.cl
+                                                    Emilio@inacap.cl
                                                     </td>
                                                     <td class="text-nowrap">
                                                     Casa Central
@@ -922,7 +974,7 @@
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <div class="d-flex">
-                                                            <a href="reporte-Yos-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                                            <a href="reporte-docentes-detalle.html" class="mr-0 mr-md-4 d-flex align-items-center float-left">
                                                                 <i class="material-icons mr-1 icon-lg">visibility</i>
                                                                 <span class="d-none d-md-inline">Ver detalle</span>
                                                             </a>
@@ -949,7 +1001,7 @@
         <footer class="page-footer">
             <div class="container py-3">
                 <div class="d-flex align-items-center justify-content-center justify-content-md-start">
-                    <div class="logo-gst"><img src="http://www.yo.cl/web/template-aplicaciones/img/logo-gst.png" alt="" /></div>
+                    <div class="logo-gst"><img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png" alt="" /></div>
                     <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
                 </div>
             </div>
@@ -962,11 +1014,22 @@
             </div>
         </div>
 
-        <script src="jquery-3.3.1.min.js"></script>
-        <script src="bootstrap.min.js"></script>
-        <script src="mdb.min.js"></script>
-        <script src="datatables.min.js"></script>
-        <script src="configuraciones.js"></script>
 
+        <!-- SCRIPTS -->
+        <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+
+        <script src="https://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+
+        <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+
+        <script src="https://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+
+        <script src="configuraciones.js"></script>
     </body>
 </html>
