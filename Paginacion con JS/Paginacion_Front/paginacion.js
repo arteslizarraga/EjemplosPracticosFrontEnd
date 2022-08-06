@@ -31,7 +31,8 @@ function desplegarPaginacionBootstrap(datos)
         cont++;
     };
 
-    if (totalPaginas > 0 && totalRegistros >= registrosPorPagina) {
+    if (totalPaginas > 0 && totalRegistros >= registrosPorPagina) 
+    {
         if (paginaActual != (contarDesdeCero ? 0 : 1))    // Ejemplo original java
         {
             agregarLi({ texto: "Anterior", onclick: datos.pasoAtras });
@@ -45,7 +46,8 @@ function desplegarPaginacionBootstrap(datos)
             inicio_paginacion = contarDesdeCero ? 0 : 1;
             fin_paginacion = totalPaginas;
         }
-        else {
+        else 
+        {
             if (paginaActual > totalPaginas - maximo_paginas_mostrado)  // Esto impide que el numero de la pagina sobrepase el total de paginas
             {
                 if (contarDesdeCero)
@@ -55,7 +57,8 @@ function desplegarPaginacionBootstrap(datos)
 
                 fin_paginacion = totalPaginas;
             }
-            else {
+            else 
+            {
                 if (paginaActual < maximo_paginas_mostrado) {
                     inicio_paginacion = contarDesdeCero ? 0 : 1;
                     fin_paginacion = maximo_paginas_mostrado;

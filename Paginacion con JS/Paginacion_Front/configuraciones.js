@@ -1,3 +1,8 @@
+// file:///C:/Users/josel/Documents/Nodos/template-aplicaciones/html/components/pagination.html
+
+// Activar selects
+$(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
+$(".mdb-select").material_select();
 
 let datos = obtenerJson();
 
@@ -6,17 +11,20 @@ let arregloJson = datos.results.map(x => {
 });
 
 let paginaActual = 0; 
-let registrosPorPagina = 4; 
+let registrosPorPagina; 
 let totalPaginas = 0; 
 
-const resetearPaginacion = () => 
+$("#filtro-busqueda [name='registrosPorPagina']").on("change", () => { resetearPaginacion(); generarTabla() });  // Al seleccionar la cantidad de registros por página
+
+function resetearPaginacion()
 { 
 	paginaActual = 0; 
 	totalPaginas = 0; 
 } 
 
-const generarTabla = () => 
+function generarTabla() 
 { 
+	registrosPorPagina = parseInt($("#filtro-busqueda [name='registrosPorPagina']").val());
 	let valorTxt = document.querySelector("#filtro-busqueda [nombre='nombreEntidad']").value;
 
 	let arregloFiltrado = arregloJson.filter(c => c.nombre.toLowerCase().includes(valorTxt.toLowerCase()));  // Aplica criterios de busqueda
