@@ -56,3 +56,26 @@ Array.from($("#formFiltrar").find("select")).forEach(x => {
 });
 
 //================================================================================================================================>>>>>
+// Llenar formulario 
+
+this.objeto = {"ccod":"DEF-PROSP-INDICADOR-1","defClaseIndicadoresNcorr":"1","defGrupoIndicadoresNcorr":"4","formato":"6","fechaEfectiva":"12/08/2022","nprelacion":"1","ndecimales":"1","unidad":"1","nlikert":"5","vlikert1":"1","vlikert2":"2","vlikert3":"3","vlikert4":"4","vlikert5":"5","ifuente":"Si","iperiodicidad":"Si","descripcion":"Ejemplo Descripción","observacion":"Ejemplo Observación"};
+
+Object.entries(this.objeto).forEach(x => 
+{
+    //console.log(` ${x[0]} = ${x[1]} `);
+	var nombre = x[0];
+	var valor = x[1];
+	var elemento = $(`#formCrear [name='${nombre}']`);
+	console.log(elemento);
+	
+	if(elemento.is("select")) {
+		console.log("Es un select");
+		elemento.val(valor).trigger("chosen:updated");
+	}
+	else {
+		console.log("No es un select");
+		elemento.val(valor);
+	}
+	
+	console.log("===========================>>>>>");
+});

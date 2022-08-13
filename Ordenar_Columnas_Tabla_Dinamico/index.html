@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+</head>
+<body>
+    
+    <div id="divTablaElementosIndex"></div>  <br/>
+
+    <script>
+
+    const entidad = { 
+        nombre: "CabeceraVenta", 
+        descripcion: "CabeceraVenta", 
+        propiedades: [
+            { orden: 1, nombre: "clienteConsumidor" },
+            { orden: 2, nombre: "estado" },
+            { orden: 3, nombre: "fechaEntrega" },
+            { orden: 4, nombre: "fechaReserva" },
+            { orden: 5, nombre: "fechaVenta" },
+            { orden: 6, nombre: "maestroLocalVenta" },
+            { orden: 7, nombre: "precioTotal" },
+            { orden: 8, nombre: "tipoEntrega" },
+        ] 
+    };
+
+
+    function cambiarPosicionTablaIndex(objeto)
+    { 
+        let elemento = entidad.propiedades.find(c=> c.nombre == objeto.getAttribute("nombreAtributo"));
+        let ordenElemento = elemento.orden;
+
+        if (objeto.getAttribute("class").includes("botonAbajo")) 
+        {
+            let siguienteElemento = entidad.propiedades.filter(c=> c.orden > elemento.orden)[0];
+            //let siguienteElemento = entidad.propiedades.find(c=> c.orden > elemento.orden); 
+            let ordenSiguienteElemento = siguienteElemento.orden;
+            
+            siguienteElemento.orden = ordenElemento;
+            elemento.orden = ordenSiguienteElemento;
+        }
+        if (objeto.getAttribute("class").includes("botonArriba"))
+        {
+            let anteriorElemento = entidad.propiedades.sort((a, b) => Number(a.orden) - Number(b.orden)).find(c=> c.orden == (elemento.orden - 1)); 
+            let ordenAnteriorElemento = anteriorElemento.orden;
+            
+            anteriorElemento.orden = ordenElemento;
+            elemento.orden = ordenAnteriorElemento;
+        }
+    
+        desplegarTablaModificarAtributosPrincipales();   // Asi la tabla se ordena de acuerdo al campo orden 
+    }
+
+    function desplegarTablaModificarAtributosPrincipales()
+    {
+        let cadena = "";
+
+        //===============================================================>>>>>
+        // Despliegue de tabla con los detalles del index
+        
+        cadena = "<h3> Definición del index para la clase "+entidad.nombre +" </h3>";  // Inicializa de nuevo la cadena
+        
+        cadena += "<table border='2'>";
+        
+        cadena += "<tr>";
+            cadena += "<td> Atributo </td>";
+            cadena += "<td> Orden tabla </td>";
+        cadena += "</tr>";
+        
+        entidad.propiedades.sort((a, b) => Number(a.orden) - Number(b.orden)).forEach((c, index) => 
+        {
+            cadena += "<tr>";  
+                cadena += "<td> " + c.nombre + " </td>";
+                
+                cadena += "<td>";
+
+                    if (index > 0) {
+                        cadena += "<button nombreAtributo='" + c.nombre + "' onclick='cambiarPosicionTablaIndex(this);' class='botonArriba'> &uarr; </button>";
+                    }
+                    if ((index + 1) < entidad.propiedades.length) {
+                        cadena += "<button nombreAtributo='" + c.nombre + "' onclick='cambiarPosicionTablaIndex(this);' class='botonAbajo'> &darr; </button>";
+                    }
+
+                cadena += "</td>";
+        
+            cadena += "</tr>";
+        });
+
+        cadena += "</table> <br/><br/>";
+
+        $("#divTablaElementosIndex").html(cadena); 
+    }
+    
+    desplegarTablaModificarAtributosPrincipales();
+
+    </script>
+
+</body>
+</html>
