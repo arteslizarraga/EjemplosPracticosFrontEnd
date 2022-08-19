@@ -95,14 +95,14 @@ function mostrarGrilla()
                 if (!$("#divDescargaReportes").length)   // Si no existe, lo crea
                 {
                     let divBotonesTabla = `
-                            <div id="divDescargaReportes" class="dataTables_actions-buttons">
-                                <button type="button" data-toggle="modal" data-target="#ModalDescargar"
-                                class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" data-toggle="tooltip"
-                                data-placement="top" title="Descargar Excel">
-                                    <i class="material-icons icon-1x">arrow_downward</i>
-                                </button>
-                            </div>
-                            `;
+                    <div id="divDescargaReportes" class="dataTables_actions-buttons">
+                        <button type="button" onclick="descargarExcel()"
+                        class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" data-toggle="tooltip"
+                        data-placement="top" title="Descargar Excel">
+                            <i class="material-icons icon-1x">arrow_downward</i>
+                        </button>
+                    </div>
+                    `;
 
                     $("#TablaPrincipal_wrapper .dataTables_actions").append(divBotonesTabla);
                 }
@@ -168,19 +168,19 @@ function mostrarGrilla()
                     if (row.estado.toUpperCase().startsWith("A"))  // Activo
                     {
                         cadena += `
-                                <a onclick="abrirModalEditar(${row.codigo})" class="mr-0 mr-md-4 d-flex align-items-center float-left">
-                                    <i class="material-icons mr-1 icon-lg grey-text">edit</i>
-                                    <span class="d-none d-md-inline">Modificar</span>
-                                </a>
-                                `;
+                        <a onclick="abrirModalEditar(${row.codigo})" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                            <i class="material-icons mr-1 icon-lg grey-text">edit</i>
+                            <span class="d-none d-md-inline">Modificar</span>
+                        </a>
+                        `;
                     }
 
                     cadena += `
-                            <a onclick="abrirModalCambiarEstado(${row.codigo})" class="mr-0 mr-md-4 d-flex align-items-center float-left">
-                                <i class="material-icons mr-1 icon-lg grey-text">assignment</i>
-                                <span class="d-none d-md-inline">Cambiar Estado</span>
-                            </a>
-                            `;
+                    <a onclick="abrirModalCambiarEstado(${row.codigo})" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                        <i class="material-icons mr-1 icon-lg grey-text">assignment</i>
+                        <span class="d-none d-md-inline">Cambiar Estado</span>
+                    </a>
+                    `;
 
                     return cadena;
                 }
@@ -318,9 +318,14 @@ function abrirModalCambiarEstado(ncorr)
 {
     obtener(ncorr).then(o =>
     {
+        //console.log(o);
         this.objeto = { ncorr: ncorr, estado: o.estado };
 
         $("#formCambiarEstado [name='estado']").val(this.objeto.estado).trigger("chosen:updated");
+
+        // Colocar descripciones en el modal para orientar al usuario
+        $("#ModalCambiarEstado [name='nombreDesplegado']").html(o.nombre);
+
         $("#ModalCambiarEstado").modal("show");
 
         $("#btnCambiarEstado").attr("disabled", true);   // Deshabilita botón
@@ -377,10 +382,8 @@ function obtenerFiltros()
     });
 }
 
-function descargarExcel(evento)
+function descargarExcel()
 {
-    evento.preventDefault();
-
     let data = [
         ["Nombre", "Estado", "Descripción", "Fecha Efectiva"]
     ];

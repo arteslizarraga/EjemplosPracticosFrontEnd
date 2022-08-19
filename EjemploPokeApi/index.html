@@ -483,34 +483,6 @@
 
     </div>
 
-
-    <div class="modal fade" id="ModalDescargar" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <p class="heading lead">Descargar</p>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <p class="text-center"><i class="material-icons icon-3x animated rotateIn red-text">file_download</i></p>
-                            <p class="text-center font-weight-bold m-0">&iquest;Desea descargar la información </p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <a class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</a>
-                    <a onclick="descargarExcel(event)" class="btn btn-default waves-effect waves-light alerta">Descargar</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog sm modal-notify" role="document">
             <div class="modal-content">
@@ -612,6 +584,13 @@
 
                             <div class="col-12">
                                 <div class="md-form">
+                                    <p name="nombreDesplegado"></p>
+                                    <label class="active text-nowrap">Nombre</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="md-form">
                                     <select class="chosen-select" name="estado">
                                         <option value="A">Activo</option>
                                         <option value="I">Inactivo</option>
@@ -691,6 +670,7 @@
     <!-- Generar Excel -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 	
+    <script src="config-general.js"></script>
     <script src="configuraciones.js"></script>
 
 </body>

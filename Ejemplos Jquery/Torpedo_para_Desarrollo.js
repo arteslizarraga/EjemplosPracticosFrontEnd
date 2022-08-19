@@ -79,3 +79,32 @@ Object.entries(this.objeto).forEach(x =>
 	
 	console.log("===========================>>>>>");
 });
+
+//================================================================================================================================>>>>>
+// Limpiar inputs de un div que está dentro de un form 
+
+$("#formCrear [nombre='div_Parametros_Likert']").find(":input").val("");
+
+// Otra forma
+var formulario = $("#formCrear"); 
+formulario.find("[nombre='div_Parametros_Likert'] :input").val(""); 
+
+//================================================================================================================================>>>>>
+
+$("#formCrear [name='formato']").on("change", () =>  
+{
+    let formulario = $("#formCrear");
+    let formato = formulario.find("[name='formato']").val();
+    
+    let div_Numero_de_Decimales = formulario.find("[nombre='div_Numero_de_Decimales']");
+    let div_Parametros_Likert = formulario.find("[nombre='div_Parametros_Likert']");
+
+    // Desplegar/Ocultar div Número de Decimales
+    if (formato == 2) { div_Numero_de_Decimales.show() } else { div_Numero_de_Decimales.hide().find(":input").val("") }
+   
+    // Desplegar/Ocultar div parámetros escala de Likert
+    if (formato == 6) { div_Parametros_Likert.show() } else { div_Parametros_Likert.hide().find(":input").val("") }      
+});
+
+//================================================================================================================================>>>>>
+
