@@ -1,63 +1,100 @@
 
-this.objeto = {
-    nombre: "José", estado: "A", fechaEfectiva: "12/07/2022", descripcion: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-};
+// public galeria : Array<Array<Foto>>;
 
-// Activar selects
-$(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
-$(".mdb-select").material_select();
+let galeria = [
+    [], [], []
+];
 
-$("#formCrear [name='fechaEfectiva']").datepicker({ language: "es", autoClose: true });
+let listaFotos = [
+    {"codigo":25,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"},
+    {"codigo":24,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/24.png"},
+    {"codigo":23,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/23.png"},
+    {"codigo":22,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/22.png"},
+    {"codigo":21,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/21.png"},
+    {"codigo":20,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/20.png"},
+    {"codigo":18,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png"},
+    {"codigo":11,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png"},
+    {"codigo":10,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png"}
+];
 
-/*
-const limpiarFormulario = (querySelector) =>
-{
-    $(querySelector).trigger("reset");  // Limpia el formulario
+llenarGaleria(listaFotos);
 
-    Array.from($(querySelector).find("select")).forEach(x => {
-        $(`${querySelector} [name='${x.name}']`).find("option:first-child").prop("selected", true).trigger("chosen:updated");
-    });
-};
-*/
+let cadena = `
+<table class="galeria-imagenes">
 
-const limpiarFormulario = (querySelector) =>
-{
-    //$(querySelector).trigger("reset");  // Limpia el formulario
-
-    Array.from($(querySelector).find(":input"))
-    .filter(x => x.className.includes("form-control") && x.attributes.getNamedItem("no-limpiar") == null).forEach(x => 
-    {
-        x.value = "";
-    });
-
-    Array.from($(querySelector).find("select"))
-    .filter(x => x.attributes.getNamedItem("no-limpiar") == null).forEach(x =>
-    {
-        $(`${querySelector} [name='${x.name}']`).find("option:first-child").prop("selected", true).trigger("chosen:updated");
-    });
-};
-
-const llenarFormulario = (querySelector, o) =>
-{
-    Object.entries(o).filter(([, valorAtributo]) => ! Array.isArray(valorAtributo))  // No incluye arreglos en caso de que los tenga 
-    .forEach(([nombreAtributo, valorAtributo]) => 
+    ${galeria.map((fila, index) => 
     { 
-        let campo = document.querySelector(`${querySelector} [name="${nombreAtributo}"]`);
+        return `
+        <tr>
+            ${fila.map((celda, index) => 
+            { 
+                let estiloBordeTd = "none";
+                let claseTd = "";
+                let contenidoTd = "";
 
-        if (campo != null) 
-        {
-            if (["input", "textarea"].includes(campo.localName)) {
-                campo.value = valorAtributo;
-            }
-            if (campo.localName == "select") {
-                $(`${querySelector} [name="${nombreAtributo}"]`).val(valorAtributo).trigger("chosen:updated");
-            }
-        }
-    }); 
+                if (celda.src != null) 
+                {
+                    estiloBordeTd = "2px solid";
+                    claseTd = "tiene-contenido";
+
+                    contenidoTd = `
+                    <div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="check_imagen_${celda.codigo}">
+                            <label class="custom-control-label" for="check_imagen_${celda.codigo}"><br></label>
+                        </div>
+                        <img style="max-width: 130px; max-height: 115px;"
+                        src="${celda.src}">
+                    </div>
+                    `;
+                }
+
+                return `
+                <td onclick="marcarImagenSeleccionada(${celda.codigo})" style="border: ${estiloBordeTd}" class="${claseTd}"> 
+                    ${contenidoTd}
+                </td>
+                `;
+
+            }).join("")} 
+        </tr>
+        `;
+
+    }).join("")} 
+</table>
+`;
+
+document.querySelector("#galeria-desplegada").innerHTML = cadena;
+
+//==============================================================================================================>>>>
+
+// llenarGaleria(arreglo: Array<Foto>, cantidadFilas: Number = 3, cantidadColumnas: Number = 3)
+
+function llenarGaleria(arreglo, cantidadFilas = 3, cantidadColumnas = 3)
+{
+  let arrRangoFilas = Array.from(Array(cantidadFilas).keys());          // [ 0, 1, 2 ]
+  let arrRangoColumnas = Array.from(Array(cantidadColumnas).keys());    // [ 0, 1, 2 ]
+  let cont = 0;
+
+  arrRangoFilas.forEach(fila => 
+  {
+    arrRangoColumnas.forEach(columna => 
+    {
+      if (arreglo[cont] != null)  // Si existe la posición en el arreglo
+        galeria[fila][columna] = arreglo[cont];  
+      else 
+        galeria[fila][columna] = { codigo: 0, src: null };  // Agrega un item vacío para rellenar
+
+      cont ++;
+    });
+  });
 }
 
-const probandoLimpiar = () => limpiarFormulario("#formCrear");
+// marcarImagenSeleccionada(foto: Foto)
 
-const probandoLlenar = () => llenarFormulario("#formCrear", this.objeto);
+function marcarImagenSeleccionada(codigo)
+{
+  // this.fotoSeleccionada = foto;
 
-
+  $(`#check_imagen_${codigo}`).prop("checked", true);    // Marca checkbox
+  listaFotos.filter(x => x.codigo != codigo).forEach(c => $(`#check_imagen_${c.codigo}`).prop("checked", false));  // Desmarca los demás checkbox
+}
