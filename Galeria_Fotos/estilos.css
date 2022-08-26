@@ -1,0 +1,17 @@
+
+/* Galería Imágenes */
+
+.galeria-imagenes td img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.galeria-imagenes td.tiene-contenido {
+  width: 150px;
+  height: 150px;
+}
+
+.galeria-imagenes td {
+  vertical-align: top;   /* Alinear contenido arriba */
+}
