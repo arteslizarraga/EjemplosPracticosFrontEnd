@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paginación Básica</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+
+        <br /><br />
+
+        <!-- <div id="nav_paginacion" style="display: none">
+            <div class="row">
+                <div class="col-md-2">
+                    <button id="btn_pagina_anterior" onclick="paginaActual = paginaActual - 1; obtenerListaPrincipal()"
+                        type="button" class="btn btn-default">
+                        <span>
+                            < </span> Anterior
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <button id="btn_pagina_siguiente" onclick="paginaActual = paginaActual + 1; obtenerListaPrincipal()"
+                        type="button" class="btn btn-default">
+                        Siguiente <span> > </span>
+                    </button>
+                </div>
+            </div>
+        </div> -->
+
+        <div id="numeros-paginacion"></div>
+
+        <div class="table-responsive">
+            <table id="tablaPrincipal" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Foto</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="paginacion.js"></script>
+
+    <script>
+
+        let paginaActual = 0;
+        let totalPaginas = 0;
+
+        const obtenerListaPrincipal = async () =>  // Obtener lista de Categoria de la Web Api 
+        {
+            let registrosPorPagina = 5;
+            let inicio = paginaActual * registrosPorPagina;
+
+            let consulta = {};                          // obtenerConsultaBuscador(); 
+            consulta["offset"] = inicio;                // start
+            consulta["limit"] = registrosPorPagina;     // length
+
+            let parametros = Object.entries(consulta).map(c => c.join("=")).join("&");
+
+            await fetch(`https://pokeapi.co/api/v2/pokemon?${parametros}`, { method: "GET" })
+            .then(response => 
+            {
+                if (response.ok) 
+                {
+                    response.json().then(data => 
+                    {
+                        totalPaginas = Math.ceil(parseInt(data["count"]) / registrosPorPagina) - 1;
+                        let datos = data["results"];
+
+                        desplegarPaginacionBootstrap({
+                            querySelector: "#numeros-paginacion", 
+                            paginaActual: paginaActual,
+                            totalRegistros: datos.length,
+                            totalPaginas: totalPaginas,
+                            registrosPorPagina: registrosPorPagina,
+                            pasoAtras: () => { paginaActual --; obtenerListaPrincipal() },  
+                            pasoAdelante: () => { paginaActual ++; obtenerListaPrincipal() },
+                            seleccionarPagina: e => { 
+                                paginaActual = parseInt(e.target.getAttribute("numeroPagina"));
+                                obtenerListaPrincipal();
+                            }
+                        });
+
+                        let tabla = document.querySelector("#tablaPrincipal tbody");
+                        tabla.innerHTML = "";   // Limpia la tabla 
+
+                        datos.reverse().forEach((c, index) => 
+                        {
+                            let idRegistro = c.url.split("/").reverse()[1];
+                            let fila = tabla.insertRow(0);
+                            fila.insertCell(0).innerHTML = c.name;
+                            fila.insertCell(1).innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idRegistro}.png"
+                            style="max-width: 55px" />`;
+                        });
+                    });
+                }
+                else 
+                {
+                    response.text().then(textoError =>
+                        alert((response.status == 400 || response.status == 500 && ![null, ""].includes(textoError)) ?
+                            textoError : `Error ${response.status}`)
+                    );
+                }
+            })
+            .catch(error => {
+                alert("Se encontro un error");
+            })
+            .finally(c => {
+                //ocultarLoadingSpinner(); 
+            });
+        }
+
+        obtenerListaPrincipal();
+
+        const resetearPaginacion = () => {
+            paginaActual = 0;
+            totalPaginas = 0;
+        }
+
+    </script>
+
+</body>
+
+</html>
