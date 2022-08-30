@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Planificaci&oacute;n y Dise&ntilde;o de Programas</title>
+    <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+    <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css" />
+    <link rel="stylesheet" type="text/css" href="estilos.css" />
+</head>
+
+<body id="appBody" class="d-flex flex-column">
+    <div class="page-content">
+        <div class="navbar-overlay"></div>
+
+        <main id="main" class="container">
+            <section>
+
+                <div class="card" id="buscar">
+
+                    <div class="card-header">
+                        <h4 class="float-left heading h4-responsive mb-0">Galería Fotos</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <!-- =========================================================================== -->
+
+                            <div id="numeros-paginacion"></div>
+
+                            <div class="col-12">
+                                <div id="galeria-desplegada"></div>
+                            </div>
+                            <!-- =========================================================================== -->
+                        </div>
+
+                        <br/><br/>
+
+                    </div>
+
+                    <div class="card-footer">
+
+                        <div class="row">
+
+                            <div class="col-12 d-flex justify-content-end">
+
+                                <button type="button" class="btn btn-secondary waves-effect waves-light">
+                                    <span>Opción 1</span>
+                                </button>
+                                <button type="button" class="btn btn-default waves-effect waves-light">
+                                    <span>Opción 1</span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="page-footer">
+        <div class="container py-3">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="logo-gst"><img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png"
+                        alt="" /></div>
+                <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+    <script src="paginacion.js"></script>
+
+    <script>
+
+        let listaFotos = [];
+
+        // public galeria : Array<Array<Foto>>;
+        let galeria = [
+            [], [], []
+        ];
+
+        //=================================================================================>>>>>
+        // Nuevo
+
+        let paginaActual = 0;
+        let totalPaginas = 0;
+
+        const obtenerListaPrincipal = async () =>  // Obtener lista de Categoria de la Web Api 
+        {
+            let registrosPorPagina = 9;
+            let inicio = paginaActual * registrosPorPagina;
+
+            let consulta = {};                          // obtenerConsultaBuscador(); 
+            consulta["offset"] = inicio;                // start
+            consulta["limit"] = registrosPorPagina;     // length
+
+            let parametros = Object.entries(consulta).map(c => c.join("=")).join("&");
+
+            await fetch(`https://pokeapi.co/api/v2/pokemon?${parametros}`, { method: "GET" })
+            .then(response => 
+            {
+                if (response.ok) 
+                {
+                    response.json().then(data => 
+                    {
+                        totalPaginas = Math.ceil(parseInt(data["count"]) / registrosPorPagina) - 1;
+
+                        listaFotos = data["results"].map(x => 
+                        {
+                            let idRegistro = x.url.split("/").reverse()[1];
+                            let urlImagen = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idRegistro}.png`;
+
+                            return { codigo: idRegistro, src: urlImagen };
+                        });
+
+                        desplegarPaginacionBootstrap({
+                            querySelector: "#numeros-paginacion", 
+                            paginaActual: paginaActual,
+                            totalRegistros: listaFotos.length,
+                            totalPaginas: totalPaginas,
+                            registrosPorPagina: registrosPorPagina,
+                            pasoAtras: () => { paginaActual --; obtenerListaPrincipal() },  
+                            pasoAdelante: () => { paginaActual ++; obtenerListaPrincipal() },
+                            seleccionarPagina: e => { 
+                                paginaActual = parseInt(e.target.getAttribute("numeroPagina"));
+                                obtenerListaPrincipal();
+                            }
+                        });
+
+                        llenarGaleria(listaFotos);
+
+                        let cadena = `
+                        <table class="galeria-imagenes">
+
+                            ${galeria.map((fila, index) => 
+                            { 
+                                return `
+                                <tr>
+                                    ${fila.map((celda, index) => 
+                                    { 
+                                        let estiloBordeTd = "none";
+                                        let claseTd = "";
+                                        let contenidoTd = "";
+
+                                        if (celda.src != null) 
+                                        {
+                                            estiloBordeTd = "2px solid";
+                                            claseTd = "tiene-contenido";
+
+                                            contenidoTd = `
+                                            <div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="check_imagen_${celda.codigo}">
+                                                    <label class="custom-control-label" for="check_imagen_${celda.codigo}"><br></label>
+                                                </div>
+                                                <img style="max-width: 130px; max-height: 115px;"
+                                                src="${celda.src}">
+                                            </div>
+                                            `;
+                                        }
+
+                                        return `
+                                        <td onclick="marcarImagenSeleccionada(${celda.codigo})" style="border: ${estiloBordeTd}" class="${claseTd}"> 
+                                            ${contenidoTd}
+                                        </td>
+                                        `;
+
+                                    }).join("")} 
+                                </tr>
+                                `;
+
+                            }).join("")} 
+                        </table>
+                        `;
+
+                        document.querySelector("#galeria-desplegada").innerHTML = cadena;
+                    });
+                }
+                else 
+                {
+                    response.text().then(textoError =>
+                        alert((response.status == 400 || response.status == 500 && ![null, ""].includes(textoError)) ?
+                            textoError : `Error ${response.status}`)
+                    );
+                }
+            })
+            .catch(error => {
+                alert("Se encontro un error");
+            })
+            .finally(c => {
+                //ocultarLoadingSpinner(); 
+            });
+        }
+
+        obtenerListaPrincipal();
+
+        const resetearPaginacion = () => {
+            paginaActual = 0;
+            totalPaginas = 0;
+        }    
+
+        // llenarGaleria(arreglo: Array<Foto>, cantidadFilas: Number = 3, cantidadColumnas: Number = 3)
+
+        function llenarGaleria(arreglo, cantidadFilas = 3, cantidadColumnas = 3)
+        {
+            let arrRangoFilas = Array.from(Array(cantidadFilas).keys());          // [ 0, 1, 2 ]
+            let arrRangoColumnas = Array.from(Array(cantidadColumnas).keys());    // [ 0, 1, 2 ]
+            let cont = 0;
+
+            arrRangoFilas.forEach(fila => 
+            {
+                arrRangoColumnas.forEach(columna => 
+                {
+                    if (arreglo[cont] != null)  // Si existe la posición en el arreglo
+                        galeria[fila][columna] = arreglo[cont];  
+                    else 
+                        galeria[fila][columna] = { codigo: 0, src: null };  // Agrega un item vacío para rellenar
+
+                    cont ++;
+                });
+            });
+        }
+
+        // marcarImagenSeleccionada(foto: Foto)
+
+        function marcarImagenSeleccionada(codigo)
+        {
+            // this.fotoSeleccionada = foto;
+
+            $(`#check_imagen_${codigo}`).prop("checked", true);    // Marca checkbox
+            listaFotos.filter(x => x.codigo != codigo).forEach(c => $(`#check_imagen_${c.codigo}`).prop("checked", false));  // Desmarca los demás checkbox
+        }
+
+    </script>
+</body>
+
+</html>
