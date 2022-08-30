@@ -27,7 +27,9 @@
                         <div class="row">
                             <!-- =========================================================================== -->
 
-                            <div id="numeros-paginacion"></div>
+                            <div class="col-12">
+                                <div id="numeros-paginacion"></div>
+                            </div>
 
                             <div class="col-12">
                                 <div id="galeria-desplegada"></div>
@@ -86,7 +88,7 @@
 
         // public galeria : Array<Array<Foto>>;
         let galeria = [
-            [], [], []
+            [], [], [], []
         ];
 
         //=================================================================================>>>>>
@@ -97,7 +99,7 @@
 
         const obtenerListaPrincipal = async () =>  // Obtener lista de Categoria de la Web Api 
         {
-            let registrosPorPagina = 9;
+            let registrosPorPagina = 16;
             let inicio = paginaActual * registrosPorPagina;
 
             let consulta = {};                          // obtenerConsultaBuscador(); 
@@ -138,52 +140,6 @@
                         });
 
                         llenarGaleria(listaFotos);
-
-                        let cadena = `
-                        <table class="galeria-imagenes">
-
-                            ${galeria.map((fila, index) => 
-                            { 
-                                return `
-                                <tr>
-                                    ${fila.map((celda, index) => 
-                                    { 
-                                        let estiloBordeTd = "none";
-                                        let claseTd = "";
-                                        let contenidoTd = "";
-
-                                        if (celda.src != null) 
-                                        {
-                                            estiloBordeTd = "2px solid";
-                                            claseTd = "tiene-contenido";
-
-                                            contenidoTd = `
-                                            <div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="check_imagen_${celda.codigo}">
-                                                    <label class="custom-control-label" for="check_imagen_${celda.codigo}"><br></label>
-                                                </div>
-                                                <img style="max-width: 130px; max-height: 115px;"
-                                                src="${celda.src}">
-                                            </div>
-                                            `;
-                                        }
-
-                                        return `
-                                        <td onclick="marcarImagenSeleccionada(${celda.codigo})" style="border: ${estiloBordeTd}" class="${claseTd}"> 
-                                            ${contenidoTd}
-                                        </td>
-                                        `;
-
-                                    }).join("")} 
-                                </tr>
-                                `;
-
-                            }).join("")} 
-                        </table>
-                        `;
-
-                        document.querySelector("#galeria-desplegada").innerHTML = cadena;
                     });
                 }
                 else 
@@ -211,7 +167,7 @@
 
         // llenarGaleria(arreglo: Array<Foto>, cantidadFilas: Number = 3, cantidadColumnas: Number = 3)
 
-        function llenarGaleria(arreglo, cantidadFilas = 3, cantidadColumnas = 3)
+        function llenarGaleria(arreglo, cantidadFilas = 4, cantidadColumnas = 4)
         {
             let arrRangoFilas = Array.from(Array(cantidadFilas).keys());          // [ 0, 1, 2 ]
             let arrRangoColumnas = Array.from(Array(cantidadColumnas).keys());    // [ 0, 1, 2 ]
@@ -222,13 +178,63 @@
                 arrRangoColumnas.forEach(columna => 
                 {
                     if (arreglo[cont] != null)  // Si existe la posición en el arreglo
-                        galeria[fila][columna] = arreglo[cont];  
+                    {
+                        // console.log(`galeria[${fila}][${columna}] = arreglo[${cont}];`);
+                        galeria[fila][columna] = arreglo[cont];
+                    }  
                     else 
                         galeria[fila][columna] = { codigo: 0, src: null };  // Agrega un item vacío para rellenar
 
                     cont ++;
                 });
             });
+
+            // Despliegue de la galería en el html 
+
+            let cadena = `
+            <table class="galeria-imagenes">
+
+                ${galeria.map((fila, index) => 
+                { 
+                    return `
+                    <tr>
+                        ${fila.map((celda, index) => 
+                        { 
+                            let estiloBordeTd = "none";
+                            let claseTd = "";
+                            let contenidoTd = "";
+
+                            if (celda.src != null) 
+                            {
+                                estiloBordeTd = "2px solid";
+                                claseTd = "tiene-contenido";
+
+                                contenidoTd = `
+                                <div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="check_imagen_${celda.codigo}">
+                                        <label class="custom-control-label" for="check_imagen_${celda.codigo}"><br></label>
+                                    </div>
+                                    <img src="${celda.src}" style="max-width: 130px; max-height: 115px;" />
+                                </div>
+                                `;
+                            }
+
+                            return `
+                            <td onclick="marcarImagenSeleccionada(${celda.codigo})" style="border: ${estiloBordeTd}" class="${claseTd}"> 
+                                ${contenidoTd}
+                            </td>
+                            `;
+
+                        }).join("")} 
+                    </tr>
+                    `;
+
+                }).join("")} 
+            </table>
+            `;
+
+            document.querySelector("#galeria-desplegada").innerHTML = cadena;
         }
 
         // marcarImagenSeleccionada(foto: Foto)
