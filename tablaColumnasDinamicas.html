@@ -184,6 +184,7 @@
                         <tr>
                             <td>${x.nombre}</td>
                             <td> <input type="text" name="${x.nombre}" /> </td>
+                            <td> <button type="button" onclick="eliminarColumna(${x.orden})"> X </button> </td>
                         </tr>
                         `;
                     })
@@ -206,9 +207,20 @@
         const insertarElementoEnArreglo = () => 
         {
             let elemento = {};
+            let errores = [];
+
+            propiedadesDesplegadas.forEach(x => 
+            {
+                let valor = document.querySelector(`#formularioIngreso [name='${x.nombre}']`)?.value;
+                elemento[x.nombre] = valor;
+
+                if (valor == "") errores.push(x.nombre);
+            });
+
+            if (errores.length > 0)
+                return alert(`Los campos \n ${errores.join(", ")} \n son requeridos`);
 
             propiedadesDesplegadas.forEach(x => {
-                elemento[x.nombre] = document.querySelector(`#formularioIngreso [name='${x.nombre}']`)?.value;
                 document.querySelector(`#formularioIngreso [name='${x.nombre}']`).value = "";      // Limpia input
             });
 
