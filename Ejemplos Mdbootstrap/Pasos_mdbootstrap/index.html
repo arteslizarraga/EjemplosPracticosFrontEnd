@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Planificaci&oacute;n y Dise&ntilde;o de Programas</title>
+    <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+    <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css" />
+    <link rel="stylesheet" type="text/css" href="estilos.css" />
+</head>
+
+<body id="appBody" class="d-flex flex-column">
+    <div class="page-content">
+        <div class="navbar-overlay"></div>
+
+        <main id="main" class="container">
+
+            <section>
+                <div class="row">
+                  <div class="col-md-12">
+                    
+                    <!-- Indicador para el usuario con números de cuál es el paso (etapa) en el que se encuentra -->
+                    <ul class="carga-masiva stepper stepper-horizontal">
+                      
+                      <li class="step1 active">
+                        <a href="javascript:;">
+                          <span class="circle">1</span>
+                          <span class="label">Carga Masiva</span>
+                        </a>
+                      </li>
+                      <li class="step2">
+                        <a href="javascript:;">
+                          <span class="circle">2</span>
+                          <span class="label">Repositorio</span>
+                        </a>
+                      </li>
+                      <li class="step3">
+                        <a href="javascript:;">
+                          <span class="circle">3</span>
+                          <span class="label">Verificaci&oacute;n</span>
+                        </a>
+                      </li>
+                      
+                    </ul>
+        
+                  </div>
+                </div>
+            </section>
+
+            <section>
+
+                <div class="card" id="card-paso-1">
+          
+                    <div class="card-header">
+                      <h4 class="float-left heading h4-responsive mb-0">Paso 1</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-10 mb-4">
+                            <p>Contenido Paso 1</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                  
+                      <div class="row flex-row">
+                    
+                        <div class="col col-md-6  d-flex justify-content-start">
+                          <a class="btn btn-outline waves-effect waves-light" href="javascript:;">
+                            <span>Cualquier Cosa</span>
+                          </a>
+                        </div>
+                        <div class="col col-md-6 d-flex justify-content-end">
+      
+                          <button type="button" class="btn btn-default waves-effect waves-light" onclick="pasarSegundoPaso(this)">
+                            <span>Pasar al paso siguiente</span>
+                          </button>
+                      
+                        </div>
+                      </div>
+      
+                    </div>
+      
+                </div>
+              
+                <div class="card" id="card-paso-2" style="display: none;">
+          
+                    <div class="card-header">
+                        <h4 class="float-left heading h4-responsive mb-0">Paso 2</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-10 mb-4">
+                            <p>Contenido Paso 2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                      
+                      <div class="row flex-row mt-4 mb4">
+                        
+                        <div class="col col-md-12  d-flex justify-content-between">
+          
+                          <button class="btn btn-outline waves-effect waves-light" onclick="volverPaso1(this)">
+                            <span>Volver</span>
+                          </button>
+          
+                          <button class="btn btn-default waves-effect waves-light" onclick="pasarTercerPaso(this)">
+                            <span>Pasar al paso siguiente</span>
+                          </button>
+
+                        </div>
+          
+                      </div>
+          
+                    </div>
+                    
+                </div>
+                
+                <div class="card" id="card-paso-3" style="display: none;">
+                    <div class="card-header">
+                        <h4 class="float-left heading h4-responsive mb-0">Paso 3</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-10 mb-4">
+                            <p>Contenido Paso 3</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                      
+                      <div class="row flex-row mt-4 mb4">
+                        
+                        <div class="col col-md-12  d-flex justify-content-between">
+          
+                          <button class="btn btn-outline waves-effect waves-light" onclick="volverPaso2(this)">
+                            <span>Volver</span>
+                          </button>
+          
+                          <button class="btn btn-default waves-effect waves-light" onclick="resetearPasos(this)">
+                            <span>Volver al Paso 1</span>
+                          </button>
+          
+                        </div>
+          
+                      </div>
+          
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="page-footer">
+        <div class="container py-3">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="logo-gst"><img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png"
+                        alt="" /></div>
+                <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+    <script src="configuracion.js"></script>
+</body>
+
+</html>
