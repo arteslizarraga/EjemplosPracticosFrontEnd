@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+       
+        table { border-collapse: collapse; text-align: left; }
+        thead { background-color: lightgray; }
+
+    </style>
+</head>
+
+<body>
+
+    <label>Ingrese nombre nueva Columna</label>
+    <input type="text" id="inputNuevaColumna" />
+    <button type="button" onclick="insertarNuevaColumna()">Insertar</button>
+    <br/><br/>
+
+    <div id="contenido"></div>
+
+    <script>
+
+        let arreglo = [
+            { correlativo: 1, nombre: "Prueba 1" }, 
+            { correlativo: 2, nombre: "Prueba 2" },
+            { correlativo: 3, nombre: "Prueba 3" },
+        ];
+
+        let primeraPosicion = arreglo[0];
+
+        let propiedadesDesplegadas = Object.keys(primeraPosicion).map((x, index) => {
+            return { nombre: x, orden: (index + 1) };
+        });
+
+        const insertarNuevaColumna = () => 
+        {
+            let inputNuevaColumna = document.querySelector("#inputNuevaColumna");
+            let nombreNuevaColumna = inputNuevaColumna.value;
+
+            let nuevoArreglo = arreglo.map(x => {
+                return {...x, [nombreNuevaColumna]: ""};
+            });
+
+            arreglo = nuevoArreglo;
+
+            /*
+            arreglo.push({
+                correlativo: arreglo.length > 0 ? ((arreglo.reduce((a, b) => (a.correlativo > b.correlativo) ? a : b).correlativo) + 1) : 1,
+                nombre: inputNuevaColumna.value 
+            });
+            */
+
+            propiedadesDesplegadas.push({ 
+                nombre: nombreNuevaColumna, 
+                orden: ((propiedadesDesplegadas.reduce((a, b) => (a.orden > b.orden) ? a : b).orden) + 1) 
+            });
+
+            cargarTabla();
+            inputNuevaColumna.value = "";
+        }
+
+        const actualizar = (correlativo) => 
+        {
+            let elemento = arreglo.find(x => x.correlativo == correlativo);
+            let nuevoNombrePrompt = prompt("Ingrese el nuevo nombre", elemento.nombre);
+
+            if (nuevoNombrePrompt != null) {
+                elemento.nombre = nuevoNombrePrompt;
+                cargarTabla();
+            } 
+        }
+
+        const eliminar = (correlativo) => 
+        {
+            arreglo = arreglo.filter(x => x.correlativo != correlativo);
+            cargarTabla();
+        }
+
+        const eliminarColumna = (orden) => 
+        {
+            let cont = 1;
+            propiedadesDesplegadas = propiedadesDesplegadas.filter(x => x.orden != orden).sort((a, b) => a.orden - b.orden);
+
+            propiedadesDesplegadas.forEach(x => {
+                x.orden = cont;
+                cont ++;
+            });
+
+            cargarTabla();
+        };
+
+        const cargarTabla = () => 
+        {
+            let cadena = `
+            <table border="1">
+                <thead>
+                    <tr>
+                        ${propiedadesDesplegadas.map(x => {
+                            return `<th>
+                                ${x.orden} - ${x.nombre} &nbsp;&nbsp;
+                                <button type="button" onclick="eliminarColumna(${x.orden})"> X </button>
+                            </th>`;
+                        }).join("")}
+
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${arreglo.map((elemento, index) => 
+                    { 
+                        return `
+                        <tr>
+                            ${propiedadesDesplegadas.map(x => `<td>${elemento[x.nombre]}</td>`).join("")}
+                            <td> 
+                                <button type="button" onclick="actualizar(${elemento.correlativo})">Actualizar</button>
+                                <button type="button" onclick="eliminar(${elemento.correlativo})">Eliminar</button>
+                            </td>
+                        </tr>
+                        `;
+                    }).join("")} 
+                </tbody>
+
+            </table>
+            `;
+
+            document.querySelector("#contenido").innerHTML = cadena;
+        }
+
+        cargarTabla();
+
+    </script>
+
+</body>
+
+</html>
