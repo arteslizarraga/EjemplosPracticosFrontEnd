@@ -64,7 +64,7 @@
             return { nombre: x, orden: (index + 1) };
         });
 
-        const insertarNuevaColumna = () => 
+        function insertarNuevaColumna() 
         {
             let inputNuevaColumna = document.querySelector("#inputNuevaColumna");
             let nombreNuevaColumna = inputNuevaColumna.value;
@@ -74,13 +74,6 @@
             });
 
             arreglo = nuevoArreglo;
-
-            /*
-            arreglo.push({
-                codigo: arreglo.length > 0 ? ((arreglo.reduce((a, b) => (a.codigo > b.codigo) ? a : b).codigo) + 1) : 1,
-                nombre: inputNuevaColumna.value 
-            });
-            */
 
             propiedadesDesplegadas.push({ 
                 nombre: nombreNuevaColumna, 
@@ -92,7 +85,7 @@
             inputNuevaColumna.value = "";
         }
 
-        const actualizar = (codigo) => 
+        function actualizar(codigo) 
         {
             let elemento = arreglo.find(x => x.codigo == codigo);
             let nuevoNombrePrompt = prompt("Ingrese el nuevo nombre", elemento.nombre);
@@ -103,13 +96,13 @@
             } 
         }
 
-        const eliminar = (codigo) => 
+        function eliminar(codigo) 
         {
             arreglo = arreglo.filter(x => x.codigo != codigo);
             desplegarTabla();
         }
 
-        const eliminarColumna = (orden) => 
+        function eliminarColumna(orden)
         {
             let cont = 1;
             propiedadesDesplegadas = propiedadesDesplegadas.filter(x => x.orden != orden).sort((a, b) => a.orden - b.orden);
@@ -121,21 +114,43 @@
 
             desplegarTabla();
             desplegarFormulario();
-        };
+        }
 
-        const desplegarTabla = () => 
+        function obtenerPropiedadesDesplegadasEnOrden() {
+            return propiedadesDesplegadas.sort((a, b) => a.orden - b.orden);
+        }
+
+        function desplegarTabla()
         {
             let cadena = `
             <table class="tabla-info">
                 <thead>
                     <tr>
                         <th style="width: 15px !important;"></th>
-                        ${propiedadesDesplegadas.map(x => `<th>${x.orden}</th>`).join("")}
+
+                        ${obtenerPropiedadesDesplegadasEnOrden().map((c, index) => 
+                        {
+                            let contenidoTH = "<th>";
+
+                            if (index > 0) {
+                                contenidoTH += "<button nombreAtributo='" + c.nombre + "' onclick='cambiarPosicionTablaIndex(this);' class='botonArriba'> &larr; </button>";
+                            }    
+                            if ((index + 1) < propiedadesDesplegadas.length) {
+                                contenidoTH += "<button nombreAtributo='" + c.nombre + "' onclick='cambiarPosicionTablaIndex(this);' class='botonAbajo'> &rarr; </button>";
+                            }
+
+                            //contenidoTH += `&nbsp;&nbsp; ${c.orden}`;
+                            contenidoTH += "</th>";
+
+                            return contenidoTH;
+                        })
+                        .join("")}
+
                         <th style="width: 140px !important;"></th>
                     </tr>
                     <tr>
                         <th></th>
-                        ${propiedadesDesplegadas.map(x => {
+                        ${obtenerPropiedadesDesplegadasEnOrden().map(x => {
                             return `<th>
                                 ${x.nombre} &nbsp;&nbsp;
                                 <button type="button" onclick="eliminarColumna(${x.orden})"> X </button>
@@ -152,7 +167,7 @@
                         <tr>
                             <td style="background-color: lightgray;"> <b> ${index + 1} </b> </td>
 
-                            ${propiedadesDesplegadas.map(x => `<td>${elemento[x.nombre]}</td>`).join("")}
+                            ${obtenerPropiedadesDesplegadasEnOrden().map(x => `<td>${elemento[x.nombre]}</td>`).join("")}
                             <td> 
                                 <button type="button" onclick="actualizar('${elemento.codigo}')">Actualizar</button>
                                 <button type="button" onclick="eliminar('${elemento.codigo}')">Eliminar</button>
@@ -170,7 +185,7 @@
 
         desplegarTabla();
 
-        const desplegarFormulario = () => 
+        function desplegarFormulario()
         {
             let cadena = `
             <h5> Formulario Ingreso <h5> 
@@ -200,11 +215,11 @@
             `;
             
             document.querySelector("#formulario").innerHTML = cadena;
-        };
+        }
 
         desplegarFormulario();
 
-        const insertarElementoEnArreglo = () => 
+        function insertarElementoEnArreglo() 
         {
             let elemento = {};
             let errores = [];
@@ -226,7 +241,34 @@
 
             arreglo.push(elemento);
             desplegarTabla();
-        };
+        }
+
+        function cambiarPosicionTablaIndex(objeto)
+        { 
+            let elemento = propiedadesDesplegadas.find(c=> c.nombre == objeto.getAttribute("nombreAtributo"));
+            let ordenElemento = elemento.orden;
+
+            if (objeto.getAttribute("class").includes("botonAbajo")) 
+            {
+                let siguienteElemento = propiedadesDesplegadas.filter(c=> c.orden > elemento.orden)[0];
+                let ordenSiguienteElemento = siguienteElemento.orden;
+                
+                siguienteElemento.orden = ordenElemento;
+                elemento.orden = ordenSiguienteElemento;
+            }
+            if (objeto.getAttribute("class").includes("botonArriba"))
+            {
+                let anteriorElemento = propiedadesDesplegadas.sort((a, b) => Number(a.orden) - Number(b.orden)).find(c=> c.orden == (elemento.orden - 1)); 
+                let ordenAnteriorElemento = anteriorElemento.orden;
+                
+                anteriorElemento.orden = ordenElemento;
+                elemento.orden = ordenAnteriorElemento;
+            }
+        
+            // Asi la grilla y el formulario se ordenan de acuerdo al campo orden 
+            desplegarTabla();
+            desplegarFormulario();
+        }
 
     </script>
 
