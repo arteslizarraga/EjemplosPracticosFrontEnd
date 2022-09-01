@@ -60,14 +60,22 @@
 
         let primeraPosicion = arreglo[0];
 
+        let propiedadesDesplegadas = [
+            { nombre: "codigo", orden: 1 }, { nombre: "nombre", orden: 2 }, { nombre: "apellido", orden: 3 }, { nombre: "edad", orden: 4 }
+        ];
+
+        /*
         let propiedadesDesplegadas = Object.keys(primeraPosicion).map((x, index) => {
             return { nombre: x, orden: (index + 1) };
         });
+        */
 
         function insertarNuevaColumna() 
         {
             let inputNuevaColumna = document.querySelector("#inputNuevaColumna");
             let nombreNuevaColumna = inputNuevaColumna.value;
+
+            if (nombreNuevaColumna == "") return alert("El nombre de la columna es requerido");
 
             let nuevoArreglo = arreglo.map(x => {
                 return {...x, [nombreNuevaColumna]: ""};
@@ -125,6 +133,8 @@
             let cadena = `
             <table class="tabla-info">
                 <thead>
+
+                    ${(propiedadesDesplegadas.length > 1) ? `
                     <tr>
                         <th style="width: 15px !important;"></th>
 
@@ -147,17 +157,20 @@
                         .join("")}
 
                         <th style="width: 140px !important;"></th>
-                    </tr>
+                    </tr>   
+                    ` : ""}
+
                     <tr>
-                        <th></th>
-                        ${obtenerPropiedadesDesplegadasEnOrden().map(x => {
-                            return `<th>
-                                ${x.nombre} &nbsp;&nbsp;
-                                <button type="button" onclick="eliminarColumna(${x.orden})"> X </button>
-                            </th>`;
+                        <th style="width: 15px !important;"></th>
+                        ${obtenerPropiedadesDesplegadasEnOrden().map(x => 
+                        {
+                            let botonEliminarColumna = (x.nombre != "codigo") ? 
+                                `&nbsp;&nbsp; <button type="button" onclick="eliminarColumna(${x.orden})"> X </button>` : "";
+
+                            return `<th> ${x.nombre} ${botonEliminarColumna} </th>`;
                         }).join("")}
 
-                        <th>Operaciones</th>
+                        <th style="width: 140px !important;"> Operaciones </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -195,11 +208,14 @@
                 <table>
                     ${propiedadesDesplegadas.map(x => 
                     {
+                        let botonEliminarColumna = (x.nombre != "codigo") ? 
+                            `<button type="button" onclick="eliminarColumna(${x.orden})"> X </button>` : "";
+
                         return `
                         <tr>
                             <td>${x.nombre}</td>
                             <td> <input type="text" name="${x.nombre}" /> </td>
-                            <td> <button type="button" onclick="eliminarColumna(${x.orden})"> X </button> </td>
+                            <td> ${botonEliminarColumna} </td>
                         </tr>
                         `;
                     })
