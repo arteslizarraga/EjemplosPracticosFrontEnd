@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Planificaci&oacute;n y Dise&ntilde;o de Programas</title>
+    <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+    <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css" />
+    <link rel="stylesheet" type="text/css" href="estilos.css" />
+</head>
+
+<body id="appBody" class="d-flex flex-column">
+    <div class="page-content">
+        <div class="navbar-overlay"></div>
+
+        <main id="main" class="container">
+            <section>
+
+                <div class="card" id="buscar">
+
+                    <div class="card-header">
+                        <h4 class="float-left heading h4-responsive mb-0">Grilla Columnas Dinamicas</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col-12">
+
+                                <button type="button" onclick="abrirModalAgregarColumna()" class="btn btn-default waves-effect waves-light">
+                                    <span>Agregar Columna</span>
+                                </button>
+
+                                <button type="button" onclick="abrirModalAgregarNuevoRegistro()" class="btn btn-secondary waves-effect waves-light">
+                                    <span>Agregar Nuevo Registro</span>
+                                </button>
+
+                            </div>
+                            <div class="col-12"> 
+                                <br/><br/>
+                                <div id="contenido"></div>
+                            </div>    
+                        </div>
+
+                        <br/><br/>
+
+                    </div>
+
+                    <div class="card-footer">
+
+                        <div class="row">
+
+                            <div class="col-12 d-flex justify-content-end">
+
+                                <button type="button" class="btn btn-secondary waves-effect waves-light">
+                                    <span>Opción 1</span>
+                                </button>
+                                <button type="button" class="btn btn-default waves-effect waves-light">
+                                    <span>Opción 1</span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="page-footer">
+        <div class="container py-3">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="logo-gst"><img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png"
+                        alt="" /></div>
+                <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
+            </div>
+        </div>
+    </footer>
+
+
+    <div class="modal fade" id="modalAgregarColumna" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+
+                <form id="formAgregarColumna">
+
+                    <div class="modal-header">
+                        <p class="heading lead">Agregar Columna</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body px-0">
+
+                        <div class="row">
+
+                            <div class="col-12">
+                                <div class="md-form">
+
+                                    <input type="text" name="nombreColumna" class="form-control mb-0"
+                                    maxlength="100" placeholder="Ingrese nombre columna" />
+
+                                    <label class="active">Nombre Columna</label>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-12">
+                                <div class="md-form">
+                                    <select class="chosen-select" name="estado" disabled>
+                                        <option value="" disabled selected>Seleccione</option>
+                                        <option value="A">Activo</option>
+                                        <option value="I">Inactivo</option>
+                                    </select>
+                                    <label class="active">Estado</label>
+                                </div>
+                            </div> -->
+
+                        </div>
+                    </div>
+                    <div class="modal-footer px-0">
+
+                        <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">
+                            <span>Cancelar</span>
+                        </button>
+
+                        <button type="button" onclick="insertarNuevaColumna()" class="btn btn-default waves-effect waves-light">
+                            <span>Agregar Columna</span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalAgregarNuevo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <form id="formularioIngreso">
+
+                    <div class="modal-header">
+                        <p class="heading lead">Agregar Nuevo</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body px-0">
+
+                        
+                        <div id="formulario" class="row">
+
+                            <!--
+                            <div class="col-3">
+                                <div class="md-form">
+                                    <input type="text" name="nombreAtributo" placeholder="Ingrese nombre columna" class="form-control"/>
+                                    <label class="active">nombreAtributo</label>
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                    <div class="modal-footer px-0">
+
+                        <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">
+                            <span>Cancelar</span>
+                        </button>
+
+                        <button type="button" onclick="insertarElementoEnArreglo()" class="btn btn-default waves-effect waves-light">
+                            <span>Agregar Nuevo</span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================== -->
+
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+    <script src="configuracion.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+        
+/* table { border-collapse: collapse; text-align: left; }
+thead { background-color: lightgray; } */
+
+.tabla-info {
+  table-layout: fixed; 
+  width:100%;
+  border-collapse: collapse;
+}
+
+.tabla-info th, td {
+  border: 1px solid rgb(104, 103, 103);
+  word-wrap: break-word;         /* All browsers since IE 5.5+ */
+  overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+}
+
+.tabla-info td {
+  padding: 5px;
+}
+
+.tabla-info th {
+  white-space: nowrap;    /* Impide que haga un salto de linea  */
+  padding: 3px;
+}
+
+.tabla-info thead {
+  background-color: lightgray; 
+      /* color: white; */
+}
