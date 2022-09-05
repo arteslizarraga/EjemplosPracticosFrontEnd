@@ -24,13 +24,13 @@
                     <ul class="carga-masiva stepper stepper-horizontal">
                       
                       <li class="step1 active">
-                        <a href="javascript:;">
+                        <a href="javascript:;" onclick="resetearPasos()">
                           <span class="circle">1</span>
                           <span class="label">Carga Masiva</span>
                         </a>
                       </li>
                       <li class="step2">
-                        <a href="javascript:;">
+                        <a href="javascript:;" onclick="pasarSegundoPaso()">
                           <span class="circle">2</span>
                           <span class="label">Repositorio</span>
                         </a>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="col col-md-6 d-flex justify-content-end">
       
-                          <button type="button" class="btn btn-default waves-effect waves-light" onclick="pasarSegundoPaso(this)">
+                          <button type="button" class="btn btn-default waves-effect waves-light" onclick="pasarSegundoPaso()">
                             <span>Pasar al paso siguiente</span>
                           </button>
                       
@@ -101,12 +101,12 @@
                       <div class="row flex-row mt-4 mb4">
                         
                         <div class="col col-md-12  d-flex justify-content-between">
-          
-                          <button class="btn btn-outline waves-effect waves-light" onclick="volverPaso1(this)">
+
+                          <button class="btn btn-outline waves-effect waves-light" onclick="resetearPasos()">
                             <span>Volver</span>
                           </button>
-          
-                          <button class="btn btn-default waves-effect waves-light" onclick="pasarTercerPaso(this)">
+
+                          <button class="btn btn-default waves-effect waves-light" onclick="pasarTercerPaso()">
                             <span>Pasar al paso siguiente</span>
                           </button>
 
@@ -134,12 +134,12 @@
                       <div class="row flex-row mt-4 mb4">
                         
                         <div class="col col-md-12  d-flex justify-content-between">
-          
-                          <button class="btn btn-outline waves-effect waves-light" onclick="volverPaso2(this)">
+
+                          <button class="btn btn-outline waves-effect waves-light" onclick="pasarSegundoPaso()">
                             <span>Volver</span>
                           </button>
           
-                          <button class="btn btn-default waves-effect waves-light" onclick="resetearPasos(this)">
+                          <button class="btn btn-default waves-effect waves-light" onclick="resetearPasos()">
                             <span>Volver al Paso 1</span>
                           </button>
           
