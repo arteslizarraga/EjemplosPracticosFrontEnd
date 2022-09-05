@@ -23,7 +23,7 @@ function insertarNuevaColumna()
     let inputNuevaColumna = document.querySelector("#formAgregarColumna [name='nombreColumna']");
     let nombreNuevaColumna = inputNuevaColumna.value;
 
-    if (nombreNuevaColumna == "") return alert("El nombre de la columna es requerido");
+    if (nombreNuevaColumna == "") return toastr.error("El nombre de la columna es requerido"); 
 
     let nuevoArreglo = arreglo.map(x => {
         return {...x, [nombreNuevaColumna]: ""};
@@ -36,21 +36,11 @@ function insertarNuevaColumna()
         orden: ((propiedadesDesplegadas.reduce((a, b) => (a.orden > b.orden) ? a : b).orden) + 1) 
     });
 
+    toastr.success("Columna agregada con exito");
     desplegarTabla();
     desplegarFormulario();
     inputNuevaColumna.value = "";
     $("#modalAgregarColumna").modal("toggle");   // Cierra modal  
-}
-
-function actualizar(codigo) 
-{
-    let elemento = arreglo.find(x => x.codigo == codigo);
-    let nuevoNombrePrompt = prompt("Ingrese el nuevo nombre", elemento.nombre);
-
-    if (nuevoNombrePrompt != null) {
-        elemento.nombre = nuevoNombrePrompt;
-        desplegarTabla();
-    } 
 }
 
 function eliminar(codigo) 
@@ -136,7 +126,9 @@ function desplegarTabla()
 
                     ${obtenerPropiedadesDesplegadasEnOrden().map(x => `<td>${elemento[x.nombre]}</td>`).join("")}
                     <td> 
-                        <button type="button" onclick="actualizar('${elemento.codigo}')">Actualizar</button>
+                        <!-- <button type="button" onclick="actualizar('${elemento.codigo}')">Actualizar</button> -->
+
+                        <button type="button" onclick="abrirModalEditarRegistro('${elemento.codigo}')">Editar</button>
                         <button type="button" onclick="eliminar('${elemento.codigo}')">Eliminar</button>
                     </td>
                 </tr>
@@ -192,7 +184,7 @@ function insertarElementoEnArreglo()
     });
 
     if (errores.length > 0)
-        return alert(`Los campos \n ${errores.join(", ")} \n son requeridos`);
+        return toastr.error(`Los campos \n ${errores.join(", ")} \n son requeridos`);
 
     propiedadesDesplegadas.forEach(x => {
         document.querySelector(`#formularioIngreso [name='${x.nombre}']`).value = "";      // Limpia input
@@ -201,6 +193,7 @@ function insertarElementoEnArreglo()
     arreglo.push(elemento);
     desplegarTabla();
     $("#modalAgregarNuevo").modal("toggle");
+    toastr.success("Registro agregado con exito");
 }
 
 function cambiarPosicionTablaIndex(objeto)
@@ -240,4 +233,48 @@ function abrirModalAgregarColumna()
 function abrirModalAgregarNuevoRegistro()
 {
     $("#modalAgregarNuevo").modal("show");
+}
+
+function abrirModalEditarRegistro(codigo)
+{
+    let objeto = arreglo.find(x => x.codigo == codigo);
+
+    let cadena = `
+    <table>
+        ${propiedadesDesplegadas.map(x => 
+        {
+            return `
+            <div class="col-3">
+                <div class="md-form">
+                    <input type="text" name="${x.nombre}" value="${objeto[x.nombre]}" placeholder="Ingrese ${x.nombre}" 
+                    class="form-control" />
+
+                    <label class="active">${x.nombre}</label>
+                </div>
+            </div>
+            `;
+        })
+        .join("")}
+    </table>
+    `;
+    
+    document.querySelector("#formularioEditar").innerHTML = cadena;
+    $("#modalEditarRegistro").modal("show");
+}
+
+function actualizarElementoEnArreglo()
+{
+    let nuevoObjeto = {};
+    $("#formularioActualizar").serializeArray().forEach(c => nuevoObjeto[c.name] = c.value); 
+
+    let camposIncompletos = propiedadesDesplegadas.filter(x => document.querySelector(`#formularioActualizar [name='${x.nombre}']`)?.value == "").map(x => x.nombre);
+
+    if (camposIncompletos.length > 0)
+        return toastr.error(`Los campos \n ${camposIncompletos.join(", ")} \n son requeridos`);
+
+    let objeto = arreglo.find(x => x.codigo == nuevoObjeto.codigo);
+
+    Object.assign(objeto, nuevoObjeto);  // Asigna al objeto del arreglo los nuevos valores
+    $("#modalEditarRegistro").modal("toggle");   // Cierra modal  
+    desplegarTabla();
 }
