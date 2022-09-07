@@ -85,24 +85,19 @@ $('#TablaPrincipal_wrapper .top').append(tableCustomButtonsReporteAdm);
 //====================================================>>>>
 // Mostrar / Ocultar Columnas
 
-let cadena = "";
-
-Array.from(table.columns().header()).forEach((x, index) => 
+let cadena = Array.from(table.columns().header()).map((x, index) =>
 {
-	if (!x.getAttribute("class").includes("no-ocultar")) 
-    {
-		//console.log(`En la posicion ${index} el nombre es ${x.textContent}`);
-
-        cadena += `
-        <fieldset class="form-check">
-            <input class="form-check-input" type="checkbox" id="checkbox_show_hide_${index}" checked="checked">
-            <label onclick="mostrarOcultarColumna(${index})" class="form-check-label" for="checkbox_show_hide_${index}">${x.textContent}</label>
-        </fieldset>
-        `;
+	if (!x.getAttribute("class").includes("no-ocultar"))
+	{
+		return `
+		<fieldset class="form-check">
+			<input class="form-check-input" type="checkbox" id="checkbox_show_hide_${index}" checked="checked">
+			<label onclick="mostrarOcultarColumna(${index})" class="form-check-label" for="checkbox_show_hide_${index}">${x.textContent}</label>
+		</fieldset>
+		`;
 	}
-});
+}).join("");
 
-cadena += "";
 document.querySelector("#divMostrarOcultarColumnas").innerHTML = cadena;
 
 function mostrarOcultarColumna(numeroColumna) 
