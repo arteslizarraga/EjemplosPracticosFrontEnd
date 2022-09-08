@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.js"></script>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    const { useState, useEffect } = React;
+
+    const App = () => 
+    { 
+        const url = "https://localhost:44335" 
+        const [operacion, setOperacion] = useState("listar") 
+        const [listaCargo, setListaCargo] = useState([]) 
+        const [cargo, setCargo] = useState({}) 
+        const [paginaActual, setPaginaActual] = useState(0)    // Atributo opcional en caso de usar Paginación 
+        const [totalPaginas, setTotalPaginas] = useState(0)    // Atributo opcional en caso de usar Paginación 
+
+        const [listasBuscador, setListasBuscador] = useState({ 
+            listaEmpresa: [], 
+            listaEmpleado: [] 
+        }) 
+
+        // En caso de que la entidad del mantenedor sea hija de otra entidad o tenga referencias cruzadas 
+        const obtenerListasBuscador = async () =>  // Obtener lista de Cargo de la Web Api 
+        { 
+            //=================================================================>>>>
+            // Probando
+
+            setListasBuscador({
+                listaEmpresa: [{ id: 1, nombre: "Empresa 1" }, { id: 2, nombre: "Empresa 2" }],
+                listaEmpleado: [
+                    { id: 1, rut: "1-9", nombreCompleto: "José" },
+                    { id: 2, rut: "2-7", nombreCompleto: "Juana" }
+                ]
+            });
+
+            //=================================================================>>>>
+            // Original
+            /*
+            fetch(url + "/Cargo/obtenerListasBuscador", { 
+                method: "GET" 
+                //headers: {"Authorization": "Bearer ejemploToken"} 
+            }) 
+            .then(response => 
+            { 
+                if(response.ok) 
+                { 
+                    response.json().then(data => 
+                    { 
+                        setListasBuscador(data) 
+                    }); 
+                } 
+                else { 
+                    response.text().then(textoError => 
+                        alert((! [null, ""].includes(textoError) && (response.status === 400 || response.status === 500)) ? 
+                        textoError : `Error ${response.status}`) 
+                    ); 
+                } 
+            }) 
+            .catch(error => { 
+                alert("Se encontro un error"); 
+            }) 
+            .finally(c=> { 
+                //ocultarLoadingSpinner(); 
+            }); 
+            */
+            //=================================================================>>>>
+        } 
+
+        const crearNuevo = () =>  // Iniciar creación de nuevo Cargo 
+        { 
+            setCargo({ 
+                activo: "", 
+                descripcion: "", 
+                empresa: {"id": "", "toString": ""},  // Foreign key 
+                listaCargoEmpleado: [], 
+            }) 
+        } 
+
+        const obtenerConsultaBuscador = () => 
+        { 
+            var consulta = {}; 
+            var filtroBusqueda = document.getElementById("filtro-busqueda"); 
+
+            if (filtroBusqueda != null) 
+            { 
+                Array.from(filtroBusqueda.querySelectorAll("input, select")) 
+                .filter(c=> c.getAttribute("nombre") != null && ! ["", null].includes(c.value))  // Filtra por nombre y value no nulos 
+                .forEach(c=> 
+                { 
+                    if (c.hasAttribute("fecha"))  // En caso de ser un datepicker propio, usa la fecha en formato yyyy-MM-dd  
+                        consulta[c.getAttribute("nombre")] = c.getAttribute("fecha"); 
+                    else 
+                        consulta[c.getAttribute("nombre")] = c.value; 
+                }); 
+            } 
+
+            return consulta; 
+        } 
+
+        const obtenerListaPrincipal = async (numeroPagina = null) =>  // Obtener lista de Cargo de la Web Api 
+        { 
+            if (numeroPagina != null) {   // Si se desea avanzar o retroceder en la paginacion 
+                setPaginaActual(numeroPagina) 
+            } 
+            else {  // Si se usa el filtro de busquedas o se acaba de insertar/actualizar un registro 
+                numeroPagina = 0 
+                setPaginaActual(0) 
+                setTotalPaginas(0) 
+            } 
+
+            //mostrarLoadingSpinner() 
+            let registrosPorPagina = 10 
+            let inicio = numeroPagina * registrosPorPagina 
+
+            let consulta = obtenerConsultaBuscador();
+            consulta["offset"] = inicio;                // start
+            consulta["limit"] = registrosPorPagina;     // length
+
+            let parametros = Object.entries(consulta).map(c=> c.join("=")).join("&"); 
+
+            let res = await fetch(`https://pokeapi.co/api/v2/pokemon?${parametros}`, { method: "GET" }); 
+            let data = await res.json(); 
+
+            let arreglo = data["results"].map(x => 
+            {
+                let idRegistro = x.url.split("/").reverse()[1];
+                return { id: idRegistro, activo: true, descripcion: x.name, empresa: { id: 1, nombre: "Empresa 1"} };
+            });
+
+            setListaCargo(arreglo); 
+            setTotalPaginas(Math.ceil(parseInt(data["count"]) / registrosPorPagina) - 1); 
+
+            //ocultarLoadingSpinner() 
+        } 
+
+        useEffect(() =>  // Al cargar la pagina 
+        { 
+            obtenerListasBuscador() 
+            crearNuevo()  // Asi la operacion crear ya cuenta con un objeto predefinido 
+            obtenerListaPrincipal() 
+
+            // eslint-disable-next-line react-hooks/exhaustive-deps 
+        }, []); 
+
+        /* 
+        const inicializarSelectBuscador = () =>  // Convertir select normal en un select buscador con paginacion  
+        { 
+            var objetoHTML = evento.target; 
+
+            if (objetoHTML.localName === "select" && objetoHTML.getAttribute("pagina") === null && objetoHTML.size <= 1)   // Si aun no ha sido inicializado el select buscador 
+            { 
+                selectBuscador({ 
+                    objetoHTML: objetoHTML, 
+                    url: this.url + objetoHTML.getAttribute("rutaWebApi"), 
+                    params: { clase: objetoHTML.getAttribute("entidad"), atributoBuscado: objetoHTML.getAttribute("atributoBuscado") }, 
+                    registrosPorPagina: {nombre: "registrosPorPagina", valor: 10}, 
+                    nombrePagina: "numeroPagina", nombreBusqueda: "busqueda", mensajeBuscando: "buscando resultados ..." 
+                }); 
+                objetoHTML.click();  // Abre el select  
+            } 
+        } 
+        */ 
+
+        const guardar = async evento =>  // Guardar y Actualizar Cargo en la Web Api 
+        { 
+            evento.preventDefault() 
+            var validacion = validar(cargo) 
+            if (validacion !== "") return alert(validacion) 
+
+            var metodoEnvio = (operacion === "crear") ? "POST" : "PUT"; 
+
+            //mostrarLoadingSpinner(); 
+
+            fetch(url + "/Cargo", { 
+                method: metodoEnvio, 
+                headers: {"Content-Type": "application/json"},  // headers: {"Authorization": "Bearer ejemploToken"} 
+                body: JSON.stringify(cargo) 
+            }) 
+            .then(response => 
+            { 
+                if(response.ok) 
+                { 
+                    obtenerListaPrincipal()               // Se actualiza la lista de Cargo llamando la Web Api 
+                    setOperacion("listar")  // Cierra el modal 
+                } 
+                else { 
+                    response.text().then(textoError => 
+                        alert((! [null, ""].includes(textoError) && (response.status === 400 || response.status === 500)) ? 
+                        textoError : `Error ${response.status}`) 
+                    ); 
+                } 
+            }) 
+            .catch(error => { 
+                alert("Se encontro un error"); 
+            }) 
+            .finally(c=> { 
+                //ocultarLoadingSpinner(); 
+            }); 
+        } 
+
+        const validar = (cargo) =>  // Validar Cargo 
+        { 
+            var listaCargoEmpleado = cargo["listaCargoEmpleado"]; 
+
+            // Se validan los atributos de la entidad 
+
+            if (["", null].includes(cargo.activo)) return "El campo activo no posee un valor"; 
+            if (["", null].includes(cargo.descripcion)) return "El campo descripcion no posee un valor"; 
+            if (["", null].includes(cargo.empresa["id"])) return "El campo de tipo Empresa no está seleccionado"; 
+
+            // Se validan las referencias cruzadas de la entidad CargoEmpleado 
+
+            if (Array.from(listaCargoEmpleado, c=> c["empleado"]).some(c=> ["", null].includes(c.id))) 
+                return "Un detalle de tipo CargoEmpleado no tiene seleccionado el campo empleado"; 
+
+            return ""; 
+        } 
+
+        const editar = async (evento, id) =>  // Obtener Cargo de la Web Api por su id 
+        { 
+            evento.preventDefault(); 
+
+            //mostrarLoadingSpinner(); 
+
+            await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, { method: "GET" }) 
+            .then(response => 
+            { 
+                if(response.ok) 
+                { 
+                    response.json().then(data => 
+                    {
+                        let elemento = { 
+                            id: data.id,
+                            activo: true, 
+                            descripcion: data.name, 
+                            empresa: { id: 1, nombre: "Empresa 1" },  // Foreign key 
+                            listaCargoEmpleado: [], 
+                        };
+                        
+                        setOperacion("editar") 
+                        setCargo(elemento) 
+                    }); 
+                } 
+                else { 
+                    response.text().then(textoError => 
+                        alert((! [null, ""].includes(textoError) && (response.status === 400 || response.status === 500)) ? 
+                        textoError : `Error ${response.status}`) 
+                    ); 
+                } 
+            }) 
+            .catch(error => { 
+                alert("Se encontro un error"); 
+            }) 
+            .finally(c=> { 
+                //ocultarLoadingSpinner(); 
+            }); 
+        } 
+
+        const eliminar = async (evento, id) =>  // Eliminar Cargo por su id 
+        { 
+            evento.preventDefault(); 
+
+            let opcionConfirm = window.confirm("Desea realmente eliminar este registro"); 
+            if (opcionConfirm === true) 
+            { 
+                //mostrarLoadingSpinner(); 
+
+                await fetch(url + "/Cargo/" + id, { 
+                    method: "DELETE", 
+                    //headers: {"Authorization": "Bearer ejemploToken"} 
+                }) 
+                .then(response => 
+                { 
+                    if(response.ok) 
+                    { 
+                        obtenerListaPrincipal();  // Se actualiza la lista de Cargo llamando la Web Api 
+                    } 
+                    else { 
+                        response.text().then(textoError => 
+                            alert((! [null, ""].includes(textoError) && (response.status === 400 || response.status === 500)) ? 
+                            textoError : `Error ${response.status}`) 
+                        ); 
+                    } 
+                }) 
+                .catch(error => { 
+                    alert("Se encontro un error"); 
+                }) 
+                .finally(c=> { 
+                    //ocultarLoadingSpinner(); 
+                }); 
+            } 
+        } 
+
+        //====================================================================================================>>>>>> 
+        // Control de referencias cruzadas de la entidad CargoEmpleado 
+
+        const agregarNuevoCargoEmpleado = () =>  // Agregar a Cargo un detalle de tipo CargoEmpleado 
+        { 
+            var nuevoCargoEmpleado = {  
+                empleado: {"id": "", "toString": ""}, 
+            } 
+
+            setCargo({ ...cargo, listaCargoEmpleado: [...cargo.listaCargoEmpleado, nuevoCargoEmpleado] }) 
+        } 
+
+        const actualizarCargoEmpleado = (evento, cargoEmpleado) =>  // Actualizar detalle de tipo CargoEmpleado que pertenece a Cargo 
+        { 
+            var nombre = evento.target.name; 
+
+            if(nombre.includes("."))  // Si se selecciona un padre para el detalle de tipo CargoEmpleado 
+            { 
+                var padre = nombre.split(".")[0]; 
+                var idPadre = nombre.split(".")[1]; 
+                if (padre === "empleado")  // Validar duplicidad de Empleado 
+                { 
+                    if (cargo["listaCargoEmpleado"].find(c=> c.empleado.id.toString() === evento.target.value)) 
+                    { 
+                        alert("Ya existe un detalle de tipo CargoEmpleado con el Empleado " + evento.target.options[evento.target.selectedIndex].text); 
+                        if (cargoEmpleado.empleado["id"] === null)  // Si no tenia un valor seleccionado previamente 
+                        { 
+                            cargoEmpleado.empleado = {"id": null};  	  // Anula el Empleado seleccionado 
+                            return evento.target.selectedIndex = 0;   // Selecciona primer option del combobox 
+                        } 
+                        else  // Si ya tenia un valor seleccionado previamente 
+                        { 
+                            var optionAnterior = Array.from(evento.target.options).find(c=> c["value"] === cargoEmpleado.empleado["id"]); 
+
+                            if (optionAnterior != null)  // Si es un select normal, o es un select buscador con paginacion que aun conserva el option anteriormente seleccionado 
+                            { 
+                                optionAnterior["selected"] = true;   // Selecciona el valor anterior 
+                            } 
+                            else if (evento.target.getAttribute("pagina") != null)   // Si es un select buscador con paginacion 
+                            { 
+                                evento.target.textContent = "";    										//Borra todos los options del select 
+                                var nuevoOption = document.createElement("option");  					nuevoOption.selected = true; 
+                                nuevoOption.text = evento.target.getAttribute("textoSeleccionado");		nuevoOption.value = evento.target.getAttribute("valorSeleccionado"); 
+                                evento.target.appendChild(nuevoOption);  								//Agrega un option con los valores de la seleccion anterior 
+                            } 
+                            return; 
+                        } 
+                    } 
+                } 
+                setCargo({ 
+                    ...cargo, 
+                    listaCargoEmpleado: cargo.listaCargoEmpleado.map(c => 
+                        (c === cargoEmpleado) ? 
+                    {...c, [padre]: { [idPadre]: evento.target.value, toString: evento.target.options[evento.target.selectedIndex].text }} : c 
+                    ) 
+                }) 
+            } 
+            else { 
+                setCargo({ 
+                    ...cargo, 
+                    listaCargoEmpleado: cargo.listaCargoEmpleado.map(c => (c === cargoEmpleado) ? {...c, [evento.target.name]: evento.target.value} : c) 
+                }) 
+            } 
+        } 
+
+        const quitarCargoEmpleado = (cargoEmpleado) =>  // Quitar detalle de tipo CargoEmpleado que pertenece a Cargo 
+        { 
+            setCargo({ ...cargo, listaCargoEmpleado: cargo.listaCargoEmpleado.filter(c => c !== cargoEmpleado) }) 
+        } 
+
+        //====================================================================================================>>>>>> 
+        if (operacion === "listar")  // Opcion de inicio 
+        { 
+
+            return ( 
+            <React.Fragment> 
+
+            <br/> 
+            <button name="crear" onClick={(e) => { crearNuevo(); setOperacion("crear") }} className="btn btn-success"> crear nuevo </button> 
+            <br/><br/> 
+            {/* Filtro busqueda */} 
+
+            <div id="filtro-busqueda" className="row"> 
+                <div className="col-md-4"> 
+                    <div className="form-group"> 
+
+                        <label className="control-label" htmlFor="activo"> activo </label> 
+                        <select nombre="activo" onChange={()=>{ obtenerListaPrincipal() }} className="form-control"> 
+                            <option value=""> - todos - </option> 
+                            <option value="true"> si </option> 
+                            <option value="false"> no </option> 
+                        </select> 
+
+                    </div> 
+                </div> 
+                <div className="col-md-4"> 
+                    <div className="form-group"> 
+
+                        <label className="control-label" htmlFor="descripcion"> descripcion </label> 
+                        <input nombre="descripcion" onKeyUp={()=>{ obtenerListaPrincipal() }} type="text" className="form-control" /> 
+
+                    </div> 
+                </div> 
+                <div className="col-md-4"> 
+                    <div className="form-group"> 
+
+                        <label className="control-label" htmlFor="empresa"> empresa </label> 
+                        <select nombre="empresa.id" onChange={()=>{ obtenerListaPrincipal() }} className="form-control"> 
+                            <option value=""> -Todos- </option> 
+                            {listasBuscador.listaEmpresa.map(empresa => { 
+                                return ( 
+                                <option key={empresa.id} value="{empresa.id}"> {JSON.stringify(empresa)} </option> 
+                                ) 
+                            })} 
+                        </select> 
+
+                    </div> 
+                </div> 
+            </div> 
+
+            {/* Fin filtro busqueda */} 
+
+            <br/> 
+            <h4> Listado de Cargo </h4> 
+
+            {/* Inicio nav paginacion */} 
+            <br/> 
+
+            {totalPaginas > 0 && 
+                <div className="row"> 
+                    <div className="col-md-1"> 
+                        <button disabled={paginaActual === 0} onClick={(e) => { obtenerListaPrincipal(paginaActual - 1) }} type="button" className="btn btn-default"> 
+                            <span> &#8592; </span> Anterior 
+                        </button> 
+                    </div> 
+                    <div className="col-md-1"> 
+                        <button disabled={paginaActual >= totalPaginas} onClick={(e) => { obtenerListaPrincipal(paginaActual + 1) }} type="button" className="btn btn-default"> 
+                            Siguiente <span> &#8594; </span> 
+                        </button> 
+                    </div> 
+                </div> 
+            } 
+
+            <br/> 
+            {/* Fin nav paginacion */} 
+
+            <div className="table-responsive">  {/* Contenedor para que la tabla sea responsiva */} 
+                <table className="table table-bordered"> 
+                    <thead> 
+                        <tr> 
+                            <th> id </th> 
+                            <th> activo </th> 
+                            <th> descripcion </th> 
+                            <th> empresa </th> 
+                            <th> </th> 
+                            <th> </th> 
+                        </tr> 
+                    </thead> 
+                    <tbody> 
+                        {listaCargo.map(cargo =>  
+                        { 
+                            return ( 
+                                <tr key={cargo.id}> 
+                                    <td> {cargo.id} </td> 
+                                    <td> {String(cargo.activo)} </td> 
+                                    <td> {cargo.descripcion} </td> 
+                                    <td> {JSON.stringify(cargo.empresa)} </td> 
+                                    <td> 
+                                        <a href="/#" onClick={(e) => editar(e, cargo.id)}> Editar </a> 
+                                    </td> 
+                                    <td> 
+                                        <a href="/#" onClick={(e) => eliminar(e, cargo.id)}> Eliminar </a> 
+                                    </td> 
+                                </tr> 
+                            ) 
+                        })} 
+                    </tbody> 
+                </table> 
+
+                <br/><br/> 
+            </div>  {/* Fin Contenedor para que la tabla sea responsiva */} 
+            
+            </React.Fragment> 
+            ) 
+        }  // Fin si la operacion es listar 
+        if (operacion === "crear" || operacion === "editar") 
+        { 
+            return ( 
+            <React.Fragment> 
+
+            <button onClick={(e) => { setOperacion("listar") }} className="btn btn-primary"> Volver </button> <br/><br/> 
+
+            <form onSubmit={guardar}> 
+
+                <div className="row"> 
+
+                    <div className="col-md-4"> 
+                        <div className="form-group"> 
+                            <label className="control-label" htmlFor="activo"> activo </label> 
+                            <select value={cargo.activo} onChange={(e) => { setCargo({ ...cargo, [e.target.name]: e.target.value  }) }} name="activo" className="form-control"> 
+                                <option value=""> - Seleccione - </option> 
+                                <option value="true"> si </option> 
+                                <option value="false"> no </option> 
+                            </select> 
+                        </div> 
+                    </div> 
+                    <div className="col-md-4"> 
+                        <div className="form-group"> 
+                            <label className="control-label" htmlFor="descripcion"> descripcion </label> 
+                            <input type="text" value={cargo.descripcion} onChange={(e) => { setCargo({ ...cargo, [e.target.name]: e.target.value  }) }} name="descripcion" className="form-control" /> 
+                        </div> 
+                    </div> 
+                    <div className="col-md-4"> 
+                        <div className="form-group"> 
+                            <label className="control-label" htmlFor="empresa"> empresa </label> 
+                            <select name="empresa" value={cargo.empresa.id} 
+                            onChange={(e) => { setCargo({ ...cargo, [e.target.name]: {"id": e.target.value} }) }} className="form-control"> 
+                                <option value=""> - Seleccione - </option> 
+                                {listasBuscador.listaEmpresa.map(empresa => { 
+                                    return ( 
+                                        <option key={empresa.id} value={empresa.id}> {JSON.stringify(empresa)} </option> 
+                                    ) 
+                                })} 
+                            </select> 
+
+                        </div> 
+                    </div> 
+
+                </div> {/* Fin <div className="row"> */} 
+
+                {/* Inicio referencias cruzadas de la entidad Cargo */} 
+
+                <br/> 
+                <button type="button" onClick={(e) => { agregarNuevoCargoEmpleado() }} className="btn btn-success"> <span>+</span> Agregar Nuevo CargoEmpleado </button> <br/> 
+
+                {cargo.listaCargoEmpleado != null && cargo.listaCargoEmpleado.length > 0 && 
+
+                    <div> 
+                    <br/> 
+                    <h4> Listado de CargoEmpleado pertenecientes a Cargo </h4> 
+
+                    <table className="table table-bordered"> 
+                        <thead> 
+                            <tr> 
+                                <th> id </th> 
+                                <th> empleado </th> 
+                                <th> </th> 
+                            </tr> 
+                        </thead> 
+                        <tbody> 
+                            {Object.entries(cargo.listaCargoEmpleado).map(([key, cargoEmpleado]) => 
+                            { 
+                                return ( 
+                                    <tr key={key}> 
+                                        <td> {cargoEmpleado.id} </td> 
+                                        <td> 
+                                            {/* Opcion 1: Llenar el select con los registros sin paginar provenientes de la funcion obtenerListasBuscador() */} 
+                                            <select onChange={(e) => { actualizarCargoEmpleado(e, cargoEmpleado) }} name="empleado.id" value={cargoEmpleado.empleado.id} className="form-control"> 
+                                                <option key={cargoEmpleado.empleado.id} value=""> - Seleccione - </option> 
+                                                {listasBuscador.listaEmpleado.map(c => { 
+                                                    return ( 
+                                                        <option key={c.id} value={c.id}> {JSON.stringify(c)} </option> 
+                                                    ) 
+                                                })} 
+                                            </select> 
+
+                                            {/* Opcion 2: Usar select buscador */} 
+                                            {/* 
+                                            <div> 
+                                                <input type="text" style="display: none; width: 100%;" className="form-control" /> 
+
+                                                <select (click)="inicializarSelectBuscador($event)" rutaWebApi="/Cargo/llenarSelect2" 
+                                                entidad="Empleado" atributoBuscado="id" 
+                                                (change)="actualizarCargoEmpleado($event, cargoEmpleado)" name="empleado.id" className="form-control"> 
+                                                    <option value=""> - Seleccione - </option> 
+                                                    <ng-container *ngIf="cargoEmpleado.empleado.id != null"> 
+                                                        <option value="{{cargoEmpleado.empleado.id}}" selected> {{cargoEmpleado.empleado.toString}} </option> 
+                                                    </ng-container> 
+                                                </select> 
+                                            </div> 
+                                            */} 
+
+                                        </td> 
+                                        <td> 
+                                            <button type="button" onClick={()=> { quitarCargoEmpleado(cargoEmpleado) }}> Quitar de la lista </button> <br/> 
+                                        </td> 
+                                    </tr> 
+                                ) 
+                            })} 
+                        </tbody> 
+                    </table> 
+                    </div> 
+                } 
+                {/* Fin referencias cruzadas de la entidad Cargo */} 
+
+                <br/> 
+                <button type="submit" className="btn btn-primary"> Guardar </button> <br/> 
+
+            </form> 
+
+            
+            </React.Fragment> 
+            ) 
+        }  // Fin si la operacion es crear o editar 
+
+
+    } 
+
+    ReactDOM.render(
+      <App />,
+      root
+    );
+
+  </script>
+
+</body>
+</html>
