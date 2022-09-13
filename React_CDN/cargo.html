@@ -21,7 +21,7 @@
 
     const App = () => 
     { 
-        const url = "https://localhost:44335" 
+        // const url = "https://localhost:44335" 
         const [operacion, setOperacion] = useState("listar") 
         const [listaCargo, setListaCargo] = useState([]) 
         const [cargo, setCargo] = useState({}) 
@@ -182,10 +182,11 @@
             if (validacion !== "") return alert(validacion) 
 
             var metodoEnvio = (operacion === "crear") ? "POST" : "PUT"; 
+            var url = (operacion === "crear") ? "https://jsonplaceholder.typicode.com/posts" : "https://jsonplaceholder.typicode.com/posts/1"; 
 
             //mostrarLoadingSpinner(); 
 
-            fetch(url + "/Cargo", { 
+            fetch(url, { 
                 method: metodoEnvio, 
                 headers: {"Content-Type": "application/json"},  // headers: {"Authorization": "Bearer ejemploToken"} 
                 body: JSON.stringify(cargo) 
@@ -248,7 +249,10 @@
                             activo: true, 
                             descripcion: data.name, 
                             empresa: { id: 1, nombre: "Empresa 1" },  // Foreign key 
-                            listaCargoEmpleado: [], 
+                            listaCargoEmpleado: [
+                                { id: "1", empleado: { id: 1, rut: "1-9", nombreCompleto: "José" } },
+                                { id: "2", empleado: { id: 2, rut: "2-7", nombreCompleto: "Juana" } }
+                            ]
                         };
                         
                         setOperacion("editar") 
@@ -279,7 +283,7 @@
             { 
                 //mostrarLoadingSpinner(); 
 
-                await fetch(url + "/Cargo/" + id, { 
+                await fetch(`https://jsonplaceholder.typicode.com/albums/${id}`, { 
                     method: "DELETE", 
                     //headers: {"Authorization": "Bearer ejemploToken"} 
                 }) 
@@ -358,7 +362,7 @@
                     ...cargo, 
                     listaCargoEmpleado: cargo.listaCargoEmpleado.map(c => 
                         (c === cargoEmpleado) ? 
-                    {...c, [padre]: { [idPadre]: evento.target.value, toString: evento.target.options[evento.target.selectedIndex].text }} : c 
+                            {...c, [padre]: { [idPadre]: evento.target.value, toString: evento.target.options[evento.target.selectedIndex].text }} : c 
                     ) 
                 }) 
             } 
