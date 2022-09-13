@@ -38,16 +38,11 @@ async function cargarPagina()
             let valorSeleccionado = $("#select_5").val();
             let textoSeleccionado = $("#select_5 option:selected").text(); 
 
-            if (valorSeleccionado != "") 
-            {
-              console.log(`El value seleccionado es ${valorSeleccionado} y el text es ${textoSeleccionado}`);
+            if (valorSeleccionado == "") return limpiarSelect("#select_6");
 
-              let especiesGeneracion = await obtenerEspeciesGeneracion(valorSeleccionado);
-              llenarSelect({ querySelector: "#select_6", data: especiesGeneracion });
-            }
-            else {
-              limpiarSelect("#select_6");
-            }
+            console.log(`El value seleccionado es ${valorSeleccionado} y el text es ${textoSeleccionado}`);
+            let especiesGeneracion = await obtenerEspeciesGeneracion(valorSeleccionado);
+            llenarSelect({ querySelector: "#select_6", data: especiesGeneracion });
         }
     });
 }
