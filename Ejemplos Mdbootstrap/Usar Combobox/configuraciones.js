@@ -4,7 +4,7 @@ $(".mdb-select").material_select();
 
 async function cargarPagina()
 {
-    let datos = await obtenerDatos();
+    let datos = await obtenerGeneraciones();
 
     llenarSelect({ 
         querySelector: "#select_1", 
@@ -33,23 +33,34 @@ async function cargarPagina()
     llenarSelect({ 
         querySelector: "#select_5", 
         data: datos,
-        onchange: () => {
+        onchange: async () => 
+        {
             let valorSeleccionado = $("#select_5").val();
             let textoSeleccionado = $("#select_5 option:selected").text(); 
-            alert(`El value seleccionado es ${valorSeleccionado} y el text es ${textoSeleccionado}`);
+
+            if (valorSeleccionado != "") 
+            {
+              console.log(`El value seleccionado es ${valorSeleccionado} y el text es ${textoSeleccionado}`);
+
+              let especiesGeneracion = await obtenerEspeciesGeneracion(valorSeleccionado);
+              llenarSelect({ querySelector: "#select_6", data: especiesGeneracion });
+            }
+            else {
+              limpiarSelect("#select_6");
+            }
         }
     });
 }
 
 cargarPagina();
 
-function obtenerDatos()
+function obtenerGeneraciones()
 {
     return new Promise((resolve, reject) => 
     {
         $.ajax({
             method: "get",
-            url: "https://pokeapi.co/api/v2/pokemon?limit=30",
+            url: "https://pokeapi.co/api/v2/generation",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             beforeSend: () => {
@@ -58,6 +69,39 @@ function obtenerDatos()
             success: (res) =>
             {
                 let datos = res.results.map(x => 
+                {
+                    let idRegistro = x.url.split("/").reverse()[1];
+                    return { codigo: idRegistro, descripcion: x.name };
+                });
+        
+                resolve(datos);
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                toastr.error("Ocurrió un error al obtener los datos");
+                hideLoading();
+            },
+            complete: (res) => {
+                hideLoading();
+            }
+        });
+    })
+}
+
+function obtenerEspeciesGeneracion(idGeneracion)
+{
+    return new Promise((resolve, reject) => 
+    {
+        $.ajax({
+            method: "get",
+            url: `https://pokeapi.co/api/v2/generation/${idGeneracion}`,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            beforeSend: () => {
+                showLoading();
+            },
+            success: (res) =>
+            {
+                let datos = res.pokemon_species.map(x => 
                 {
                     let idRegistro = x.url.split("/").reverse()[1];
                     return { codigo: idRegistro, descripcion: x.name };

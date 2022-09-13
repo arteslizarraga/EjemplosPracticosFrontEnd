@@ -99,7 +99,17 @@
                                         <option value="" selected>Seleccione</option>
                                         
                                     </select>
-                                    <label class="active">Seleccionar un option</label>
+                                    <label class="active">Seleccione una Generación</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <div class="md-form">
+                                    <select id="select_6" class="chosen-select" searchable="Buscar">
+                                        <option value="" selected>Seleccione</option>
+                                        
+                                    </select>
+                                    <label class="active">Seleccione una Especie</label>
                                 </div>
                             </div>
 
@@ -108,8 +118,9 @@
 
                             <div class="col p-0 d-flex justify-content-end">
 
-                                <button type="button" class="btn btn-default waves-effect waves-light" onclick="quitarSeleccionSelect('#select_5')">
-                                    <span>Remover Selección</span>
+                                <button type="button" class="btn btn-default waves-effect waves-light" 
+                                onclick="quitarSeleccionSelect('#select_5'); limpiarSelect('#select_6')">
+                                    <span>Limpiar</span>
                                 </button>
 
                             </div>
