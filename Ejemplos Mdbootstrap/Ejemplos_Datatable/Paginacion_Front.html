@@ -164,8 +164,7 @@
                         <div class="row">
                             <div class="col-12">
 
-                                <table id="TablaPrincipal"
-                                    class="datatables table table-hover table-striped table-bordered m-0">
+                                <table id="TablaPrincipal" width="100%" class="datatables table table-hover table-striped table-bordered m-0">
                                     <thead>
                                         <tr>
                                             <th class="no-ocultar"></th>
@@ -236,6 +235,17 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
+
+                            <!-- <fieldset class="form-check">
+                                <input id="checkbox_seleccionarTodo" type="checkbox" class="form-check-input" checked="checked">
+                                <label onclick="seleccionarTodoColumnasGrilla()" for="checkbox_seleccionarTodo" class="form-check-label">Seleccionar Todo</label>
+                            </fieldset> -->
+                            <fieldset class="form-check">
+                                <input class="form-check-input" type="checkbox" id="checkbox_seleccionarTodo" checked="checked">
+                                <label onclick="seleccionarTodoColumnasGrilla()" class="form-check-label" for="checkbox_seleccionarTodo">Seleccionar Todo</label>
+                            </fieldset>
+                            <hr/>
+
                             <div id="divMostrarOcultarColumnas"></div>
                         </div>
                     </div>

@@ -1,3 +1,4 @@
+let arregloColumnasOcultas = [];
 
 function mostrarGrilla()
 {
@@ -16,8 +17,8 @@ function mostrarGrilla()
         // dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',  // Alineado a la izquierda
         dom: '<"top top-grey justify-content-end"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
         
-        scrollY: "60vh",
-        //"scrollX": true,  // Si la tabla tiene poco tamaño hacia el lado, esto hace que se vea pequeña
+        scrollY: "50vh",
+        scrollX: true,  // Si la tabla tiene poco tamaño hacia el lado, es necesario agregar un     width="100%"
         //lengthMenu: [[10, 20, 30], [10, 20, 30]],
         lengthMenu: [[minRegistrosPorPagina, 10, 15, 20, -1], [minRegistrosPorPagina, 10, 15, 20, "Todas"]],
         // bLengthChange: false, // Oculta el select de registros por página
@@ -208,8 +209,8 @@ function desplegarCheckboxMostrarOcultarColumnas()
 	    {
 		    return `
 		    <fieldset class="form-check">
-			    <input class="form-check-input" type="checkbox" id="checkbox_show_hide_${index}" checked="checked">
-			    <label onclick="mostrarOcultarColumna(${index})" class="form-check-label" for="checkbox_show_hide_${index}">${x.textContent}</label>
+			    <input id="checkbox_show_hide_${index}" type="checkbox" class="form-check-input" checked="checked">
+			    <label onclick="mostrarOcultarColumna(${index})" for="checkbox_show_hide_${index}" class="form-check-label">${x.textContent}</label>
 		    </fieldset>
 		    `;
 	    }
@@ -221,7 +222,29 @@ function desplegarCheckboxMostrarOcultarColumnas()
 function mostrarOcultarColumna(numeroColumna)
 {
     let column = $("#TablaPrincipal").DataTable().column(numeroColumna);    // Obtener columna
-    column.visible(!column.visible());                                      // Administrar visibilidad columna
+    let visible = !column.visible();
+    column.visible(visible);                                                // Administrar visibilidad columna
+
+    if (!visible) { arregloColumnasOcultas.push(numeroColumna) }
+    else { arregloColumnasOcultas = arregloColumnasOcultas.filter(x => x != numeroColumna) }
+
+    $("#checkbox_seleccionarTodo").prop("checked", (arregloColumnasOcultas.length == 0));
+}
+
+function seleccionarTodoColumnasGrilla() 
+{
+    let seleccionarTodo = $("#checkbox_seleccionarTodo").is(":checked");
+    let tabla = $("#TablaPrincipal").DataTable();
+	
+    Array.from($("#TablaPrincipal").DataTable().columns().header()).forEach((x, index) =>
+    {
+        if (!x.getAttribute("class").includes("no-ocultar")) 
+        {
+            let column = tabla.column(index); 
+            column.visible(!seleccionarTodo);                                       // Mostrar/Ocultar Columna
+            $(`#checkbox_show_hide_${index}`).prop("checked", !seleccionarTodo);    // Marcar/Desmarcar Checkbox
+        }
+    });
 }
 
 function abrirModalMostrarOcultarColumnas() {
