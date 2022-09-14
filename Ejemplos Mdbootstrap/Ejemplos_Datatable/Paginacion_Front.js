@@ -225,16 +225,24 @@ function mostrarOcultarColumna(numeroColumna)
     let visible = !column.visible();
     column.visible(visible);                                                // Administrar visibilidad columna
 
-    if (!visible) { arregloColumnasOcultas.push(numeroColumna) }
-    else { arregloColumnasOcultas = arregloColumnasOcultas.filter(x => x != numeroColumna) }
+    if (!visible) {
+        arregloColumnasOcultas.push(numeroColumna);
+        $("#checkbox_seleccionarTodo").prop("checked", false);
+    }
+    else
+    {
+        arregloColumnasOcultas = arregloColumnasOcultas.filter(x => x != numeroColumna);
 
-    $("#checkbox_seleccionarTodo").prop("checked", (arregloColumnasOcultas.length == 0));
+        if (arregloColumnasOcultas.length == 0)
+            $("#checkbox_seleccionarTodo").prop("checked", true);
+    }
 }
 
 function seleccionarTodoColumnasGrilla() 
 {
     let seleccionarTodo = $("#checkbox_seleccionarTodo").is(":checked");
     let tabla = $("#TablaPrincipal").DataTable();
+    if (!seleccionarTodo) arregloColumnasOcultas = [];
 	
     Array.from($("#TablaPrincipal").DataTable().columns().header()).forEach((x, index) =>
     {
@@ -243,6 +251,7 @@ function seleccionarTodoColumnasGrilla()
             let column = tabla.column(index); 
             column.visible(!seleccionarTodo);                                       // Mostrar/Ocultar Columna
             $(`#checkbox_show_hide_${index}`).prop("checked", !seleccionarTodo);    // Marcar/Desmarcar Checkbox
+            if (seleccionarTodo) arregloColumnasOcultas.push(index);
         }
     });
 }
