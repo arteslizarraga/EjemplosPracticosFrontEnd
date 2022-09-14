@@ -1,0 +1,14 @@
+
+/* =================================================================================================================================== */
+/* Textos e Iconos informativos para mostrar el estado o etapa en las grillas */
+
+.info-estado-grilla { cursor: pointer; }
+
+.info-estado-grilla.en-borrador { color: #808080; }   
+.info-estado-grilla.pendiente { color: #FFD700; } 
+.info-estado-grilla.observado { color: #ef6c00; }
+.info-estado-grilla.rechazado { color: #c00; }
+.info-estado-grilla.anulado { color: #c00; }
+.info-estado-grilla.aprobado { color: #4caf50; }
+
+/* =================================================================================================================================== */
