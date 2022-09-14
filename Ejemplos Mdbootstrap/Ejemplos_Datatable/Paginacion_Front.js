@@ -1,20 +1,28 @@
 
-let filtroAplicado = {};
-
-
 function mostrarGrilla()
 {
-    filtroAplicado.cantidad = 30;
+    let cantidad = 30;
+    let minRegistrosPorPagina = 5;
+
+    let limitarTextoCelda = (descripcion, size = 40) => (descripcion.length > size) ?
+        `<container data-toggle="tooltip" data-placement="top" title="${descripcion}" style="cursor: pointer">${descripcion.slice(0, size)} ...</container>`
+        : descripcion;
 
     let oTable = $("#TablaPrincipal").DataTable({
-        pageLength: 10,
-        dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
+        // destroy: true,   // Se utiliza en caso de volver a crear la tabla
+        // pageLength: 10,
+
+        // Input de búsqueda y botones de descarga y configurar
+        // dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',  // Alineado a la izquierda
+        dom: '<"top top-grey justify-content-end"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
+        
         scrollY: "60vh",
         //"scrollX": true,  // Si la tabla tiene poco tamaño hacia el lado, esto hace que se vea pequeña
         //lengthMenu: [[10, 20, 30], [10, 20, 30]],
-        bLengthChange: false, // Oculta el select de registros por página
+        lengthMenu: [[minRegistrosPorPagina, 10, 15, 20, -1], [minRegistrosPorPagina, 10, 15, 20, "Todas"]],
+        // bLengthChange: false, // Oculta el select de registros por página
         columnDefs: [
-            { "width": "32px", "targets": 0 },
+            { "width": "32px", "targets": 0 },  // Ancho de la columna con colores
             { "width": "140px", "targets": 6 }  // Ancho de la columna acciones
         ],
         aaSorting: [],
@@ -25,14 +33,23 @@ function mostrarGrilla()
         responsive: true,
         fnDrawCallback: () =>
         {
-            let recordsTotal = $("#TablaPrincipal").DataTable().page.info().recordsDisplay      // Al usar paginacion front
+            let cantidadFilasTabla = $("#TablaPrincipal").DataTable().page.info().recordsDisplay      // Al usar paginacion front (Filtros Incluidos)
+            // let cantidadFilasTabla = this.fnSettings().fnRecordsTotal();                           // Al usar ajax
+            // console.log("cantidadFilasTabla:", cantidadFilasTabla);
 
-            if (recordsTotal > 0)
+            if (cantidadFilasTabla > 0)
             {
                 $("#TablaPrincipal_filter").show();            // Muestra search box
                 $("#table-search").attr("maxlength", "20");    // Search box maxlength
 
-                $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length, #divDescargaReportes").show();
+                // $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length, #divDescargaReportes").show();
+
+                if (cantidadFilasTabla > minRegistrosPorPagina) {   // Si la tabla tiene más de una pagina de informacion, Muestra/Oculta la paginacion 
+                    $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length").show();
+                }
+                else {
+                    $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length").hide();
+                }
 
                 if (!$("#divDescargaReportes").length)   // Si no existe, lo crea
                 {
@@ -43,6 +60,12 @@ function mostrarGrilla()
                         class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" data-toggle="tooltip"
                         data-placement="top" title="Descargar Excel">
                             <i class="material-icons icon-1x">arrow_downward</i>
+                        </button>
+
+                        <button type="button" onclick="" 
+                        class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" 
+                        data-toggle="tooltip" data-placement="top" title="Descargar PDF" data-original-title="Descargar PDF">
+                            <i class="material-icons icon-1x">picture_as_pdf</i>
                         </button>
 
                         <button type="button" class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light"
@@ -65,7 +88,7 @@ function mostrarGrilla()
         },
         ajax: {
             type: "get",
-            url: `https://pokeapi.co/api/v2/pokemon?limit=${filtroAplicado.cantidad}`,
+            url: `https://pokeapi.co/api/v2/pokemon?limit=${cantidad}`,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: () => {
@@ -129,9 +152,7 @@ function mostrarGrilla()
             { "data": "nombre", "name": "nombre" },
             {
                 "data": "descripcion", "name": "descripcion", "className": "text-nowrap", "render": (data, type, row, meta) => {
-                    let descripcion = row.descripcion;
-                    if (descripcion.length > 50) return descripcion.slice(0, 50) + " ...";
-                    return descripcion;
+                    return limitarTextoCelda(row.descripcion);
                 }
             },
             { "data": "fechaEfectiva", "name": "fechaEfectiva", "className": "text-nowrap" },
