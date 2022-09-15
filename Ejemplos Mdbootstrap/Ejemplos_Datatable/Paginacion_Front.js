@@ -221,15 +221,12 @@ function desplegarCheckboxMostrarOcultarColumnas()
 
 function mostrarOcultarColumna(numeroColumna)
 {
-    let column = $("#TablaPrincipal").DataTable().column(numeroColumna);    // Obtener columna
-    let visible = !column.visible();
-    column.visible(visible);                                                // Administrar visibilidad columna
-
-    if (!visible) {
+    if ($(`#checkbox_show_hide_${numeroColumna}`).is(":checked")) 
+    {
         arregloColumnasOcultas.push(numeroColumna);
         $("#checkbox_seleccionarTodo").prop("checked", false);
     }
-    else
+    else 
     {
         arregloColumnasOcultas = arregloColumnasOcultas.filter(x => x != numeroColumna);
 
@@ -240,20 +237,36 @@ function mostrarOcultarColumna(numeroColumna)
 
 function seleccionarTodoColumnasGrilla() 
 {
-    let seleccionarTodo = $("#checkbox_seleccionarTodo").is(":checked");
-    let tabla = $("#TablaPrincipal").DataTable();
-    if (!seleccionarTodo) arregloColumnasOcultas = [];
+    let seleccionarTodo = !$("#checkbox_seleccionarTodo").is(":checked");
+    if (seleccionarTodo) arregloColumnasOcultas = [];
 	
     Array.from($("#TablaPrincipal").DataTable().columns().header()).forEach((x, index) =>
     {
         if (!x.getAttribute("class").includes("no-ocultar")) 
         {
-            let column = tabla.column(index); 
-            column.visible(!seleccionarTodo);                                       // Mostrar/Ocultar Columna
-            $(`#checkbox_show_hide_${index}`).prop("checked", !seleccionarTodo);    // Marcar/Desmarcar Checkbox
-            if (seleccionarTodo) arregloColumnasOcultas.push(index);
+            $(`#checkbox_show_hide_${index}`).prop("checked", seleccionarTodo);    // Marcar/Desmarcar Checkbox
+            if (!seleccionarTodo) arregloColumnasOcultas.push(index);
         }
     });
+}
+
+function aplicarCambiosColumnasGrilla() 
+{
+    let tabla = $("#TablaPrincipal").DataTable();
+    let columnas = Array.from(tabla.columns().header());
+
+    if (columnas.filter(x => !x.getAttribute("class").includes("no-ocultar")).length == arregloColumnasOcultas.length) {
+        return toastr.error("Debe existir al menos una columna visible");
+    }
+
+    columnas.forEach((x, index) =>
+    {
+        let column = tabla.column(index);
+        let estaOculta = arregloColumnasOcultas.includes(index); 
+        column.visible(!estaOculta);
+    });
+
+    $("#ModalMostrarOcultarColumnas").modal("hide");
 }
 
 function abrirModalMostrarOcultarColumnas() {

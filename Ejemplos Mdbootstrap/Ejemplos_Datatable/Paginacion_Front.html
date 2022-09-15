@@ -236,10 +236,6 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                            <!-- <fieldset class="form-check">
-                                <input id="checkbox_seleccionarTodo" type="checkbox" class="form-check-input" checked="checked">
-                                <label onclick="seleccionarTodoColumnasGrilla()" for="checkbox_seleccionarTodo" class="form-check-label">Seleccionar Todo</label>
-                            </fieldset> -->
                             <fieldset class="form-check">
                                 <input class="form-check-input" type="checkbox" id="checkbox_seleccionarTodo" checked="checked">
                                 <label onclick="seleccionarTodoColumnasGrilla()" class="form-check-label" for="checkbox_seleccionarTodo">Seleccionar Todo</label>
@@ -253,6 +249,9 @@
                 <div class="modal-footer px-0">
                     <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">
                         <span>Cerrar</span>
+                    </button>
+                    <button type="button" onclick="aplicarCambiosColumnasGrilla()" class="btn btn-default waves-effect waves-light">
+                        <span>Aplicar</span>
                     </button>
                 </div>
             </div>
