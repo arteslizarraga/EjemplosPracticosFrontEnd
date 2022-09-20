@@ -131,8 +131,10 @@
                             totalRegistros: listaFotos.length,
                             totalPaginas: totalPaginas,
                             registrosPorPagina: registrosPorPagina,
+                            primeraPagina: () => { resetearPaginacion(); obtenerListaPrincipal() },         // Navegar hacia la primera página
                             pasoAtras: () => { paginaActual --; obtenerListaPrincipal() },  
                             pasoAdelante: () => { paginaActual ++; obtenerListaPrincipal() },
+                            ultimaPagina: () => { paginaActual = totalPaginas; obtenerListaPrincipal() },   // Navegar hacia la última página
                             seleccionarPagina: e => { 
                                 paginaActual = parseInt(e.target.getAttribute("numeroPagina"));
                                 obtenerListaPrincipal();

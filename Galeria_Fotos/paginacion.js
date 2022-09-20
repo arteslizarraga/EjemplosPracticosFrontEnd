@@ -30,11 +30,17 @@ function desplegarPaginacionBootstrap(datos)
         cont++;
     };
 
-    if (totalPaginas > 0 && totalRegistros >= registrosPorPagina) 
+    // console.log("paginaActual", paginaActual);
+    // console.log("totalPaginas", totalPaginas);
+
+    if (totalPaginas > 0)   // if (totalPaginas > 0 && totalRegistros >= registrosPorPagina) 
     {
-        if (paginaActual != (contarDesdeCero ? 0 : 1))    // Ejemplo original java
+        if (paginaActual != (contarDesdeCero ? 0 : 1)) 
         {
-            agregarLi({ texto: "Anterior", onclick: datos.pasoAtras });
+            agregarLi({ texto: "Primera Página", onclick: datos.primeraPagina });
+
+            // agregarLi({ texto: "Anterior", onclick: datos.pasoAtras });
+            agregarLi({ texto: "«", onclick: datos.pasoAtras });
         }
 
         let maximo_paginas_mostrado = 10; // Total de paginas desplegadas. Ej: paginas del 1 al 10,   del 10 al 19,   del 20 al 29 
@@ -97,7 +103,10 @@ function desplegarPaginacionBootstrap(datos)
 
         if (paginaActual != totalPaginas)  // Si pagina es diferente de totalPaginas 
         {
-            agregarLi({ texto: "Siguiente", onclick: datos.pasoAdelante });
+            // agregarLi({ texto: "Siguiente", onclick: datos.pasoAdelante });
+            agregarLi({ texto: "»", onclick: datos.pasoAdelante });
+
+            agregarLi({ texto: "Última Página", onclick: datos.ultimaPagina });
         }
 
         document.querySelector(datos.querySelector).appendChild(ul);  // NUEVO
