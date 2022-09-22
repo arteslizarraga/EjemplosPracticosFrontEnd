@@ -1,0 +1,213 @@
+<html>
+
+<head>
+    <style>
+
+        .tabla-reporte {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .fila-cabecera {
+            font-weight: bold;
+        }
+
+        .fila-detalle td {
+            padding-bottom: 2em;
+            word-wrap: break-word;
+            vertical-align: top;
+        }
+
+        table, tr, td, th, tbody, thead, tfoot {
+            page-break-inside: avoid !important;
+        }
+
+        /* =================================================================== */
+        /* Importante: Esto es solo para visualizar la página en el navegador como si fuera una hoja carta / oficio */
+
+        body {
+          font-family: Arial;
+          font-size: 13px;                   /* Tamaño de las letras */
+          background: rgb(204,204,204);  /* Color de fondo para ver de que tamaño queda la pagina */
+        }
+
+        pagina {
+            background: white;
+            width: 1040px;      /* Largo de la seccion blanca de la hoja */
+            height: 1350px;     /* Carta: 1350px        Oficio: 1550px */
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+        }
+
+        .invoice-box {
+            padding: 30px;  /* Este es el margen todos los elementos de la pagina */
+            min-height: 1300px;
+        }
+
+        /* =================================================================== */
+    </style>
+</head>
+
+<body>
+
+    <pagina>
+
+        <div class="invoice-box">
+
+            <img src="data:image/png;base64,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"
+            style='width: 200px;' />
+
+            <br><br><br>
+
+            <table class="tabla-reporte">
+                <tr class="fila-cabecera">
+                    <td>Código</td>
+                    <td>Rut Solicitante</td>
+                    <td>Nombre Solicitante</td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td>CF22121</td>
+                    <td>12222222-K</td>
+                    <td>Nombre de Ejemplo</td>
+                </tr>
+                <tr class="fila-cabecera">
+                    <td>Nombre de Capacitación</td>
+                    <td>Canal de Formación</td>
+                    <td>Modalidad</td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td>La Comprensión Lectora en el ambiente Académico</td>
+                    <td>Actualización de Especialidad </td>
+                    <td>Semipresencial</td>
+                </tr>
+                <tr class="fila-cabecera">
+                    <td>Área Académica</td>
+                    <td>Programas de Estudio</td>
+                    <td>Asignaturas</td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td>
+                        <p>Todas las Áreas</p>
+                    </td>
+                    <td>
+                        <p>Todos los Programas de Estudio</p>
+                    </td>
+                    <td>
+                        <p>(AATI01)Taller Integrado de Empresas</p>
+                        <p>(APEC01)Economía y Negocios</p>
+                        <p>(AEEM01)Emprendimiento</p>
+                        <p>(APAD01)Administración</p>
+                        <p>(APCP01)Costo y Presupuesto</p>
+                        <p>(APLG01)Legislación Comercial y Laboral</p>
+                        <p>(IDEN01)Inglés I</p>
+                    </td>
+                </tr>
+                <tr class="fila-cabecera">
+                    <td>Institución</td>
+                    <td>Período</td>
+                    <td>Cantidad de Docentes Impactados</td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td>
+                        <p>INSTITUTO PROFESIONAL</p>
+                        <p>CENTRO DE FORMACIÓN TÉCNICA</p>
+                        <p>UNIVERSIDAD TECNOLÓGICA DE CHILE INACAP</p>
+                    </td>
+                    <td>OTOÑO 2022</td>
+                    <td> 33 </td>
+                </tr>
+                <tr class="fila-cabecera">
+                    <td>Costo del Curso</td>
+                    <td>Responsable Costo</td>
+                    <td>Horas Totales de Capacitación</td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td> 232.333 </td>
+                    <td>Sede</td>
+                    <td>33</td>
+                </tr>
+                <tr class="fila-cabecera">
+                    <td colspan="3">Descripción detallada de la Actividad</td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td colspan="3">
+                        La UNESCO ha propuesto siempre, que la lectura y la alfabetización han
+                        sido dos de sus principales desafíos y compromisos. Que, para contribuir a la paz y al respeto universal
+                        de los derechos humanos, ha de fomentarse el conocimiento y la comprensión mutua y que hay que impulsar
+                        a la educación popular y a la difusión de la cultura y ayudar a su conservación, al progreso y a la
+                        difusión del saber. Nada de lo anterior es posible sin la lectura, sin la escritura y sin el acceso a
+                        los libros. El proceso antes mencionado desarrolla el aprendizaje mediante distintas etapas, que se
+                        materializan adqui
+                    </td>
+                </tr>
+                <tr class="fila-cabecera">
+                    <td>Incluye Certificación</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td>No</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="fila-cabecera">
+                    <td>Quién Ejecuta</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td>interno</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="fila-cabecera">
+                    <td>Código Sence</td>
+                    <td colspan="2">Curso Pre requisito</td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td>NO TIENE</td>
+                    <td colspan="2">MAT001</td>
+                </tr>
+            </table>
+
+        </div>
+
+    </pagina>
+
+    <pagina>
+
+        <div class="invoice-box">
+
+            <table class="tabla-reporte">
+                <tr class="fila-cabecera">
+                    <td>Título Cualquiercosa</td>
+                    <td>Título Cualquiercosa</td>
+                    <td>Título Cualquiercosa</td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td>Cualquiercosa</td>
+                    <td>Cualquiercosa</td>
+                    <td>Cualquiercosa</td>
+                </tr>
+                <tr class="fila-cabecera">
+                    <td>Título Cualquiercosa</td>
+                    <td>Título Cualquiercosa</td>
+                    <td>Título Cualquiercosa</td>
+                </tr>
+                <tr class="fila-detalle">
+                    <td>Cualquiercosa</td>
+                    <td>Cualquiercosa</td>
+                    <td>Cualquiercosa</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </pagina>
+    
+</body>
+
+</html>

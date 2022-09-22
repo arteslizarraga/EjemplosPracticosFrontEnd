@@ -1,0 +1,697 @@
+<html>
+
+<head>
+  <style>
+    table, tr, td, th, tbody, thead, tfoot { page-break-inside: avoid !important; }
+
+    .tabla-info {
+      table-layout: fixed; 
+      width:100%;
+      border-collapse: collapse;
+    }
+
+    .tabla-info th, td {
+      border: 1px solid rgb(104, 103, 103);
+      word-wrap: break-word;         /* All browsers since IE 5.5+ */
+      overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+    }
+
+    .tabla-info td {
+      padding: 5px;
+    }
+
+    .tabla-info th {
+      white-space: nowrap;    /* Impide que haga un salto de linea  */
+      padding: 3px;
+    }
+
+    .tabla-info thead {
+      background-color: gray; color: white;
+    }
+
+    .sin-borde {
+      border:none !important;
+    }
+
+    /* =================================================================== */
+    /* Importante: Esto es solo para visualizar la página en el navegador como si fuera una hoja carta / oficio */
+
+    body {
+        font-family: Arial;
+        font-size: 13px;
+        /* Tamaño de las letras */
+        background: rgb(204, 204, 204);
+        /* Color de fondo para ver de que tamaño queda la pagina */
+    }
+
+    pagina {
+        background: white;
+        width: 1040px;
+        /* Largo de la seccion blanca de la hoja */
+        height: 1350px;
+        /* Carta: 1350px        Oficio: 1550px */
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+    }
+
+    .invoice-box {
+        padding: 30px;
+        /* Este es el margen todos los elementos de la pagina */
+        min-height: 1300px;
+    }
+
+    /* =================================================================== */
+  </style>
+</head>
+
+<body>
+
+  <pagina>
+
+    <div class="invoice-box">
+
+      <img
+        src="data:image/png;base64,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"
+        style='width: 200px;' />
+
+      <br><br><br>
+
+      <!-- ============================================================================================================= -->
+
+      <div>
+        <table class="tabla-info">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nombre curso</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CF22182</td>
+              <td>La buena alimentación en el entorno laboral</td>
+              <td>
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <div>
+          <table class="tabla-info">
+            <thead>
+              <tr>
+                <th rowspan="2">Hrs. Presenciales</th>
+                <th colspan="2" scope="rowgroup"> Hrs. Online</th>
+                <th rowspan="2">Hrs. Totales</th>
+                <th rowspan="2">Formato</th>
+              </tr>
+              <tr>
+                <th>Sincrónicas </th>
+                <th>Asincrónicas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>33</td>
+                <td>55</td>
+                <td>77</td>
+                <td>165</td>
+                <td>Online Mixto</td>
+              </tr>
+            </tbody>
+          </table><br>
+        </div>
+      </div>
+      <div>
+        <table class="tabla-info">
+          <thead>
+            <tr>
+              <th>Clúster Competencias Transversales</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Ética y Ciudadanía.</b> - Propone un énfasis en el saber ser y convivir en una sociedad global,
+                respetando códigos y normas sociales y específicas del trabajo, interactuando con personas y grupos de
+                distintos orígenes y ámbitos en espacios presenciales y virtuales, y aportando activamente a los
+                desafíos ambientales, los económicos y productivos de la sociedad, con un sentido crítico y
+                constructivo. </td>
+            </tr>
+            <tr>
+              <td><b>Resolución de Problemas, Innovación y Emprendimiento</b> - Propone un énfasis en saber pensar,
+                saber ser y saber actuar orientado hacia la generación de valor, para abordar los problemas y desafíos
+                sociales, ambientales, económicos y productivos propios de la industria 4.0, incorporando una mirada
+                analítica, crítica y creativa e integrando tecnologías y herramientas digitales que favorezcan la
+                generación de oportunidades de solución innovadoras y alternativas de emprendimientos sostenibles. </td>
+            </tr>
+            <tr>
+              <td><b>Aprendizaje Continuo o Permanente</b> - Propone un énfasis en el saber analizar y actuar en un
+                contexto caracterizado por la generación dinámica de información y de conocimiento, en permanente
+                transformación, evaluando su trayectoria formativo laboral y actuando con autonomía y flexibilidad para
+                proyectar sus desafíos de aprendizaje, integrando formatos híbridos e innovadores en su actualización,
+                para el logro de sus objetivos personales y profesionales. </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <div>
+          <table>
+            <tbody>
+              <tr>
+                <th>Unidades de Aprendizaje: </th>
+                <th></th>
+              </tr>
+            </tbody>
+          </table><br>
+        </div>
+        <div>
+          <p><em><strong>Unidad AA</strong></em></p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat.</p>
+        </div>
+        <table class="tabla-info">
+          <thead>
+            <th>Aprendizajes Esperados</th>
+            <th>Criterios de Evaluación</th>
+            <th>Contenidos</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <p><em><strong>Aprendizaje&nbsp; AA 2</strong></em></p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  pariatur. Excepteur sint occaecat cupidatat non proident</p>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Criterio AA 2_B</strong></em></p>
+                      <p>Ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Criterio AA 2_A</strong></em></p>
+                      <p>Ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Contenido AA 2_B</strong></em></p>
+                      <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Contenido AA 2_A</strong></em></p>
+                      <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p><em><strong>Aprendizaje AA 1</strong></em></p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  pariatur. Excepteur sint occaecat cupidatat non proident</p>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Criterio AA 1_B</strong></em></p>
+                      <p>Ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Criterio AA 1_A</strong></em></p>
+                      <p>Ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Contenido AA 1_B</strong></em></p>
+                      <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Contenido AA 1_A</strong></em></p>
+                      <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table><br>
+        <div>
+          <p><em><strong>Unidad AB</strong></em></p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat.</p>
+        </div>
+        <table class="tabla-info">
+          <thead>
+            <th>Aprendizajes Esperados</th>
+            <th>Criterios de Evaluación</th>
+            <th>Contenidos</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <p><em><strong>Aprendizaje&nbsp; AB 2</strong></em></p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  pariatur. Excepteur sint occaecat cupidatat non proident</p>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Criterio AB 2_A</strong></em></p>
+                      <p>Ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Criterio AB 2_B</strong></em></p>
+                      <p>Ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Contenido AB 2_A</strong></em></p>
+                      <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Contenido AB 2_B</strong></em></p>
+                      <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p><em><strong>Aprendizaje&nbsp; AB 1</strong></em></p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  pariatur. Excepteur sint occaecat cupidatat non proident</p>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Criterio AB 1_A</strong></em></p>
+                      <p>Ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Criterio AB 1_B</strong></em></p>
+                      <p>Ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Contenido AB 1_A</strong></em></p>
+                      <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde">
+                      <p><em><strong>Contenido AB 1_B</strong></em></p>
+                      <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <table style="text-align: left;">
+          <tbody>
+            <tr>
+              <th>Estrategias Metodológicas: </th>
+              <th> Para el logro de los aprendizajes esperados de esta asignatura, se han establecido las siguientes
+                estrategias y técnicas didácticas, acordes al enfoque orientado a competencias.</th>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <table class="tabla-info">
+          <thead>
+            <tr>
+              <th>UA</th>
+              <th>Estrategia didáctica</th>
+              <th>Complementada con la(s) técnica(s)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Unidad AA
+                Lorem ipsu...</td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde"><b>Aprendizaje Basado en Problemas (ABP)</b> Es el empleo didáctico de un
+                      problema como punto de partida para la adquisición e integración de nuevos conocimientos y
+                      competencias” (Barrows, 1986, citado en Morales &amp; Landa, 2004). <br></td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde"><b>Método del Caso (MC)</b> Es el empleo didáctico del análisis de la
+                      situación descrita en un caso, donde los alumnos se colocan de manera figurada en la posición
+                      particular de un tomador de decisiones” (Dirección de Investigación y Desarrollo Educativo, s.f.b,
+                      p. 8). <br></td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde"><b>Dilemas Éticos (DE)</b> Es el empleo didáctico del análisis de la situación
+                      descrita en un dilema, donde los alumnos tienen que tomar una decisión sobre el curso de acción a
+                      seguir. Esta decisión debe tomarse entre varias alternativas que implican aspectos positivos y
+                      negativos, tanto para el tomador de decisión, como para otras personas (Meza, 2008). <br></td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde"><b>Clase Invertida (CI)</b> Técnica que invierte la clase tradicional. Las
+                      actividades prácticas que implican la movilización de aprendizajes se realizan en el aula con la
+                      guía del docente y la presentación de los conceptos, se deja como tarea previa a realizar fuera
+                      del aula, donde los estudiantes de manera autónoma revisan el material facilitado de manera previa
+                      a la asistencia de la clase (Bergmann &amp; Sams, 2014). <br></td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde"><b>Clase Expositiva (CEX)
+                      </b> Técnica que implica la presentación de un tema lógicamente estructurado con la finalidad de
+                      facilitar información organizada siguiendo criterios adecuados a la finalidad pretendida”. Esta
+                      técnica se centra fundamentalmente en la “exposición verbal por parte del docente de los
+                      contenidos sobre la materia objeto de estudio (Miguel, 2006, p. 84). <br></td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde"><b>Debate (DBT)</b> Es una técnica “para desarrollar la expresión oral, que
+                      promueve la reflexión y la argumentación, puesto que induce a los estudiantes a adoptar una
+                      posición y defenderla. Se favorece la participación activa de todos los estudiantes. Desarrolla
+                      habilidades de comunicación (argumentación, escucha activa) y valores tales como el respeto”
+                      (Centro de Innovación Metodológica y Tecnológica [CIMET], 2012, p. 61). <br></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>Unidad AB
+                Lorem ipsu...</td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde"><b>Prácticas Externas (PE)</b> Estrategia didáctica en que el desarrollo de
+                      competencias, ocurre a partir de un conjunto de desempeños que un estudiante realiza en un
+                      contexto real, controlado y propio del ejercicio de su profesión, que proporcionan al estudiante
+                      oportunidades de aprendizaje para fortalecer el logro de las competencias. <br></td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde"><b>Simulación Clínica (SC)</b> Estrategia didáctica que consiste en situar a
+                      un estudiante en un contexto que imite un aspecto de la realidad asistencial, estableciendo en ese
+                      ambiente, situaciones o problemas similares a los que él deberá enfrentar con individuos sanos o
+                      enfermos en un contexto clínico real, adquiriendo competencias en un ambiente de aprendizaje
+                      seguro y controlado. <br></td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde"><b>Aprendizaje Centrado en la Resolución de Problemas en el Aula (ACERPA)</b>
+                      Estrategia didáctica que busca desarrollar en el estudiante el conocimiento de las ciencias
+                      (Matemática, Física, Química y Biología) enfrentándose a problemas no rutinarios y de diversa
+                      complejidad, que requieren de conocimientos y estrategias para su resolución. Su didáctica,
+                      mediada por el docente, se desarrolla a través de estrategias específicas que favorecen la
+                      construcción o reconstrucción del conocimiento, que permiten al estudiante profundizar y
+                      flexibilizar su conocimiento científico. <br></td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td class="sin-borde"><b>Simulación (SIM)</b> Técnica que consiste en la representación espontánea o
+                      preparada de una situación real o hipotética para demostrar un procedimiento, problema o
+                      información relevante para los aprendizajes del curso. (Rodríguez, 2007). <br></td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde"><b>Demostración (DMT)</b> Es una técnica didáctica a través de la cual se
+                      explica un proceso o procedimiento y se muestra evidencia de cómo funciona o cómo se opera. La
+                      demostración es una técnica tanto visual como verbal; su objeto es una información, un
+                      conocimiento o una técnica (Mora, 1983). <br></td>
+                  </tr>
+                  <tr>
+                    <td class="sin-borde"><b>Salida a Terreno (ST) Trabajo de Campo (TDC)</b> Esta técnica se refiere a
+                      las pasantías, visitas y prácticas en terreno que permiten a los estudiantes llevar a cabo
+                      experiencias de observación y/o aplicación, como apoyo al desarrollo de los aprendizajes de una
+                      asignatura. <br></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <table>
+          <tr>
+            <td class="sin-borde"><b> Sistema de Evaluación: </b> &nbsp;&nbsp; </td>
+            <td class="sin-borde"> Para resguardar el logro de los aprendizajes esperados de esta asignatura, el
+              sistemas de evaluación debe incluir las siguientes instancias evaluativas: </td>
+          </tr>
+        </table><br>
+      </div>
+      <div>
+        <ul>
+          <li><strong>Evaluación Diagnóstica:</strong> Evaluación de inicio del proceso formativo, orientada a indagar
+            en los conocimientos previos de los estudiantes, como punto de partida del módulo. Esta evaluación puede ser
+            considerada para la evaluación final, pues permite detectar el resultado final del proceso del aprendizaje
+            de los estudiantes.</li>
+          <li><strong>Evaluación Formativa:</strong> Evaluación de proceso, destinada a la entrega de retroalimentación
+            del avance de los estudiantes, con foco en la mejora del proceso de enseñanza y aprendizaje.</li>
+          <li><strong>Evaluación Sumativa:</strong> Evaluación final de cada unidad de aprendizaje, dirigida a valorar
+            los resultados del aprendizaje de los estudiantes y verificar el logro del estándar de aprendizaje.</li>
+        </ul>
+      </div>
+      <div>
+        <table class="tabla-info">
+          <thead>
+            <tr>
+              <th>Unidad de Aprendizaje</th>
+              <th>Evidencia</th>
+              <th>Criterios de Evaluación</th>
+              <th>Situación de Evaluación</th>
+              <th>Instrumento de Evaluación</th>
+              <th>% Parcial</th>
+              <th>% Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="2">Unidad AA
+                Lorem ipsu...</td>
+              <td>Evidencia 2</td>
+              <td>Criterio de evaluación 2</td>
+              <td>Situación de evaluación 2</td>
+              <td>Instrumento de evaluación 2</td>
+              <td>25%</td>
+              <td rowspan="4"> 100% </td>
+            </tr>
+            <tr>
+              <td>Evidencia 1</td>
+              <td>Criterio de evaluación 1</td>
+              <td>Situación de evaluación 1</td>
+              <td>Instrumento de evaluación 1</td>
+              <td>25%</td>
+            </tr>
+            <tr>
+              <td rowspan="2">Unidad AB
+                Lorem ipsu...</td>
+              <td>Evidencia 4</td>
+              <td>Criterio de evaluación 4</td>
+              <td>Situación de evaluación 4</td>
+              <td>Instrumento de evaluación 4</td>
+              <td>20%</td>
+            </tr>
+            <tr>
+              <td>Evidencia 3</td>
+              <td>Criterio de evaluación 3</td>
+              <td>Situación de evaluación 3</td>
+              <td>Instrumento de evaluación 3</td>
+              <td>30%</td>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <th>Perfil Docente:</th>
+              <th></th>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <table class="tabla-info">
+          <thead>
+            <tr>
+              <th>Pref.</th>
+              <th>Título Profesional</th>
+              <th>Grado Académico</th>
+              <th>Exp. Docente</th>
+              <th>Exp. Profesional</th>
+              <th>Observaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Arqueólogo</td>
+              <td>Magíster en Educación</td>
+              <td> 11 </td>
+              <td> 42 </td>
+              <td> Arqueólogo con Magister en Educación. Tiene 42 años de experiencia profesional y 11 de experiencia
+                docente </td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Antropólogo</td>
+              <td>Licenciado en Antropología</td>
+              <td> 2 </td>
+              <td> 15 </td>
+              <td> Licenciado en Antropología con 15 años de experiencia profesional y 2 de experiencia docente </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Arquitecto</td>
+              <td>Magíster en Manejo de Suelos y Aguas</td>
+              <td> 5 </td>
+              <td> 32 </td>
+              <td> Arquitecto con 32 años de experiencia profesional y 5 de experiencia docente </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Bioquímico</td>
+              <td>Doctor en Biología</td>
+              <td> 15 </td>
+              <td> 40 </td>
+              <td> Doctor en Biología con 40 años de experiencia profesional y 15 de experiencia docente </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Cirujano Dental</td>
+              <td>Magíster en Ciencias de la Salud</td>
+              <td> 14 </td>
+              <td> 36 </td>
+              <td> Cirujano Dental - Magister en Ciencias de la Salud. Tiene 36 años de experiencia profesional y 14 de
+                experiencia docente </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <th>Recursos:</th>
+              <th></th>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <table class="tabla-info">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Recurso 2</td>
+            </tr>
+            <tr>
+              <td>Recurso 1</td>
+            </tr>
+            <tr>
+              <td>Recurso 3</td>
+            </tr>
+            <tr>
+              <td>Recurso 4</td>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <th>Requisitos:</th>
+              <th></th>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+      <div>
+        <table class="tabla-info">
+          <thead>
+            <tr>
+              <th>Cupos (Número de Participantes)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td> 1234 </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </div>
+
+      <!-- ============================================================================================================= -->
+
+    </div>
+
+  </pagina>
+
+</body>
+
+</html>
