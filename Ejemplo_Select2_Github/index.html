@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Probando Select2</title>
+    <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+
+    <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css" />
+    <link rel="stylesheet" type="text/css" href="estilos.css" />
+
+    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+
+    <script src="funciones.js"></script>
+</head>
+
+<body>
+
+    <div class="page-content">
+        <div class="navbar-overlay"></div>
+
+        <main id="main" class="container">
+            <section>
+                <div class="row">
+                    <div class="card col" id="resultados">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h4 class="float-left heading h4-responsive mb-0">Ejemplo Select2</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">      
+
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group"> 
+                                        <label>Buscar Repositorios</label> 
+                                        
+                                        <select id="select2_asignaturas" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                        </select> 
+                                    </div> 
+                                </div>
+
+                            </div> 
+                        </div>
+                    </div>     
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        $(document).ready(function () 
+		{
+            // https://api.github.com/search/repositories?q=lizarraga&page=1
+            // https://api.github.com/search/repositories?q=lizarraga&page=2
+
+            llenarSelect2({
+                querySelector: "#select2_asignaturas",
+                url: "https://api.github.com/search/repositories",
+                consultarPorRut: true,
+                maxlength: 15,
+                placeholder: "Seleccione un Repositorio",
+                registrosPorPagina: 10,
+                multiple: true, 
+                /*
+                params: (x) => 
+                {
+                    return {
+                        // q: "lizarraga"
+                    };
+                },
+                */
+                onchange: (x) => 
+                {
+                    // console.log(x);  // Trae todo
+
+                    console.log("El value es: ", x.value);
+                    console.log("El texto seleccionado es: ", x.text);
+
+                    //console.log(x.params().i_carr_ccod);
+                },
+                onblur: (x) => {
+                    //console.log("Onblur | El value seleccionado es:", x.value);
+                }
+            });
+           
+        });
+    </script>
+
+</body>
+
+</html>
