@@ -8,15 +8,11 @@
     <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
 
     <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css" />
-    <link rel="stylesheet" type="text/css" href="estilos.css" />
-
-    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script> -->
+    <link rel="stylesheet" type="text/css" href="select2-estilos.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 
     <script src="funciones.js"></script>
 </head>
@@ -29,7 +25,7 @@
         <main id="main" class="container">
             <section>
                 <div class="row">
-                    <div class="card col" id="resultados">
+                    <div class="card col">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
@@ -38,15 +34,31 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="row">      
-
+                            <div class="row"> 
+                                
                                 <div class="col-12 col-md-4">
+                                    <div class="md-form">
+                                        <input type="search" name="campoCualquiera" placeholder="Ingrese campo cualquiera" class="form-control">
+                                        <label class="active">Campo Cualquiera</label>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-12 col-md-4">
                                     <div class="form-group"> 
                                         <label>Buscar Repositorios</label> 
                                         
                                         <select id="select2_asignaturas" class="form-control" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                         </select> 
                                     </div> 
+                                </div> -->
+
+                                <div class="col-12 col-md-4">
+                                    <div class="md-form">
+                                        <select id="select2_asignaturas" style="width: 100%;">
+                                            <!-- <option value="" disabled selected>Seleccione un Repo</option> -->
+                                        </select>
+                                        <label for="select2_asignaturas" class="active">Buscar Repositorios</label>
+                                    </div>
                                 </div>
 
                             </div> 
