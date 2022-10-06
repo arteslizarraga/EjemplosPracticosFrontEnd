@@ -1,0 +1,62 @@
+﻿<!doctype html>  
+<html>  
+<head></head>  
+<body>
+
+<button type="button" onclick="descargarEjemplo()">Descargar CSV</button>
+
+<script>  
+     function convertToCsv(fName, rows) 
+	 {
+        var csv = '';
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            for (var j = 0; j < row.length; j++) {
+                var val = row[j] === null ? '' : row[j].toString();
+                val = val.replace(/\t/gi, " ");
+                if (j > 0)
+                    csv += '\t';
+                csv += val;
+            }
+            csv += '\n';
+        }
+
+        // for UTF-16
+        var cCode, bArr = [];
+        bArr.push(255, 254);
+        for (var i = 0; i < csv.length; ++i) {
+            cCode = csv.charCodeAt(i);
+            bArr.push(cCode & 0xff);
+            bArr.push(cCode / 256 >>> 0);
+        }
+
+        var blob = new Blob([new Uint8Array(bArr)], { type: 'text/csv;charset=UTF-16LE;' });
+        if (navigator.msSaveBlob) {
+            navigator.msSaveBlob(blob, fName);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) {
+                var url = window.URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fName);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            }
+        }
+    }
+
+	function descargarEjemplo()
+	{
+		convertToCsv("Prueba.csv", [
+			["Prueba 1", "Prueba 2", "Prueba 3", "Prueba 4"],
+			["Pruebabularda 1", "Pruebabularda 2", "Pruebabularda 3", "Pruebabularda 4"],
+			["Pruebabulardalarda 1", "Pruebabulardalarda 2", "Pruebabulardalarda 3", "Pruebabulardalarda 4"],
+		]);
+	}
+
+</script>  
+</body>  
+</html> 
