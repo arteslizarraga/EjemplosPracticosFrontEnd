@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculo</title>
+</head>
+
+<body>
+
+    <table border="2" width="80%">
+        <thead>
+            <tr>
+                <th>Descripción Terremoto</th>
+                <th>Magnitud</th>
+                <th>Fecha Terremoto</th>
+                <th>Eclipse Anterior</th>
+                <th>Días Antes</th>
+                <th>Eclipse Posterior</th>
+                <th>Días Después</th>
+            </tr>
+        </thead>
+        <tbody id="tbodyTablaTerremotos"></tbody>
+
+    </table>
+
+    <!--  
+    Debe dar:
+
+    33 años, 11 meses, y 11 días
+    12401 días
+    -->
+
+    <script src="fechas.js"></script>
+
+    <script>
+
+        let arregloTerremotos = [
+            { 
+                descripcionTerremoto: "Terremoto de Valdivia", 
+                magnitud: "9.5",
+                fechaTerremoto: "22-05-1960",
+                eclipses: [
+                    {
+                        tipo: "Solar", magnitud: "Total", fecha: "02-10-1959"
+                    },
+                    {
+                        tipo: "Solar", magnitud: "Parcial", fecha: "27-03-1960"
+                    },
+                    // 20 de septiembre de 1960
+                    {
+                        tipo: "Solar", magnitud: "Parcial", fecha: "20-09-1960"
+                    },
+                ]
+            },
+            { 
+                descripcionTerremoto: "Terremoto del océano Índico", 
+                magnitud: "9.2",
+                fechaTerremoto: "26-12-2004",
+                eclipses: [
+                    {
+                        tipo: "Solar", magnitud: "Total", fecha: "23-11-2003"
+                    },
+                    {
+                        tipo: "Solar", magnitud: "Parcial", fecha: "19-04-2004"
+                    },
+                    {
+                        tipo: "Solar", magnitud: "Total", fecha: "08-04-2005"
+                    }
+                ]
+            }
+        ];
+
+        let cadena = `
+        ${arregloTerremotos.map((terremoto, x) => 
+        {
+            let cantidadEclipses = terremoto.eclipses.length;
+
+            return `${terremoto.eclipses.map((eclipse, y) => 
+            {
+                let diferencia = calcularDiferenciaEntreDosFechas({ primeraFecha: eclipse.fecha, segundaFecha: terremoto.fechaTerremoto });
+
+                if (diferencia.soloDias >= 0)  // Si es un eclipse anterior al terremoto
+                {
+                    return `<tr>
+
+                        ${y == 0 ? ` 
+                            <td rowspan="${cantidadEclipses}"> ${terremoto.descripcionTerremoto} </td>
+                            <td rowspan="${cantidadEclipses}"> ${terremoto.magnitud} </td>
+                            <td rowspan="${cantidadEclipses}"> ${terremoto.fechaTerremoto} </td>
+                        ` : ""} 
+
+                        <td> Eclipse ${eclipse.tipo} ${eclipse.magnitud} ocurrido el día ${eclipse.fecha} </td>
+                        <td> ${diferencia.soloDias} </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>`;
+                }
+
+                // Si es un eclipse posterior al terremoto
+                let diferenciaInversa = calcularDiferenciaEntreDosFechas({ primeraFecha: terremoto.fechaTerremoto, segundaFecha: eclipse.fecha });
+
+                return `<tr>
+
+                    ${y == 0 ? ` 
+                        <td rowspan="${cantidadEclipses}"> ${terremoto.descripcionTerremoto} </td>
+                        <td rowspan="${cantidadEclipses}"> ${terremoto.magnitud} </td>
+                        <td rowspan="${cantidadEclipses}"> ${terremoto.fechaTerremoto} </td>
+                    ` : ""} 
+
+                    <td> </td>
+                    <td> </td>
+                    <td> Eclipse ${eclipse.tipo} ${eclipse.magnitud} ocurrido el día ${eclipse.fecha} </td>
+                    <td> ${diferenciaInversa.soloDias} </td>
+                </tr>`;
+
+            }).join("")}`;
+
+        }).join("")}
+        `;
+
+        document.querySelector("#tbodyTablaTerremotos").innerHTML = cadena;
+
+    </script>
+    
+
+</body>
+
+</html>
