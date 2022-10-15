@@ -32,6 +32,9 @@
                 <th style="width: 6em">
                     Días Después
                 </th>
+                <th style="width: 3em">
+                    Saros
+                </th>
             </tr>
         </thead>
         <tbody id="tbodyTablaTerremotos"></tbody>
@@ -57,31 +60,63 @@
                 magnitud: "9.5",
                 fechaTerremoto: "22-05-1960",
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "02-10-1959" },
-                    { tipo: "Solar", magnitud: "Parcial", fecha: "27-03-1960" },
-                    // { tipo: "Solar", magnitud: "Parcial", fecha: "20-09-1960" },  // Si existio
-                    { tipo: "Solar", magnitud: "Total", fecha: "15-02-1961" },
+                    { tipo: "Solar", magnitud: "Anular", fecha: "08-04-1959", saros: 138 },   // Un eclipse solar anular ocurrió el 8 de abril de 1959
+                    { tipo: "Solar", magnitud: "Total", fecha: "02-10-1959", saros: 143 },
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "27-03-1960", saros: null },
+                    // { tipo: "Solar", magnitud: "Parcial", fecha: "20-09-1960", saros: null },  // Si existio
+
+                    { tipo: "Solar", magnitud: "Total", fecha: "15-02-1961", saros: 120 },   // 15 de febrero de 1961
                 ]
             },
+            //===============================================================>>>>>
+            { 
+                hipotetico: true,
+                descripcionTerremoto: "Terremoto HIPOTETICO", 
+                magnitud: "9.0",
+                fechaTerremoto: "11-05-2031",
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Total", fecha: "25-11-2030", saros: 133 },      // November 25, 2030
+                    { tipo: "Solar", magnitud: "Anular", fecha: "21-05-2031", saros: 138 },  // eclipse solar anular del día 21 de mayo de 2031.
+                    { tipo: "Solar", magnitud: "Hibrido", fecha: "14-11-2031", saros: 143 }    // November 14, 2031
+                ]
+            },
+            //===============================================================>>>>>
             { 
                 descripcionTerremoto: "Terremoto del océano Índico", 
                 magnitud: "9.3",
                 fechaTerremoto: "26-12-2004",
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "23-11-2003" },
-                    { tipo: "Solar", magnitud: "Parcial", fecha: "19-04-2004" },
-                    { tipo: "Solar", magnitud: "Total", fecha: "08-04-2005" }
+                    { tipo: "Solar", magnitud: "Total", fecha: "23-11-2003", saros: 152 },   // 23 de noviembre de 2003 - Saros 152
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "19-04-2004", saros: null },
+                    { tipo: "Solar", magnitud: "Total", fecha: "08-04-2005", saros: 129 },   // nodo ascendente de la Luna el 8 de abril de 2005
+                    { tipo: "Solar", magnitud: "Anular", fecha: "03-10-2005", saros: 134 }  // El 3 de octubre de 2005 tuvo lugar un eclipse de Sol anular
                 ]
             },
+
+            //===============================================================>>>>>
+            { 
+                hipotetico: true,
+                descripcionTerremoto: "Terremoto HIPOTETICO", 
+                magnitud: "8.9",
+                fechaTerremoto: "28-12-2022",
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Total", fecha: "04-12-2021", saros: 152 },
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "30-04-2022", saros: null },   // Un eclipse solar parcial ocurrió el 30 de abril del 2022 
+                    { tipo: "Solar", magnitud: "Hibrido", fecha: "20-04-2023", saros: null },  // O eclipse solar de 20 de abril de 2023 será um eclipse solar híbrido.
+                    { tipo: "Solar", magnitud: "Anular", fecha: "14-10-2023", saros: 134 }  // October 14, 2023 	18:00:41 	Anular      saros 134
+                ]
+            },
+            //===============================================================>>>>>
+
             { 
                 descripcionTerremoto: "Terremoto de Alaska", 
                 magnitud: "9.2",
                 fechaTerremoto: "27-03-1964",
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "20-07-1963" },
-                    { tipo: "Solar", magnitud: "Parcial", fecha: "14-01-1964" },
-                    // { tipo: "Solar", magnitud: "Parcial", fecha: "10-06-1964" },  // Si existio
-                    { tipo: "Solar", magnitud: "Total", fecha: "30-05-1965" },
+                    { tipo: "Solar", magnitud: "Total", fecha: "20-07-1963", saros: null },
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "14-01-1964", saros: null },
+                    // { tipo: "Solar", magnitud: "Parcial", fecha: "10-06-1964", saros: null },  // Si existio
+                    { tipo: "Solar", magnitud: "Total", fecha: "30-05-1965", saros: null },
                 ]
             },
             { 
@@ -89,9 +124,9 @@
                 magnitud: "9.1",
                 fechaTerremoto: "11-03-2011",   // 11 de marzo de 2011
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "11-07-2010" },      // Eclipse Total de Sol el 11 de julio de 2010
-                    { tipo: "Solar", magnitud: "Parcial", fecha: "04-01-2011" },    // 4 de enero de 2011 	parcial
-                    { tipo: "Solar", magnitud: "Total", fecha: "13-11-2012" }       // 13 de noviembre de 2012 	total
+                    { tipo: "Solar", magnitud: "Total", fecha: "11-07-2010", saros: null },      // Eclipse Total de Sol el 11 de julio de 2010
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "04-01-2011", saros: null },    // 4 de enero de 2011 	parcial
+                    { tipo: "Solar", magnitud: "Total", fecha: "13-11-2012", saros: 133 }       // 13 de noviembre de 2012 	total
                 ]
             },
             { 
@@ -99,9 +134,9 @@
                 magnitud: "9.0",
                 fechaTerremoto: "04-11-1952",   // 4 de noviembre de 1952
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "25-02-1952" },  // Eclipse Total de Sol el 25 de febrero de 1952
-                    { tipo: "Solar", magnitud: "Anular", fecha: "20-08-1952" },  // 20 de agosto de 1952  Anular
-                    { tipo: "Solar", magnitud: "Parcial", fecha: "14-02-1953" } // 14 de febrero de 1953 	Parcial
+                    { tipo: "Solar", magnitud: "Total", fecha: "25-02-1952", saros: null },  // Eclipse Total de Sol el 25 de febrero de 1952
+                    { tipo: "Solar", magnitud: "Anular", fecha: "20-08-1952", saros: null },  // 20 de agosto de 1952  Anular
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "14-02-1953", saros: null } // 14 de febrero de 1953 	Parcial
                 ]
             },
             { 
@@ -109,22 +144,38 @@
                 magnitud: "9.0",
                 fechaTerremoto: "28-10-1746",   // 28 de octubre de 1746
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "15-09-1746" },  // Eclipse Total de Sol el 15 de septiembre de 1746
-                    { tipo: "Solar", magnitud: "Parcial", fecha: "09-02-1747" } // 9 February 1747 Parcial
+                    { tipo: "Solar", magnitud: "Total", fecha: "15-09-1746", saros: null },  // Eclipse Total de Sol el 15 de septiembre de 1746
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "09-02-1747", saros: null } // 9 February 1747 Parcial
                 ]
             },
-
-            // Eclipse Total de Sol el 18 de enero de 1730 (https://en.wikipedia.org/wiki/Solar_Saros_117)
-            // Hasta el terremoto del 8 de julio de 1730 (Terremoto de Valparaiso) transcurrieron 171 días (0 años, 5 meses, y 19 días)
             { 
                 descripcionTerremoto: "Terremoto de Valparaiso de 1730", 
                 magnitud: "9.0",
                 fechaTerremoto: "08-07-1730",   // 8 de julio de 1730
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "18-01-1730" },  // Eclipse Total de Sol el 18 de enero de 1730
-                    { tipo: "Solar", magnitud: "Anular", fecha: "15-07-1730" } // 15 July 1730 	Anular
+                    { tipo: "Solar", magnitud: "Total", fecha: "18-01-1730", saros: null },  // Eclipse Total de Sol el 18 de enero de 1730
+                    { tipo: "Solar", magnitud: "Anular", fecha: "15-07-1730", saros: null } // 15 July 1730 	Anular
+                ]
+            },
+            { 
+                descripcionTerremoto: "Terremoto de Cascadia de 1700", 
+                magnitud: "9.0",
+                fechaTerremoto: "26-01-1700",   // 26 de enero de 1700
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Hibrido", fecha: "23-09-1699", saros: null }, // eclipse 23 September 1699
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "18-02-1700", saros: null }   // eclipse 18 February 1700
+                ]
+            },
+            { 
+                descripcionTerremoto: "Terremoto de Arica", 
+                magnitud: "9.0",
+                fechaTerremoto: "13-08-1868",   // 13 de agosto de 1868
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Total", fecha: "29-08-1867", saros: null },  // Eclipse Total de Sol el 29 de agosto de 1867
+                    { tipo: "Solar", magnitud: "Total", fecha: "16-08-1868", saros: 133 }  // Eclipse Total de Sol el 16 de agosto de 1868 (El eclipse del Rey de Siam)
                 ]
             }
+
         ];
 
         let cadena = `
@@ -132,29 +183,36 @@
         {
             let cantidadEclipses = terremoto.eclipses.length;
 
+            let estilosFila = (terremoto.hipotetico != null && terremoto.hipotetico) ? 
+                "background-color: #665d5d; color: #ddd1d1;" :
+                    (x % 2 == 0) ?
+                        "background-color: #d6f5ff" : "background-color: #fff5d6";
+
             return `${terremoto.eclipses.map((eclipse, y) => 
             {
                 let diferencia = calcularDiferenciaEntreDosFechas({ primeraFecha: eclipse.fecha, segundaFecha: terremoto.fechaTerremoto });
-                let colorFondo = `background-color: ${x % 2 == 0 ? "#d6f5ff" : "#fff5d6"}`;
-                let colorEclipseTotal = "background-color: #d2c4c2";
 
-                let estiloCelda = (eclipse.tipo == "Solar" && ["Total", "Anular"].includes(eclipse.magnitud)) ? 
-                    colorEclipseTotal : colorFondo;
+                let colorEclipseTotal = (terremoto.hipotetico != null && terremoto.hipotetico) ? 
+                    "background-color: #ac6960; color: #f9f3f3" : "background-color: #d2c4c2";
+
+                let estiloCelda = (eclipse.tipo == "Solar" && ["Total", "Anular", "Hibrido"].includes(eclipse.magnitud)) ? 
+                    colorEclipseTotal : estilosFila;
 
                 if (diferencia.soloDias >= 0)  // Si es un eclipse anterior al terremoto
                 {
                     return `<tr>
 
                         ${y == 0 ? ` 
-                            <td rowspan="${cantidadEclipses}" style="${colorFondo}"> ${terremoto.descripcionTerremoto} </td>
-                            <td rowspan="${cantidadEclipses}" style="${colorFondo}"> ${terremoto.magnitud} </td>
-                            <td rowspan="${cantidadEclipses}" style="${colorFondo}"> ${terremoto.fechaTerremoto} </td>
+                            <td rowspan="${cantidadEclipses}" style="${estilosFila}"> ${terremoto.descripcionTerremoto} </td>
+                            <td rowspan="${cantidadEclipses}" style="${estilosFila}"> ${terremoto.magnitud} </td>
+                            <td rowspan="${cantidadEclipses}" style="${estilosFila}"> ${terremoto.fechaTerremoto} </td>
                         ` : ""} 
 
                         <td style="${estiloCelda}"> Eclipse ${eclipse.tipo} ${eclipse.magnitud} ocurrido el día ${eclipse.fecha} </td>
                         <td style="${estiloCelda}"> ${diferencia.soloDias} </td>
-                        <td style="${colorFondo}"> </td>
-                        <td style="${colorFondo}"> </td>
+                        <td style="${estilosFila}"> </td>
+                        <td style="${estilosFila}"> </td>
+                        <td style="${estilosFila}"> ${eclipse.saros ?? ""} </td>
                     </tr>`;
                 }
 
@@ -169,10 +227,11 @@
                         <td rowspan="${cantidadEclipses}"> ${terremoto.fechaTerremoto} </td>
                     ` : ""} 
 
-                    <td style="${colorFondo}"> </td>
-                    <td style="${colorFondo}"> </td>
+                    <td style="${estilosFila}"> </td>
+                    <td style="${estilosFila}"> </td>
                     <td style="${estiloCelda}"> Eclipse ${eclipse.tipo} ${eclipse.magnitud} ocurrido el día ${eclipse.fecha} </td>
                     <td style="${estiloCelda}"> ${diferenciaInversa.soloDias} </td>
+                    <td style="${estilosFila}"> ${eclipse.saros ?? ""} </td>
                 </tr>`;
 
             }).join("")}`;
