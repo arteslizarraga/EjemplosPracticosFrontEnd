@@ -103,6 +103,27 @@
                     { tipo: "Solar", magnitud: "Anular", fecha: "20-08-1952" },  // 20 de agosto de 1952  Anular
                     { tipo: "Solar", magnitud: "Parcial", fecha: "14-02-1953" } // 14 de febrero de 1953 	Parcial
                 ]
+            },
+            { 
+                descripcionTerremoto: "Terremoto y Maremoto de Lima y Callao", 
+                magnitud: "9.0",
+                fechaTerremoto: "28-10-1746",   // 28 de octubre de 1746
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Total", fecha: "15-09-1746" },  // Eclipse Total de Sol el 15 de septiembre de 1746
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "09-02-1747" } // 9 February 1747 Parcial
+                ]
+            },
+
+            // Eclipse Total de Sol el 18 de enero de 1730 (https://en.wikipedia.org/wiki/Solar_Saros_117)
+            // Hasta el terremoto del 8 de julio de 1730 (Terremoto de Valparaiso) transcurrieron 171 días (0 años, 5 meses, y 19 días)
+            { 
+                descripcionTerremoto: "Terremoto de Valparaiso de 1730", 
+                magnitud: "9.0",
+                fechaTerremoto: "08-07-1730",   // 8 de julio de 1730
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Total", fecha: "18-01-1730" },  // Eclipse Total de Sol el 18 de enero de 1730
+                    { tipo: "Solar", magnitud: "Anular", fecha: "15-07-1730" } // 15 July 1730 	Anular
+                ]
             }
         ];
 
@@ -116,7 +137,9 @@
                 let diferencia = calcularDiferenciaEntreDosFechas({ primeraFecha: eclipse.fecha, segundaFecha: terremoto.fechaTerremoto });
                 let colorFondo = `background-color: ${x % 2 == 0 ? "#d6f5ff" : "#fff5d6"}`;
                 let colorEclipseTotal = "background-color: #d2c4c2";
-                let estiloCelda = (eclipse.tipo == "Solar" && eclipse.magnitud == "Total") ? colorEclipseTotal : colorFondo;
+
+                let estiloCelda = (eclipse.tipo == "Solar" && ["Total", "Anular"].includes(eclipse.magnitud)) ? 
+                    colorEclipseTotal : colorFondo;
 
                 if (diferencia.soloDias >= 0)  // Si es un eclipse anterior al terremoto
                 {
@@ -146,8 +169,8 @@
                         <td rowspan="${cantidadEclipses}"> ${terremoto.fechaTerremoto} </td>
                     ` : ""} 
 
-                    <td> </td>
-                    <td> </td>
+                    <td style="${colorFondo}"> </td>
+                    <td style="${colorFondo}"> </td>
                     <td style="${estiloCelda}"> Eclipse ${eclipse.tipo} ${eclipse.magnitud} ocurrido el día ${eclipse.fecha} </td>
                     <td style="${estiloCelda}"> ${diferenciaInversa.soloDias} </td>
                 </tr>`;
