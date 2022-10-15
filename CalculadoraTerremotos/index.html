@@ -1,23 +1,37 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Calculo</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
 
-    <table border="2" width="80%">
+    <table class="tabla-info" width="80%">
         <thead>
             <tr>
-                <th>Descripción Terremoto</th>
-                <th>Magnitud</th>
-                <th>Fecha Terremoto</th>
-                <th>Eclipse Anterior</th>
-                <th>Días Antes</th>
-                <th>Eclipse Posterior</th>
-                <th>Días Después</th>
+                <th>
+                    Descripción Terremoto
+                </th>
+                <th style="width: 4.5em">
+                    Magnitud
+                </th>
+                <th style="width: 7.5em">
+                    Fecha Terremoto
+                </th>
+                <th>
+                    Eclipse Anterior
+                </th>
+                <th style="width: 5em">
+                    Días Antes
+                </th>
+                <th>
+                    Eclipse Posterior
+                </th>
+                <th style="width: 6em">
+                    Días Después
+                </th>
             </tr>
         </thead>
         <tbody id="tbodyTablaTerremotos"></tbody>
@@ -35,38 +49,59 @@
 
     <script>
 
+        // https://copro.com.ar/Lista_de_eclipses_solares_en_el_siglo_XX.html
+
         let arregloTerremotos = [
             { 
                 descripcionTerremoto: "Terremoto de Valdivia", 
                 magnitud: "9.5",
                 fechaTerremoto: "22-05-1960",
                 eclipses: [
-                    {
-                        tipo: "Solar", magnitud: "Total", fecha: "02-10-1959"
-                    },
-                    {
-                        tipo: "Solar", magnitud: "Parcial", fecha: "27-03-1960"
-                    },
-                    // 20 de septiembre de 1960
-                    {
-                        tipo: "Solar", magnitud: "Parcial", fecha: "20-09-1960"
-                    },
+                    { tipo: "Solar", magnitud: "Total", fecha: "02-10-1959" },
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "27-03-1960" },
+                    // { tipo: "Solar", magnitud: "Parcial", fecha: "20-09-1960" },  // Si existio
+                    { tipo: "Solar", magnitud: "Total", fecha: "15-02-1961" },
                 ]
             },
             { 
                 descripcionTerremoto: "Terremoto del océano Índico", 
-                magnitud: "9.2",
+                magnitud: "9.3",
                 fechaTerremoto: "26-12-2004",
                 eclipses: [
-                    {
-                        tipo: "Solar", magnitud: "Total", fecha: "23-11-2003"
-                    },
-                    {
-                        tipo: "Solar", magnitud: "Parcial", fecha: "19-04-2004"
-                    },
-                    {
-                        tipo: "Solar", magnitud: "Total", fecha: "08-04-2005"
-                    }
+                    { tipo: "Solar", magnitud: "Total", fecha: "23-11-2003" },
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "19-04-2004" },
+                    { tipo: "Solar", magnitud: "Total", fecha: "08-04-2005" }
+                ]
+            },
+            { 
+                descripcionTerremoto: "Terremoto de Alaska", 
+                magnitud: "9.2",
+                fechaTerremoto: "27-03-1964",
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Total", fecha: "20-07-1963" },
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "14-01-1964" },
+                    // { tipo: "Solar", magnitud: "Parcial", fecha: "10-06-1964" },  // Si existio
+                    { tipo: "Solar", magnitud: "Total", fecha: "30-05-1965" },
+                ]
+            },
+            { 
+                descripcionTerremoto: "Terremoto y maremoto de Japón de 2011", 
+                magnitud: "9.1",
+                fechaTerremoto: "11-03-2011",   // 11 de marzo de 2011
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Total", fecha: "11-07-2010" },      // Eclipse Total de Sol el 11 de julio de 2010
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "04-01-2011" },    // 4 de enero de 2011 	parcial
+                    { tipo: "Solar", magnitud: "Total", fecha: "13-11-2012" }       // 13 de noviembre de 2012 	total
+                ]
+            },
+            { 
+                descripcionTerremoto: "Terremoto de Kamchatka", 
+                magnitud: "9.0",
+                fechaTerremoto: "04-11-1952",   // 4 de noviembre de 1952
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Total", fecha: "25-02-1952" },  // Eclipse Total de Sol el 25 de febrero de 1952
+                    { tipo: "Solar", magnitud: "Anular", fecha: "20-08-1952" },  // 20 de agosto de 1952  Anular
+                    { tipo: "Solar", magnitud: "Parcial", fecha: "14-02-1953" } // 14 de febrero de 1953 	Parcial
                 ]
             }
         ];
@@ -79,21 +114,24 @@
             return `${terremoto.eclipses.map((eclipse, y) => 
             {
                 let diferencia = calcularDiferenciaEntreDosFechas({ primeraFecha: eclipse.fecha, segundaFecha: terremoto.fechaTerremoto });
+                let colorFondo = `background-color: ${x % 2 == 0 ? "#d6f5ff" : "#fff5d6"}`;
+                let colorEclipseTotal = "background-color: #d2c4c2";
+                let estiloCelda = (eclipse.tipo == "Solar" && eclipse.magnitud == "Total") ? colorEclipseTotal : colorFondo;
 
                 if (diferencia.soloDias >= 0)  // Si es un eclipse anterior al terremoto
                 {
                     return `<tr>
 
                         ${y == 0 ? ` 
-                            <td rowspan="${cantidadEclipses}"> ${terremoto.descripcionTerremoto} </td>
-                            <td rowspan="${cantidadEclipses}"> ${terremoto.magnitud} </td>
-                            <td rowspan="${cantidadEclipses}"> ${terremoto.fechaTerremoto} </td>
+                            <td rowspan="${cantidadEclipses}" style="${colorFondo}"> ${terremoto.descripcionTerremoto} </td>
+                            <td rowspan="${cantidadEclipses}" style="${colorFondo}"> ${terremoto.magnitud} </td>
+                            <td rowspan="${cantidadEclipses}" style="${colorFondo}"> ${terremoto.fechaTerremoto} </td>
                         ` : ""} 
 
-                        <td> Eclipse ${eclipse.tipo} ${eclipse.magnitud} ocurrido el día ${eclipse.fecha} </td>
-                        <td> ${diferencia.soloDias} </td>
-                        <td> </td>
-                        <td> </td>
+                        <td style="${estiloCelda}"> Eclipse ${eclipse.tipo} ${eclipse.magnitud} ocurrido el día ${eclipse.fecha} </td>
+                        <td style="${estiloCelda}"> ${diferencia.soloDias} </td>
+                        <td style="${colorFondo}"> </td>
+                        <td style="${colorFondo}"> </td>
                     </tr>`;
                 }
 
@@ -110,8 +148,8 @@
 
                     <td> </td>
                     <td> </td>
-                    <td> Eclipse ${eclipse.tipo} ${eclipse.magnitud} ocurrido el día ${eclipse.fecha} </td>
-                    <td> ${diferenciaInversa.soloDias} </td>
+                    <td style="${estiloCelda}"> Eclipse ${eclipse.tipo} ${eclipse.magnitud} ocurrido el día ${eclipse.fecha} </td>
+                    <td style="${estiloCelda}"> ${diferenciaInversa.soloDias} </td>
                 </tr>`;
 
             }).join("")}`;
