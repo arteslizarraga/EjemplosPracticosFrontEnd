@@ -7,15 +7,33 @@
 <body>
 
 	<label>Formatear Número Entero</label>
-	<input name="valor" type="text" onkeyup="this.value = formatearNumeroEntero(this.value)" maxlength="30" />
+	<input name="valor" type="text" oninput="this.value = formatearNumeroEntero(this.value)" maxlength="30" />
 	
 	<br/><br/>
 	
 	<label>Formatear Número Decimal</label>
-	<input name="valor" type="text" onkeyup="this.value = formatearNumeroDecimal(this.value)" maxlength="30" />
+	<input name="valor" type="text" oninput="this.value = formatearNumeroDecimal(this.value)" maxlength="30" />
+
+	<br/><br/>
+
+	<label>Formatear Porcentaje</label>
+	<input name="valor" type="text" oninput="this.value = formatearNumeroDecimal(this.value, 1)" maxlength="5" />
+
+	<br/><br/>
+
+	<label>Solo Mayusculas</label>
+	<input type="text" name="nombre" maxlength="100" 
+	oninput="let p = this.selectionStart; this.value = this.value.toUpperCase();this.setSelectionRange(p, p);" />
+
+	<br/><br/>
+
+	<label>Solo Números</label>
+	<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="3">
+
+	<br/><br/>
 
     <script>
-	
+
         function formatearNumeroEntero(cadena)
 		{
 			// formatearNumeroEntero("123456789") 
@@ -43,7 +61,6 @@
 		function formatearNumeroDecimal(cadena, cantidadDecimales = 5)
 		{
 			let primerCaracter = cadena.charAt(0);
-			let ultimoCaracter = cadena[cadena.length - 1];
 			let cantidadComasNumero = (cadena.match(/,/g) || []).length;
 			let primerosDosCaracteres = cadena.substring(0, 2);
 			let decimales = cadena.split(",")[1];
@@ -52,7 +69,6 @@
 			{
 				decimales = decimales.replace(/[^0-9]/g, '');                    // Limpia los decimales
 				
-				// if (decimales.length > 5) decimales = decimales.slice(0, -1);
 				if (decimales.length > cantidadDecimales) decimales = decimales.substr(0, cantidadDecimales);   // Limita la cantidad de decimales si el usuario escribe mas de lo permitido
 				
 				cadena = "0," + decimales;
