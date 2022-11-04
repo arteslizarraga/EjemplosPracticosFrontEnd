@@ -53,6 +53,8 @@
     <script>
 
         // https://copro.com.ar/Lista_de_eclipses_solares_en_el_siglo_XX.html
+        // https://en.wikipedia.org/wiki/List_of_solar_eclipses_in_the_17th_century
+        // https://en.wikipedia.org/wiki/List_of_solar_eclipses_in_the_18th_century
 
         let arregloTerremotos = [
             { 
@@ -81,6 +83,7 @@
             },
 
             //===============================================================>>>>>
+            /*
             { 
                 hipotetico: true,
                 descripcionTerremoto: "Terremoto HIPOTETICO", 
@@ -93,6 +96,7 @@
                     { tipo: "Solar", magnitud: "Anular", fecha: "14-10-2023", saros: 134 }  // October 14, 2023 	18:00:41 	Anular      saros 134
                 ]
             },
+            */
             //===============================================================>>>>>
 
             { 
@@ -100,10 +104,10 @@
                 magnitud: "9.2",
                 fechaTerremoto: "27-03-1964",
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "20-07-1963", saros: null },
+                    { tipo: "Solar", magnitud: "Total", fecha: "20-07-1963", saros: 145 },  // 20 July 1963 	Total 	saros 145
                     { tipo: "Solar", magnitud: "Parcial", fecha: "14-01-1964", saros: null },
                     // { tipo: "Solar", magnitud: "Parcial", fecha: "10-06-1964", saros: null },  // Si existio
-                    { tipo: "Solar", magnitud: "Total", fecha: "30-05-1965", saros: null },
+                    { tipo: "Solar", magnitud: "Total", fecha: "30-05-1965", saros: 127 },  // 30 May 1965 	Total 	saros 127
                 ]
             },
             { 
@@ -127,11 +131,23 @@
                 ]
             },
             { 
+                descripcionTerremoto: "Terremoto de Arica", 
+                magnitud: "9.0",
+                fechaTerremoto: "13-08-1868",   // 13 de agosto de 1868
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Total", fecha: "29-08-1867", saros: 123 },  // Eclipse Total de Sol el 29 de agosto de 1867
+                    { tipo: "Solar", magnitud: "Anular", fecha: "23-02-1868", saros: 128 }, // 23 February 1868 	saros 128 	Annular 
+                    { tipo: "Solar", magnitud: "Total", fecha: "16-08-1868", saros: 133 },  // Eclipse Total de Sol el 16 de agosto de 1868 (El eclipse del Rey de Siam)
+                    { tipo: "Solar", magnitud: "Anular", fecha: "11-02-1869", saros: 138 }   // 11 February 1869 	saros 138 	Annular 
+                ]
+            },
+            { 
                 descripcionTerremoto: "Terremoto y Maremoto de Lima y Callao", 
                 magnitud: "9.0",
                 fechaTerremoto: "28-10-1746",   // 28 de octubre de 1746
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "15-09-1746", saros: null },  // Eclipse Total de Sol el 15 de septiembre de 1746
+                    { tipo: "Solar", magnitud: "Anular", fecha: "22-03-1746", saros: 135 },  // 22 March 1746 	saros 135 	    Annular
+                    { tipo: "Solar", magnitud: "Total", fecha: "15-09-1746", saros: 140 },  // Eclipse Total de Sol el 15 de septiembre de 1746
                     { tipo: "Solar", magnitud: "Parcial", fecha: "09-02-1747", saros: null } // 9 February 1747 Parcial
                 ]
             },
@@ -141,7 +157,9 @@
                 fechaTerremoto: "08-07-1730",   // 8 de julio de 1730
                 eclipses: [
                     { tipo: "Solar", magnitud: "Total", fecha: "18-01-1730", saros: 117 },  // Eclipse Total de Sol el 18 de enero de 1730
-                    { tipo: "Solar", magnitud: "Anular", fecha: "15-07-1730", saros: 122 } // 15 July 1730 	Anular   |  July 15, 1730 	4:59:09 	Annular
+                    { tipo: "Solar", magnitud: "Anular", fecha: "15-07-1730", saros: 122 }, // 15 July 1730 	Anular   |  July 15, 1730 	Annular
+                    { tipo: "Solar", magnitud: "Total", fecha: "08-01-1731", saros: 127 },  // 8 January 1731 	saros 127 	Total 
+                    { tipo: "Solar", magnitud: "Hibrido", fecha: "29-12-1731", saros: 137 }  // 29 December 1731 	saros 137 	Hybrid
                 ]
             },
             { 
@@ -153,16 +171,21 @@
                     { tipo: "Solar", magnitud: "Parcial", fecha: "18-02-1700", saros: null }   // eclipse 18 February 1700
                 ]
             },
+
             { 
-                descripcionTerremoto: "Terremoto de Arica", 
+                descripcionTerremoto: "Terremoto de Arica de 1604", 
                 magnitud: "9.0",
-                fechaTerremoto: "13-08-1868",   // 13 de agosto de 1868
+                fechaTerremoto: "24-11-1604",   // 12:30 horas del 24 de noviembre de 1604
                 eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "29-08-1867", saros: null },  // Eclipse Total de Sol el 29 de agosto de 1867
-                    { tipo: "Solar", magnitud: "Total", fecha: "16-08-1868", saros: 133 }  // Eclipse Total de Sol el 16 de agosto de 1868 (El eclipse del Rey de Siam)
+                    { tipo: "Solar", magnitud: "Total", fecha: "27-03-1604", saros: 23 }, // 1604 Mar 27    |   The eclipse belongs to Saros 23
+                    { tipo: "Solar", magnitud: "Total", fecha: "22-10-1604", saros: 127 },  // 22 October 1604 
+                    { tipo: "Solar", magnitud: "Anular", fecha: "18-04-1605", saros: 132 },   // 18 April 1605 	|   saros 132   |  	Annular
+                    { tipo: "Solar", magnitud: "Total", fecha: "12-10-1605", saros: 137 }  // 12 October 1605 	saros 137 	Total 
                 ]
             },
+
             //===============================================================>>>>>
+            /*
             { 
                 hipotetico: true,
                 descripcionTerremoto: "Terremoto HIPOTETICO", 
@@ -174,6 +197,7 @@
                     { tipo: "Solar", magnitud: "Hibrido", fecha: "14-11-2031", saros: 143 }    // November 14, 2031
                 ]
             }
+            */
             //===============================================================>>>>>
 
         ];
