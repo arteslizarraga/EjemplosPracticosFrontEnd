@@ -238,30 +238,53 @@
 
     <script>
 
+        // Activar selects
+        // $(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
+        $(".mdb-select").material_select();
+
         let datos = obtenerDatos(); 
 
         (async () => 
         {
             await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+            definirInputsGrilla();
+        }) ();
 
-            Array.from($("#TablaPrincipal").DataTable().rows({ filter: "applied" }).data()).forEach(x =>
+        function definirInputsGrilla()
+        {
+            Array.from($("#TablaPrincipal").DataTable().rows({ filter: "applied" }).data()).forEach(x => 
             {
-                let txt = $(`#fechaEfectiva_${x.codigoPerfil}`);
+                let registro = datos.find(y => y.codigoPerfil == x.codigoPerfil);
+                let txtFechaEfectiva = $(`#fechaEfectiva_${x.codigoPerfil}`);
 
-                txt.datepicker({ 
+                txtFechaEfectiva.datepicker({ 
                     language: "es", 
                     autoClose: true,
                     onSelect: (e) => {
-                        let registro = datos.find(x => x.codigoPerfil == txt.attr("identificador"));
+                        // let registro = datos.find(y => y.codigoPerfil == txtFechaEfectiva.attr("identificador"));
                         registro.fechaEfectiva = e;
                         console.log(registro);
                     } 
                 });
+
+                llenarSelect({ 
+                    selectedValue: x.estado,
+                    querySelector: `#estado_${x.codigoPerfil}`, 
+                    data: [{codigo: "Activo", descripcion: "Activo"}, {codigo: "Inactivo", descripcion: "Inactivo"}],
+                    onchange: () => {
+                        registro.estado = $(`#estado_${x.codigoPerfil}`).val();
+                        console.log(registro);
+                    }
+                });
+
+                $(`#estado_${x.codigoPerfil}`).chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
             });
-        }) ();
+        }
 
         function construirGrillaPerfilesOcupacionalesCualificacion(datosRecibidos)
         {
+            showLoading();
+
             return new Promise((resolve, reject) =>
             {
                 $("#TablaPrincipal").DataTable({
@@ -283,6 +306,7 @@
                     orderMulti: false,
                     responsive: true,
                     fnDrawCallback: () => {
+                        hideLoading();
                         resolve(true)
                     },
                     columns: [
@@ -302,9 +326,25 @@
                             }
                         },
 
-                        { data: "estado", "className": "text-nowrap", "searchable": true, "sortable": true }
+                        // { data: "estado", "className": "text-nowrap", "searchable": true, "sortable": true }
+
+                        {
+                            "data": "estado", "name": "estado", "className": "text-nowrap", "render": (data, type, row, meta) => 
+                            {
+                                return `
+                                <select id="estado_${row.codigoPerfil}" class="chosen-select" searchable="Buscar">
+                                    <option value="" selected>Seleccione</option>   
+                                </select>
+                                `;
+                            }
+                        }
                     ]
-                });
+                })
+                .on("page.dt", () => { 
+                    console.log("Cambio de página");
+                    setTimeout(() => definirInputsGrilla(), 200);
+                } )
+
                 //.on("draw", () => { resolve(true); });
 
                 //setTimeout(() => resolve(true), 800);
@@ -315,8 +355,8 @@
         {
             return [
                 { codigoPerfil: 1, nombre: "PER OCUP 1", descripcion: "Perfil Ocupacional Cualificacion 1", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 2, nombre: "PER OCUP 2", descripcion: "Perfil Ocupacional Cualificacion 2", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 3, nombre: "PER OCUP 3", descripcion: "Perfil Ocupacional Cualificacion 3", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 2, nombre: "PER OCUP 2", descripcion: "Perfil Ocupacional Cualificacion 2", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
+                { codigoPerfil: 3, nombre: "PER OCUP 3", descripcion: "Perfil Ocupacional Cualificacion 3", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
                 { codigoPerfil: 4, nombre: "PER OCUP 4", descripcion: "Perfil Ocupacional Cualificacion 4", fechaEfectiva: "07-11-2022", estado: "Activo" },
                 { codigoPerfil: 5, nombre: "PER OCUP 5", descripcion: "Perfil Ocupacional Cualificacion 5", fechaEfectiva: "07-11-2022", estado: "Activo" },
                 { codigoPerfil: 6, nombre: "PER OCUP 6", descripcion: "Perfil Ocupacional Cualificacion 6", fechaEfectiva: "07-11-2022", estado: "Activo" },
@@ -344,6 +384,74 @@
                 { codigoPerfil: 28, nombre: "PER OCUP 28", descripcion: "Perfil Ocupacional Cualificacion 28", fechaEfectiva: "07-11-2022", estado: "Activo" },
                 { codigoPerfil: 29, nombre: "PER OCUP 29", descripcion: "Perfil Ocupacional Cualificacion 29", fechaEfectiva: "07-11-2022", estado: "Activo" }
             ];
+        }
+
+        function quitarSeleccionSelect(querySelector) 
+        {
+            $(querySelector).find('option:first-child').prop('selected', true).end().trigger('chosen:updated');
+        }
+
+        function limpiarSelect(querySelector) 
+        {
+            $(querySelector + ' option[value!=""]').remove().end();    // Remueve todos los options excepto el seleccione
+            $(querySelector).trigger("chosen:updated");
+        }
+
+        function llenarSelect(datos) 
+        {
+            if (Array.from($(datos.querySelector + ' option[value!=""]')).length)   // Si tiene elementos excepto el seleccione
+                limpiarSelect(datos.querySelector);                              // Esto sirve al refrescar el combobox con nuevos datos
+
+            quitarSeleccionSelect(datos.querySelector);
+
+            if (datos.data != null) 
+            {
+                if (datos.selectedValue == null) 
+                {
+                    datos.data.forEach(c => {
+                        $(datos.querySelector).append('<option value="' + c.codigo + '">' + c.descripcion + '</option>');
+                    });
+                }
+                else 
+                {
+                    if (Array.isArray(datos.selectedValue)) {
+                        var arreglo = datos.selectedValue;
+
+                        datos.data.forEach(c => {
+                            let selected = (arreglo.includes(c.codigo.toString())) ? "selected" : "";
+                            $(datos.querySelector).append('<option value="' + c.codigo + '" ' + selected + '>' + c.descripcion + '</option>');
+
+                        });
+                    }
+                    else {
+                        datos.data.forEach(c => {
+                            let selected = (c.codigo == datos.selectedValue) ? "selected" : "";
+                            $(datos.querySelector).append('<option value="' + c.codigo + '" ' + selected + '>' + c.descripcion + '</option>');
+                        });
+                    }
+                }
+
+            }
+
+            $(datos.querySelector).on("change", () => {
+                if (datos.onchange != null && typeof datos.onchange === "function") datos.onchange();
+            });
+
+            $(datos.querySelector).trigger("chosen:updated");   // El select toma los cambios realizados
+
+            if (datos.multiple != null && datos.multiple)   // Si es un select multiple, lo refresca
+            {
+                $(datos.querySelector).materialSelect("destroy");
+                $(datos.querySelector).removeAttr("disabled");
+            }
+        }
+
+        function showLoading() {
+            $('#loadingOverlay').show();
+        }
+
+        function hideLoading() {
+            $('#loadingOverlay').hide();
         }
 
     </script>
