@@ -191,12 +191,12 @@
                           </div>
                           <div class="col col-md-6 d-flex justify-content-end">
         
-                            <button type="button" class="btn btn-outline waves-effect waves-light">
-                                <span>Ejemplo</span>
+                            <button type="button" onclick="limpiarDatos()" class="btn btn-outline waves-effect waves-light">
+                                <span>Limpiar Datos</span>
                             </button>
 
-                            <button type="button" class="btn btn-default waves-effect waves-light">
-                              <span>Ejemplo</span>
+                            <button type="button" onclick="alert(JSON.stringify(datos))" class="btn btn-default waves-effect waves-light">
+                              <span>Mostrar Datos</span>
                             </button>
                         
                           </div>
@@ -239,16 +239,24 @@
     <script>
 
         // Activar selects
-        // $(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
+        $(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
         $(".mdb-select").material_select();
 
         let datos = obtenerDatos(); 
-
-        (async () => 
+        alCargarPagina();
+        
+        async function alCargarPagina()
         {
             await construirGrillaPerfilesOcupacionalesCualificacion(datos);
             definirInputsGrilla();
-        }) ();
+        }
+
+        async function limpiarDatos()
+        {
+            datos = obtenerDatos(); 
+            await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+            definirInputsGrilla();
+        }
 
         function definirInputsGrilla()
         {
@@ -257,15 +265,17 @@
                 let registro = datos.find(y => y.codigoPerfil == x.codigoPerfil);
                 let txtFechaEfectiva = $(`#fechaEfectiva_${x.codigoPerfil}`);
 
-                txtFechaEfectiva.datepicker({ 
-                    language: "es", 
-                    autoClose: true,
-                    onSelect: (e) => {
-                        // let registro = datos.find(y => y.codigoPerfil == txtFechaEfectiva.attr("identificador"));
-                        registro.fechaEfectiva = e;
-                        console.log(registro);
-                    } 
-                });
+                if(txtFechaEfectiva.data("datepicker") == null)  // Si no ha sido inicializado
+                {
+                    txtFechaEfectiva.datepicker({ 
+                        language: "es", 
+                        autoClose: true,
+                        onSelect: (e) => {
+                            registro.fechaEfectiva = e;
+                            console.log(registro);
+                        } 
+                    });
+                }
 
                 llenarSelect({ 
                     selectedValue: x.estado,
@@ -318,16 +328,12 @@
                             {
                                 return `
                                 <input id="fechaEfectiva_${row.codigoPerfil}" type="text" value="${row.fechaEfectiva}"
-                                identificador="${row.codigoPerfil}"
                                 class="datepicker-input form-control" placeholder="DD/MM/AAAA"
                                 data-position="bottom center" autocomplete="off" readonly="readonly" 
-                                style="width: 7em" />
+                                style="width: 7.1em" />
                                 `;
                             }
                         },
-
-                        // { data: "estado", "className": "text-nowrap", "searchable": true, "sortable": true }
-
                         {
                             "data": "estado", "name": "estado", "className": "text-nowrap", "render": (data, type, row, meta) => 
                             {
