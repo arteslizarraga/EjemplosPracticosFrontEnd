@@ -260,7 +260,7 @@
 
         function definirInputsGrilla()
         {
-            Array.from($("#TablaPrincipal").DataTable().rows({ filter: "applied" }).data()).forEach(x => 
+            Array.from($("#TablaPrincipal").DataTable().rows({ filter: "applied", page: "current" }).data()).forEach(x => 
             {
                 let registro = datos.find(y => y.codigoPerfil == x.codigoPerfil);
                 let txtFechaEfectiva = $(`#fechaEfectiva_${x.codigoPerfil}`);
