@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+	<script type="text/javascript" src="listCollapse.js"></script>
+
+	<style>
+		ul.maketree, ul.maketree ul, ul.maketree li {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+
+		ul.maketree ul {
+			padding-left: 0.3em;
+		}
+
+		ul.maketree li {
+			border-left: 1px dotted #000;
+			padding-left: 13px;
+			background: url(dotted.gif) scroll no-repeat 1px 0.8em;
+		}
+
+		ul.maketree li.last {
+			border-left-width: 0px;
+			padding-left: 14px;
+			background: url(dottedangle.gif) scroll no-repeat left top;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<ul class="maketree" id="treeversion">
+		<li>Book 1
+			<ul>
+				<li><a href="#">Chapter 1</a></li>
+				<li><a href="#">Chapter 2</a></li>
+				<li><a href="#">Chapter 3</a></li>
+				<li class="last"><a href="#">Chapter 4</a></li>
+			</ul>
+		</li>
+		<li>Book 2
+			<ul>
+				<li><a href="#">Chapter 1</a></li>
+				<li><a href="#">Chapter 2</a></li>
+				<li>Chapter 3
+					<ul>
+						<li><a href="#">Ex 1</a></li>
+						<li class="last"><a href="#">Ex 2</a></li>
+					</ul>
+				</li>
+				<li class="last"><a href="#">Chapter 4</a></li>
+			</ul>
+		</li>
+		<li class="last">Book 3
+			<ul>
+				<li><a href="#">Chapter 1</a></li>
+				<li><a href="#">Chapter 2</a></li>
+				<li><a href="#">Chapter 3</a></li>
+				<li class="last"><a href="#">Chapter 4</a></li>
+			</ul>
+		</li>
+	</ul>
+
+	<script>
+
+		compactMenu('odo', false, '&plusmn; ');
+		compactMenu('odo2', true, '&plusmn; ');
+		compactMenu('treeversion', false, '&plusmn; ');
+		selfLink('odo', 'samePage', false);
+		selfLink('odo2', 'samePage', true);
+		selfLink('treeversion', 'samePage', true);
+		stateToFromStr('odo', retrieveCookie('menuState'));
+
+		//window.onunload = function () { if (document.getElementById && document.getElementById('consent').checked) { setCookie('menuState', stateToFromStr('odo')); } };
+
+	</script>
+
+	</div>
+
+</body>
+
+</html>

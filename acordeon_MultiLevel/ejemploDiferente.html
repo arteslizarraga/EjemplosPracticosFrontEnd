@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { background: steelblue; font-family: Arial, Helvetica, sans-serif; }
+
+		.main-nav * { 
+		  box-sizing : border-box;
+		}
+		.main-nav {
+		  width         : 20rem;
+		  border-bottom : 1px solid #fbfbfb;
+		}
+		.main-nav ul { 
+		  list-style : none;
+		  margin     : 0;
+		  padding    : 0;
+		}
+		.main-nav a { 
+		  display         : block;
+		  width           : 100%;
+		  border          : 1px solid #fbfbfb;
+		  border-bottom   : none;
+		  background      : #c7c7c7;
+		  text-decoration : none;
+		  line-height     : 2.5rem;
+		  padding         : 0 .5rem;
+		  color           : #2a2a2a;
+		}
+		.main-nav a:hover {
+		  background: #ebebeb;
+		}
+		.main-nav ul ul a    { padding-left:2rem; background: #d5d5d5; }
+		.main-nav ul ul ul a { padding-left:3rem; background: #e1e1e1; }
+
+		.main-nav li.submenu > ul { 
+		  max-height : 0;
+		  transition : max-height 0.25s ease-out;
+		  overflow   : hidden;
+		}
+		.main-nav li.submenu > a::after {
+		  display    : block;
+		  float      : right;
+		  content    : '\276F'; /*'\1405'; */
+		  transition : 180ms;
+		  transform  : rotate(90deg);
+		}
+		.main-nav li.submenu.show > ul {
+		  max-height : 500px;
+		  transition : max-height 0.35s ease-in;
+		}
+		.main-nav li.submenu.show > a  {
+		  padding-right    : .7rem; /* because '\276F' is not symetric ! */
+		}
+		.main-nav li.submenu.show > a::after {
+		  transform  : rotate(-90deg);
+		}
+    </style>
+</head>
+<body>
+    <div class="main-nav"></div>
+
+    <script>
+        const menu = [
+            { lib: "Home", link: "#Home" },
+            {
+                lib: "About Us", link: "#About", sub: [
+                    { lib: "History and Foundation", link: "#History" }, 
+                    { lib: "Company Overview", link: "#Company" }, 
+                    {
+                        lib: "Working Strategy", link: "#Working", sub: [
+                            { lib: "Employer Profile", link: "#Employer" }, 
+                            { 
+                                lib: "Manpower Allocation", 
+                                link: "#Manpower" 
+                                // sub: [
+                                //     { lib: "Babuska", link: "#Babuska" }, 
+                                //     { lib: "Rebecuda", link: "#Rebecuda" }, 
+                                //     { lib: "Bibilarda", link: "#Bibilarda" }
+                                // ] 
+                            }, 
+                            { lib: "Marketing Strategy", link: "#Marketing" }
+                        ]
+                    }
+                ]
+            }, 
+            {
+                lib: "Services", link: "#Services", sub: [
+                    { lib: "Graphic Designing", link: "#Graphic" }, 
+                    { lib: "Web Designing", link: "#Web" }, 
+                    {
+                        lib: "App Development", link: "#App", sub: [
+                            { lib: "Android", link: "#Android" }, 
+                            { lib: "IOS", link: "#IOS" }, 
+                            { lib: "Hybrid", link: "#Hybrid" }
+                        ]
+                    }
+                ]
+            }, 
+            { lib: "Contact", link: "#Contact" }
+        ];
+
+        const navMenu = document.querySelector('div.main-nav')
+
+        const OpenMenus = [] // to memorize DOM (li.show) menus opened
+
+        function makeMenu(nav, jso) {
+            let eUL = nav.appendChild(document.createElement('ul'))
+
+            for (const row of jso) {
+                let eLI = eUL.appendChild(document.createElement('li'))
+                    , lnk = eLI.appendChild(document.createElement('a'))
+                    ;
+                lnk.textContent = row.lib
+                lnk.href = row.link
+                if (!!row.sub) {
+                    eLI.className = 'submenu'
+                    makeMenu(eLI, row.sub)
+                }
+            }
+        }
+        makeMenu(navMenu, menu)
+
+        navMenu.addEventListener('click', (e) => {
+            if (!e.target.matches('li.submenu > a')) return
+            e.preventDefault()
+
+            let level = 0, 
+                eLI = e.target.closest('li'), 
+                eUL = e.target.closest('ul'), 
+                mOpen = eLI.classList.toggle('show');
+                
+            for (; ; level++) // get menu Level
+            {
+                eUL = eUL.parentElement.closest('ul')
+                if (!eUL || !eUL.matches('div.main-nav ul')) break
+            }
+            for (let i = OpenMenus.length; (--i) > level;) // close all < sub levels
+            {
+                OpenMenus.pop().classList.remove('show')
+            }
+            if (OpenMenus[level] && OpenMenus[level] != eLI)
+                OpenMenus.pop().classList.remove('show')
+
+            if (mOpen) OpenMenus.push(eLI)  // memorize adding menu opened
+            else OpenMenus.pop()     // or remove it. 
+        })
+    </script>
+
+</body>
+
+</html>
