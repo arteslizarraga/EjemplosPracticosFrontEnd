@@ -78,11 +78,6 @@
     <script src="https://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
 
     <script>
-        // public galeria : Array<Array<Foto>>;
-
-        let galeria = [
-            [], [], []
-        ];
 
         let listaFotos = [
             {"codigo":25,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"},
@@ -93,8 +88,12 @@
             {"codigo":20,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/20.png"},
             {"codigo":18,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png"},
             {"codigo":11,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png"},
-            {"codigo":10,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png"}
+            //{"codigo":10,"src":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png"}
         ];
+
+        let cantidadColumnas = 3;
+        let cantidadFilas = Math.round(listaFotos.length / cantidadColumnas);  // Calcula la cantidad de filas que tendrá la tabla
+        let galeria = [];
 
         llenarGaleria(listaFotos);
 
@@ -144,11 +143,7 @@
 
         document.querySelector("#galeria-desplegada").innerHTML = cadena;
 
-        //==============================================================================================================>>>>
-
-        // llenarGaleria(arreglo: Array<Foto>, cantidadFilas: Number = 3, cantidadColumnas: Number = 3)
-
-        function llenarGaleria(arreglo, cantidadFilas = 3, cantidadColumnas = 3)
+        function llenarGaleria(arreglo)
         {
             let arrRangoFilas = Array.from(Array(cantidadFilas).keys());          // [ 0, 1, 2 ]
             let arrRangoColumnas = Array.from(Array(cantidadColumnas).keys());    // [ 0, 1, 2 ]
@@ -156,6 +151,8 @@
 
             arrRangoFilas.forEach(fila => 
             {
+                galeria.push([]);
+                
                 arrRangoColumnas.forEach(columna => 
                 {
                     if (arreglo[cont] != null)  // Si existe la posición en el arreglo
@@ -167,8 +164,6 @@
                 });
             });
         }
-
-        // marcarImagenSeleccionada(foto: Foto)
 
         function marcarImagenSeleccionada(codigo)
         {
