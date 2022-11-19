@@ -272,12 +272,13 @@
 
         let cadena = arreglo.map(x => 
         {
-            let contenido = x.contenido != null && x.contenido != "" ? x.contenido : "- - -";
+            let tieneContenido = (x.contenido != null && x.contenido != "");
+            let contenido = tieneContenido ? x.contenido : "- - -";
 
             return `
-            <div class="${x.col != null ? x.col : "col-12 col-md-4"}">
+            <div class="${x.col != null && tieneContenido ? x.col : "col-12 col-md-4"}">
                 <div class="md-form">
-                    <p name="codigoCualificacion">${contenido}</p>
+                    <p name="">${contenido}</p>
                     <label class="active">${x.titulo}</label>
                 </div>
             </div>
