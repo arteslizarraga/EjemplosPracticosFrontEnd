@@ -50,7 +50,33 @@ function generarTabla()
 
     //==================================================>>>>
 
-    let cadena = "";
+    let arregloNivelesExistentesCabecera = []; 
+
+    arregloFiltrado.map(x => x.infoNiveles.map(y => y.numeroNivel)).forEach(x => 
+        x.filter(y => !arregloNivelesExistentesCabecera.includes(y)).forEach(y => arregloNivelesExistentesCabecera.push(y))
+    );
+
+    // arregloNivelesExistentesCabecera.sort((a, b) => a - b).forEach(x => console.log(x));  // 1 2 3 4 5
+
+    //==================================================>>>>
+
+    let cadena = `
+    <table id="table-tfl" class="table-tfl">
+    <thead>
+        <tr class="title-cards">
+            <th class="px-2 py-0 pb-2 nivel">
+            
+            </th>
+
+            ${arregloNivelesExistentesCabecera.sort((a, b) => a - b).map(nivel => 
+               `<th class="px-2 py-0 pb-2 nivel">
+                    <div class="col title text-center p-2">Nivel ${nivel}</div>
+                </th>` 
+            ).join("")}
+        </tr>
+    </thead>
+    <tbody>
+    `;
 
     arregloFiltrado.forEach(ruta => 
     {
@@ -137,8 +163,13 @@ function generarTabla()
     
         cadena += `</tr>`;
     });
+
+    cadena += `
+    </tbody>
+    </table>
+    `;
     
-    document.querySelector("#table-tfl tbody").innerHTML = cadena;
+    document.querySelector("#table-tfl").innerHTML = cadena;
 }
 
 function resetearPaginacion()
