@@ -21,13 +21,24 @@
 
      p { word-break: break-word }   /* Impedir textos enormes que desbordan la página */
 
-    .bs-tooltip-top .arrow::before, 
-    .bs-tooltip-auto[x-placement^="top"] .arrow::before{
-      border-top-color: #1565C0;
+    .bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before{
+      border-top-color: #1565C0;  /* Flecha que une al tooltip con el elemento sobre el cual pasa el mouse */
     }
+
     .tooltip.bs-tooltip-top .tooltip-inner {
-      background-color: #1565C0; /* Red */
+      background-color: #1565C0; /* Tooltip hacia arriba */
+      
     }
+
+    .tooltip.bs-tooltip-bottom .tooltip-inner {
+      background-color: #1565C0;  /* (Agregado) Tooltip hacia abajo */
+    }
+
+    .tooltip-inner {
+        /* max-width: none; */
+        max-width: 60%;         /* (Agregado) Largo hacia el lado del tooltip */
+    }
+
     table{
       height: 1px;
     }
@@ -332,283 +343,7 @@
       <div class="preloader-wrapper big active"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
     </div>
   </div>
-
-    <!-- Modal  Nueva Busqueda-->
-
-  <!-- / Modal Nueva busqueda -->
     
-    
-    
-    <!-- Modal  editar -->
-    <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog sm modal-notify" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <p class="heading lead">Editar Informaci&oacute;n</p>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body px-0">
-            
-            <div class="row mb-4">
-              
-              <div class="col-12 col-md-4">
-                <div class="md-form">
-                  <select class="mdb-select" searchable="Buscar">
-                    <option value="" disabled selected>Seleccione ID</option>
-                    <option value="1">ID 1</option>
-                    <option value="2">ID 2</option>
-                  </select>
-                  <label>Periodo de Poblamiento</label>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <div class="md-form">
-                  <select class="mdb-select" searchable="Buscar">
-                    <option value="" disabled selected>Seleccione ID</option>
-                    <option value="1">ID 1</option>
-                    <option value="2">ID 2</option>
-                  </select>
-                  <label>ID Sector Productivo</label>
-                </div>
-              </div>
-              
-              <div class="col-12 col-md-4">
-                <div class="md-form">
-                  <select class="mdb-select" searchable="Buscar">
-                    <option value="" disabled selected>Seleccione tipo</option>
-                    <option value="1">Tipo 1</option>
-                    <option value="2">Tipo 2</option>
-                  </select>
-                  <label>ID Sub Sector Productivo</label>
-                </div>
-              </div>
-
-              
-            </div>
-
-            <div class="row mb-4">
-
-              <div class="col-12 col-md-4">
-                <div class="md-form">
-                  <select class="mdb-select" searchable="Buscar">
-                    <option value="" disabled selected>Seleccione c&oacute;digo</option>
-                    <option value="1">C&oacute;digo 1</option>
-                    <option value="2">C&oacute;digo 2</option>
-                  </select>
-                  <label>ID Ruta Formativo Laboral</label>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <div class="md-form">
-                  <select class="mdb-select" searchable="Buscar">
-                    <option value="" disabled selected>Seleccione ID</option>
-                    <option value="1">ID 1</option>
-                    <option value="2">ID 2</option>
-                  </select>
-                  <label>ID Cualificaci&oacute;n</label>
-                </div>
-              </div>
-              
-              <div class="col-12 col-md-4">
-                <div class="md-form">
-                  <select class="mdb-select" searchable="Buscar">
-                    <option value="" disabled selected>Seleccione estado</option>
-                    <option value="1">Estado 1</option>
-                    <option value="2">Estado 2</option>
-                  </select>
-                  <label>Estado</label>
-                </div>
-              </div>
-            
-            </div>
-
-            <div class="row mb-4">
-
-              <div class="col-12 col-md-4">
-                <div class="md-form">
-                  <select class="mdb-select" searchable="Buscar">
-                    <option value="" disabled selected>Seleccione prelaci&oacute;n</option>
-                    <option value="1">Prelaci&oacute;n 1</option>
-                    <option value="2">Prelaci&oacute;n 2</option>
-                  </select>
-                  <label>Prelaci&oacute;n dentro del Nivel</label>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <div class="md-form">
-                  <input name="campo_fecha" id="campo_fecha" type='text' class="datepicker-input form-control" placeholder="Seleccione Fecha"
-                  data-position="bottom center" autocomplete="off" />
-                  <label for="campo_fecha" class="active">Fecha Publicaci&oacute;n de Versi&oacute;n</label>
-                </div>
-              </div>
-              
-              <div class="col-12 col-md-4">
-                <div class="md-form">
-                  <select class="mdb-select" searchable="Buscar">
-                    <option value="" disabled selected>Seleccione estado</option>
-                    <option value="1">Estado 1</option>
-                    <option value="2">Estado 2</option>
-                  </select>
-                  <label>ID MCTP</label>
-                </div>
-              </div>
-            
-            </div>
-
-          </div>
-          <div class="modal-footer px-0">
-            <a class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</a>
-            <a class="btn btn-default waves-effect waves-light" data-dismiss="modal" onclick="toastr.success('&#161;Editado Correctamente.');">Editar</a>
-          </div>
-        </div>
-      </div>
-    </div> 
-    <!-- editar -->
-    <!-- Modal  detalle -->
-    <div class="modal fade" id="ModalDetalle" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <p class="heading lead" name="tituloModal">Detalle Cualificación - Lorem Ipsum Dolor sin Amet</p>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body px-0">
-
-            <div id="ver-detalle-cualificacion" class="row"></div>
-
-          </div>
-          <div class="modal-footer px-0">
-            <button class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cerrar</button>
-          </div>
-        </div>
-      </div>
-    </div> 
-    <!-- detalle -->
-    <!-- Modal  detalle -->
-    <div class="modal fade" id="ModalPerfiles" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <p class="heading lead">Perfiles Ocupacionales de una Cualificaci&oacute;n</p>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body px-0">
-            
-            <div class="row my-4">
-              
-              <div class="col-12 col-md-12">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Cualificación:</p>
-                  <p class="font-weight-bold mb-1 ml-3" name="cualificacion">xxx xxx xxx</p>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-12">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Versión Cualificación:</p>
-                  <p class="font-weight-bold mb-1 ml-3" name="versionCualificacion">001</p>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-12">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Sector Productivo:</p>
-                  <p class="font-weight-bold mb-1 ml-3" name="sectorProductivo">xxx xxx xxx</p>
-                </div>
-              </div>
-              <div class="col-12 col-md-12">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Sub Sector Productivo:</p>
-                  <p class="font-weight-bold mb-1 ml-3" name="subSectorProductivo">xxx xxx xxx</p>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-12">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Estado Cualificación:</p>
-                  <p class="font-weight-bold mb-1 ml-3" name="estadoCualificacion">xxx xxx xxx</p>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-12">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Fecha Publicación:</p>
-                  <p class="font-weight-bold mb-1 ml-3" name="fechaPublicacion">dd/mm/aa</p>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="row">
-
-              <div class="col-12">
-
-                  <div class="table-responsive">
-
-                        <table id="TablaModalPerfiles" class="datatables table table-hover table-striped table-bordered m-0" width="100%">
-                          <thead>
-                            <tr>
-                                <th>Nivel del MCTP</th> 
-                                <th>Código Perfil Ocupacional</th> 
-                                <th>Nombre Perfil Ocupacional</th> 
-                                <th>Estado Perfil Ocupacional</th> 
-                            </tr>
-                          </thead>
-                          <tbody>
-
-                          </tbody>
-                        </table> 
-                    </div>
-              </div>
-
-            </div>
-
-          </div>
-          <div class="modal-footer px-0">
-            <button class="btn btn-default waves-effect waves-light" data-dismiss="modal">Cerrar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="ModalEliminar" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <p class="heading lead">Eliminar</p>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              
-              <div class="col-md-12">
-                <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn red-text ">delete</i></p>
-                <p class="text-center font-weight-bold m-0">
-                  &iquest;Desea eliminar la informaci&oacute;n&quest;
-                </p>
-              </div>
-              
-            </div>
-          </div>
-          <div class="modal-footer justify-content-center">
-            <a class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</a>
-            <a class="btn btn-default waves-effect waves-light alerta" data-dismiss="modal" onclick="toastr.success('Eliminado correctamente.');">Eliminar</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
     <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
     <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
@@ -621,8 +356,9 @@
     
     <script src="funcionesGenerales.js"></script>
     <script src="card.js"></script>
-    <script src="datos_1.js"></script>
+    <!-- <script src="datos_1.js"></script> -->
     <!-- <script src="datos_2.js"></script> -->
+    <script src="datos_3.js"></script>
     <script src="CONSULTA_MCTP.js"></script>
     
 

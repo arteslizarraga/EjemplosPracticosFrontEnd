@@ -1,19 +1,37 @@
 
 function obtenerDatos_1()
 {
-    let textoGrande = "El lenguaje de programación C# es totalmente orientado a componentes y orientado a objetos. C# proporciona construcciones de lenguaje para admitir directamente estos conceptos, por lo que se trata de un lenguaje natural en el que crear y usar componentes de software. Desde su origen, C# ha agregado características para admitir nuevas cargas de trabajo y prácticas de diseño de software emergentes. En el fondo, C# es un lenguaje orientado a objetos. Defina los tipos y su comportamiento. Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-
     return [
         {
             "ncorr": 1,
             "nombreRuta": "Ruta 1",
             "infoNiveles": [
                 {
+                    "numeroNivel": 1,
+                    "elementos": [
+                        // {
+                        //     "correlativo": 1,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": []
+                        // },
+                        // {
+                        //     "correlativo": 2,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": []
+                        // },
+                        // {
+                        //     "correlativo": 3,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": []
+                        // }
+                    ]
+                },
+                {
                     "numeroNivel": 2,
                     "elementos": [
                         {
                             "correlativo": 5,
-                            "texto": "Probando nivel 2. " + textoGrande,
+                            "texto": "Probando Nivel 2",
                             "asociadoCon": [
                                 3,
                                 1
@@ -32,6 +50,43 @@ function obtenerDatos_1()
                             "texto": "Probando",
                             "asociadoCon": []
                         }
+                    ]
+                },
+                {
+                    "numeroNivel": 3,
+                    "elementos": [
+                        // {
+                        //     "correlativo": 9,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         7,
+                        //         5
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 8,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         6,
+                        //         4
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 9,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         7,
+                        //         5
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 7,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         5,
+                        //         3
+                        //     ]
+                        // }
                     ]
                 },
                 {
@@ -99,30 +154,88 @@ function obtenerDatos_1()
             "nombreRuta": "Ruta 2",
             "infoNiveles": [
                 {
+                    "numeroNivel": 1,
+                    "elementos": [
+                        // {
+                        //     "correlativo": 18,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         16,
+                        //         14
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 16,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         14,
+                        //         12
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 17,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         15,
+                        //         13
+                        //     ]
+                        // }
+                    ]
+                },
+                {
                     "numeroNivel": 2,
                     "elementos": [
+                        // {
+                        //     "correlativo": 21,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         19,
+                        //         17
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 19,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         17,
+                        //         15
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 20,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         18,
+                        //         16
+                        //     ]
+                        // }
+                    ]
+                },
+                {
+                    "numeroNivel": 3,
+                    "elementos": [
                         {
-                            "correlativo": 21,
-                            "texto": "Probando nivel 2",
+                            "correlativo": 23,
+                            "texto": "Probando nivel 3",
                             "asociadoCon": [
-                                19,
-                                17
+                                21,
+                                19
                             ]
                         },
                         {
-                            "correlativo": 19,
+                            "correlativo": 22,
                             "texto": "Probando",
                             "asociadoCon": [
-                                17,
-                                15
+                                20,
+                                18
                             ]
                         },
                         {
-                            "correlativo": 20,
+                            "correlativo": 24,
                             "texto": "Probando",
                             "asociadoCon": [
-                                18,
-                                16
+                                22,
+                                20
                             ]
                         }
                     ]
@@ -159,30 +272,30 @@ function obtenerDatos_1()
                 {
                     "numeroNivel": 5,
                     "elementos": [
-                        {
-                            "correlativo": 29,
-                            "texto": "Probando nivel 5",
-                            "asociadoCon": [
-                                27,
-                                25
-                            ]
-                        },
-                        {
-                            "correlativo": 28,
-                            "texto": "Probando",
-                            "asociadoCon": [
-                                26,
-                                24
-                            ]
-                        },
-                        {
-                            "correlativo": 30,
-                            "texto": "Probando",
-                            "asociadoCon": [
-                                28,
-                                26
-                            ]
-                        }
+                        // {
+                        //     "correlativo": 29,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         27,
+                        //         25
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 28,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         26,
+                        //         24
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 30,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         28,
+                        //         26
+                        //     ]
+                        // }
                     ]
                 }
             ]
@@ -192,11 +305,40 @@ function obtenerDatos_1()
             "nombreRuta": "Ruta 3",
             "infoNiveles": [
                 {
+                    "numeroNivel": 1,
+                    "elementos": [
+                        // {
+                        //     "correlativo": 33,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         31,
+                        //         29
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 31,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         29,
+                        //         27
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 32,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         30,
+                        //         28
+                        //     ]
+                        // }
+                    ]
+                },
+                {
                     "numeroNivel": 2,
                     "elementos": [
                         {
                             "correlativo": 35,
-                            "texto": textoGrande,
+                            "texto": "Probando nivel 2",
                             "asociadoCon": [
                                 33,
                                 31
@@ -216,6 +358,35 @@ function obtenerDatos_1()
                             "asociadoCon": [
                                 34,
                                 32
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "numeroNivel": 3,
+                    "elementos": [
+                        {
+                            "correlativo": 38,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                36,
+                                34
+                            ]
+                        },
+                        {
+                            "correlativo": 37,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                35,
+                                33
+                            ]
+                        },
+                        {
+                            "correlativo": 39,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                37,
+                                35
                             ]
                         }
                     ]
@@ -285,6 +456,35 @@ function obtenerDatos_1()
             "nombreRuta": "Ruta 4",
             "infoNiveles": [
                 {
+                    "numeroNivel": 1,
+                    "elementos": [
+                        // {
+                        //     "correlativo": 48,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         46,
+                        //         44
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 46,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         44,
+                        //         42
+                        //     ]
+                        // },
+                        // {
+                        //     "correlativo": 47,
+                        //     "texto": "Probando",
+                        //     "asociadoCon": [
+                        //         45,
+                        //         43
+                        //     ]
+                        // }
+                    ]
+                },
+                {
                     "numeroNivel": 2,
                     "elementos": [
                         {
@@ -309,6 +509,35 @@ function obtenerDatos_1()
                             "asociadoCon": [
                                 49,
                                 47
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "numeroNivel": 3,
+                    "elementos": [
+                        {
+                            "correlativo": 53,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                51,
+                                49
+                            ]
+                        },
+                        {
+                            "correlativo": 52,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                50,
+                                48
+                            ]
+                        },
+                        {
+                            "correlativo": 54,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                52,
+                                50
                             ]
                         }
                     ]
@@ -378,6 +607,35 @@ function obtenerDatos_1()
             "nombreRuta": "Ruta 5",
             "infoNiveles": [
                 {
+                    "numeroNivel": 1,
+                    "elementos": [
+                        {
+                            "correlativo": 62,
+                            "texto": "Probando nivel 1",
+                            "asociadoCon": [
+                                60,
+                                58
+                            ]
+                        },
+                        {
+                            "correlativo": 61,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                59,
+                                57
+                            ]
+                        },
+                        {
+                            "correlativo": 63,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                61,
+                                59
+                            ]
+                        }
+                    ]
+                },
+                {
                     "numeroNivel": 2,
                     "elementos": [
                         {
@@ -402,6 +660,35 @@ function obtenerDatos_1()
                             "asociadoCon": [
                                 62,
                                 60
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "numeroNivel": 3,
+                    "elementos": [
+                        {
+                            "correlativo": 68,
+                            "texto": "Probando nivel 3",
+                            "asociadoCon": [
+                                66,
+                                64
+                            ]
+                        },
+                        {
+                            "correlativo": 69,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                67,
+                                65
+                            ]
+                        },
+                        {
+                            "correlativo": 67,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                65,
+                                63
                             ]
                         }
                     ]

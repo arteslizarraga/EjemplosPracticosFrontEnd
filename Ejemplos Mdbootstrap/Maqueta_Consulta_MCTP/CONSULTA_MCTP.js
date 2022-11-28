@@ -9,6 +9,7 @@ let totalPaginas = 0;
 $("body").tooltip({ selector: "[data-toggle=tooltip]", trigger: "hover" });  // Habilitar tooltips
 
 let arregloRutas = [];
+let arregloFiltrado = [];
 buscar();
 
 function buscar()
@@ -27,7 +28,7 @@ function generarTabla()
     //==================================================>>>>
     // Aplicar Paginación
 
-    let arregloFiltrado = arregloRutas;
+    arregloFiltrado = arregloRutas;
     totalPaginas = Math.ceil( arregloFiltrado.length / registrosPorPagina ) - 1;
 
     desplegarPaginacionBootstrap({
@@ -52,11 +53,17 @@ function generarTabla()
 
     let arregloNivelesExistentesCabecera = []; 
 
-    arregloFiltrado.map(x => x.infoNiveles.map(y => y.numeroNivel)).forEach(x => 
+    // filter(y => y.elementos)
+    //console.log(arregloFiltrado);
+
+
+    arregloFiltrado.map(x => x.infoNiveles.filter(y => Array.isArray(y.elementos) && y.elementos.length > 0).map(y => y.numeroNivel)).forEach(x => 
         x.filter(y => !arregloNivelesExistentesCabecera.includes(y)).forEach(y => arregloNivelesExistentesCabecera.push(y))
     );
 
     // arregloNivelesExistentesCabecera.sort((a, b) => a - b).forEach(x => console.log(x));  // 1 2 3 4 5
+    arregloNivelesExistentesCabecera = arregloNivelesExistentesCabecera.sort((a, b) => a - b);
+    console.log(arregloNivelesExistentesCabecera);
 
     //==================================================>>>>
 
@@ -68,7 +75,7 @@ function generarTabla()
             
             </th>
 
-            ${arregloNivelesExistentesCabecera.sort((a, b) => a - b).map(nivel => 
+            ${arregloNivelesExistentesCabecera.map(nivel => 
                `<th class="px-2 py-0 pb-2 nivel">
                     <div class="col title text-center p-2">Nivel ${nivel}</div>
                 </th>` 
@@ -90,13 +97,17 @@ function generarTabla()
             </div>
         </td>
         `;
-    
-        ruta.infoNiveles.forEach(infoNivel => 
+
+        // ruta.infoNiveles.filter(infoNivel => Array.isArray(infoNivel.elementos) && infoNivel.elementos.length > 0).forEach(infoNivel =>
+        
+        arregloNivelesExistentesCabecera.forEach(numeroNivel =>
         {
+            let infoNivel = ruta.infoNiveles.find(x => x.numeroNivel == numeroNivel);
+
             cadena += `<td class="ruta p-2">`;
                 cadena += `<div class="card-container d-flex flex-row flex-wrap justify-content-between">`;
                 
-                // console.log(`   numeroNivel: ${infoNivel.numeroNivel}`);
+                //console.log(`   numeroNivel: ${infoNivel.numeroNivel}`);
     
                 infoNivel.elementos.forEach(x => 
                 {
@@ -142,18 +153,6 @@ function generarTabla()
                             </div>
                         </div>
                     </div>
-
-                    <!--
-                    <div class="col-6 p-0">
-                        <div class="card sm cards-ruta m-1 text-center ${clasesCssAsociacion}" id="${x.correlativo}">
-                        <p ${infoTooltip}>${textoDesplegado}</p>
-                        <div class="d-flex justify-content-between section-action">
-                            <a><i class="material-icons icon-lg" data-toggle="tooltip" data-placement="top" title="Ver perfiles">person</i></a>
-                            <a data-toggle="modal" data-target="#ModalDetalle"><i class="material-icons icon-lg blue-text" data-toggle="tooltip" data-placement="top" title="Ver detalle">visibility</i></a>
-                        </div>
-                        </div>
-                    </div>
-                    -->
                     `;
                 });
     
