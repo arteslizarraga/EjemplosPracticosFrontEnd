@@ -61,6 +61,7 @@ p { word-break: break-word }   /* Impedir textos enormes que desbordan la págin
 .tabla-info th {
     /* white-space: nowrap; */    /* Impide que haga un salto de linea  */
     padding: 3px;
+    text-align: center;
 }
 
 .tabla-info thead {
