@@ -7,31 +7,7 @@
     <title>Planificaci&oacute;n y Dise&ntilde;o de Programas</title>
     <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
     <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css" />
-    <style>
-        /* Galería Imágenes */
-
-        .galeria-ordenada td img{
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .galeria-ordenada td.tiene-contenido {
-            width: 120px;
-            height: 120px;
-        }
-
-        .galeria-ordenada td {
-            vertical-align: top;   /* Alinear contenido arriba */
-        }
-
-        .galeria-ordenada td p {
-            word-break: break-word; 
-            cursor: pointer;
-            margin: 1em;
-        }
-
-    </style>
+    <link rel="stylesheet" href="estilos.css" />
 </head>
 
 <body id="appBody" class="d-flex flex-column">
@@ -44,7 +20,7 @@
                 <div class="card" id="buscar">
 
                     <div class="card-header">
-                        <h4 class="float-left heading h4-responsive mb-0">Ejemplo 2</h4>
+                        <h4 class="float-left heading h4-responsive mb-0">Ejemplo 2 (Sin paginar y sin columnas dinámicas)</h4>
                     </div>
                     <div class="card-body">
 
@@ -117,59 +93,13 @@
     <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
     <script src="https://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
 
+    <script src="datos.js"></script>
+
     <script>
 
         $("body").tooltip({ selector: "[data-toggle=tooltip]", trigger: "hover" });  // Habilitar tooltips
 
-        let textoGrande = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. AAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA`;
-
-        let arregloRutas = [
-            {
-                nombreRuta: "Ruta 1",
-                infoNiveles: [
-                    {
-                        numeroNivel: 1,
-                        elementos: [
-                            { correlativo: 1, texto: "Probar con Este", asociadoCon: [2] },
-                            { correlativo: 2, texto: "Relacionado", asociadoCon: [1, 3] },
-                            { correlativo: 2, texto: textoGrande, asociadoCon: [] },
-                            { correlativo: 2, texto: "Rellenar", asociadoCon: [] },
-                            { correlativo: 2, texto: textoGrande, asociadoCon: [] }
-                        ]
-                    },
-                    {
-                        numeroNivel: 2,
-                        elementos: [
-                            { correlativo: 3, texto: "Texto Nivel 2", asociadoCon: [2] },
-                            { correlativo: 4, texto: "Texto", asociadoCon: [2] },
-                            { correlativo: 2, texto: textoGrande, asociadoCon: [] },
-                        ]
-                    },
-                    {
-                        numeroNivel: 3,
-                        elementos: [
-                            { correlativo: 5, texto: "Relacionado", asociadoCon: [1] },
-                            { correlativo: 6, texto: "Texto", asociadoCon: [4] }
-                        ]
-                    },
-                    {
-                        numeroNivel: 4,
-                        elementos: [
-                            { correlativo: 7, texto: "Texto", asociadoCon: [6] },
-                            { correlativo: 8, texto: "Texto", asociadoCon: [9] }
-                        ]
-                    },
-                    {
-                        numeroNivel: 5,
-                        elementos: [
-                            { correlativo: 9, texto: "Texto", asociadoCon: [5] },
-                            { correlativo: 10, texto: "Texto", asociadoCon: [8] }
-                        ]
-                    }
-                ]
-            }
-        ];
-
+        let arregloRutas = obtenerDatos();
         let cadenaProbando = "";
 
         arregloRutas.forEach(ruta => 
@@ -186,48 +116,10 @@
 
             ruta.infoNiveles.forEach(infoNivel => 
             {
-                console.log(infoNivel);  //  { numeroNivel: 1, elementos: (5) […] }
+                // console.log(infoNivel);  //  { numeroNivel: 1, elementos: (5) […] }
 
                 cadenaProbando += `<td>`;
                     cadenaProbando += babushka(infoNivel.elementos);
-
-                    /*
-                    cadenaProbando += `<div class="card-container d-flex flex-row flex-wrap justify-content-between">`;
-                    
-                    // console.log(`   numeroNivel: ${infoNivel.numeroNivel}`);
-
-                    infoNivel.elementos.forEach(x => 
-                    {
-                        let clasesCssAsociacion = x.asociadoCon.map(x => `me-asocio-con-${x}`).join(" ");
-
-                        //============================>>>
-
-                        let textoDesplegado = x.texto;
-                        let infoTooltip = "";
-
-                        if (textoDesplegado.length > 20) {
-                            textoDesplegado = `${textoDesplegado.slice(0, 70)} ...`;
-                            infoTooltip = `data-toggle="tooltip" data-placement="top" title="${x.texto}"`;
-                        }
-
-                        //============================>>>
-
-                        cadenaProbando += `
-                        <div class="col-6 p-0">
-                            <div class="card sm cards-ruta m-1 text-center ${clasesCssAsociacion}" id="${x.correlativo}">
-                            <p ${infoTooltip}>${textoDesplegado}</p>
-                            <div class="d-flex justify-content-between section-action">
-                                <a><i class="material-icons icon-lg" data-toggle="tooltip" data-placement="top" title="Ver perfiles">person</i></a>
-                                <a data-toggle="modal" data-target="#ModalDetalle"><i class="material-icons icon-lg blue-text" data-toggle="tooltip" data-placement="top" title="Ver detalle">visibility</i></a>
-                            </div>
-                            </div>
-                        </div>
-                        `;
-
-                    });
-
-                    cadenaProbando += `</div>`;
-                    */
                 cadenaProbando += `</td>`;
             });
 
