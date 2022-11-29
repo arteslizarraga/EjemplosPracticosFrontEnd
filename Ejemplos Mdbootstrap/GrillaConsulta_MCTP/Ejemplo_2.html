@@ -86,65 +86,68 @@
         $("body").tooltip({ selector: "[data-toggle=tooltip]", trigger: "hover" });  // Habilitar tooltips
 
         let arregloRutas = obtenerDatos();
+        generarTabla();
 
-        let cadenaProbando = `
-        <table class="tabla-info">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Nivel 1</th>
-                <th>Nivel 2</th>
-                <th>Nivel 3</th>
-                <th>Nivel 4</th>
-                <th>Nivel 5</th>
-            </tr>
-        </thead>
-        <tbody>`;
-
-        arregloRutas.forEach(ruta => 
+        function generarTabla()
         {
-            let textoRuta = ruta.nombreRuta;
-            let infoTooltipRuta = "";
+            let cadenaProbando = `
+            <table class="tabla-info">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Nivel 1</th>
+                    <th>Nivel 2</th>
+                    <th>Nivel 3</th>
+                    <th>Nivel 4</th>
+                    <th>Nivel 5</th>
+                </tr>
+            </thead>
+            <tbody>`;
 
-            cadenaProbando += `<tr valign="top">`;
-
-            if (textoRuta.length > 25) {
-                textoRuta = `${textoRuta.slice(0, 25)} ...`;
-                infoTooltipRuta = `data-toggle="tooltip" data-placement="top" title="${ruta.nombreRuta}"`;
-            }
-
-            cadenaProbando += `
-            <td>
-                <div class="card title h-100 align-items-center justify-content-center" style="${infoTooltipRuta != "" ? "cursor: pointer" : ""}">
-                    <div ${infoTooltipRuta}>${textoRuta}</div>
-                </div>
-            </td>
-            `;
-
-            ruta.infoNiveles.forEach(infoNivel => 
+            arregloRutas.forEach(ruta => 
             {
-                // console.log(infoNivel);  //  { numeroNivel: 1, elementos: (5) […] }
+                let textoRuta = ruta.nombreRuta;
+                let infoTooltipRuta = "";
 
-                cadenaProbando += `<td>`;
-                    cadenaProbando += babushka(infoNivel.elementos);
-                cadenaProbando += `</td>`;
+                cadenaProbando += `<tr valign="top">`;
+
+                if (textoRuta.length > 25) {
+                    textoRuta = `${textoRuta.slice(0, 25)} ...`;
+                    infoTooltipRuta = `data-toggle="tooltip" data-placement="top" title="${ruta.nombreRuta}"`;
+                }
+
+                cadenaProbando += `
+                <td>
+                    <div class="card title h-100 align-items-center justify-content-center" style="${infoTooltipRuta != "" ? "cursor: pointer" : ""}">
+                        <div ${infoTooltipRuta}>${textoRuta}</div>
+                    </div>
+                </td>
+                `;
+
+                ruta.infoNiveles.forEach(infoNivel => 
+                {
+                    // console.log(infoNivel);  //  { numeroNivel: 1, elementos: (5) […] }
+
+                    cadenaProbando += `<td>`;
+                        cadenaProbando += generarGaleria(infoNivel.elementos);
+                    cadenaProbando += `</td>`;
+                });
+
+                cadenaProbando += `</tr>`;
             });
 
-            cadenaProbando += `</tr>`;
-        });
+            cadenaProbando += `
+            </tbody>
+            </table>
+            `;
 
-        cadenaProbando += `
-        </tbody>
-        </table>
-        `;
+            document.querySelector("#table-tfl").innerHTML = cadenaProbando; 
+        }
 
-        document.querySelector("#table-tfl").innerHTML = cadenaProbando; 
-
-
-        function babushka(listaFotos) 
+        function generarGaleria(lista) 
         {
             let cantidadColumnas = 2;
-            let cantidadFilas = Math.round(listaFotos.length / cantidadColumnas);  // Calcula la cantidad de filas que tendrá la tabla
+            let cantidadFilas = Math.round(lista.length / cantidadColumnas);  // Calcula la cantidad de filas que tendrá la tabla
             
             // Llenar la galería
             
@@ -159,8 +162,8 @@
 
                 arrRangoColumnas.forEach(columna => 
                 {
-                    if (listaFotos[cont] != null && matriz[fila] != null)  // Si existe la posición en el arreglo
-                        matriz[fila][columna] = listaFotos[cont];  
+                    if (lista[cont] != null && matriz[fila] != null)  // Si existe la posición en el arreglo
+                        matriz[fila][columna] = lista[cont];  
                     else 
                         matriz[fila][columna] = { correlativo: 0, src: null };  // Agrega un item vacío para rellenar
 
@@ -189,7 +192,7 @@
                                 let textoDesplegado = celda.texto;
                                 let infoTooltip = "";
                 
-                                if (textoDesplegado.length > 25) {
+                                if (textoDesplegado.length >= 25) {
                                     textoDesplegado = `${textoDesplegado.slice(0, 25)} ...`;
                                     infoTooltip = `data-toggle="tooltip" data-placement="top" title="${celda.texto}"`;
                                 }
@@ -199,7 +202,7 @@
                                 return `
                                 <td style="border: ${estiloBordeTd}" class="${claseTd}"> 
 
-                                    <div class="card" style="background-color: lightgray">
+                                    <div class="f-card m-1" style="background-color: lightgray">
                                         <div class="card-body" style="height: 80px">
                                             <p>${contenidoTd}</p>
                                         </div>
