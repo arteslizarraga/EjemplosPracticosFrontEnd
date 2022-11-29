@@ -26,21 +26,7 @@
 
                         <div class="row">
                             <div class="col-12">
-                            
-                                <table id="table-tfl" border="2">
-                                    <thead>
-                                      <tr>
-                                        <th></th>
-                                        <th>Nivel 1</th>
-                                        <th>Nivel 2</th>
-                                        <th>Nivel 3</th>
-                                        <th>Nivel 4</th>
-                                        <th>Nivel 5</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-
+                                <div id="table-tfl"></div>
                             </div>
                         </div>
                         <div class="row">
@@ -100,16 +86,37 @@
         $("body").tooltip({ selector: "[data-toggle=tooltip]", trigger: "hover" });  // Habilitar tooltips
 
         let arregloRutas = obtenerDatos();
-        let cadenaProbando = "";
+
+        let cadenaProbando = `
+        <table class="tabla-info">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nivel 1</th>
+                <th>Nivel 2</th>
+                <th>Nivel 3</th>
+                <th>Nivel 4</th>
+                <th>Nivel 5</th>
+            </tr>
+        </thead>
+        <tbody>`;
 
         arregloRutas.forEach(ruta => 
         {
+            let textoRuta = ruta.nombreRuta;
+            let infoTooltipRuta = "";
+
             cadenaProbando += `<tr valign="top">`;
+
+            if (textoRuta.length > 25) {
+                textoRuta = `${textoRuta.slice(0, 25)} ...`;
+                infoTooltipRuta = `data-toggle="tooltip" data-placement="top" title="${ruta.nombreRuta}"`;
+            }
 
             cadenaProbando += `
             <td>
-                <div class="card title h-100 align-items-center justify-content-center">
-                    <div>${ruta.nombreRuta}</div>
+                <div class="card title h-100 align-items-center justify-content-center" style="${infoTooltipRuta != "" ? "cursor: pointer" : ""}">
+                    <div ${infoTooltipRuta}>${textoRuta}</div>
                 </div>
             </td>
             `;
@@ -126,9 +133,14 @@
             cadenaProbando += `</tr>`;
         });
 
-        document.querySelector("#table-tfl tbody").innerHTML = cadenaProbando; 
+        cadenaProbando += `
+        </tbody>
+        </table>
+        `;
 
-        
+        document.querySelector("#table-tfl").innerHTML = cadenaProbando; 
+
+
         function babushka(listaFotos) 
         {
             let cantidadColumnas = 2;
@@ -177,8 +189,8 @@
                                 let textoDesplegado = celda.texto;
                                 let infoTooltip = "";
                 
-                                if (textoDesplegado.length > 40) {
-                                    textoDesplegado = `${textoDesplegado.slice(0, 40)} ...`;
+                                if (textoDesplegado.length > 25) {
+                                    textoDesplegado = `${textoDesplegado.slice(0, 25)} ...`;
                                     infoTooltip = `data-toggle="tooltip" data-placement="top" title="${celda.texto}"`;
                                 }
 
@@ -186,16 +198,23 @@
 
                                 return `
                                 <td style="border: ${estiloBordeTd}" class="${claseTd}"> 
-                                    ${contenidoTd}
-                                
-                                    <div class="d-flex p-2 justify-content-between section-action">
-                                        <button onclick="console.log('abrirModalPerfiles')">
-                                            <i class="material-icons icon-lg" data-toggle="tooltip" data-placement="top" title="Ver perfiles">person</i>
-                                        </button>
-                                        <button onclick="console.log('abrirModalDetalle')">
-                                            <i class="material-icons icon-lg blue-text" data-toggle="tooltip" data-placement="top" title="Ver detalle">visibility</i>
-                                        </button>
+
+                                    <div class="card" style="background-color: lightgray">
+                                        <div class="card-body" style="height: 80px">
+                                            <p>${contenidoTd}</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="d-flex p-2 justify-content-between section-action">
+                                                <button onclick="console.log('abrirModalPerfiles')">
+                                                    <i class="material-icons icon-lg" data-toggle="tooltip" data-placement="top" title="Ver perfiles">person</i>
+                                                </button>
+                                                <button onclick="console.log('abrirModalDetalle')">
+                                                    <i class="material-icons icon-lg blue-text" data-toggle="tooltip" data-placement="top" title="Ver detalle">visibility</i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </td>
                                 `;
                             }

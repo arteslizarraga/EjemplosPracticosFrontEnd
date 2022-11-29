@@ -1,13 +1,8 @@
 
 p { word-break: break-word }   /* Impedir textos enormes que desbordan la página */
 
+/* ===================================================================================================== */
 /* Galería Imágenes */
-
-/* .galeria-ordenada td img{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-} */
 
 .galeria-ordenada td.tiene-contenido {
     width: 120px;
@@ -25,6 +20,7 @@ p { word-break: break-word }   /* Impedir textos enormes que desbordan la págin
     margin: 1em;
 }
 
+/* ===================================================================================================== */
 /* Tooltips */
 
 .bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before{
@@ -43,4 +39,30 @@ p { word-break: break-word }   /* Impedir textos enormes que desbordan la págin
     min-width: 100px;
     /* max-width: none; */
     max-width: 60%;         /* (Agregado) Largo hacia el lado del tooltip */
+}
+
+/* ===================================================================================================== */
+/* Grilla Principal */
+
+.tabla-info {
+    /* table-layout: fixed; */
+    width:100%;
+    border-collapse: collapse;
+}
+
+.tabla-info th, td {
+    border: 3px solid rgb(104, 103, 103);
+}
+
+.tabla-info td {
+    padding: 5px;
+}
+
+.tabla-info th {
+    /* white-space: nowrap; */    /* Impide que haga un salto de linea  */
+    padding: 3px;
+}
+
+.tabla-info thead {
+    background-color: gray; color: white;
 }
