@@ -107,7 +107,7 @@
             cadenaProbando += `<tr valign="top">`;
 
             cadenaProbando += `
-            <td class="ruta p-2">
+            <td>
                 <div class="card title h-100 align-items-center justify-content-center">
                     <div>${ruta.nombreRuta}</div>
                 </div>
@@ -134,7 +134,6 @@
             let cantidadColumnas = 2;
             let cantidadFilas = Math.round(listaFotos.length / cantidadColumnas);  // Calcula la cantidad de filas que tendrá la tabla
             
-            //=============================================================================================>>>>>>
             // Llenar la galería
             
             let matriz = [];
@@ -156,8 +155,6 @@
                     cont ++;
                 });
             });
-
-            //=============================================================================================>>>>>>
 
             let cadena = `
             <table class="galeria-ordenada">
@@ -186,13 +183,26 @@
                                 }
 
                                 contenidoTd = `<p ${infoTooltip}> ${textoDesplegado} </p>`;
-                            }
 
-                            return `
-                            <td style="border: ${estiloBordeTd}" class="${claseTd}"> 
-                                ${contenidoTd}
-                            </td>
-                            `;
+                                return `
+                                <td style="border: ${estiloBordeTd}" class="${claseTd}"> 
+                                    ${contenidoTd}
+                                
+                                    <div class="d-flex p-2 justify-content-between section-action">
+                                        <button onclick="console.log('abrirModalPerfiles')">
+                                            <i class="material-icons icon-lg" data-toggle="tooltip" data-placement="top" title="Ver perfiles">person</i>
+                                        </button>
+                                        <button onclick="console.log('abrirModalDetalle')">
+                                            <i class="material-icons icon-lg blue-text" data-toggle="tooltip" data-placement="top" title="Ver detalle">visibility</i>
+                                        </button>
+                                    </div>
+                                </td>
+                                `;
+                            }
+                            else 
+                            {
+                                return `<td style="border: ${estiloBordeTd}" class="${claseTd}"></td>`;
+                            }
 
                         }).join("")} 
                     </tr>

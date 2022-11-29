@@ -3,11 +3,11 @@ p { word-break: break-word }   /* Impedir textos enormes que desbordan la págin
 
 /* Galería Imágenes */
 
-.galeria-ordenada td img{
+/* .galeria-ordenada td img{
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 .galeria-ordenada td.tiene-contenido {
     width: 120px;
