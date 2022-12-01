@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Sistema de definici&oacute;n de Programas Formativos: M&oacute;dulos de Poblamiento del MCTP</title>
+    <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+    <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
+    <style>
+        .bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before{
+            border-top-color: #1565C0;  /* Flecha que une al tooltip con el elemento sobre el cual pasa el mouse */
+        }
+
+        .tooltip.bs-tooltip-top .tooltip-inner { background-color: #1565C0; }
+        .tooltip.bs-tooltip-bottom .tooltip-inner { background-color: #1565C0; }
+        .tooltip-inner { min-width: 100px; max-width: 60%; }
+    </style>
+</head>
+<body id="appBody" class="d-flex flex-column">
+
+    <div class="page-content">
+
+        <div class="navbar-overlay"></div>
+
+        <div id="menuContent">
+            
+            <!-- Loading Overlay -->
+            <div class="loading-backdrop" id="loadingOverlay">
+                <div class="loading-circle">
+                    <div class="preloader-wrapper big active"><div class="spinner-layer spinner-white-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>
+                </div>
+            </div>
+            <header class="header">
+
+                <div class="header-container">
+
+                    <!--Logo-->
+                    <div class="header-logo">
+                        <a href="https://www.inacap.cl">
+                            <img src="https://www.inacap.cl/web/template-aplicaciones/img/isotipo.png" alt="INACAP" class="logo-mobile">
+                            <img src="https://www.inacap.cl/web/template-aplicaciones/img/logo-inacap.png" alt="INACAP" class="logo">
+                        </a>
+                    </div>
+
+                    <!--Titulo, recuerda que tambien debes reemplazar el nombre en el script m&aacute;s abajo-->
+                    <div class="header-title">
+                        <h1 id="title">
+                            <a href="#">Título</a>
+                        </h1>
+                    </div>
+
+                    <!--Datos del Usuario-->
+                    <div class="user-info">
+
+                        <div class="user-name mr-4">
+                            <p> Ejemplo Nombre </p>
+                        </div>
+
+                        <!-- Iconos encabezado - Mobile -->
+                        <div class="user-mobile-menu user-button dropdown dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <p class="dropdown-user-name">Colaborador X</p>
+                                <p class="dropdown-title dropdown-title--border">Accesibilidad</p>
+                                <ul class="accesibility-menu">
+                                    <li class="accesibility-menu__item">
+                                        <div class="d-flex align-items-center justify-content-between" onclick="darkMode();">
+                                            <span class="tipo-de-modo">Modo Oscuro</span>
+                                            <div class="d-flex justify-content-center">
+                                                <span>
+                                                    <i class="material-icons">brightness_medium</i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="accesibility-menu__item">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span>Tama&ntilde;o de letra</span>
+                                            <div class="d-flex justify-content-center">
+                                                <span tabindex="0" role="button" class="btnDecrease btn btn-round btn-fonts btn-secondary d-flex align-items-center justify-content-center waves-effect waves-light">
+                                                    <i class="material-icons">remove</i>
+                                                </span>
+                                                <span tabindex="0" role="button" class="btnEnlarge btn btn-round btn-fonts btn-default d-flex align-items-center justify-content-center ml-2 mr-0 waves-effect waves-light">
+                                                    <i class="material-icons">add</i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <!--- Cerrar Sesi&oacute;n-->
+                                <p class="dropdown-title dropdown-title--border">Cuenta</p>
+                                <ul class="accesibility-menu">
+                                    <li class="accesibility-menu__item">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span id="tipo-de-modo">Cerrar Sesi&oacute;n</span>
+                                            <div class="d-flex justify-content-center">
+                                                <span>
+                                                    <i class="material-icons">exit_to_app</i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+                        <!-- Iconos encabezado - Mobile -->
+
+                        <!-- Iconos encabezado - Escritorio-->
+                        <div class="user-desktop-icons">
+
+                            <div class="user-accesibility user-button dropdown dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                <i class="material-icons ">accessibility</i>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <p class="dropdown-title">Accesibilidad</p>
+                                    <ul class="accesibility-menu">
+                                        <li class="accesibility-menu__item">
+                                            <div class="d-flex align-items-center justify-content-between" onclick="darkMode();">
+                                                <span class="tipo-de-modo">Modo Oscuro</span>
+                                                <div class="d-flex justify-content-center">
+                                                    <span>
+                                                        <i class="material-icons">brightness_medium</i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="accesibility-menu__item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <span>Tama&ntilde;o de letra</span>
+                                                <div class="d-flex justify-content-center">
+                                                    <span tabindex="0" role="button" class="btnDecrease btn btn-round btn-fonts btn-secondary d-flex align-items-center justify-content-center waves-effect waves-light"><i class="material-icons">remove</i></span>
+                                                    <span tabindex="0" role="button" class="btnEnlarge btn btn-round btn-fonts btn-default d-flex align-items-center justify-content-center ml-2 mr-0 waves-effect waves-light"><i class="material-icons">add</i></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div class="user-logout user-button">
+                                <a href="#"><i class="material-icons">exit_to_app</i></a>
+                            </div>
+
+                        </div>
+                        <!-- Iconos encabezado - Escritorio-->
+
+                    </div>
+                </div>
+
+            </header>
+        </div>
+        <main class="container">
+            <section>
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 d-flex align-items-end justify-content-between">
+                                <h4 class="float-left heading h4-responsive mb-0">Grilla con columnas de orden Dinámico y generar Excel</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+
+                                <table id="TablaPrincipal" class="datatables table table-hover table-striped table-bordered m-0" width="100%">
+                                    <thead></thead>
+                                    <tbody></tbody>
+                                </table> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row py-2 flex-row">
+                      
+                          <div class="col col-md-6  d-flex justify-content-start">
+
+                            <button type="button" class="btn btn-outline waves-effect waves-light">
+                                <span>Ejemplo</span>
+                            </button>
+                          </div>
+                          <div class="col col-md-6 d-flex justify-content-end">
+        
+                            <button type="button" onclick="" class="btn btn-outline waves-effect waves-light">
+                                <span>Ejemplo</span>
+                            </button>
+
+                            <button type="button" onclick="alert(JSON.stringify(datos))" class="btn btn-default waves-effect waves-light">
+                              <span>Ejemplo</span>
+                            </button>
+                        
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <footer class="page-footer">
+        <div class="container py-3">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="logo-gst">
+                    <img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png" alt="">
+                </div>
+                <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script>
+
+        $("body").tooltip({ selector: "[data-toggle=tooltip]", trigger: "hover" });  // Habilitar tooltips
+
+        let datos = obtenerDatos(); 
+
+        let infoCargaTabla = [
+            { atributo: "codigoPerfil", descripcion: "Código de perfil" },
+            { atributo: "nombre", descripcion: "Nombre" },
+            { atributo: "descripcion", descripcion: "Descripción" },
+            { atributo: "fechaEfectiva", descripcion: "Fecha Efectiva" },
+            { atributo: "estado", descripcion: "Estado" },
+        ];
+
+        (async () =>  // Al cargar página
+        {
+            await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+        })();
+
+        function limitarTextoCelda(descripcion, size = 40)
+        {
+            if (descripcion.length > size)
+            {
+                let titulo = descripcion;   // El título sí puede contener <br>
+
+                if (titulo.includes("\""))
+                    titulo = titulo.replaceAll("\"", "&quot;");  // Reemplaza comillas dobles por &quot;
+
+                if (descripcion.includes("<br>") || descripcion.includes("<br/>")) 
+                    descripcion = descripcion.replaceAll("<br>", "").replaceAll("<br/>", "");
+                
+                return `<container data-html="true" data-toggle="tooltip" data-placement="top" title="${titulo}" style="cursor: pointer">${descripcion.slice(0, size)} ...</container>`;
+            }
+            return descripcion
+        }
+
+        function construirGrillaPerfilesOcupacionalesCualificacion(datosRecibidos)
+        {
+            showLoading();
+
+            let tabla = $("#TablaPrincipal");
+            let thead = tabla.find("thead");
+            let tbody = tabla.find("tbody");
+
+            // Poblar thead
+            thead.append(`<tr> ${infoCargaTabla.map(x => `<th> ${x.descripcion} </th>`).join("")} </tr>`);
+
+            // Poblar tbody
+
+            datosRecibidos.forEach(dato => 
+            {
+                let td = infoCargaTabla.map(y => 
+                {
+                    let nombreAtributo = y.atributo;
+                    let texto = dato[nombreAtributo];
+
+                    if (nombreAtributo == "estado") {
+                        texto = `<button type="button" style="width: 60px">${texto}</button>`;
+                    }
+                    else {
+                        texto = limitarTextoCelda(texto);
+                    }
+
+                    return `<td>${texto}</td>`;
+                });
+                
+                tbody.append(`<tr> ${td} </tr>`);
+            });
+            
+            //=================================>>>
+
+            return new Promise((resolve, reject) =>
+            {
+                tabla.DataTable({
+                    // data: datosRecibidos,  // COMENTADO
+                    destroy: true,
+                    pageLength: 10,
+                    dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
+                    //scrollY: "60vh",
+                    //"scrollX": true,  // Si la tabla tiene poco tamaño hacia el lado, esto hace que se vea pequeña
+                    //lengthMenu: [[10, 20, 30], [10, 20, 30]],
+                    bLengthChange: false, // Oculta el select de registros por página
+                    columnDefs: [
+                        //{ "width": "260px", "targets": 4 }  // Ancho de la columna acciones
+                    ],
+                    aaSorting: [],
+                    processing: true,
+                    //serverSide: true, 
+                    filter: true,
+                    orderMulti: false,
+                    responsive: true,
+                    // fnDrawCallback: () => {
+                    //     hideLoading();
+                    //     resolve(true)
+                    // },
+                    fnDrawCallback: () =>
+                    {
+                        let recordsTotal = $("#TablaPrincipal").DataTable().page.info().recordsDisplay      // Al usar paginacion front
+
+                        if (recordsTotal > 0)
+                        {
+                            $("#TablaPrincipal_filter").show();            // Muestra search box
+                            $("#table-search").attr("maxlength", "20");    // Search box maxlength
+
+                            $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length, #divDescargaReportes").show();
+
+                            if (!$("#divDescargaReportes").length)   // Si no existe, lo crea
+                            {
+                                let divBotonesTabla = `
+                                <div id="divDescargaReportes" class="dataTables_actions-buttons">
+                                    <button type="button" onclick="descargarExcel()"
+                                    class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" data-toggle="tooltip"
+                                    data-placement="top" title="Descargar Excel">
+                                        <i class="material-icons icon-1x">arrow_downward</i>
+                                    </button>
+                                </div>
+                                `;
+
+                                $("#TablaPrincipal_wrapper .dataTables_actions").append(divBotonesTabla);
+                            }
+                            else {
+                                $("#divDescargaReportes").show();
+                            }
+                        }
+                        else {
+                            $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length, #divDescargaReportes").hide();
+                        }
+
+                        hideLoading();
+                        resolve(true)
+                    },
+                    /*  // COMENTADO
+                    columns: [
+                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.codigoPerfil) },
+                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.nombre) },
+                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.descripcion) },
+                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.fechaEfectiva) },
+                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.estado) }
+                    
+                        // { data: "codigoPerfil", "className": "text-nowrap", "searchable": true, "sortable": true },
+                        // { data: "nombre", "className": "text-nowrap", "searchable": true, "sortable": true },
+                        // { data: "descripcion", "className": "text-nowrap", "searchable": true, "sortable": true },
+                        // { data: "fechaEfectiva", "className": "text-nowrap", "searchable": true, "sortable": true },
+                        // { data: "estado", "className": "text-nowrap", "searchable": true, "sortable": true }
+                    ]
+                    */
+                })
+                .on("page.dt", () => { 
+                    console.log("Cambio de página");
+                } )
+
+                //.on("draw", () => { resolve(true); });
+
+                //setTimeout(() => resolve(true), 800);
+                
+            });
+        }
+
+        function descargarExcel()
+        {
+            let data = [infoCargaTabla.map(x => x.descripcion)];  // Agrega header:  [[ "Código de perfil", "Nombre", "Descripción", "Fecha Efectiva", "Estado" ]]
+            let atributos = infoCargaTabla.map(x => x.atributo);
+
+            let datosRecibidos = obtenerDatos();
+
+            datosRecibidos.forEach(dato => 
+            {
+                let arreglo = atributos.map(atributo => dato[atributo]);
+                data.push(arreglo);
+            });
+
+            generarExcel(data, "Probando");
+        }
+
+        function obtenerDatos() 
+        {
+            let textoGrande = "El lenguaje de programación C# es totalmente orientado a componentes y orientado a objetos. C# proporciona construcciones de lenguaje para admitir directamente estos conceptos, por lo que se trata de un lenguaje natural en el que crear y usar componentes de software. Desde su origen, C# ha agregado características para admitir nuevas cargas de trabajo y prácticas de diseño de software emergentes. En el fondo, C# es un lenguaje orientado a objetos. Defina los tipos y su comportamiento. Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+            return [
+                { codigoPerfil: 1, nombre: "PER OCUP 1", descripcion: `Perfil Ocupacional Cualificacion 1. ${textoGrande}`, fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 2, nombre: "PER OCUP 2", descripcion: "Perfil Ocupacional Cualificacion 2", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
+                { codigoPerfil: 3, nombre: "PER OCUP 3", descripcion: "Perfil Ocupacional Cualificacion 3", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
+                { codigoPerfil: 4, nombre: "PER OCUP 4", descripcion: "Perfil Ocupacional Cualificacion 4", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 5, nombre: "PER OCUP 5", descripcion: "Perfil Ocupacional Cualificacion 5", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 6, nombre: "PER OCUP 6", descripcion: "Perfil Ocupacional Cualificacion 6", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 7, nombre: "PER OCUP 7", descripcion: "Perfil Ocupacional Cualificacion 7", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 8, nombre: "PER OCUP 8", descripcion: "Perfil Ocupacional Cualificacion 8", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 9, nombre: "PER OCUP 9", descripcion: "Perfil Ocupacional Cualificacion 9", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 10, nombre: "PER OCUP 10", descripcion: "Perfil Ocupacional Cualificacion 10", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 11, nombre: "PER OCUP 11", descripcion: "Perfil Ocupacional Cualificacion 11", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 12, nombre: "PER OCUP 12", descripcion: "Perfil Ocupacional Cualificacion 12", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 13, nombre: "PER OCUP 13", descripcion: "Perfil Ocupacional Cualificacion 13", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 14, nombre: "PER OCUP 14", descripcion: "Perfil Ocupacional Cualificacion 14", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 15, nombre: "PER OCUP 15", descripcion: "Perfil Ocupacional Cualificacion 15", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 16, nombre: "PER OCUP 16", descripcion: "Perfil Ocupacional Cualificacion 16", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 17, nombre: "PER OCUP 17", descripcion: "Perfil Ocupacional Cualificacion 17", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 18, nombre: "PER OCUP 18", descripcion: "Perfil Ocupacional Cualificacion 18", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 19, nombre: "PER OCUP 19", descripcion: "Perfil Ocupacional Cualificacion 19", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 20, nombre: "PER OCUP 20", descripcion: "Perfil Ocupacional Cualificacion 20", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 21, nombre: "PER OCUP 21", descripcion: "Perfil Ocupacional Cualificacion 21", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 22, nombre: "PER OCUP 22", descripcion: "Perfil Ocupacional Cualificacion 22", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 23, nombre: "PER OCUP 23", descripcion: "Perfil Ocupacional Cualificacion 23", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 24, nombre: "PER OCUP 24", descripcion: "Perfil Ocupacional Cualificacion 24", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 25, nombre: "PER OCUP 25", descripcion: "Perfil Ocupacional Cualificacion 25", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 26, nombre: "PER OCUP 26", descripcion: "Perfil Ocupacional Cualificacion 26", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 27, nombre: "PER OCUP 27", descripcion: "Perfil Ocupacional Cualificacion 27", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 28, nombre: "PER OCUP 28", descripcion: "Perfil Ocupacional Cualificacion 28", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                { codigoPerfil: 29, nombre: "PER OCUP 29", descripcion: "Perfil Ocupacional Cualificacion 29", fechaEfectiva: "07-11-2022", estado: "Activo" }
+            ];
+        }
+
+        function showLoading() {
+            $('#loadingOverlay').show();
+        }
+
+        function hideLoading() {
+            $('#loadingOverlay').hide();
+        }
+
+        function generarExcel(data, nombreArchivo)
+        {
+            let workbook = XLSX.utils.book_new(),
+                worksheet = XLSX.utils.aoa_to_sheet(data);
+
+            workbook.SheetNames.push("Hoja 1");
+            workbook.Sheets["Hoja 1"] = worksheet;
+
+            let xlsbin = XLSX.write(workbook, {
+                bookType: "xlsx",
+                type: "binary"
+            });
+
+            let buffer = new ArrayBuffer(xlsbin.length),
+                array = new Uint8Array(buffer);
+
+            for (let i = 0; i < xlsbin.length; i++) {
+                array[i] = xlsbin.charCodeAt(i) & 0XFF;
+            }
+
+            let xlsblob = new Blob([buffer], { type: "application/octet-stream" });
+            delete array; delete buffer; delete xlsbin;
+
+            let url = window.URL.createObjectURL(xlsblob),
+                anchor = document.createElement("a");
+            anchor.href = url;
+            anchor.download = `${nombreArchivo}.xlsx`;
+            anchor.click();
+            window.URL.revokeObjectURL(url);
+            delete anchor;
+        }
+
+    </script>
+
+</body>
+</html>
