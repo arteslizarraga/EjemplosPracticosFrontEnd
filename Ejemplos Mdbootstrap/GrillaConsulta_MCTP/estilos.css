@@ -35,18 +35,35 @@ p { word-break: break-word }   /* Impedir textos enormes que desbordan la págin
     background-color: #1565C0;  /* (Agregado) Tooltip hacia abajo */
 }
 
-.tooltip-inner {
+/* .tooltip-inner {
     min-width: 100px;
-    /* max-width: none; */
-    max-width: 60%;         /* (Agregado) Largo hacia el lado del tooltip */
+    max-width: 60%; 
+} */
+
+/* .tooltip-inner {
+    min-width: 100px;
+    max-width: none;
+    word-break: break-word;
+} */
+
+.tooltip .tooltip-inner{
+    max-width: 1000px !important;
+    width: 900px !important;
 }
 
 /* ===================================================================================================== */
 /* Grilla Principal */
 
-.tabla-info {
-    /* table-layout: fixed; */
+table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
     width:100%;
+}
+
+.tabla-info {
+    white-space: nowrap;
+    /* table-layout: fixed; */
     border-collapse: collapse;
 }
 

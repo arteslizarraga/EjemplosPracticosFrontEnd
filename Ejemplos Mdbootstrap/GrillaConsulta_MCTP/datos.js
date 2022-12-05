@@ -1,7 +1,8 @@
 
+
 function obtenerDatos()
 {
-    let textoGrande = "El lenguaje de programación C# es totalmente orientado a componentes y orientado a objetos. C# proporciona construcciones de lenguaje para admitir directamente estos conceptos, por lo que se trata de un lenguaje natural en el que crear y usar componentes de software. Desde su origen, C# ha agregado características para admitir nuevas cargas de trabajo y prácticas de diseño de software emergentes. En el fondo, C# es un lenguaje orientado a objetos. Defina los tipos y su comportamiento. Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    let textoGrande = "El lenguaje de programación C# es totalmente orientado a componentes y orientado a objetos. C# proporciona construcciones de lenguaje para admitir directamente estos conceptos, por lo que se trata de un lenguaje natural en el que crear y usar componentes de software. Desde su origen, C# ha agregado características para admitir nuevas cargas de trabajo y prácticas de diseño de software emergentes. En el fondo, C# es un lenguaje orientado a objetos. Defina los tipos y su comportamiento. Los programas de C# se ejecutan en .NET, un sistema de ejecución virtual denominado Common Language Runtime (CLR) y un conjunto de bibliotecas de clases. CLR es la implementación de Microsoft del estándar internacional Common Language Infrastructure (CLI). CLI es la base para crear entornos de ejecución y desarrollo en los que los lenguajes y las bibliotecas funcionan juntos sin problemas. El código fuente escrito en C# se compila en un lenguaje intermedio (IL) que guarda conformidad con la especificación de CLI. El código y los recursos de IL, como los mapas de bits y las cadenas, se almacenan en un ensamblado, normalmente con una extensión .dll. Un ensamblado contiene un manifiesto que proporciona información sobre los tipos, la versión y la referencia cultural. Cuando se ejecuta el programa C#, el ensamblado se carga en CLR. CLR realiza la compilación Just-In-Time (JIT) para convertir el código IL en instrucciones de máquina nativas. Además, CLR proporciona otros servicios relacionados con la recolección de elementos no utilizados, el control de excepciones y la administración de recursos. El código que se ejecuta en CLR a veces se conoce como código administrado. El código no administrado se compila en un lenguaje nativo de la máquina destinado a un sistema concreto. Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
     return [
         {
@@ -104,7 +105,7 @@ function obtenerDatos()
                     "elementos": [
                         {
                             "correlativo": 15,
-                            "texto": "Probando nivel 5",
+                            "texto": "Probando nivel 5. " + textoGrande,
                             "asociadoCon": [
                                 13,
                                 11
@@ -132,7 +133,7 @@ function obtenerDatos()
         },
         {
             "ncorr": 2,
-            "nombreRuta": "Ruta 2. Probando probando probando probando probando probando probando probando",
+            "nombreRuta": "Ruta 2",
             "infoNiveles": [
                 {
                     "numeroNivel": 1,
@@ -544,7 +545,7 @@ function obtenerDatos()
                     "elementos": [
                         {
                             "correlativo": 62,
-                            "texto": "Probando nivel 1",
+                            "texto": "Probando nivel 1. " + textoGrande,
                             "asociadoCon": [
                                 60,
                                 58
@@ -683,7 +684,123 @@ function obtenerDatos()
                             ]
                         }
                     ]
-                }
+                },
+                {
+                    "numeroNivel": 6,
+                    "elementos": [
+                        {
+                            "correlativo": 76,
+                            "texto": "Probando nivel 6",
+                            "asociadoCon": [
+                                73,
+                                71
+                            ]
+                        },
+                        {
+                            "correlativo": 77,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                72,
+                                70
+                            ]
+                        },
+                        {
+                            "correlativo": 78,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                71,
+                                69
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "numeroNivel": 7,
+                    "elementos": [
+                        {
+                            "correlativo": 79,
+                            "texto": "Probando nivel 7",
+                            "asociadoCon": [
+                                73,
+                                71
+                            ]
+                        },
+                        {
+                            "correlativo": 80,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                72,
+                                70
+                            ]
+                        },
+                        {
+                            "correlativo": 81,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                71,
+                                69
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "numeroNivel": 8,
+                    "elementos": [
+                        {
+                            "correlativo": 82,
+                            "texto": "Probando nivel 8. " + textoGrande,
+                            "asociadoCon": [
+                                73,
+                                71
+                            ]
+                        },
+                        {
+                            "correlativo": 83,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                72,
+                                70
+                            ]
+                        },
+                        {
+                            "correlativo": 84,
+                            "texto": "Probando",
+                            "asociadoCon": [
+                                71,
+                                69
+                            ]
+                        }
+                    ]
+                },
+                // {
+                //     "numeroNivel": 9,
+                //     "elementos": [
+                //         {
+                //             "correlativo": 85,
+                //             "texto": "Probando nivel 8",
+                //             "asociadoCon": [
+                //                 73,
+                //                 71
+                //             ]
+                //         },
+                //         {
+                //             "correlativo": 86,
+                //             "texto": "Probando",
+                //             "asociadoCon": [
+                //                 72,
+                //                 70
+                //             ]
+                //         },
+                //         {
+                //             "correlativo": 87,
+                //             "texto": "Probando",
+                //             "asociadoCon": [
+                //                 71,
+                //                 69
+                //             ]
+                //         }
+                //     ]
+                // }
             ]
         }
     ];
