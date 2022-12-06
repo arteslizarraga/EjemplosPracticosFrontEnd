@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabla Multilevel</title>
+</head>
+<body>
+
+    <table border="2">
+        <tr>
+            <td>AAAA</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>BBBB</td>
+        </tr>
+        <tr>
+            <td>Pasivo</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <br/><br/>
+
+    <div id="tabla"></div>
+
+    <script>
+
+        var babu = [
+            {
+                nombre: "AAAA",
+                arreglo: [
+                    { 
+                        nombre: "BBBB",
+                        arreglo: [
+                            { 
+                                nombre: "CCCC",
+                                arreglo: [
+                                    { nombre: "DDDD 1" },
+                                    { nombre: "DDDD 2" },
+                                    { nombre: "DDDD 3" }
+                                ]
+                            }
+                        ] 
+                    }
+                ]
+            },
+            {
+                nombre: "Pasivo"
+            }
+        ];
+
+        //=========================================>>>>>
+        // Contar
+
+        var cantidadColumnas = 1;
+
+        function contarColumna(elemento)
+        {
+            if (elemento.arreglo != null) 
+            {
+                cantidadColumnas ++;
+
+                elemento.arreglo.forEach(x => {
+                    contarColumna(x);
+                });
+            }
+        }
+        
+        babu.forEach(x => 
+        {
+            contarColumna(x);
+        });
+
+        console.log("cantidadColumnas", cantidadColumnas);
+
+        //=========================================>>>>>
+
+        var columnaContar = 0;   // Array.from(Array(cantidadColumnas).keys()).forEach(columna => { console.log(columna); });
+
+        function babuska(elemento)
+        {
+            var texto = "<tr>";
+
+                Array.from(Array(cantidadColumnas).keys()).forEach(columna => 
+                { 
+                    if (columna == columnaContar) {
+                        texto += `<td> ${elemento.nombre} </td>`;
+                    }
+                    else {
+                        texto += "<td></td>";
+                    }
+                });
+
+            texto += "</tr>";
+
+            if (elemento.arreglo != null) 
+            {
+                columnaContar ++;
+
+                elemento.arreglo.forEach(y => 
+                {
+                    texto += babuska(y);
+                });
+            }
+
+            return texto;
+        }
+
+        var cadena = `<table border="2">`;
+
+        babu.forEach(x => 
+        {
+            cadena += babuska(x);
+            columnaContar = 0;
+        });
+
+        cadena += "</table>";
+
+        //=========================================>>>>>
+
+        document.querySelector("#tabla").innerHTML = cadena;
+    </script>
+
+</body>
+
+</html>
