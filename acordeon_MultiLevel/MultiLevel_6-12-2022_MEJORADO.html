@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabla Multilevel</title>
+</head>
+<body>
+
+    <table border="2">
+        <tr>
+            <td>AAAA</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>BBBB</td>
+        </tr>
+        <tr>
+            <td>Pasivo</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <br/><br/>
+
+    <div id="tabla"></div>
+
+    <script>
+
+        var babu = [
+            {
+                nombre: "AAAA",
+                arreglo: [
+                    { 
+                        nombre: "BBBB",
+                        arreglo: [
+                            { 
+                                nombre: "CCCC",
+                                arreglo: [
+                                    { nombre: "DDDD 1" },
+                                    { nombre: "DDDD 2" },
+                                    { nombre: "DDDD 3" }
+                                ]
+                            }
+                        ] 
+                    },
+                    {
+                        nombre: "babu 1",
+                        arreglo: [
+                            { 
+                                nombre: "babu 2",
+                                arreglo: [
+                                    { 
+                                        nombre: "babu 3" 
+                                    },
+                                    { 
+                                        nombre: "babu 4" 
+                                    }
+                                ]
+                            },
+                            { 
+                                nombre: "babu 5" 
+                            }
+                        ] 
+                    }
+                ]
+            },
+            {
+                nombre: "EEEE",
+                arreglo: [
+                    { 
+                        nombre: "FFFF",
+                        arreglo: [
+                            { 
+                                nombre: "GGGG",
+                                arreglo: [
+                                    { nombre: "HHHH 1" },
+                                    { nombre: "HHHH 2" },
+                                    { 
+                                        nombre: "HHHH 3",
+                                        arreglo: [
+                                            { nombre: "IIII 1" },
+                                            { nombre: "IIII 2" },
+                                            { nombre: "IIII 3" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ] 
+                    }
+                ]
+            }
+        ];
+
+        //=========================================>>>>>
+        // Contar
+
+        var cantidadColumnas = 1;
+        var cantidadColumnas_Aux = 1;
+
+        function contarColumna(elemento)
+        {
+            if (elemento.arreglo != null) 
+            {
+                cantidadColumnas_Aux ++;
+
+                elemento.arreglo.forEach(x => {
+                    contarColumna(x);
+                });
+            }
+        }
+        
+        babu.forEach(x => 
+        {
+            contarColumna(x);
+
+            if (cantidadColumnas_Aux > cantidadColumnas) {
+                cantidadColumnas = cantidadColumnas_Aux;
+            }
+            cantidadColumnas_Aux = 1;
+        });
+
+        console.log("cantidadColumnas", cantidadColumnas);
+
+        //=========================================>>>>>
+
+        var columnaContar = 0;   // Array.from(Array(cantidadColumnas).keys()).forEach(columna => { console.log(columna); });
+        var babularda = null;
+
+        function babuska(elemento)
+        {
+            var texto = "<tr>";
+
+                Array.from(Array(cantidadColumnas).keys()).forEach(columna => 
+                { 
+                    if (columna == columnaContar) {
+                        texto += `<td> ${elemento.nombre} </td>`;
+                    }
+                    else {
+                        texto += "<td></td>";
+                    }
+                });
+
+            texto += "</tr>";
+
+            if (elemento.arreglo != null) 
+            {
+                columnaContar ++;
+                if (babularda == null) babularda = columnaContar;
+
+                var largo = elemento.arreglo.length;
+                cont = 0;
+
+                elemento.arreglo.forEach(y => 
+                {
+                    texto += babuska(y);
+                    cont ++;
+
+                    if (cont == largo) {
+                        console.log(`${y.nombre} es la última posición recorrida del arreglo`);
+                        columnaContar = babularda;
+                    }
+                });
+
+                babularda = null;
+            }
+
+            return texto;
+        }
+
+        var cadena = `<table border="2">`;
+
+        babu.forEach(x => 
+        {
+            cadena += babuska(x);
+            columnaContar = 0;
+        });
+
+        cadena += "</table>";
+
+        //=========================================>>>>>
+
+        document.querySelector("#tabla").innerHTML = cadena;
+    </script>
+
+</body>
+
+</html>
