@@ -47,7 +47,29 @@
                 ]
             },
             {
-                nombre: "Pasivo"
+                nombre: "EEEE",
+                arreglo: [
+                    { 
+                        nombre: "FFFF",
+                        arreglo: [
+                            { 
+                                nombre: "GGGG",
+                                arreglo: [
+                                    { nombre: "HHHH 1" },
+                                    { nombre: "HHHH 2" },
+                                    { 
+                                        nombre: "HHHH 3",
+                                        arreglo: [
+                                            { nombre: "IIII 1" },
+                                            { nombre: "IIII 2" },
+                                            { nombre: "IIII 3" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ] 
+                    }
+                ]
             }
         ];
 
@@ -55,12 +77,13 @@
         // Contar
 
         var cantidadColumnas = 1;
+        var cantidadColumnas_Aux = 1;
 
         function contarColumna(elemento)
         {
             if (elemento.arreglo != null) 
             {
-                cantidadColumnas ++;
+                cantidadColumnas_Aux ++;
 
                 elemento.arreglo.forEach(x => {
                     contarColumna(x);
@@ -71,6 +94,11 @@
         babu.forEach(x => 
         {
             contarColumna(x);
+
+            if (cantidadColumnas_Aux > cantidadColumnas) {
+                cantidadColumnas = cantidadColumnas_Aux;
+            }
+            cantidadColumnas_Aux = 1;
         });
 
         console.log("cantidadColumnas", cantidadColumnas);
