@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Experimento</title>
+</head>
+<body>
+
+    <table id="grillaMultiNivel" border="2">
+        <tbody></tbody>
+    </table>
+
+    <script>
+
+        let arregloProbando = [
+            {
+                id: 1,
+                nombre: "Región Metropolitana",
+                detalles: [
+                    {  
+                        id: 2,
+                        nombre: "Santiago",
+                        detalles: [
+                            {
+                                id: 3,
+                                nombre: "Las Condes",
+                                detalles: [
+                                    { 
+                                        id: 4,
+                                        nombre: "Imperial 1234",
+                                        detalles: [
+                                            { 
+                                                id: 5,
+                                                nombre: "Casa de Babu",
+                                                detalles: [
+                                                    { id: 6, nombre: "babuuuuuuuuu" },
+                                                    { id: 7, nombre: "loca de patio" }
+                                                ] 
+                                            }
+                                        ] 
+                                    },
+                                    { 
+                                        id: 8,
+                                        nombre: "Chiu Chiu 1234",
+                                        detalles: [
+                                            { 
+                                                id: 9, nombre: "Casa de José" 
+                                            }
+                                        ] 
+                                    }
+                                ]
+                            },
+                            { 
+                                id: 10, nombre: "Vitacura"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 11,
+                nombre: "Región de Valparaíso",
+                detalles: [
+                    {  
+                        id: 12,
+                        nombre: "Viña del Mar",
+                        detalles: [
+                            {
+                                id: 13,
+                                nombre: "Reñaca"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 14, nombre: "Región de O'Higgins"
+            }
+        ];
+
+        //==================================================>>>>>
+
+        construirGrilla();
+
+        function construirGrilla()
+        {
+            let cadena = "";
+            let obtenerTab = (numero) => Array.from(Array(numero).keys()).map(x => "    ").join("");   // map(x => "\t").join("");
+
+            let obtenerNbsp = (numero, ele) => 
+            {
+                let icono = (ele.detalles != null && ele.detalles.length > 0) ? "+" : "&nbsp;";
+                return Array.from(Array(numero).keys()).map(x => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").join("") + icono;
+            };
+
+            let babushka = (elemento, num, idPadre) =>
+            {
+                // console.log(`${elemento.nombre} | id: ${elemento.id} | idPadre: ${idPadre}`);
+
+                cadena += `<tr>
+                    <td>${elemento.id}</td>
+                    <td>${obtenerNbsp(num, elemento)} ${elemento.nombre}</td>
+                    <td> <button type="button" onclick="eliminar(${elemento.id}, ${idPadre})"> Eliminar </button> </td>
+                </tr>`;
+
+                // console.log(`${obtenerTab(num)} ${elemento.nombre} | id: ${elemento.id} | idPadre: ${idPadre}`);
+
+                if (elemento.detalles != null)
+                {
+                    elemento.detalles.forEach(x => babushka(x, (num + 1), elemento.id));
+                }
+            };
+
+            arregloProbando.forEach(x => babushka(x, 0, 0));
+            document.querySelector("#grillaMultiNivel tbody").innerHTML = cadena;
+        }
+
+        
+        function eliminar(id, idPadre) 
+        {
+            if (idPadre == 0)  // Si es un padre
+                arregloProbando = arregloProbando.filter(x => x.id != id);
+            else 
+            {
+                let padre = encontrarElemento(idPadre);
+                padre.detalles = padre.detalles.filter(x => x.id != id);
+            }
+            
+            construirGrilla();
+        }
+
+        // function eliminarFila(indice) 
+        // {
+        //     var grilla = document.querySelector("#grillaMultiNivel");
+        //     var indiceEliminar = Array.from(grilla.rows).findIndex(x => x.getAttribute("indice") == indice); 
+        //     grilla.deleteRow(indiceEliminar);
+        // }
+
+        let objeto = null;
+
+        function encontrarElemento(id)
+        {
+            objeto = null;
+            
+            let babushka = (elemento, id) =>
+            {
+                if (elemento.id == id) 
+                    objeto = elemento;
+                else 
+                {
+                    if (elemento.detalles != null)
+                        elemento.detalles.forEach(x => babushka(x, id));
+                }
+            };
+
+            arregloProbando.forEach(elemento => babushka(elemento, id));
+            return objeto;
+        }
+
+        //==================================================>>>>>
+        
+    </script>
+    
+
+</body>
+
+</html>
