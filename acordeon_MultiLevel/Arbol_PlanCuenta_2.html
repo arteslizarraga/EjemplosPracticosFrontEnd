@@ -88,38 +88,122 @@
 
         construirGrilla();
 
-        function babuRidicula(id)
+        let arregloItemsAbiertos = [];
+
+        function sofiaOsorio(elemento, primeraLlamada)
+        {
+            //=========================>>>>
+            //console.log(elemento);
+
+            if (primeraLlamada) 
+            {
+                /*
+                var babuEnMetro = (x) => 
+                {
+                    arregloItemsAbiertos = arregloItemsAbiertos.filter(y => y != x.id);
+                    x.detalles.forEach(y => babuEnMetro(y));
+                };
+
+                console.log(elemento);
+
+                if (arregloItemsAbiertos.includes(elemento.id))
+                    elemento.detalles.forEach(x => babuEnMetro(x));
+                */
+            }
+
+            if (!primeraLlamada)
+            {
+                let filaBabu = document.querySelector(`#fila-id-${elemento.id}`);
+
+                if (arregloItemsAbiertos.includes(elemento.id))
+                    filaBabu.classList.remove("invisible");
+                else
+                    filaBabu.classList.add("invisible");
+            }
+
+            //=========================>>>>
+
+            elemento.detalles.forEach(x => 
+            {
+                //console.log(x);
+                let fila = document.querySelector(`#fila-id-${x.id}`);
+
+                if (arregloItemsAbiertos.includes(elemento.id))
+                    fila.classList.remove("invisible");
+                else
+                    fila.classList.add("invisible");
+
+                if (x.detalles != null)
+                {
+                    x.detalles.forEach(y => 
+                    {
+                        arregloItemsAbiertos = arregloItemsAbiertos.filter(z => z != y.id);
+                        sofiaOsorio(y)
+                    });
+                }
+            });
+        }
+
+        function abrirCerrarSubItems(id)
         {
             let elemento = encontrarElemento(id);
-
-            elemento.detalles.forEach(ele => 
+            
+            if (!arregloItemsAbiertos.includes(id))
+                arregloItemsAbiertos.push(id);
+            else 
             {
-                let x = document.querySelector(`#fila-id-${ele.id}`);
-                // console.log(x);
+                arregloItemsAbiertos = arregloItemsAbiertos.filter(x => x != id); 
 
-                if (!x.classList.contains("invisible"))
-                    x.classList.add("invisible");
-                else
-                    x.classList.remove("invisible");
-            });
+                var babuEnMetro = (x) => 
+                {
+                    arregloItemsAbiertos = arregloItemsAbiertos.filter(y => y != x.id);
+                    x.detalles.forEach(y => babuEnMetro(y));
+                };
+
+                elemento.detalles.forEach(x => babuEnMetro(x));
+            }
+
+            //============================================================================>>>
+
+            
+            sofiaOsorio(elemento, true);
+            console.log(arregloItemsAbiertos.sort((a, b) => a - b));
+
+            //============================================================================>>>
 
             /*
-            let ocultarHijos = (id) => 
+            const colapsar = (elemento, primeraLlamada) =>
             {
-                Array.from(document.getElementsByClassName(`pertenece-a-${id}`)).forEach(x => 
+                if (!primeraLlamada) 
                 {
-                    //console.log(x.classList);
-                    // x.style.display = "revert";
-                    //x.style.display = "none";
+                    let filaBabu = document.querySelector(`#fila-id-${elemento.id}`);
 
-                    if (!x.classList.contains("invisible"))
-                        x.classList.add("invisible");
-                    else
-                        x.classList.remove("invisible");
+                    if (!filaBabu.classList.contains("invisible"))
+                        filaBabu.classList.add("invisible");
+                }
+
+                elemento.detalles.forEach(x => 
+                {
+                    let fila = document.querySelector(`#fila-id-${x.id}`);
+
+                    if (primeraLlamada)
+                    {
+                        if (!fila.classList.contains("invisible"))
+                            fila.classList.add("invisible");
+                        else
+                            fila.classList.remove("invisible");
+                    }
+                    else {
+                        fila.classList.add("invisible");
+                    }
+
+                    if (x.detalles != null)
+                        x.detalles.forEach(y => colapsar(y, false));
                 });
             };
 
-            ocultarHijos(id);
+            let elemento = encontrarElemento(id);
+            colapsar(elemento, true);
             */
         }
 
@@ -138,9 +222,10 @@
             {
                 // console.log(`${elemento.nombre} | id: ${elemento.id} | idPadre: ${idPadre}`);
 
-                cadena += `<tr id="fila-id-${elemento.id}" class="pertenece-a-${idPadre}">
+                cadena += `<tr id="fila-id-${elemento.id}" class="pertenece-a-${idPadre} ${num == 0 ? "" : "invisible"}">
+                    <td> ${elemento.id} </td>
                     <td> 
-                        <span onclick="babuRidicula(${elemento.id})">${obtenerNbsp(num, elemento)}</span> 
+                        <span onclick="abrirCerrarSubItems(${elemento.id})">${obtenerNbsp(num, elemento)}</span> 
                         <span onclick="editar(${elemento.id}, '${elemento.nombre}')">${elemento.nombre}<span> </td>
                     <td> 
                         <button type="button" onclick="agregarHijo(${elemento.id})"> Agregar Sub Cuenta </button> 
