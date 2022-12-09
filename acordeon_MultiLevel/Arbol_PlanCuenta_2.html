@@ -4,14 +4,41 @@
     <meta charset="UTF-8">
     <title>Experimento</title>
     <style>
+        
         .invisible { display: none; }
+
+        /* ===================================================== */
+
+        span { cursor: pointer; }
+
+        .tabla-info {
+		  width:100%;
+		  border-collapse: collapse;
+		}
+
+		.tabla-info th, td {
+		  border: 1px solid rgb(104, 103, 103);
+		}
+
+		.tabla-info td {
+		  padding: 5px;
+		}
+
+		.tabla-info th {
+		  /* white-space: nowrap; */    /* Impide que haga un salto de linea  */
+		  padding: 3px;
+		}
+
+		.tabla-info thead {
+		  background-color: gray; color: white;
+		}
     </style>
 </head>
 <body>
 
     <button type="button" onclick="agregarPadre()"> Agregar Cuenta </button> <br/><br/>
 
-    <table id="grillaMultiNivel" border="2">
+    <table id="grillaMultiNivel" class="tabla-info">
         <tbody></tbody>
     </table>
 
@@ -90,16 +117,20 @@
 
         construirGrilla();
 
-        function abrirCerrarSubItems(id)
+        function abrirCerrarSubItems(id, evento)
         {
             let elemento = encontrarElemento(id);
 
             // Agregar y quitar del arreglo
 
-            if (!arregloItemsAbiertos.includes(id))
+            if (!arregloItemsAbiertos.includes(id)) 
+            {
                 arregloItemsAbiertos.push(id);
+                evento.target.innerText = "-";
+            }
             else 
             {
+                evento.target.innerText = "+";
                 arregloItemsAbiertos = arregloItemsAbiertos.filter(x => x != id); 
 
                 let babuEnMetro = (x) => 
@@ -147,10 +178,15 @@
             let cadena = "";
             let obtenerTab = (numero) => Array.from(Array(numero).keys()).map(x => "    ").join("");   // map(x => "\t").join("");
 
-            let obtenerNbsp = (numero, ele) => 
+            let obtenerSpan = (numero, ele) => 
             {
-                let icono = (ele.detalles != null && ele.detalles.length > 0) ? "+" : "&nbsp;";
-                return Array.from(Array(numero).keys()).map(x => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").join("") + icono;
+                let icono = "&nbsp;&nbsp;";
+
+                if (ele.detalles != null && ele.detalles.length > 0) 
+                    icono = (arregloItemsAbiertos.includes(ele.id)) ? "-" : "+";
+
+                return Array.from(Array(numero).keys()).map(x => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").join("") 
+                    + `<span onclick="abrirCerrarSubItems(${ele.id}, event)"> ${icono} </span>`;
             };
 
             let babushka = (elemento, num, idPadre) =>
@@ -160,7 +196,7 @@
 
                 cadena += `<tr id="fila-id-${elemento.id}" class="${esVisible ? "" : "invisible"}">
                     <td> 
-                        <span onclick="abrirCerrarSubItems(${elemento.id})">${obtenerNbsp(num, elemento)}</span> 
+                        ${obtenerSpan(num, elemento)}
                         <span onclick="editar(${elemento.id}, '${elemento.nombre}')">${elemento.nombre}<span> </td>
                     <td> 
                         <button type="button" onclick="agregarHijo(${elemento.id})"> Agregar Sub Cuenta </button> 
@@ -215,8 +251,8 @@
                 let elemento = encontrarElemento(id);
                 elemento.detalles.push({ id: obtenerNumeroRandom(1, 1000000), nombre: nombre, detalles: [] });
                 
-                // if (!arregloItemsAbiertos.includes(id))
-                //     arregloItemsAbiertos.push(id);      // Despliega en caso de que esté cerrado
+                if (!arregloItemsAbiertos.includes(id))
+                    arregloItemsAbiertos.push(id);      // Despliega en caso de que esté cerrado
 
                 construirGrilla();
             }
