@@ -128,13 +128,16 @@
                 arregloItemsAbiertos.push(id);
                 evento.target.innerText = "-";
             }
-            else 
+            else // Si se está colapsando un ítem
             {
                 evento.target.innerText = "+";
                 arregloItemsAbiertos = arregloItemsAbiertos.filter(x => x != id); 
 
                 let babuEnMetro = (x) => 
                 {
+                    if (x.detalles.length > 0)
+                        document.querySelector(`#icono-${x.id}`).innerText = "+"; 
+
                     arregloItemsAbiertos = arregloItemsAbiertos.filter(y => y != x.id);
                     x.detalles.forEach(y => babuEnMetro(y));
                 };
@@ -186,7 +189,7 @@
                     icono = (arregloItemsAbiertos.includes(ele.id)) ? "-" : "+";
 
                 return Array.from(Array(numero).keys()).map(x => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").join("") 
-                    + `<span onclick="abrirCerrarSubItems(${ele.id}, event)"> ${icono} </span>`;
+                    + `<span id="icono-${ele.id}" onclick="abrirCerrarSubItems(${ele.id}, event)"> ${icono} </span>`;
             };
 
             let babushka = (elemento, num, idPadre) =>
