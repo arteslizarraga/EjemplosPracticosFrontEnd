@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Experimento</title>
+    <style>
+        .invisible { display: none; }
+    </style>
 </head>
 <body>
 
@@ -85,6 +88,41 @@
 
         construirGrilla();
 
+        function babuRidicula(id)
+        {
+            let elemento = encontrarElemento(id);
+
+            elemento.detalles.forEach(ele => 
+            {
+                let x = document.querySelector(`#fila-id-${ele.id}`);
+                // console.log(x);
+
+                if (!x.classList.contains("invisible"))
+                    x.classList.add("invisible");
+                else
+                    x.classList.remove("invisible");
+            });
+
+            /*
+            let ocultarHijos = (id) => 
+            {
+                Array.from(document.getElementsByClassName(`pertenece-a-${id}`)).forEach(x => 
+                {
+                    //console.log(x.classList);
+                    // x.style.display = "revert";
+                    //x.style.display = "none";
+
+                    if (!x.classList.contains("invisible"))
+                        x.classList.add("invisible");
+                    else
+                        x.classList.remove("invisible");
+                });
+            };
+
+            ocultarHijos(id);
+            */
+        }
+
         function construirGrilla()
         {
             let cadena = "";
@@ -100,9 +138,10 @@
             {
                 // console.log(`${elemento.nombre} | id: ${elemento.id} | idPadre: ${idPadre}`);
 
-                cadena += `<tr>
-                    <td>${elemento.id}</td>
-                    <td> <span>${obtenerNbsp(num, elemento)}</span> <span onclick="editar(${elemento.id}, '${elemento.nombre}')">${elemento.nombre}<span> </td>
+                cadena += `<tr id="fila-id-${elemento.id}" class="pertenece-a-${idPadre}">
+                    <td> 
+                        <span onclick="babuRidicula(${elemento.id})">${obtenerNbsp(num, elemento)}</span> 
+                        <span onclick="editar(${elemento.id}, '${elemento.nombre}')">${elemento.nombre}<span> </td>
                     <td> 
                         <button type="button" onclick="agregarHijo(${elemento.id})"> Agregar Sub Cuenta </button> 
                         <button type="button" onclick="eliminar(${elemento.id}, ${idPadre})"> Eliminar </button>
