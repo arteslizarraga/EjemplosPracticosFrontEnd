@@ -6,6 +6,8 @@
 </head>
 <body>
 
+    <button type="button" onclick="agregarPadre()"> Agregar Cuenta </button> <br/><br/>
+
     <table id="grillaMultiNivel" border="2">
         <tbody></tbody>
     </table>
@@ -33,8 +35,8 @@
                                                 id: 5,
                                                 nombre: "Casa de Babu",
                                                 detalles: [
-                                                    { id: 6, nombre: "babuuuuuuuuu" },
-                                                    { id: 7, nombre: "loca de patio" }
+                                                    { id: 6, nombre: "babuuuuuuuuu", detalles: [] },
+                                                    { id: 7, nombre: "loca de patio", detalles: [] }
                                                 ] 
                                             }
                                         ] 
@@ -44,14 +46,14 @@
                                         nombre: "Chiu Chiu 1234",
                                         detalles: [
                                             { 
-                                                id: 9, nombre: "Casa de José" 
+                                                id: 9, nombre: "Casa de José", detalles: [] 
                                             }
                                         ] 
                                     }
                                 ]
                             },
                             { 
-                                id: 10, nombre: "Vitacura"
+                                id: 10, nombre: "Vitacura", detalles: []
                             }
                         ]
                     }
@@ -67,14 +69,15 @@
                         detalles: [
                             {
                                 id: 13,
-                                nombre: "Reñaca"
+                                nombre: "Reñaca",
+                                detalles: []
                             }
                         ]
                     }
                 ]
             },
             {
-                id: 14, nombre: "Región de O'Higgins"
+                id: 14, nombre: "Región de O'Higgins", detalles: []
             }
         ];
 
@@ -99,8 +102,11 @@
 
                 cadena += `<tr>
                     <td>${elemento.id}</td>
-                    <td>${obtenerNbsp(num, elemento)} ${elemento.nombre}</td>
-                    <td> <button type="button" onclick="eliminar(${elemento.id}, ${idPadre})"> Eliminar </button> </td>
+                    <td> <span>${obtenerNbsp(num, elemento)}</span> <span onclick="editar(${elemento.id}, '${elemento.nombre}')">${elemento.nombre}<span> </td>
+                    <td> 
+                        <button type="button" onclick="agregarHijo(${elemento.id})"> Agregar Sub Cuenta </button> 
+                        <button type="button" onclick="eliminar(${elemento.id}, ${idPadre})"> Eliminar </button>
+                    </td>
                 </tr>`;
 
                 // console.log(`${obtenerTab(num)} ${elemento.nombre} | id: ${elemento.id} | idPadre: ${idPadre}`);
@@ -115,6 +121,45 @@
             document.querySelector("#grillaMultiNivel tbody").innerHTML = cadena;
         }
 
+        const obtenerNumeroRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+        function agregarPadre()
+        {
+            let nombre = prompt("Ingrese el nombre de la cuenta", "");
+
+            if (nombre != null) 
+            {
+                if (nombre == "") return alert("El nombre de la cuenta es requerido");
+                arregloProbando.push({ id: obtenerNumeroRandom(1, 1000000), nombre: nombre, detalles: [] });
+                construirGrilla();
+            }
+        }
+
+        function editar(id, nombre)
+        {
+            let nuevoNombre = prompt("Ingrese el nombre de la sub cuenta", nombre);
+
+            if (nuevoNombre != null) 
+            {
+                if (nuevoNombre == "") return alert("El nombre de la sub cuenta es requerido");
+                let elemento = encontrarElemento(id);
+                elemento.nombre = nuevoNombre;
+                construirGrilla();
+            }
+        }
+
+        function agregarHijo(id) 
+        {
+            let nombre = prompt("Ingrese el nombre de la sub cuenta", "");
+
+            if (nombre != null) 
+            {
+                if (nombre == "") return alert("El nombre de la sub cuenta es requerido");
+                let elemento = encontrarElemento(id);
+                elemento.detalles.push({ id: obtenerNumeroRandom(1, 1000000), nombre: nombre, detalles: [] });
+                construirGrilla();
+            }
+        }
         
         function eliminar(id, idPadre) 
         {

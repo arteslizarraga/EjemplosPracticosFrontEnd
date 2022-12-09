@@ -6,6 +6,8 @@
 </head>
 <body>
 
+    <button type="button" onclick="agregarPadre()"> Agregar Cuenta </button> <br/><br/>
+
     <table id="grillaMultiNivel" border="2">
         <tbody></tbody>
     </table>
@@ -121,12 +123,25 @@
 
         const obtenerNumeroRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+        function agregarPadre()
+        {
+            let nombre = prompt("Ingrese el nombre de la cuenta", "");
+
+            if (nombre != null) 
+            {
+                if (nombre == "") return alert("El nombre de la cuenta es requerido");
+                arregloProbando.push({ id: obtenerNumeroRandom(1, 1000000), nombre: nombre, detalles: [] });
+                construirGrilla();
+            }
+        }
+
         function editar(id, nombre)
         {
             let nuevoNombre = prompt("Ingrese el nombre de la sub cuenta", nombre);
 
             if (nuevoNombre != null) 
             {
+                if (nuevoNombre == "") return alert("El nombre de la sub cuenta es requerido");
                 let elemento = encontrarElemento(id);
                 elemento.nombre = nuevoNombre;
                 construirGrilla();
@@ -139,6 +154,7 @@
 
             if (nombre != null) 
             {
+                if (nombre == "") return alert("El nombre de la sub cuenta es requerido");
                 let elemento = encontrarElemento(id);
                 elemento.detalles.push({ id: obtenerNumeroRandom(1, 1000000), nombre: nombre, detalles: [] });
                 construirGrilla();
