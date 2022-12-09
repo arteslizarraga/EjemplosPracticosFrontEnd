@@ -17,6 +17,8 @@
 
     <script>
 
+        let arregloItemsAbiertos = [];
+
         let arregloProbando = [
             {
                 id: 1,
@@ -88,73 +90,19 @@
 
         construirGrilla();
 
-        let arregloItemsAbiertos = [];
-
-        function sofiaOsorio(elemento, primeraLlamada)
-        {
-            //=========================>>>>
-            //console.log(elemento);
-
-            if (primeraLlamada) 
-            {
-                /*
-                var babuEnMetro = (x) => 
-                {
-                    arregloItemsAbiertos = arregloItemsAbiertos.filter(y => y != x.id);
-                    x.detalles.forEach(y => babuEnMetro(y));
-                };
-
-                console.log(elemento);
-
-                if (arregloItemsAbiertos.includes(elemento.id))
-                    elemento.detalles.forEach(x => babuEnMetro(x));
-                */
-            }
-
-            if (!primeraLlamada)
-            {
-                let filaBabu = document.querySelector(`#fila-id-${elemento.id}`);
-
-                if (arregloItemsAbiertos.includes(elemento.id))
-                    filaBabu.classList.remove("invisible");
-                else
-                    filaBabu.classList.add("invisible");
-            }
-
-            //=========================>>>>
-
-            elemento.detalles.forEach(x => 
-            {
-                //console.log(x);
-                let fila = document.querySelector(`#fila-id-${x.id}`);
-
-                if (arregloItemsAbiertos.includes(elemento.id))
-                    fila.classList.remove("invisible");
-                else
-                    fila.classList.add("invisible");
-
-                if (x.detalles != null)
-                {
-                    x.detalles.forEach(y => 
-                    {
-                        arregloItemsAbiertos = arregloItemsAbiertos.filter(z => z != y.id);
-                        sofiaOsorio(y)
-                    });
-                }
-            });
-        }
-
         function abrirCerrarSubItems(id)
         {
             let elemento = encontrarElemento(id);
-            
+
+            // Agregar y quitar del arreglo
+
             if (!arregloItemsAbiertos.includes(id))
                 arregloItemsAbiertos.push(id);
             else 
             {
                 arregloItemsAbiertos = arregloItemsAbiertos.filter(x => x != id); 
 
-                var babuEnMetro = (x) => 
+                let babuEnMetro = (x) => 
                 {
                     arregloItemsAbiertos = arregloItemsAbiertos.filter(y => y != x.id);
                     x.detalles.forEach(y => babuEnMetro(y));
@@ -163,22 +111,17 @@
                 elemento.detalles.forEach(x => babuEnMetro(x));
             }
 
-            //============================================================================>>>
+            // Colapsar / Descolapsar
 
-            
-            sofiaOsorio(elemento, true);
-            console.log(arregloItemsAbiertos.sort((a, b) => a - b));
-
-            //============================================================================>>>
-
-            /*
-            const colapsar = (elemento, primeraLlamada) =>
+            const sofiaOsorio = (elemento, primeraLlamada) =>
             {
-                if (!primeraLlamada) 
+                if (!primeraLlamada)
                 {
                     let filaBabu = document.querySelector(`#fila-id-${elemento.id}`);
 
-                    if (!filaBabu.classList.contains("invisible"))
+                    if (arregloItemsAbiertos.includes(elemento.id))
+                        filaBabu.classList.remove("invisible");
+                    else
                         filaBabu.classList.add("invisible");
                 }
 
@@ -186,25 +129,17 @@
                 {
                     let fila = document.querySelector(`#fila-id-${x.id}`);
 
-                    if (primeraLlamada)
-                    {
-                        if (!fila.classList.contains("invisible"))
-                            fila.classList.add("invisible");
-                        else
-                            fila.classList.remove("invisible");
-                    }
-                    else {
+                    if (arregloItemsAbiertos.includes(elemento.id))
+                        fila.classList.remove("invisible");
+                    else
                         fila.classList.add("invisible");
-                    }
 
-                    if (x.detalles != null)
-                        x.detalles.forEach(y => colapsar(y, false));
+                    if (x.detalles != null) x.detalles.forEach(y => sofiaOsorio(y));
                 });
             };
 
-            let elemento = encontrarElemento(id);
-            colapsar(elemento, true);
-            */
+            sofiaOsorio(elemento, true);
+            console.log(arregloItemsAbiertos.sort((a, b) => a - b));
         }
 
         function construirGrilla()
@@ -221,9 +156,9 @@
             let babushka = (elemento, num, idPadre) =>
             {
                 // console.log(`${elemento.nombre} | id: ${elemento.id} | idPadre: ${idPadre}`);
+                let esVisible = (num == 0 || arregloItemsAbiertos.includes(elemento.id) || arregloItemsAbiertos.includes(idPadre));
 
-                cadena += `<tr id="fila-id-${elemento.id}" class="pertenece-a-${idPadre} ${num == 0 ? "" : "invisible"}">
-                    <td> ${elemento.id} </td>
+                cadena += `<tr id="fila-id-${elemento.id}" class="${esVisible ? "" : "invisible"}">
                     <td> 
                         <span onclick="abrirCerrarSubItems(${elemento.id})">${obtenerNbsp(num, elemento)}</span> 
                         <span onclick="editar(${elemento.id}, '${elemento.nombre}')">${elemento.nombre}<span> </td>
@@ -236,9 +171,7 @@
                 // console.log(`${obtenerTab(num)} ${elemento.nombre} | id: ${elemento.id} | idPadre: ${idPadre}`);
 
                 if (elemento.detalles != null)
-                {
                     elemento.detalles.forEach(x => babushka(x, (num + 1), elemento.id));
-                }
             };
 
             arregloProbando.forEach(x => babushka(x, 0, 0));
@@ -281,6 +214,10 @@
                 if (nombre == "") return alert("El nombre de la sub cuenta es requerido");
                 let elemento = encontrarElemento(id);
                 elemento.detalles.push({ id: obtenerNumeroRandom(1, 1000000), nombre: nombre, detalles: [] });
+                
+                // if (!arregloItemsAbiertos.includes(id))
+                //     arregloItemsAbiertos.push(id);      // Despliega en caso de que esté cerrado
+
                 construirGrilla();
             }
         }
@@ -294,6 +231,9 @@
                 let padre = encontrarElemento(idPadre);
                 padre.detalles = padre.detalles.filter(x => x.id != id);
             }
+
+            if (arregloItemsAbiertos.includes(id))
+                arregloItemsAbiertos = arregloItemsAbiertos.filter(x => x != id);
             
             construirGrilla();
         }
