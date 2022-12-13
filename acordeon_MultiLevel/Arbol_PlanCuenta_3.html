@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Experimento</title>
+    <style>
+        
+        .invisible { display: none; }
+
+        /* ===================================================== */
+
+        span { cursor: pointer; }
+
+        .tabla-info {
+		  /* width:100%; */
+          min-width: 40%;
+		  border-collapse: collapse;
+		}
+
+		.tabla-info th, td {
+		  border: 1px solid rgb(104, 103, 103);
+		}
+
+		.tabla-info td {
+		  padding: 5px;
+		}
+
+		.tabla-info th {
+		  /* white-space: nowrap; */    /* Impide que haga un salto de linea  */
+		  padding: 3px;
+		}
+
+		.tabla-info thead {
+		  background-color: gray; color: white;
+		}
+
+        .tabla-info .columna-acciones { width: 20%; }
+
+        /* ===================================================== */
+
+        .icono-colapsar {
+            font-weight: bold;
+            font-size: 1.4em;
+            display: inline-block;
+            background-color: lightblue;
+            width: 27px;
+            text-align: center;
+            border-radius: 50px 50px;
+            height: 27px;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <button type="button" onclick="agregarPadre()"> Agregar Cuenta </button> <br/><br/>
+
+    <table id="grillaMultiNivel" class="tabla-info">
+        <tbody></tbody>
+    </table>
+
+    <script>
+
+        let arregloItemsAbiertos = [];
+
+        let arregloProbando = [
+            {
+                id: 1,
+                nombre: "Región Metropolitana",
+                detalles: [
+                    {  
+                        id: 2,
+                        nombre: "Santiago",
+                        detalles: [
+                            {
+                                id: 3,
+                                nombre: "Las Condes",
+                                detalles: [
+                                    { 
+                                        id: 4,
+                                        nombre: "Imperial 1234",
+                                        detalles: [
+                                            { 
+                                                id: 5,
+                                                nombre: "Casa de Babu",
+                                                detalles: [
+                                                    { id: 6, nombre: "babuuuuuuuuu", detalles: [] },
+                                                    { id: 7, nombre: "loca de patio", detalles: [] }
+                                                ] 
+                                            }
+                                        ] 
+                                    },
+                                    { 
+                                        id: 8,
+                                        nombre: "Chiu Chiu 1234",
+                                        detalles: [
+                                            { 
+                                                id: 9, nombre: "Casa de José", detalles: [] 
+                                            }
+                                        ] 
+                                    }
+                                ]
+                            },
+                            { 
+                                id: 10, nombre: "Vitacura", detalles: []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 11,
+                nombre: "Región de Valparaíso",
+                detalles: [
+                    {  
+                        id: 12,
+                        nombre: "Viña del Mar",
+                        detalles: [
+                            {
+                                id: 13,
+                                nombre: "Reñaca",
+                                detalles: []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 14, nombre: "Región de O Higgins", detalles: []
+            }
+        ];
+
+        //==================================================>>>>>
+
+        construirGrilla();
+
+        function abrirCerrarSubItems(id, evento)
+        {
+            let elemento = encontrarElemento(id);
+
+            // Agregar y quitar del arreglo
+
+            if (!arregloItemsAbiertos.includes(id)) 
+            {
+                arregloItemsAbiertos.push(id);
+                evento.target.innerText = "-";
+                evento.target.classList.add("icono-colapsar");   // 13-12-2022
+            }
+            else // Si se está colapsando un ítem
+            {
+                evento.target.innerText = "+";
+                arregloItemsAbiertos = arregloItemsAbiertos.filter(x => x != id); 
+
+                let babuEnMetro = (x) => 
+                {
+                    if (x.detalles.length > 0) {
+                        document.querySelector(`#icono-${x.id}`).innerText = "+";
+                        document.querySelector(`#icono-${x.id}`).classList.add("icono-colapsar");   // 13-12-2022 
+                    }
+
+                    arregloItemsAbiertos = arregloItemsAbiertos.filter(y => y != x.id);
+                    x.detalles.forEach(y => babuEnMetro(y));
+                };
+
+                elemento.detalles.forEach(x => babuEnMetro(x));
+            }
+
+            // Colapsar / Descolapsar
+
+            const sofiaOsorio = (elemento, primeraLlamada) =>
+            {
+                if (!primeraLlamada)
+                {
+                    let filaBabu = document.querySelector(`#fila-id-${elemento.id}`);
+
+                    if (arregloItemsAbiertos.includes(elemento.id))
+                        filaBabu.classList.remove("invisible");
+                    else
+                        filaBabu.classList.add("invisible");
+                }
+
+                elemento.detalles.forEach(x => 
+                {
+                    let fila = document.querySelector(`#fila-id-${x.id}`);
+
+                    if (arregloItemsAbiertos.includes(elemento.id))
+                        fila.classList.remove("invisible");
+                    else
+                        fila.classList.add("invisible");
+
+                    if (x.detalles != null) x.detalles.forEach(y => sofiaOsorio(y));
+                });
+            };
+
+            sofiaOsorio(elemento, true);
+            console.log(arregloItemsAbiertos.sort((a, b) => a - b));
+        }
+
+        function construirGrilla()
+        {
+            let cadena = "";
+            // let obtenerTab = (numero) => Array.from(Array(numero).keys()).map(x => "    ").join("");   // map(x => "\t").join("");
+
+            let obtenerSpan = (numero, ele) => 
+            {
+                let tab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+                if (ele.detalles != null && ele.detalles.length > 0) 
+                {
+                    let contenido = (arregloItemsAbiertos.includes(ele.id)) ? "-" : "+";
+
+                    return Array.from(Array(numero).keys()).map(x => tab).join("") 
+                        + `<span id="icono-${ele.id}" class="icono-colapsar" onclick="abrirCerrarSubItems(${ele.id}, event)"> ${contenido} </span>`;
+                }
+                else 
+                {
+                    if (numero == 0) return tab;
+                    return tab + Array.from(Array(numero).keys()).map(x => tab).join("");
+                }
+            };
+
+            let babushka = (elemento, num, idPadre) =>
+            {
+                // console.log(`${elemento.nombre} | id: ${elemento.id} | idPadre: ${idPadre}`);
+                let esVisible = (num == 0 || arregloItemsAbiertos.includes(elemento.id) || arregloItemsAbiertos.includes(idPadre));
+
+                cadena += `<tr id="fila-id-${elemento.id}" class="${esVisible ? "" : "invisible"}">
+                    <td> 
+                        ${obtenerSpan(num, elemento)}
+                        <span onclick="editar(${elemento.id}, '${elemento.nombre}')">${elemento.nombre}</span> 
+                    </td>
+                    <td class="columna-acciones"> 
+                        <button type="button" onclick="agregarHijo(${elemento.id})"> Agregar Sub Cuenta </button> 
+                        <button type="button" onclick="eliminar(${elemento.id}, ${idPadre})"> Eliminar </button>
+                    </td>
+                </tr>`;
+
+                // console.log(`${obtenerTab(num)} ${elemento.nombre} | id: ${elemento.id} | idPadre: ${idPadre}`);
+
+                if (elemento.detalles != null)
+                    elemento.detalles.forEach(x => babushka(x, (num + 1), elemento.id));
+            };
+
+            arregloProbando.forEach(x => babushka(x, 0, 0));
+            document.querySelector("#grillaMultiNivel tbody").innerHTML = cadena;
+        }
+
+        const obtenerNumeroRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+        function agregarPadre()
+        {
+            let nombre = prompt("Ingrese el nombre de la cuenta", "");
+
+            if (nombre != null) 
+            {
+                if (nombre == "") return alert("El nombre de la cuenta es requerido");
+                arregloProbando.push({ id: obtenerNumeroRandom(1, 1000000), nombre: nombre, detalles: [] });
+                construirGrilla();
+            }
+        }
+
+        function editar(id, nombre)
+        {
+            let nuevoNombre = prompt("Ingrese el nombre de la sub cuenta", nombre);
+
+            if (nuevoNombre != null) 
+            {
+                if (nuevoNombre == "") return alert("El nombre de la sub cuenta es requerido");
+                let elemento = encontrarElemento(id);
+                elemento.nombre = nuevoNombre;
+                construirGrilla();
+            }
+        }
+
+        function agregarHijo(id) 
+        {
+            let nombre = prompt("Ingrese el nombre de la sub cuenta", "");
+
+            if (nombre != null) 
+            {
+                if (nombre == "") return alert("El nombre de la sub cuenta es requerido");
+                let elemento = encontrarElemento(id);
+                elemento.detalles.push({ id: obtenerNumeroRandom(1, 1000000), nombre: nombre, detalles: [] });
+                
+                if (!arregloItemsAbiertos.includes(id))
+                    arregloItemsAbiertos.push(id);      // Despliega en caso de que esté cerrado
+
+                construirGrilla();
+            }
+        }
+        
+        function eliminar(id, idPadre) 
+        {
+            if (idPadre == 0)  // Si es un padre
+                arregloProbando = arregloProbando.filter(x => x.id != id);
+            else 
+            {
+                let padre = encontrarElemento(idPadre);
+                padre.detalles = padre.detalles.filter(x => x.id != id);
+            }
+
+            if (arregloItemsAbiertos.includes(id))
+                arregloItemsAbiertos = arregloItemsAbiertos.filter(x => x != id);
+            
+            construirGrilla();
+        }
+
+        // function eliminarFila(indice) 
+        // {
+        //     var grilla = document.querySelector("#grillaMultiNivel");
+        //     var indiceEliminar = Array.from(grilla.rows).findIndex(x => x.getAttribute("indice") == indice); 
+        //     grilla.deleteRow(indiceEliminar);
+        // }
+
+        let objeto = null;
+
+        function encontrarElemento(id)
+        {
+            objeto = null;
+            
+            let babushka = (elemento, id) =>
+            {
+                if (elemento.id == id) 
+                    objeto = elemento;
+                else 
+                {
+                    if (elemento.detalles != null)
+                        elemento.detalles.forEach(x => babushka(x, id));
+                }
+            };
+
+            arregloProbando.forEach(elemento => babushka(elemento, id));
+            return objeto;
+        }
+
+        //==================================================>>>>>
+        
+    </script>
+    
+
+</body>
+
+</html>
