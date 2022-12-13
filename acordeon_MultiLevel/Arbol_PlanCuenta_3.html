@@ -211,33 +211,11 @@
                     if (ele.detalles != null && ele.detalles.length > 0) 
                         textoSpan = (arregloItemsAbiertos.includes(ele.id)) ? "-" : "+";
 
-                    return tab 
-                        + `<span id="icono-${ele.id}" class="icono-colapsar" onclick="abrirCerrarSubItems(${ele.id}, event)"> ${textoSpan} </span>`;
+                    return tab + `<span id="icono-${ele.id}" class="icono-colapsar" onclick="abrirCerrarSubItems(${ele.id}, event)"> ${textoSpan} </span>`;
                 }
 
-                return tab 
-                    + `<span class="icono-colapsar" style="background-color: lightgray !important"> ${textoSpan} </span>`;
+                return tab + `<span class="icono-colapsar" style="background-color: lightgray !important"> ${textoSpan} </span>`;
             };
-
-            /*
-            let obtenerSpan = (numero, ele) => 
-            {
-                let tab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-
-                if (ele.detalles != null && ele.detalles.length > 0) 
-                {
-                    let contenido = (arregloItemsAbiertos.includes(ele.id)) ? "-" : "+";
-
-                    return Array.from(Array(numero).keys()).map(x => tab).join("") 
-                        + `<span id="icono-${ele.id}" class="icono-colapsar" onclick="abrirCerrarSubItems(${ele.id}, event)"> ${contenido} </span>`;
-                }
-                else 
-                {
-                    if (numero == 0) return tab;
-                    return tab + Array.from(Array(numero).keys()).map(x => tab).join("");
-                }
-            };
-            */
 
             let babushka = (elemento, num, idPadre) =>
             {
