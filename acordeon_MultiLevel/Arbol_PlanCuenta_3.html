@@ -203,6 +203,25 @@
 
             let obtenerSpan = (numero, ele) => 
             {
+                let textoSpan = "&nbsp;&nbsp;";
+                let tab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+                if (ele.detalles != null && ele.detalles.length > 0) 
+                {
+                    if (ele.detalles != null && ele.detalles.length > 0) 
+                        textoSpan = (arregloItemsAbiertos.includes(ele.id)) ? "-" : "+";
+
+                    return Array.from(Array(numero).keys()).map(x => tab).join("") 
+                        + `<span id="icono-${ele.id}" class="icono-colapsar" onclick="abrirCerrarSubItems(${ele.id}, event)"> ${textoSpan} </span>`;
+                }
+
+                return Array.from(Array(numero).keys()).map(x => tab).join("") 
+                    + `<span class="icono-colapsar" style="background-color: lightgray !important"> ${textoSpan} </span>`;
+            };
+
+            /*
+            let obtenerSpan = (numero, ele) => 
+            {
                 let tab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
                 if (ele.detalles != null && ele.detalles.length > 0) 
@@ -218,6 +237,7 @@
                     return tab + Array.from(Array(numero).keys()).map(x => tab).join("");
                 }
             };
+            */
 
             let babushka = (elemento, num, idPadre) =>
             {
