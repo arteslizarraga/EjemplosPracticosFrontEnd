@@ -176,6 +176,7 @@
                                     <thead>
                                       <tr>
                                         <th>Correlativo</th>
+                                        <th>Prelación</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
                                         <th>Fecha</th>
@@ -262,9 +263,10 @@
 
         async function agregarRegistro()
         {
-            let nuevoNcorr = (datos.length > 0) ? (Math.max(...datos.map(o => o.ncorr)) + 1) : 1;
+            let prelacion = (datos.length > 0) ? (Math.max(...datos.map(o => o.prelacion)) + 1) : 1;
             let fechaHoy = new Date().toJSON().slice(0,10).split("-").reverse().join("-");  // "28-12-2022"
-            datos.push({ ncorr: nuevoNcorr, nombre: `Probando ${nuevoNcorr}`, descripcion: `Probando descripción ${nuevoNcorr}`, fecha: fechaHoy, estado: "Activo" });
+            datos.push({ ncorr: null, prelacion, nombre: `Probando ${prelacion}`, descripcion: `Probando descripción ${prelacion}`, fecha: fechaHoy, estado: "Activo" });
+
             await construirGrillaPerfilesOcupacionalesCualificacion(datos);
             definirInputsGrilla();
         }
@@ -280,8 +282,8 @@
         {
             Array.from($("#TablaPrincipal").DataTable().rows({ filter: "applied", page: "current" }).data()).forEach(x => 
             {
-                let registro = datos.find(y => y.ncorr == x.ncorr);
-                let txtFecha = $(`#fecha_${x.ncorr}`);
+                let registro = datos.find(y => y.prelacion == x.prelacion);
+                let txtFecha = $(`#fecha_${x.prelacion}`);
 
                 if(txtFecha.data("datepicker") == null)  // Si no ha sido inicializado
                 {
@@ -297,15 +299,15 @@
 
                 llenarSelect({ 
                     selectedValue: x.estado,
-                    querySelector: `#estado_${x.ncorr}`, 
+                    querySelector: `#estado_${x.prelacion}`, 
                     data: [{codigo: "Activo", descripcion: "Activo"}, {codigo: "Inactivo", descripcion: "Inactivo"}],
                     onchange: () => {
-                        registro.estado = $(`#estado_${x.ncorr}`).val();
+                        registro.estado = $(`#estado_${x.prelacion}`).val();
                         console.log(registro);
                     }
                 });
 
-                $(`#estado_${x.ncorr}`).chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
+                $(`#estado_${x.prelacion}`).chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
             });
         }
 
@@ -313,7 +315,7 @@
         {
             showLoading();
 
-            datosRecibidos.sort((a, b) => b.ncorr - a.ncorr);   // Ordena por ncorr desc
+            datosRecibidos.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
 
             return new Promise((resolve, reject) =>
             {
@@ -340,14 +342,15 @@
                         resolve(true)
                     },
                     columns: [
-                        { data: "ncorr", "className": "text-nowrap", "searchable": true, "sortable": true },
+                        { data: "ncorr", "className": "text-nowrap", "searchable": true, "sortable": true, "render": (data, type, row, meta) => row.ncorr ?? "No tiene" },
+                        { data: "prelacion", "className": "text-nowrap", "searchable": true, "sortable": true },
                         { data: "nombre", "className": "text-nowrap", "searchable": true, "sortable": true },
                         { data: "descripcion", "className": "text-nowrap", "searchable": true, "sortable": true },
                         {
                             "data": "fecha", "name": "fecha", "className": "text-nowrap", "render": (data, type, row, meta) => 
                             {
                                 return `
-                                <input id="fecha_${row.ncorr}" type="text" value="${row.fecha}"
+                                <input id="fecha_${row.prelacion}" type="text" value="${row.fecha}"
                                 class="datepicker-input form-control" placeholder="DD/MM/AAAA"
                                 data-position="bottom center" autocomplete="off" readonly="readonly" 
                                 style="width: 7.1em" />
@@ -358,7 +361,7 @@
                             "data": "estado", "name": "estado", "className": "text-nowrap", "render": (data, type, row, meta) => 
                             {
                                 return `
-                                <select id="estado_${row.ncorr}" class="chosen-select" searchable="Buscar">
+                                <select id="estado_${row.prelacion}" class="chosen-select" searchable="Buscar">
                                     <option value="" selected>Seleccione</option>   
                                 </select>
                                 `;
@@ -380,20 +383,20 @@
         function obtenerDatos() 
         {
             return [
-                { ncorr: 1, nombre: "Probando 1", descripcion: "Probando descripción 1", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 2, nombre: "Probando 2", descripcion: "Probando descripción 2", fecha: "07-11-2022", estado: "Inactivo" },
-                { ncorr: 3, nombre: "Probando 3", descripcion: "Probando descripción 3", fecha: "07-11-2022", estado: "Inactivo" },
-                { ncorr: 4, nombre: "Probando 4", descripcion: "Probando descripción 4", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 5, nombre: "Probando 5", descripcion: "Probando descripción 5", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 6, nombre: "Probando 6", descripcion: "Probando descripción 6", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 7, nombre: "Probando 7", descripcion: "Probando descripción 7", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 8, nombre: "Probando 8", descripcion: "Probando descripción 8", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 9, nombre: "Probando 9", descripcion: "Probando descripción 9", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 10, nombre: "Probando 10", descripcion: "Probando descripción 10", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 11, nombre: "Probando 11", descripcion: "Probando descripción 11", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 12, nombre: "Probando 12", descripcion: "Probando descripción 12", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 13, nombre: "Probando 13", descripcion: "Probando descripción 13", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 14, nombre: "Probando 14", descripcion: "Probando descripción 14", fecha: "07-11-2022", estado: "Activo" }
+                { ncorr: 101, prelacion: 1, nombre: "Probando 1", descripcion: "Probando descripción 1", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 102, prelacion: 2, nombre: "Probando 2", descripcion: "Probando descripción 2", fecha: "07-11-2022", estado: "Inactivo" },
+                { ncorr: 103, prelacion: 3, nombre: "Probando 3", descripcion: "Probando descripción 3", fecha: "07-11-2022", estado: "Inactivo" },
+                { ncorr: 104, prelacion: 4, nombre: "Probando 4", descripcion: "Probando descripción 4", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 105, prelacion: 5, nombre: "Probando 5", descripcion: "Probando descripción 5", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 106, prelacion: 6, nombre: "Probando 6", descripcion: "Probando descripción 6", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 107, prelacion: 7, nombre: "Probando 7", descripcion: "Probando descripción 7", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 108, prelacion: 8, nombre: "Probando 8", descripcion: "Probando descripción 8", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 109, prelacion: 9, nombre: "Probando 9", descripcion: "Probando descripción 9", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 110, prelacion: 10, nombre: "Probando 10", descripcion: "Probando descripción 10", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 111, prelacion: 11, nombre: "Probando 11", descripcion: "Probando descripción 11", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 112, prelacion: 12, nombre: "Probando 12", descripcion: "Probando descripción 12", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 113, prelacion: 13, nombre: "Probando 13", descripcion: "Probando descripción 13", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 114, prelacion: 14, nombre: "Probando 14", descripcion: "Probando descripción 14", fecha: "07-11-2022", estado: "Activo" }
             ];
         }
 
