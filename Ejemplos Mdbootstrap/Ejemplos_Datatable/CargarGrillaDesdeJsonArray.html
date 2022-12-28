@@ -161,15 +161,24 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
+
+                            <div class="col col-md-6 d-flex justify-content-start">
+
+                                <button type="button" onclick="agregarRegistro()" class="btn btn-default waves-effect waves-light">
+                                    <span>Agregar Nuevo</span>
+                                </button>
+                            </div>
+                            
                             <div class="col-12">
+                                <br/>
 
                                 <table id="TablaPrincipal" class="datatables table table-hover table-striped table-bordered m-0" width="100%">
                                     <thead>
                                       <tr>
-                                        <th>Código de perfil</th>
+                                        <th>Correlativo</th>
                                         <th>Nombre</th>
-                                        <th>Descripci&oacute;n</th>
-                                        <th>Fecha efectiva</th>
+                                        <th>Descripción</th>
+                                        <th>Fecha</th>
                                         <th>Estado</th>
                                       </tr>
                                     </thead>
@@ -251,6 +260,15 @@
             definirInputsGrilla();
         }
 
+        async function agregarRegistro()
+        {
+            let nuevoNcorr = (datos.length > 0) ? (Math.max(...datos.map(o => o.ncorr)) + 1) : 1;
+            let fechaHoy = new Date().toJSON().slice(0,10).split("-").reverse().join("-");  // "28-12-2022"
+            datos.push({ ncorr: nuevoNcorr, nombre: `Probando ${nuevoNcorr}`, descripcion: `Probando descripción ${nuevoNcorr}`, fecha: fechaHoy, estado: "Activo" });
+            await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+            definirInputsGrilla();
+        }
+
         async function limpiarDatos()
         {
             datos = obtenerDatos(); 
@@ -262,16 +280,16 @@
         {
             Array.from($("#TablaPrincipal").DataTable().rows({ filter: "applied", page: "current" }).data()).forEach(x => 
             {
-                let registro = datos.find(y => y.codigoPerfil == x.codigoPerfil);
-                let txtFechaEfectiva = $(`#fechaEfectiva_${x.codigoPerfil}`);
+                let registro = datos.find(y => y.ncorr == x.ncorr);
+                let txtFecha = $(`#fecha_${x.ncorr}`);
 
-                if(txtFechaEfectiva.data("datepicker") == null)  // Si no ha sido inicializado
+                if(txtFecha.data("datepicker") == null)  // Si no ha sido inicializado
                 {
-                    txtFechaEfectiva.datepicker({ 
+                    txtFecha.datepicker({ 
                         language: "es", 
                         autoClose: true,
                         onSelect: (e) => {
-                            registro.fechaEfectiva = e;
+                            registro.fecha = e;
                             console.log(registro);
                         } 
                     });
@@ -279,15 +297,15 @@
 
                 llenarSelect({ 
                     selectedValue: x.estado,
-                    querySelector: `#estado_${x.codigoPerfil}`, 
+                    querySelector: `#estado_${x.ncorr}`, 
                     data: [{codigo: "Activo", descripcion: "Activo"}, {codigo: "Inactivo", descripcion: "Inactivo"}],
                     onchange: () => {
-                        registro.estado = $(`#estado_${x.codigoPerfil}`).val();
+                        registro.estado = $(`#estado_${x.ncorr}`).val();
                         console.log(registro);
                     }
                 });
 
-                $(`#estado_${x.codigoPerfil}`).chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
+                $(`#estado_${x.ncorr}`).chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
             });
         }
 
@@ -295,12 +313,14 @@
         {
             showLoading();
 
+            datosRecibidos.sort((a, b) => b.ncorr - a.ncorr);   // Ordena por ncorr desc
+
             return new Promise((resolve, reject) =>
             {
                 $("#TablaPrincipal").DataTable({
                     data: datosRecibidos,
                     destroy: true,
-                    pageLength: 10,
+                    pageLength: 5,
                     dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
                     //scrollY: "60vh",
                     //"scrollX": true,  // Si la tabla tiene poco tamaño hacia el lado, esto hace que se vea pequeña
@@ -320,14 +340,14 @@
                         resolve(true)
                     },
                     columns: [
-                        { data: "codigoPerfil", "className": "text-nowrap", "searchable": true, "sortable": true },
+                        { data: "ncorr", "className": "text-nowrap", "searchable": true, "sortable": true },
                         { data: "nombre", "className": "text-nowrap", "searchable": true, "sortable": true },
                         { data: "descripcion", "className": "text-nowrap", "searchable": true, "sortable": true },
                         {
-                            "data": "fechaEfectiva", "name": "fechaEfectiva", "className": "text-nowrap", "render": (data, type, row, meta) => 
+                            "data": "fecha", "name": "fecha", "className": "text-nowrap", "render": (data, type, row, meta) => 
                             {
                                 return `
-                                <input id="fechaEfectiva_${row.codigoPerfil}" type="text" value="${row.fechaEfectiva}"
+                                <input id="fecha_${row.ncorr}" type="text" value="${row.fecha}"
                                 class="datepicker-input form-control" placeholder="DD/MM/AAAA"
                                 data-position="bottom center" autocomplete="off" readonly="readonly" 
                                 style="width: 7.1em" />
@@ -338,7 +358,7 @@
                             "data": "estado", "name": "estado", "className": "text-nowrap", "render": (data, type, row, meta) => 
                             {
                                 return `
-                                <select id="estado_${row.codigoPerfil}" class="chosen-select" searchable="Buscar">
+                                <select id="estado_${row.ncorr}" class="chosen-select" searchable="Buscar">
                                     <option value="" selected>Seleccione</option>   
                                 </select>
                                 `;
@@ -360,35 +380,20 @@
         function obtenerDatos() 
         {
             return [
-                { codigoPerfil: 1, nombre: "PER OCUP 1", descripcion: "Perfil Ocupacional Cualificacion 1", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 2, nombre: "PER OCUP 2", descripcion: "Perfil Ocupacional Cualificacion 2", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
-                { codigoPerfil: 3, nombre: "PER OCUP 3", descripcion: "Perfil Ocupacional Cualificacion 3", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
-                { codigoPerfil: 4, nombre: "PER OCUP 4", descripcion: "Perfil Ocupacional Cualificacion 4", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 5, nombre: "PER OCUP 5", descripcion: "Perfil Ocupacional Cualificacion 5", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 6, nombre: "PER OCUP 6", descripcion: "Perfil Ocupacional Cualificacion 6", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 7, nombre: "PER OCUP 7", descripcion: "Perfil Ocupacional Cualificacion 7", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 8, nombre: "PER OCUP 8", descripcion: "Perfil Ocupacional Cualificacion 8", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 9, nombre: "PER OCUP 9", descripcion: "Perfil Ocupacional Cualificacion 9", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 10, nombre: "PER OCUP 10", descripcion: "Perfil Ocupacional Cualificacion 10", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 11, nombre: "PER OCUP 11", descripcion: "Perfil Ocupacional Cualificacion 11", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 12, nombre: "PER OCUP 12", descripcion: "Perfil Ocupacional Cualificacion 12", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 13, nombre: "PER OCUP 13", descripcion: "Perfil Ocupacional Cualificacion 13", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 14, nombre: "PER OCUP 14", descripcion: "Perfil Ocupacional Cualificacion 14", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 15, nombre: "PER OCUP 15", descripcion: "Perfil Ocupacional Cualificacion 15", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 16, nombre: "PER OCUP 16", descripcion: "Perfil Ocupacional Cualificacion 16", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 17, nombre: "PER OCUP 17", descripcion: "Perfil Ocupacional Cualificacion 17", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 18, nombre: "PER OCUP 18", descripcion: "Perfil Ocupacional Cualificacion 18", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 19, nombre: "PER OCUP 19", descripcion: "Perfil Ocupacional Cualificacion 19", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 20, nombre: "PER OCUP 20", descripcion: "Perfil Ocupacional Cualificacion 20", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 21, nombre: "PER OCUP 21", descripcion: "Perfil Ocupacional Cualificacion 21", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 22, nombre: "PER OCUP 22", descripcion: "Perfil Ocupacional Cualificacion 22", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 23, nombre: "PER OCUP 23", descripcion: "Perfil Ocupacional Cualificacion 23", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 24, nombre: "PER OCUP 24", descripcion: "Perfil Ocupacional Cualificacion 24", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 25, nombre: "PER OCUP 25", descripcion: "Perfil Ocupacional Cualificacion 25", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 26, nombre: "PER OCUP 26", descripcion: "Perfil Ocupacional Cualificacion 26", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 27, nombre: "PER OCUP 27", descripcion: "Perfil Ocupacional Cualificacion 27", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 28, nombre: "PER OCUP 28", descripcion: "Perfil Ocupacional Cualificacion 28", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 29, nombre: "PER OCUP 29", descripcion: "Perfil Ocupacional Cualificacion 29", fechaEfectiva: "07-11-2022", estado: "Activo" }
+                { ncorr: 1, nombre: "Probando 1", descripcion: "Probando descripción 1", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 2, nombre: "Probando 2", descripcion: "Probando descripción 2", fecha: "07-11-2022", estado: "Inactivo" },
+                { ncorr: 3, nombre: "Probando 3", descripcion: "Probando descripción 3", fecha: "07-11-2022", estado: "Inactivo" },
+                { ncorr: 4, nombre: "Probando 4", descripcion: "Probando descripción 4", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 5, nombre: "Probando 5", descripcion: "Probando descripción 5", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 6, nombre: "Probando 6", descripcion: "Probando descripción 6", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 7, nombre: "Probando 7", descripcion: "Probando descripción 7", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 8, nombre: "Probando 8", descripcion: "Probando descripción 8", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 9, nombre: "Probando 9", descripcion: "Probando descripción 9", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 10, nombre: "Probando 10", descripcion: "Probando descripción 10", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 11, nombre: "Probando 11", descripcion: "Probando descripción 11", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 12, nombre: "Probando 12", descripcion: "Probando descripción 12", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 13, nombre: "Probando 13", descripcion: "Probando descripción 13", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 14, nombre: "Probando 14", descripcion: "Probando descripción 14", fecha: "07-11-2022", estado: "Activo" }
             ];
         }
 
