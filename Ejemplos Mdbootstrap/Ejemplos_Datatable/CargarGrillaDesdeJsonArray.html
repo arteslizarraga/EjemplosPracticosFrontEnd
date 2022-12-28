@@ -195,8 +195,8 @@
                       
                           <div class="col col-md-6  d-flex justify-content-start">
 
-                            <button type="button" class="btn btn-outline waves-effect waves-light">
-                                <span>Ejemplo</span>
+                            <button type="button" onclick="mostrarParamSQL()" class="btn btn-outline waves-effect waves-light">
+                                <span>Imprimir parámetro SP</span>
                             </button>
                           </div>
                           <div class="col col-md-6 d-flex justify-content-end">
@@ -254,6 +254,12 @@
 
         let datos = obtenerDatos(); 
         alCargarPagina();
+
+        function mostrarParamSQL()
+        {
+            let cadena = JSON.stringify(datos).split("\"").join("''");
+            console.log(cadena);
+        }
         
         async function alCargarPagina()
         {
@@ -508,59 +514,62 @@
         */
 
         //=====================================================================================>>>>>
+        // Ejemplo funcionando:
+
+        // var cadena = JSON.stringify(datos).split("\"").join("''");
 
         /*
-SET SERVEROUTPUT ON
+        SET SERVEROUTPUT ON
 
-DECLARE
-    cadena varchar(5000) := '[{''ncorr'':null,''prelacion'':16,''nombre'':''Probando 16'',''descripcion'':''Probando descripción 16'',''fecha'':''31/12/2022'',''estado'':''Inactivo''},{''ncorr'':null,''prelacion'':15,''nombre'':''Probando 15'',''descripcion'':''Probando descripción 15'',''fecha'':''30/12/2022'',''estado'':''Inactivo''},{''ncorr'':114,''prelacion'':14,''nombre'':''Probando 14'',''descripcion'':''Probando descripción 14'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':113,''prelacion'':13,''nombre'':''Probando 13'',''descripcion'':''Probando descripción 13'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':112,''prelacion'':12,''nombre'':''Probando 12'',''descripcion'':''Probando descripción 12'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':111,''prelacion'':11,''nombre'':''Probando 11'',''descripcion'':''Probando descripción 11'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':110,''prelacion'':10,''nombre'':''Probando 10'',''descripcion'':''Probando descripción 10'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':109,''prelacion'':9,''nombre'':''Probando 9'',''descripcion'':''Probando descripción 9'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':108,''prelacion'':8,''nombre'':''Probando 8'',''descripcion'':''Probando descripción 8'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':107,''prelacion'':7,''nombre'':''Probando 7'',''descripcion'':''Probando descripción 7'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':106,''prelacion'':6,''nombre'':''Probando 6'',''descripcion'':''Probando descripción 6'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':105,''prelacion'':5,''nombre'':''Probando 5'',''descripcion'':''Probando descripción 5'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':104,''prelacion'':4,''nombre'':''Probando 4'',''descripcion'':''Probando descripción 4'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':103,''prelacion'':3,''nombre'':''Probando 3'',''descripcion'':''Probando descripción 3'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':102,''prelacion'':2,''nombre'':''Probando 2'',''descripcion'':''Probando descripción 2'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':101,''prelacion'':1,''nombre'':''Probando 1'',''descripcion'':''Probando descripción 1'',''fecha'':''07-11-2022'',''estado'':''Activo''}]';
-    nueva_cadena varchar(5000);
-    arreglo_recibido   json_array_t;
-    objeto   json_object_t;
-    ncorr varchar(40); 
-    prelación varchar(40);
-    nombre varchar(40);
-    descripcion varchar(40);
-    fecha varchar(40);
-    estado varchar(40);
-    error_generico EXCEPTION;
-BEGIN
-    nueva_cadena := replace(cadena,'''','"');   -- Reemplaza el  ''   por   "
-    DBMS_OUTPUT.put_line(nueva_cadena);
-    
-    arreglo_recibido := json_array_t (nueva_cadena);
-    DBMS_OUTPUT.put_line ('El número de elementos del arreglo es: ' || arreglo_recibido.get_size); 
-    DBMS_OUTPUT.put_line('================================================================>>>>>'); 
- 
-    FOR index_ele IN 0 .. arreglo_recibido.get_size - 1 LOOP 
-    
-        objeto := json_object_t (arreglo_recibido.get(index_ele));
+        DECLARE
+            cadena varchar(5000) := '[{''ncorr'':null,''prelacion'':16,''nombre'':''Probando 16'',''descripcion'':''Probando descripción 16'',''fecha'':''31/12/2022'',''estado'':''Inactivo''},{''ncorr'':null,''prelacion'':15,''nombre'':''Probando 15'',''descripcion'':''Probando descripción 15'',''fecha'':''30/12/2022'',''estado'':''Inactivo''},{''ncorr'':114,''prelacion'':14,''nombre'':''Probando 14'',''descripcion'':''Probando descripción 14'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':113,''prelacion'':13,''nombre'':''Probando 13'',''descripcion'':''Probando descripción 13'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':112,''prelacion'':12,''nombre'':''Probando 12'',''descripcion'':''Probando descripción 12'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':111,''prelacion'':11,''nombre'':''Probando 11'',''descripcion'':''Probando descripción 11'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':110,''prelacion'':10,''nombre'':''Probando 10'',''descripcion'':''Probando descripción 10'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':109,''prelacion'':9,''nombre'':''Probando 9'',''descripcion'':''Probando descripción 9'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':108,''prelacion'':8,''nombre'':''Probando 8'',''descripcion'':''Probando descripción 8'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':107,''prelacion'':7,''nombre'':''Probando 7'',''descripcion'':''Probando descripción 7'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':106,''prelacion'':6,''nombre'':''Probando 6'',''descripcion'':''Probando descripción 6'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':105,''prelacion'':5,''nombre'':''Probando 5'',''descripcion'':''Probando descripción 5'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':104,''prelacion'':4,''nombre'':''Probando 4'',''descripcion'':''Probando descripción 4'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':103,''prelacion'':3,''nombre'':''Probando 3'',''descripcion'':''Probando descripción 3'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':102,''prelacion'':2,''nombre'':''Probando 2'',''descripcion'':''Probando descripción 2'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':101,''prelacion'':1,''nombre'':''Probando 1'',''descripcion'':''Probando descripción 1'',''fecha'':''07-11-2022'',''estado'':''Activo''}]';
+            nueva_cadena varchar(5000);
+            arreglo_recibido   json_array_t;
+            objeto   json_object_t;
+            ncorr varchar(40); 
+            prelación varchar(40);
+            nombre varchar(40);
+            descripcion varchar(40);
+            fecha varchar(40);
+            estado varchar(40);
+            error_generico EXCEPTION;
+        BEGIN
+            nueva_cadena := replace(cadena,'''','"');   -- Reemplaza el  ''   por   "
+            DBMS_OUTPUT.put_line(nueva_cadena);
+            
+            arreglo_recibido := json_array_t (nueva_cadena);
+            DBMS_OUTPUT.put_line ('El número de elementos del arreglo es: ' || arreglo_recibido.get_size); 
+            DBMS_OUTPUT.put_line('================================================================>>>>>'); 
         
-        ncorr := replace(objeto.get('ncorr').to_string,'"','');
-        prelación := replace(objeto.get('prelacion').to_string,'"','');
-        nombre := replace(objeto.get('nombre').to_string,'"','');
-        fecha := replace(objeto.get('fecha').to_string,'"','');
-        estado := replace(objeto.get('estado').to_string,'"','');
-        
-        IF ncorr = 'null' THEN  
-            DBMS_OUTPUT.put_line('INSERT INTO EJEMPLO(ncorr, prelación, nombre, fecha, estado) 
-            VALUES (EJEMPLO.NEXTVAL, ' || prelación || ', ' || nombre || ', ' || fecha || ', ' || estado || ');');
-        ELSE  
-           DBMS_OUTPUT.put_line('UPDATE EJEMPLO 
-           SET prelacion = ' || prelación || ', nombre = ' || nombre || ', fecha = ' || fecha || ', estado = ' || estado || ' 
-           WHERE ncorr = ' || ncorr);
-        END IF;
-        
-        DBMS_OUTPUT.put_line('===============================>>>>>'); 
-    END LOOP; 
-    
-    --raise_application_error( -20001, 'Probando error');
-    DBMS_OUTPUT.put_line('COMMIT;'); 
-    
-EXCEPTION WHEN OTHERS THEN
-    dbms_output.put_line( sqlerrm );
-	DBMS_OUTPUT.PUT_LINE('ROLLBACK');
-END;
+            FOR index_ele IN 0 .. arreglo_recibido.get_size - 1 LOOP 
+            
+                objeto := json_object_t (arreglo_recibido.get(index_ele));
+                
+                ncorr := replace(objeto.get('ncorr').to_string,'"','');
+                prelación := replace(objeto.get('prelacion').to_string,'"','');
+                nombre := replace(objeto.get('nombre').to_string,'"','');
+                fecha := replace(objeto.get('fecha').to_string,'"','');
+                estado := replace(objeto.get('estado').to_string,'"','');
+                
+                IF ncorr = 'null' THEN  
+                    DBMS_OUTPUT.put_line('INSERT INTO EJEMPLO(ncorr, prelación, nombre, fecha, estado) 
+                    VALUES (EJEMPLO.NEXTVAL, ' || prelación || ', ' || nombre || ', ' || fecha || ', ' || estado || ');');
+                ELSE  
+                DBMS_OUTPUT.put_line('UPDATE EJEMPLO 
+                SET prelacion = ' || prelación || ', nombre = ' || nombre || ', fecha = ' || fecha || ', estado = ' || estado || ' 
+                WHERE ncorr = ' || ncorr);
+                END IF;
+                
+                DBMS_OUTPUT.put_line('===============================>>>>>'); 
+            END LOOP; 
+            
+            --raise_application_error( -20001, 'Probando error');
+            DBMS_OUTPUT.put_line('COMMIT;'); 
+            
+        EXCEPTION WHEN OTHERS THEN
+            dbms_output.put_line( sqlerrm );
+            DBMS_OUTPUT.PUT_LINE('ROLLBACK');
+        END;
         */
 
     </script>
