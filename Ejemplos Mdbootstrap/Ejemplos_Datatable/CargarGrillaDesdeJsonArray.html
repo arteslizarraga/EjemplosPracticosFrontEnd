@@ -538,19 +538,32 @@
 SET SERVEROUTPUT ON
 
 DECLARE
-    cadena varchar(5000) := '[{''ncorr'':null,''prelacion'':16,''nombre'':''Probando 16'',''descripcion'':''Probando descripción 16'',''fecha'':''31/12/2022'',''estado'':''Inactivo''},{''ncorr'':null,''prelacion'':15,''nombre'':''Probando 15'',''descripcion'':''Probando descripción 15'',''fecha'':''30/12/2022'',''estado'':''Inactivo''},{''ncorr'':114,''prelacion'':14,''nombre'':''Probando 14'',''descripcion'':''Probando descripción 14'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':113,''prelacion'':13,''nombre'':''Probando 13'',''descripcion'':''Probando descripción 13'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':112,''prelacion'':12,''nombre'':''Probando 12'',''descripcion'':''Probando descripción 12'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':111,''prelacion'':11,''nombre'':''Probando 11'',''descripcion'':''Probando descripción 11'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':110,''prelacion'':10,''nombre'':''Probando 10'',''descripcion'':''Probando descripción 10'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':109,''prelacion'':9,''nombre'':''Probando 9'',''descripcion'':''Probando descripción 9'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':108,''prelacion'':8,''nombre'':''Probando 8'',''descripcion'':''Probando descripción 8'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':107,''prelacion'':7,''nombre'':''Probando 7'',''descripcion'':''Probando descripción 7'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':106,''prelacion'':6,''nombre'':''Probando 6'',''descripcion'':''Probando descripción 6'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':105,''prelacion'':5,''nombre'':''Probando 5'',''descripcion'':''Probando descripción 5'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':104,''prelacion'':4,''nombre'':''Probando 4'',''descripcion'':''Probando descripción 4'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':103,''prelacion'':3,''nombre'':''Probando 3'',''descripcion'':''Probando descripción 3'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':102,''prelacion'':2,''nombre'':''Probando 2'',''descripcion'':''Probando descripción 2'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':101,''prelacion'':1,''nombre'':''Probando 1'',''descripcion'':''Probando descripción 1'',''fecha'':''07-11-2022'',''estado'':''Activo''}]';
+    --cadena varchar(5000) := '[{ "ncorr": null, "prelacion": 1, "nombre": "Probando 1", "descripcion": "Probando descripción 1", "fecha": "07-11-2022", "estado": "Activo" },{ "ncorr": 102, "prelacion": 2, "nombre": "Probando 2", "descripcion": "Probando descripción 2", "fecha": "07-11-2022", "estado": "Activo" }]';
+
+    cadena varchar(5000) := '[{''ncorr'':null,''prelacion'':15,''nombre'':''Probando 15'',''descripcion'':''Probando descripción 15'',''fecha'':''30-12-2022'',''estado'':''Activo''},{''ncorr'':114,''prelacion'':14,''nombre'':''Probando 14'',''descripcion'':''Probando descripción 14'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':113,''prelacion'':13,''nombre'':''Probando 13'',''descripcion'':''Probando descripción 13'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':112,''prelacion'':12,''nombre'':''Probando 12'',''descripcion'':''Probando descripción 12'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':111,''prelacion'':11,''nombre'':''Probando 11'',''descripcion'':''Probando descripción 11'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':110,''prelacion'':10,''nombre'':''Probando 10'',''descripcion'':''Probando descripción 10'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':109,''prelacion'':9,''nombre'':''Probando 9'',''descripcion'':''Probando descripción 9'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':108,''prelacion'':8,''nombre'':''Probando 8'',''descripcion'':''Probando descripción 8'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':107,''prelacion'':7,''nombre'':''Probando 7'',''descripcion'':''Probando descripción 7'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':106,''prelacion'':6,''nombre'':''Probando 6'',''descripcion'':''Probando descripción 6'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':105,''prelacion'':5,''nombre'':''Probando 5'',''descripcion'':''Probando descripción 5'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':104,''prelacion'':4,''nombre'':''Probando 4'',''descripcion'':''Probando descripción 4'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':103,''prelacion'':3,''nombre'':''Probando 3'',''descripcion'':''Probando descripción 3'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':102,''prelacion'':2,''nombre'':''Probando 2'',''descripcion'':''Probando descripción 2'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':101,''prelacion'':1,''nombre'':''Probando 1'',''descripcion'':''Probando descripción 1'',''fecha'':''07-11-2022'',''estado'':''Activo''}]';
     nueva_cadena varchar(5000);
     arreglo   json_array_t;
     objeto   json_object_t;
-    ncorr varchar(40); 
+    ncorr int; 
     prelación varchar(40);
     nombre varchar(40);
     descripcion varchar(40);
-    fecha varchar(40);
+    fecha DATE;
     estado varchar(40);
-    
-    function obtenerValor(p_obj IN JSON_OBJECT_T, nombre varchar2) return varchar2 is begin 
-        return replace(p_obj.get(nombre).to_string, '"', '');
+    valor varchar(40);
+
+    function obtenerValor(p_obj IN JSON_OBJECT_T, nombre varchar2) return varchar2 is 
+        cadena varchar(80);
+    begin 
+       IF p_obj.has(nombre) AND p_obj.get(nombre) is not null THEN
+            cadena := replace(p_obj.get(nombre).to_string, '"', '');
+            return CASE 
+                WHEN cadena <> 'null' THEN replace(p_obj.get(nombre).to_string, '"', '') 
+                ELSE null 
+            END;
+       END IF;
+       raise_application_error( -20001, 'No existe la key ' || nombre);
+       return null; 
     end;
 BEGIN
     
@@ -564,18 +577,23 @@ BEGIN
     FOR index_ele IN 0 .. arreglo.get_size - 1 LOOP 
     
         objeto := json_object_t (arreglo.get(index_ele));
-        ncorr := obtenerValor(objeto, 'ncorr');
+        ncorr := TO_NUMBER(COALESCE(obtenerValor(objeto, 'ncorr'), '0'));
         prelación := obtenerValor(objeto, 'prelacion');
         nombre := obtenerValor(objeto, 'nombre');
-        fecha := obtenerValor(objeto, 'fecha');
         estado := obtenerValor(objeto, 'estado');
         
-        IF ncorr = 'null' THEN  
+        valor := obtenerValor(objeto, 'fecha');
+        fecha := CASE 
+            WHEN valor is not null THEN TO_DATE(trim(valor), 'dd-mm-yyyy') 
+            ELSE null 
+        END;
+        
+        IF ncorr = 0 THEN  
             DBMS_OUTPUT.put_line('INSERT INTO EJEMPLO(ncorr, prelación, nombre, fecha, estado) 
-            VALUES (EJEMPLO.NEXTVAL, ' || prelación || ', ' || nombre || ', ' || fecha || ', ' || estado || ');');
+            VALUES (EJEMPLO.NEXTVAL, ' || prelación || ', ' || nombre || ', ' || TO_CHAR(fecha, 'dd-mm-yyyy') || ', ' || estado || ');');
         ELSE  
             DBMS_OUTPUT.put_line('UPDATE EJEMPLO 
-            SET prelacion = ' || prelación || ', nombre = ' || nombre || ', fecha = ' || fecha || ', estado = ' || estado || ' 
+            SET prelacion = ' || prelación || ', nombre = ' || nombre || ', fecha = ' || TO_CHAR(fecha, 'dd-mm-yyyy') || ', estado = ' || estado || ' 
             WHERE ncorr = ' || ncorr);
         END IF;
         
@@ -589,6 +607,7 @@ EXCEPTION WHEN OTHERS THEN
     dbms_output.put_line( sqlerrm );
     DBMS_OUTPUT.PUT_LINE('ROLLBACK');
 END;
+
 */
 
     </script>
