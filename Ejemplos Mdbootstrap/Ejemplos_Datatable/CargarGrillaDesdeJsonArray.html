@@ -258,8 +258,30 @@
 
         function mostrarParamSQL()
         {
-            let cadena = JSON.stringify(datos).split("\"").join("''");
+            // let cadena = JSON.stringify(datos).split("\"").join("''");
+            let cadena = JSON.stringify(JSON.stringify(datos));
             console.log(cadena);
+
+            /*
+            $.ajax({
+                method: "POST",
+                url: "https://jsonplaceholder.typicode.com/posts",
+                data: JSON.stringify({ cadena }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: () => {
+                    showLoading();
+                },
+                success: (res) => {
+                    console.log(res.cadena);
+                },
+                error: (XMLHttpRequest, textStatus, errorThrown) => {
+                    hideLoading();
+                    toastr.error("Ocurrió un error al guardar el sector productivo");
+                },
+                complete: (res) => hideLoading()
+            });
+            */
         }
         
         async function alCargarPagina()
@@ -557,9 +579,7 @@
 SET SERVEROUTPUT ON
 
 DECLARE
-    --cadena varchar(5000) := '[{ "ncorr": null, "prelacion": 1, "nombre": "Probando 1", "descripcion": "Probando descripción 1", "fecha": "07-11-2022", "estado": "Activo" },{ "ncorr": 102, "prelacion": 2, "nombre": "Probando 2", "descripcion": "Probando descripción 2", "fecha": "07-11-2022", "estado": "Activo" }]';
-
-    cadena varchar(5000) := '[{''ncorr'':null,''prelacion'':15,''nombre'':''Probando 15'',''descripcion'':''Probando descripción 15'',''fecha'':''30-12-2022'',''estado'':''Activo''},{''ncorr'':114,''prelacion'':14,''nombre'':''Probando 14'',''descripcion'':''Probando descripción 14'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':113,''prelacion'':13,''nombre'':''Probando 13'',''descripcion'':''Probando descripción 13'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':112,''prelacion'':12,''nombre'':''Probando 12'',''descripcion'':''Probando descripción 12'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':111,''prelacion'':11,''nombre'':''Probando 11'',''descripcion'':''Probando descripción 11'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':110,''prelacion'':10,''nombre'':''Probando 10'',''descripcion'':''Probando descripción 10'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':109,''prelacion'':9,''nombre'':''Probando 9'',''descripcion'':''Probando descripción 9'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':108,''prelacion'':8,''nombre'':''Probando 8'',''descripcion'':''Probando descripción 8'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':107,''prelacion'':7,''nombre'':''Probando 7'',''descripcion'':''Probando descripción 7'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':106,''prelacion'':6,''nombre'':''Probando 6'',''descripcion'':''Probando descripción 6'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':105,''prelacion'':5,''nombre'':''Probando 5'',''descripcion'':''Probando descripción 5'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':104,''prelacion'':4,''nombre'':''Probando 4'',''descripcion'':''Probando descripción 4'',''fecha'':''07-11-2022'',''estado'':''Activo''},{''ncorr'':103,''prelacion'':3,''nombre'':''Probando 3'',''descripcion'':''Probando descripción 3'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':102,''prelacion'':2,''nombre'':''Probando 2'',''descripcion'':''Probando descripción 2'',''fecha'':''07-11-2022'',''estado'':''Inactivo''},{''ncorr'':101,''prelacion'':1,''nombre'':''Probando 1'',''descripcion'':''Probando descripción 1'',''fecha'':''07-11-2022'',''estado'':''Activo''}]';
+    cadena varchar(5000) := '[{\"ncorr\":101,\"prelacion\":1,\"nombre\":\"Probando 1\",\"descripcion\":\"Probando descripción 1\",\"fecha\":\"07-11-2022\",\"estado\":\"Activo\"}]';
     nueva_cadena varchar(5000);
     arreglo   json_array_t;
     objeto   json_object_t;
@@ -586,7 +606,8 @@ DECLARE
     end;
 BEGIN
     
-    nueva_cadena := replace(cadena,'''','"');   -- Reemplaza el  ''   por   "
+    -- nueva_cadena := replace(cadena,'''','"');   -- Reemplaza el  ''   por   "
+    nueva_cadena := replace(cadena,'\"','"');   -- Reemplaza el  \"   por   "
     -- DBMS_OUTPUT.put_line(nueva_cadena);
     
     arreglo := json_array_t (nueva_cadena);
@@ -626,7 +647,6 @@ EXCEPTION WHEN OTHERS THEN
     dbms_output.put_line( sqlerrm );
     DBMS_OUTPUT.PUT_LINE('ROLLBACK');
 END;
-
 */
 
     </script>
