@@ -379,6 +379,7 @@
                             "data": "ncorr", "name": "ncorr", "className": "text-nowrap", "sortable": false, "render": (data, type, row, meta) => 
                             {
                                 return `
+                                <button onclick="editarNombre(${row.prelacion})">Editar Nombre</button>
                                 <button onclick="eliminarRegistro(${row.prelacion})">Eliminar</button>
                                 `;
                             }
@@ -401,6 +402,23 @@
             datos = datos.filter(x => x.prelacion != prelacion);
             await construirGrillaPerfilesOcupacionalesCualificacion(datos);
             definirInputsGrilla();
+        }
+
+        async function editarNombre(prelacion)
+        {
+            let elemento = datos.find(x => x.prelacion == prelacion);
+            let nuevoNombre = prompt("Escriba el nombre", elemento.nombre);
+            console.log(nuevoNombre);
+
+            if (nuevoNombre != null) 
+            {
+                if (nuevoNombre == "")
+                    return toastr.error("El nombre es requerido");
+
+                elemento.nombre = nuevoNombre;
+                await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+                definirInputsGrilla();
+            } 
         }
 
         function obtenerDatos() 
