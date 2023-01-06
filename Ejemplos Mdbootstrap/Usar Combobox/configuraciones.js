@@ -33,14 +33,12 @@ async function cargarPagina()
     llenarSelect({ 
         querySelector: "#select_5", 
         data: datos,
-        onchange: async () => 
+        onchange: async (x) => 
         {
-            let valorSeleccionado = $("#select_5").val();
-            let textoSeleccionado = $("#select_5 option:selected").text(); 
-
+            let valorSeleccionado = x.value;
             if (valorSeleccionado == "") return limpiarSelect("#select_6");
 
-            console.log(`El value seleccionado es ${valorSeleccionado} y el text es ${textoSeleccionado}`);
+            console.log(`El value seleccionado es ${valorSeleccionado} y el text es ${x.text}`);
             let especiesGeneracion = await obtenerEspeciesGeneracion(valorSeleccionado);
             llenarSelect({ querySelector: "#select_6", data: especiesGeneracion });
         }
@@ -126,6 +124,15 @@ function limpiarSelect(querySelector) {
 
 function llenarSelect(datos) 
 {
+  const retornoEvento = () => 
+  {
+    let res = {...datos};
+    res.value = $(datos.querySelector).val();
+    res.text = $(`${datos.querySelector} option:selected`).text();
+        
+    return res;
+  };
+	
   if (Array.from($(datos.querySelector + ' option[value!=""]')).length)   // Si tiene elementos excepto el seleccione
     limpiarSelect(datos.querySelector);                              // Esto sirve al refrescar el combobox con nuevos datos
 
@@ -164,8 +171,13 @@ function llenarSelect(datos)
 
   }
 
-  $(datos.querySelector).on("change", () => {
-    if (datos.onchange != null && typeof datos.onchange === "function") datos.onchange();
+  $(datos.querySelector).on("change", () => 
+  {
+    if (datos.onchange != null && typeof datos.onchange === "function") 
+	{
+		let retorno = retornoEvento();  // { value: "1234", text: "Hola" }
+        datos.onchange(retorno);
+	}
   });
 
   $(datos.querySelector).trigger("chosen:updated");   // El select toma los cambios realizados
