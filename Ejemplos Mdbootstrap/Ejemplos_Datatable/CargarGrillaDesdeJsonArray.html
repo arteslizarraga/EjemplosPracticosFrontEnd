@@ -175,6 +175,7 @@
                                 <table id="TablaPrincipal" class="datatables table table-hover table-striped table-bordered m-0" width="100%">
                                     <thead>
                                       <tr>
+                                        <th data-orderable="false">Posición</th>
                                         <th>Correlativo</th>
                                         <th>Prelación</th>
                                         <th>Nombre</th>
@@ -286,7 +287,7 @@
         
         async function alCargarPagina()
         {
-            await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+            await construirGrillaPerfilesOcupacionalesCualificacion();
             definirInputsGrilla();
         }
 
@@ -296,14 +297,14 @@
             let fechaHoy = new Date().toJSON().slice(0,10).split("-").reverse().join("-");  // "28-12-2022"
             datos.push({ ncorr: null, prelacion, nombre: `Probando ${prelacion}`, descripcion: `Probando descripción ${prelacion}`, fecha: fechaHoy, estado: "Activo" });
 
-            await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+            await construirGrillaPerfilesOcupacionalesCualificacion();
             definirInputsGrilla();
         }
 
         async function limpiarDatos()
         {
             datos = obtenerDatos(); 
-            await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+            await construirGrillaPerfilesOcupacionalesCualificacion();
             definirInputsGrilla();
         }
 
@@ -341,16 +342,18 @@
             });
         }
 
-        function construirGrillaPerfilesOcupacionalesCualificacion(datosRecibidos)
+        function construirGrillaPerfilesOcupacionalesCualificacion()
         {
             showLoading();
 
-            datosRecibidos.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
+            datos.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
 
             return new Promise((resolve, reject) =>
             {
+                let index = 0;
+
                 $("#TablaPrincipal").DataTable({
-                    data: datosRecibidos,
+                    data: datos,
                     destroy: true,
                     pageLength: 5,
                     dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
@@ -372,6 +375,7 @@
                         resolve(true)
                     },
                     columns: [
+                        { "className": "text-nowrap", "render": (data, type, row, meta) => index },
                         { data: "ncorr", "className": "text-nowrap", "searchable": true, "sortable": true, "render": (data, type, row, meta) => row.ncorr ?? "No tiene" },
                         { data: "prelacion", "className": "text-nowrap", "searchable": true, "sortable": true },
                         { data: "nombre", "className": "text-nowrap", "searchable": true, "sortable": true },
@@ -400,10 +404,13 @@
                         {
                             "data": "ncorr", "name": "ncorr", "className": "text-nowrap", "sortable": false, "render": (data, type, row, meta) => 
                             {
-                                return `
-                                <button onclick="editarNombre(${row.prelacion})">Editar Nombre</button>
-                                <button onclick="eliminarRegistro(${row.prelacion})">Eliminar</button>
+                                let cadena = `
+                                <button onclick="editarNombre(${index})">Editar Nombre</button>
+                                <button onclick="eliminarRegistro(${index})">Eliminar</button>
                                 `;
+
+                                index ++;
+                                return cadena;
                             }
                         }
                     ]
@@ -419,16 +426,19 @@
             });
         }
 
-        async function eliminarRegistro(prelacion)
+        async function eliminarRegistro(index)
         {
-            datos = datos.filter(x => x.prelacion != prelacion);
-            await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+            datos.splice(index, 1);     // Elimina la posición del arreglo
+
+            datos.sort((a, b) => a.prelacion - b.prelacion).forEach((x, index) => x.prelacion = index + 1);  // Re asigna prelacion a todos los elementos del arreglo
+            
+            await construirGrillaPerfilesOcupacionalesCualificacion();
             definirInputsGrilla();
         }
 
-        async function editarNombre(prelacion)
+        async function editarNombre(index)
         {
-            let elemento = datos.find(x => x.prelacion == prelacion);
+            let elemento = datos[index];
             let nuevoNombre = prompt("Escriba el nombre", elemento.nombre);
             console.log(nuevoNombre);
 
@@ -438,7 +448,7 @@
                     return toastr.error("El nombre es requerido");
 
                 elemento.nombre = nuevoNombre;
-                await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+                await construirGrillaPerfilesOcupacionalesCualificacion();
                 definirInputsGrilla();
             } 
         }
