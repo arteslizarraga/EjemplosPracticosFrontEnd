@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+  <nav>
+    <div id="probando"></div>
+  </nav>
+
+<script>
+
+function generarUl() 
+{
+  let ul = document.createElement("ul");
+  ul.setAttribute("class", "pagination");
+
+  let cont = 0;
+
+  let agregarLi = (info) => 
+  {
+    let li = document.createElement("li");
+    li.setAttribute("class", `page-item ${info.esPaginaActual != null ? "active" : ""}`);
+
+    //=============================>>>>>
+
+    let enlace = document.createElement("a"); 
+    enlace.setAttribute("href","javascript:void(0)");
+    enlace.setAttribute("class", "page-link"); 
+    enlace.innerText = info.texto;
+    if (info.numeroPagina != null) enlace.setAttribute("numeroPagina", info.numeroPagina);
+    enlace.addEventListener("click", info.onclick);
+    li.appendChild(enlace);
+
+    //=============================>>>>>
+
+    //li.appendChild(document.createTextNode(datos));  // Asi se pondria solo un texto en el li
+
+    ul.appendChild(li);
+    cont ++;
+  };
+
+  agregarLi({ texto: "Anterior", onclick: () => alert("datos.pasoAtras") });
+
+  agregarLi({ texto: "1", numeroPagina: 1, onclick: () => alert("1") });
+  agregarLi({ texto: "2", numeroPagina: 2, onclick: () => alert("2"), esPaginaActual: true });
+  agregarLi({ texto: "3", numeroPagina: 2, onclick: () => alert("3") });
+
+  agregarLi({ texto: "Siguiente", onclick: () => alert("datos.pasoAdelante") });
+
+  document.getElementById("probando").appendChild(ul);
+}
+
+generarUl();
+
+</script>
+  
+</body>
+</html>
