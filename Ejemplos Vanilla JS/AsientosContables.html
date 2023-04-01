@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+       
+        table {
+            border-collapse: collapse;
+        }
+        thead {
+            background-color: lightgray;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <br/><br/>
+
+    <table width="100%" border="1">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Título</th>
+                <th>Descripción General</th>
+                <th>Descripción Específica</th>
+                <th>Cuenta</th>
+                <th>Debe (cargar)</th>
+                <th>Haber (abonar)</th>
+                <th>Columna General</th>
+            </tr>
+        </thead>
+        <tbody id="contenido">
+        </tbody>
+
+    </table>
+
+    <script>
+
+        // Tomado de: http://localhost:8999/#/contabilidad/asientoContableDummy
+
+        let asientosContables = [
+            { 
+                fecha: "30-04-2018",
+                nombre: "Asiento 4", 
+                descripcion: "El 30 de abril se paga el salario de una persona encargada de vender el producto y otra de administrarlo. El salario del primero es de $15.000 y el segundo es de $14.000", 
+                detallesDebe: [
+                    { 
+                        descripcionCarga: "Guando tenemos un gasto tenemos que cargarlo, ya que corre por cuenta de la compañia. El hecho de hablar del pago de un salario nos dice que tenemos que gastar en una persona cierto importe para que realice una determinada funcion", 
+                        nombreCuenta: "Sueldos y Salarios (Gasto Venta) ", cantidad: 15000 
+                    }, 
+                    { 
+                        descripcionCarga: "Se paga el salario de una persona encargada de administrar el producto", 
+                        nombreCuenta: "Sueldos y Salarios (Gasto de Administración)", 
+                        cantidad: 14000 
+                    }
+                ],
+                detallesHaber: [
+                    { 
+                        descripcionAbono: "De nuestro banco van a salir $29.000. Uso la cuenta Banco, que es de donde va a salir nuestro dinero. Calculo: 15.000 + 14.000 = 29.000", 
+                        nombreCuenta: "Banco", 
+                        cantidad: 29000 
+                    }
+                ]
+            }, 
+            { 
+                fecha: "08-05-2018", 
+                nombre: "Asiento 5",
+                descripcion: "El 8 de mayo se vende producto a una fundacion. El importe que se vendio es por $50.000. El 80% se cobra de contado y el resto se cobrara a 45 dias. El costo de lo vendido representa el 50% de la venta.", 
+                detallesDebe: [
+                    { 
+                        descripcionCarga: "$50.000 es el importe total de lo que se vendió.", 
+                        nombreCuenta: "Clientes (Cuentas por cobrar)", 
+                        cantidad: 50000 
+                    }
+                ],
+                detallesHaber: [
+                    { 
+                        descripcionAbono: "Ojo que aca no se esta considerando el IVA", 
+                        nombreCuenta: "Ventas", 
+                        cantidad: 50000 
+                    }
+                ]
+            },
+            { 
+                fecha: "08-05-2018", 
+                nombre: "Asiento 5a",
+                descripcion: "Registrar un pago que nos estan haciendo. Aqui voy a reflejar cuanto estoy cobrando", 
+                detallesDebe: [
+                    { 
+                        descripcionCarga: "Le mando al banco la totalidad de lo que nos van a pagar. El 80% de $50.000 es $40.000", 
+                        nombreCuenta: "Banco", 
+                        cantidad: 40000 
+                    }
+                ],
+                detallesHaber: [
+                    { 
+                        descripcionAbono: "Aca voy a reducir lo que nos deben nuestros clientes", 
+                        nombreCuenta: "Clientes", 
+                        cantidad: 40000 
+                    }
+                ]
+            },
+            { 
+                fecha: "08-05-2018", 
+                nombre: "Asiento 5b",
+                descripcion: "Registrar el costo de lo vendido que es el 50% de la venta. De nuestro almacen tendremos que sacar el producto porque ya lo vendimos", 
+                detallesDebe: [
+                    { 
+                        descripcionCarga: "Hacemos un cargo a nuestro Costo de Ventas, ya que nosotros estamos asumiendo ese costo por la mitad de lo que vendimos. El calculo es: $50.000 / 2 = $25.000", 
+                        nombreCuenta: "Costo de Ventas", 
+                        cantidad: 25000 
+                    }
+                ],
+                detallesHaber: [
+                    { 
+                        descripcionAbono: "Asi se refleja que el Almacen ya no tiene ese importe o esa mercancia", 
+                        nombreCuenta: "Almacen", 
+                        cantidad: 25000 
+                    }
+                ]
+            }
+        ];
+     
+        let cantidadTotalDetalles = asientosContables.map(x => x.detallesDebe.length).reduce((a, b) => a + b, 0)
+        +
+        asientosContables.map(x => x.detallesHaber.length).reduce((a, b) => a + b, 0); 
+
+        //=========>>>
+
+        let sumaDebe = asientosContables.map(x => x.detallesDebe.map(y => y.cantidad).reduce((acumulador, ele) => acumulador + ele)).reduce((acumulador, ele) => acumulador + ele);
+        let sumaHaber = asientosContables.map(x => x.detallesHaber.map(y => y.cantidad).reduce((acumulador, ele) => acumulador + ele)).reduce((acumulador, ele) => acumulador + ele);
+
+        //=========>>>
+
+        let cadena = `
+
+        ${asientosContables.map((asiento, x) => 
+        { 
+            let estilosFilaAsiento = `background-color: ${x % 2 == 0 ? "#fff4ee" : "#ced0c6"};`;
+            let cantidadFilas = asiento.detallesDebe.length + asiento.detallesHaber.length;
+            let retorno = "";
+
+            retorno += `
+            ${asiento.detallesDebe.map((detalleDebe, y) => 
+            { 
+                return `
+                <tr style="${estilosFilaAsiento}">
+                    ${y == 0 ? ` 
+                        <td rowspan="${cantidadFilas}"> ${asiento.fecha} </td>
+                        <td rowspan="${cantidadFilas}"> ${asiento.nombre} </td>
+                        <td rowspan="${cantidadFilas}"> ${asiento.descripcion} </td>
+                    ` : ""} 
+
+                    <td> ${detalleDebe.descripcionCarga} </td>
+                    <td> ${detalleDebe.nombreCuenta} </td>
+
+                    <!-- Debe y Haber -->
+                    <td>${formatearNumero(detalleDebe.cantidad)}</td>
+                    <td></td>
+                   
+                    ${x == 0 && y == 0 ? ` 
+                        <td rowspan="${cantidadTotalDetalles}">
+                            <p>Suma Debe: ${formatearNumero(sumaDebe)}</p>
+                            <p>Suma Haber: ${formatearNumero(sumaHaber)}</p>    
+                        </td>
+                    ` : ""} 
+                </tr>
+                `;
+
+            }).join("")} 
+            `;
+
+            retorno += `
+            ${asiento.detallesHaber.map((detalleHaber, y) => 
+            { 
+                return `
+                <tr style="${estilosFilaAsiento}">
+                    <td> ${detalleHaber.descripcionAbono} </td>
+                    <td> ${detalleHaber.nombreCuenta} </td>
+
+                    <!-- Debe y Haber -->
+                    <td></td>
+                    <td>${formatearNumero(detalleHaber.cantidad)}</td> 
+                </tr>
+                `;
+
+            }).join("")} 
+            `;
+
+            return retorno;
+
+        }).join("")} 
+
+        `;
+
+        document.querySelector("#contenido").innerHTML = cadena;
+
+        function formatearNumero(numero) 
+        {
+            let arreglo = (numero + "").split("").reverse();
+            let cadena = "", cont = 1;
+        
+            arreglo.forEach((c, index) => {
+                cadena += c;
+                if (cont % 3 == 0 && arreglo[index + 1] != null) cadena += ".";
+                cont++;
+            });
+        
+            let nuevaCadena = cadena.split("").reverse().join("");
+            return nuevaCadena;
+        }
+
+    </script>
+
+</body>
+
+</html>
