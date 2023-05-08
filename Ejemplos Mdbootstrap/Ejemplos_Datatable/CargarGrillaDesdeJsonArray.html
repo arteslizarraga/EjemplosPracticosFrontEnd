@@ -207,7 +207,7 @@
                                 <span>Limpiar Datos</span>
                             </button>
 
-                            <button type="button" onclick="alert(JSON.stringify(datos))" class="btn btn-default waves-effect waves-light">
+                            <button type="button" onclick="alert(JSON.stringify(listaObjetos))" class="btn btn-default waves-effect waves-light">
                               <span>Mostrar Datos</span>
                             </button>
                         
@@ -220,6 +220,60 @@
             </section>
         </main>
     </div>
+
+    <!-- ========================================================= -->
+
+    <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog sm modal-notify" role="document">
+          <div class="modal-content">
+
+              <div class="modal-header">
+                  <p class="heading lead">Modificar Informaci&oacute;n</p>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body px-0">
+
+                  <div class="row mb-4">
+
+                      <div class="col-12 col-md-6">
+                          <div class="md-form mb-3">
+                              <input type="text" name="nombre" class="form-control mb-0" placeholder="Ingrese nombre">
+                              <label class="active">Nombre</label>
+                          </div>
+                      </div>
+
+                  </div>
+                  <div class="row mb-4">
+
+                      <div class="col-12 col-md-12">
+                          <div class="md-form mb-3">
+                              <textarea name="descripcion" rows="4" placeholder="Ingrese descripción" class="form-control md-textarea"></textarea>
+                              <label class="active">Descripción</label>
+                          </div>
+                      </div>
+
+                  </div>
+
+              </div>
+              <div class="modal-footer px-0 justify-content-between">
+
+                  <button type="button" class="btn mx-2 btn-outline waves-effect waves-light" data-dismiss="modal">Cerrar</button>
+                  <div>
+                      <button type="button" name="btn-guardar" onclick="guardarDatosModalEditar()" 
+                      class="btn mx-2 btn-default waves-effect waves-light">Guardar</button>
+
+                      <button type="button" name="btn-guardar-y-continuar" onclick="guardarDatosModalEditar(true)" 
+                      class="btn mx-2 btn-default waves-effect waves-light">Guardar y Continuar</button>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
 
     <footer class="page-footer">
         <div class="container py-3">
@@ -255,6 +309,7 @@
         $(".mdb-select").material_select();
 
         this.listaObjetos = obtenerDatos(); 
+        this.indexDetalle = 0;
         alCargarPagina();
 
         function mostrarParamSQL()
@@ -413,6 +468,7 @@
                             "data": "ncorr", "name": "ncorr", "className": "text-nowrap", "sortable": false, "render": (data, type, row, meta) => 
                             {
                                 return `
+                                <button onclick="abrirModalEditar(${row.indexReal})">Editar</button>
                                 <button onclick="editarNombre(${row.indexReal})">Editar Nombre</button>
                                 <button onclick="eliminarRegistro(${row.indexReal})">Eliminar</button>
                                 `;
@@ -429,6 +485,33 @@
 
                 //setTimeout(() => resolve(true), 800);
             });
+        }
+
+        function abrirModalEditar(index)
+        {
+            let elemento = this.listaObjetos[index];
+            this.indexDetalle = index;                  // Almacena el index para así poder actualizar
+            let modal = $("#ModalEditar");
+
+            modal.find("[name='nombre']").val(elemento.nombre); 
+            modal.find("[name='descripcion']").val(elemento.descripcion); 
+
+            modal.modal("show"); 
+        }
+
+        async function guardarDatosModalEditar(pasarSiguientePagina = false)
+        {
+            let modal = $("#ModalEditar");
+            let nombre = modal.find("[name='nombre']").val();
+            let descripcion = modal.find("[name='descripcion']").val();
+
+            let elemento = this.listaObjetos[this.indexDetalle];
+            elemento.nombre = nombre;
+            elemento.descripcion = descripcion;
+
+            modal.modal("hide"); 
+            await construirGrilla();
+            definirInputsGrilla();
         }
 
         async function eliminarRegistro(index)
