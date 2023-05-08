@@ -254,13 +254,12 @@
         $(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
         $(".mdb-select").material_select();
 
-        let datos = obtenerDatos(); 
+        this.listaObjetos = obtenerDatos(); 
         alCargarPagina();
 
         function mostrarParamSQL()
         {
-            // let cadena = JSON.stringify(datos).split("\"").join("''");
-            let cadena = JSON.stringify(JSON.stringify(datos));
+            let cadena = JSON.stringify(JSON.stringify(this.listaObjetos));
             console.log(cadena);
 
             /*
@@ -287,24 +286,24 @@
         
         async function alCargarPagina()
         {
-            await construirGrillaPerfilesOcupacionalesCualificacion();
+            await construirGrilla();
             definirInputsGrilla();
         }
 
         async function agregarRegistro()
         {
-            let prelacion = (datos.length > 0) ? (Math.max(...datos.map(o => o.prelacion)) + 1) : 1;
+            let prelacion = (this.listaObjetos.length > 0) ? (Math.max(...this.listaObjetos.map(o => o.prelacion)) + 1) : 1;
             let fechaHoy = new Date().toJSON().slice(0,10).split("-").reverse().join("-");  // "28-12-2022"
-            datos.push({ ncorr: null, prelacion, nombre: `Probando ${prelacion}`, descripcion: `Probando descripción ${prelacion}`, fecha: fechaHoy, estado: "Activo" });
+            this.listaObjetos.push({ ncorr: null, prelacion, nombre: `Probando ${prelacion}`, descripcion: `Probando descripción ${prelacion}`, fecha: fechaHoy, estado: "Activo" });
 
-            await construirGrillaPerfilesOcupacionalesCualificacion();
+            await construirGrilla();
             definirInputsGrilla();
         }
 
         async function limpiarDatos()
         {
-            datos = obtenerDatos(); 
-            await construirGrillaPerfilesOcupacionalesCualificacion();
+            this.listaObjetos = obtenerDatos(); 
+            await construirGrilla();
             definirInputsGrilla();
         }
 
@@ -312,7 +311,7 @@
         {
             Array.from($("#TablaPrincipal").DataTable().rows({ filter: "applied", page: "current" }).data()).forEach(x => 
             {
-                let registro = datos.find(y => y.prelacion == x.prelacion);
+                let registro = this.listaObjetos.find(y => y.prelacion == x.prelacion);
                 let txtFecha = $(`#fecha_${x.prelacion}`);
 
                 if(txtFecha.data("datepicker") == null)  // Si no ha sido inicializado
@@ -342,18 +341,27 @@
             });
         }
 
-        function construirGrillaPerfilesOcupacionalesCualificacion()
+        function construirGrilla()
         {
             showLoading();
 
-            datos.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
+            //================>>>>
+
+            let listaDesplegar = this.listaObjetos.map((x, index) => {
+                x.indexReal = index;    // Le agrega el index real, para que al filtrar, este index no se pierda    
+                return x;
+            });
+
+            listaDesplegar.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
+
+            //================>>>>
+
+            //this.listaObjetos.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
 
             return new Promise((resolve, reject) =>
             {
-                let index = 0;
-
                 $("#TablaPrincipal").DataTable({
-                    data: datos,
+                    data: listaDesplegar,
                     destroy: true,
                     pageLength: 5,
                     dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
@@ -375,7 +383,7 @@
                         resolve(true)
                     },
                     columns: [
-                        { "className": "text-nowrap", "render": (data, type, row, meta) => index },
+                        { "className": "text-nowrap", "render": (data, type, row, meta) => row.indexReal },
                         { data: "ncorr", "className": "text-nowrap", "searchable": true, "sortable": true, "render": (data, type, row, meta) => row.ncorr ?? "No tiene" },
                         { data: "prelacion", "className": "text-nowrap", "searchable": true, "sortable": true },
                         { data: "nombre", "className": "text-nowrap", "searchable": true, "sortable": true },
@@ -404,13 +412,10 @@
                         {
                             "data": "ncorr", "name": "ncorr", "className": "text-nowrap", "sortable": false, "render": (data, type, row, meta) => 
                             {
-                                let cadena = `
-                                <button onclick="editarNombre(${index})">Editar Nombre</button>
-                                <button onclick="eliminarRegistro(${index})">Eliminar</button>
+                                return `
+                                <button onclick="editarNombre(${row.indexReal})">Editar Nombre</button>
+                                <button onclick="eliminarRegistro(${row.indexReal})">Eliminar</button>
                                 `;
-
-                                index ++;
-                                return cadena;
                             }
                         }
                     ]
@@ -428,17 +433,17 @@
 
         async function eliminarRegistro(index)
         {
-            datos.splice(index, 1);     // Elimina la posición del arreglo
+            this.listaObjetos.splice(index, 1);     // Elimina la posición del arreglo
 
-            datos.sort((a, b) => a.prelacion - b.prelacion).forEach((x, index) => x.prelacion = index + 1);  // Re asigna prelacion a todos los elementos del arreglo
+            this.listaObjetos.sort((a, b) => a.prelacion - b.prelacion).forEach((x, index) => x.prelacion = index + 1);  // Re asigna prelacion a todos los elementos del arreglo
             
-            await construirGrillaPerfilesOcupacionalesCualificacion();
+            await construirGrilla();
             definirInputsGrilla();
         }
 
         async function editarNombre(index)
         {
-            let elemento = datos[index];
+            let elemento = this.listaObjetos[index];
             let nuevoNombre = prompt("Escriba el nombre", elemento.nombre);
             console.log(nuevoNombre);
 
@@ -448,7 +453,7 @@
                     return toastr.error("El nombre es requerido");
 
                 elemento.nombre = nuevoNombre;
-                await construirGrillaPerfilesOcupacionalesCualificacion();
+                await construirGrilla();
                 definirInputsGrilla();
             } 
         }
