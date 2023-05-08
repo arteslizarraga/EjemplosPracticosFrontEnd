@@ -304,62 +304,39 @@
 
     <script>
 
-        // Activar selects
-        $(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
-        $(".mdb-select").material_select();
-
         this.listaObjetos = obtenerDatos(); 
         this.indexDetalle = 0;
-        alCargarPagina();
+        this.nextIndex = 0;
+        this.registrosPorPagina = 5;
+        this.paginaActual = 0;
 
-        function mostrarParamSQL()
+        $(document).ready(function ()
         {
-            let cadena = JSON.stringify(JSON.stringify(this.listaObjetos));
-            console.log(cadena);
+            // Activar selects
+            $(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
+            $(".mdb-select").material_select();
 
-            /*
-            $.ajax({
-                method: "POST",
-                url: "https://jsonplaceholder.typicode.com/posts",
-                data: JSON.stringify({ cadena }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                beforeSend: () => {
-                    showLoading();
-                },
-                success: (res) => {
-                    console.log(res.cadena);
-                },
-                error: (XMLHttpRequest, textStatus, errorThrown) => {
-                    hideLoading();
-                    toastr.error("Ocurrió un error al guardar el sector productivo");
-                },
-                complete: (res) => hideLoading()
-            });
-            */
-        }
-        
-        async function alCargarPagina()
-        {
-            await construirGrilla();
-            definirInputsGrilla();
-        }
+            construirGrilla();
+        });
 
-        async function agregarRegistro()
+        function agregarRegistro()
         {
             let prelacion = (this.listaObjetos.length > 0) ? (Math.max(...this.listaObjetos.map(o => o.prelacion)) + 1) : 1;
             let fechaHoy = new Date().toJSON().slice(0,10).split("-").reverse().join("-");  // "28-12-2022"
             this.listaObjetos.push({ ncorr: null, prelacion, nombre: `Probando ${prelacion}`, descripcion: `Probando descripción ${prelacion}`, fecha: fechaHoy, estado: "Activo" });
 
-            await construirGrilla();
-            definirInputsGrilla();
+            construirGrilla();
         }
 
-        async function limpiarDatos()
+        function limpiarDatos()
         {
             this.listaObjetos = obtenerDatos(); 
-            await construirGrilla();
-            definirInputsGrilla();
+            this.indexDetalle = 0;
+            this.nextIndex = 0;
+            this.registrosPorPagina = 5;
+            this.paginaActual = 0;
+
+            construirGrilla();
         }
 
         function definirInputsGrilla()
@@ -377,7 +354,7 @@
                         autoClose: true,
                         onSelect: (e) => {
                             registro.fecha = e;
-                            console.log(registro);
+                            // console.log(registro);
                         } 
                     });
                 }
@@ -388,7 +365,7 @@
                     data: [{codigo: "Activo", descripcion: "Activo"}, {codigo: "Inactivo", descripcion: "Inactivo"}],
                     onchange: () => {
                         registro.estado = $(`#estado_${x.prelacion}`).val();
-                        console.log(registro);
+                        // console.log(registro);
                     }
                 });
 
@@ -407,84 +384,80 @@
                 return x;
             });
 
-            listaDesplegar.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
+            // listaDesplegar.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc    (AL HACER ESTO, EL BOTÓN GUARDA Y CONTINUAR CAMBIA SU FUNCIONAMIENTO POR EL this.nextIndex)
 
             //================>>>>
 
             //this.listaObjetos.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
 
-            return new Promise((resolve, reject) =>
-            {
-                $("#TablaPrincipal").DataTable({
-                    data: listaDesplegar,
-                    destroy: true,
-                    pageLength: 5,
-                    dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
-                    //scrollY: "60vh",
-                    //"scrollX": true,  // Si la tabla tiene poco tamaño hacia el lado, esto hace que se vea pequeña
-                    //lengthMenu: [[10, 20, 30], [10, 20, 30]],
-                    bLengthChange: false, // Oculta el select de registros por página
-                    columnDefs: [
-                        //{ "width": "260px", "targets": 4 }  // Ancho de la columna acciones
-                    ],
-                    aaSorting: [],
-                    processing: true,
-                    //serverSide: true, 
-                    filter: true,
-                    orderMulti: false,
-                    responsive: true,
-                    fnDrawCallback: () => {
-                        hideLoading();
-                        resolve(true)
-                    },
-                    columns: [
-                        { "className": "text-nowrap", "render": (data, type, row, meta) => row.indexReal },
-                        { data: "ncorr", "className": "text-nowrap", "searchable": true, "sortable": true, "render": (data, type, row, meta) => row.ncorr ?? "No tiene" },
-                        { data: "prelacion", "className": "text-nowrap", "searchable": true, "sortable": true },
-                        { data: "nombre", "className": "text-nowrap", "searchable": true, "sortable": true },
-                        { data: "descripcion", "className": "text-nowrap", "searchable": true, "sortable": true },
+            $("#TablaPrincipal").DataTable({
+                data: listaDesplegar,
+                destroy: true,
+                pageLength: this.registrosPorPagina,
+                dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
+                //scrollY: "60vh",
+                //"scrollX": true,  // Si la tabla tiene poco tamaño hacia el lado, esto hace que se vea pequeña
+                //lengthMenu: [[10, 20, 30], [10, 20, 30]],
+                bLengthChange: false, // Oculta el select de registros por página
+                columnDefs: [
+                    //{ "width": "260px", "targets": 4 }  // Ancho de la columna acciones
+                ],
+                aaSorting: [],
+                processing: true,
+                //serverSide: true, 
+                filter: true,
+                orderMulti: false,
+                responsive: true,
+                fnDrawCallback: () => 
+                {
+                    hideLoading();
+                    setTimeout(() => definirInputsGrilla(), 200);   // Nuevo 8-5-2023
+                },
+                columns: [
+                    { "className": "text-nowrap", "render": (data, type, row, meta) => row.indexReal },
+                    { data: "ncorr", "className": "text-nowrap", "searchable": true, "sortable": true, "render": (data, type, row, meta) => row.ncorr ?? "No tiene" },
+                    { data: "prelacion", "className": "text-nowrap", "searchable": true, "sortable": true },
+                    { data: "nombre", "className": "text-nowrap", "searchable": true, "sortable": true },
+                    { data: "descripcion", "className": "text-nowrap", "searchable": true, "sortable": true },
+                    {
+                        "data": "fecha", "name": "fecha", "className": "text-nowrap", "render": (data, type, row, meta) => 
                         {
-                            "data": "fecha", "name": "fecha", "className": "text-nowrap", "render": (data, type, row, meta) => 
-                            {
-                                return `
-                                <input id="fecha_${row.prelacion}" type="text" value="${row.fecha}"
-                                class="datepicker-input form-control" placeholder="DD/MM/AAAA"
-                                data-position="bottom center" autocomplete="off" readonly="readonly" 
-                                style="width: 7.1em" />
-                                `;
-                            }
-                        },
-                        {
-                            "data": "estado", "name": "estado", "className": "text-nowrap", "render": (data, type, row, meta) => 
-                            {
-                                return `
-                                <select id="estado_${row.prelacion}" class="chosen-select" searchable="Buscar">
-                                    <option value="" selected>Seleccione</option>   
-                                </select>
-                                `;
-                            }
-                        },
-                        {
-                            "data": "ncorr", "name": "ncorr", "className": "text-nowrap", "sortable": false, "render": (data, type, row, meta) => 
-                            {
-                                return `
-                                <button onclick="abrirModalEditar(${row.indexReal})">Editar</button>
-                                <button onclick="editarNombre(${row.indexReal})">Editar Nombre</button>
-                                <button onclick="eliminarRegistro(${row.indexReal})">Eliminar</button>
-                                `;
-                            }
+                            return `
+                            <input id="fecha_${row.prelacion}" type="text" value="${row.fecha}"
+                            class="datepicker-input form-control" placeholder="DD/MM/AAAA"
+                            data-position="bottom center" autocomplete="off" readonly="readonly" 
+                            style="width: 7.1em" />
+                            `;
                         }
-                    ]
-                })
-                .on("page.dt", () => { 
-                    console.log("Cambio de página");
-                    setTimeout(() => definirInputsGrilla(), 200);
-                } )
-
-                //.on("draw", () => { resolve(true); });
-
-                //setTimeout(() => resolve(true), 800);
-            });
+                    },
+                    {
+                        "data": "estado", "name": "estado", "className": "text-nowrap", "render": (data, type, row, meta) => 
+                        {
+                            return `
+                            <select id="estado_${row.prelacion}" class="chosen-select" searchable="Buscar">
+                                <option value="" selected>Seleccione</option>   
+                            </select>
+                            `;
+                        }
+                    },
+                    {
+                        "data": "ncorr", "name": "ncorr", "className": "text-nowrap", "sortable": false, "render": (data, type, row, meta) => 
+                        {
+                            return `
+                            <button onclick="abrirModalEditar(${row.indexReal})">Editar</button>
+                            <button onclick="editarNombre(${row.indexReal})">Editar Nombre</button>
+                            <button onclick="eliminarRegistro(${row.indexReal})">Eliminar</button>
+                            `;
+                        }
+                    }
+                ]
+            })
+            .on("page.dt", () =>   // Al cambiar de página
+            {  
+                this.paginaActual = $("#TablaPrincipal").DataTable().page.info().page;
+                setTimeout(() => definirInputsGrilla(), 200);
+            })
+            .page(this.paginaActual).draw(false);     
         }
 
         function abrirModalEditar(index)
@@ -497,9 +470,27 @@
             modal.find("[name='descripcion']").val(elemento.descripcion); 
 
             modal.modal("show"); 
+
+            //=================>>>>>
+            // Botón Guardar y continuar
+
+            let btnGuardarContinuar = modal.find("[name='btn-guardar-y-continuar']");
+            let siguienteElemento = this.listaObjetos[index + 1];
+
+            this.nextIndex = (typeof siguienteElemento !== "undefined" && this.listaObjetos.includes(siguienteElemento)) ?
+                (index + 1) : 0;
+
+            btnGuardarContinuar.attr("disabled", true).attr("class", "btn");  // Deshabilita botón guardar y continuar
+
+            if (this.nextIndex != 0)
+                btnGuardarContinuar.removeAttr("disabled").attr("class", "btn btn-default waves-effect waves-light");
+            else
+                toastr.success("Último registro");
+        
+            //=================>>>>>
         }
 
-        async function guardarDatosModalEditar(pasarSiguientePagina = false)
+        function guardarDatosModalEditar(pasarSiguientePagina = false)
         {
             let modal = $("#ModalEditar");
             let nombre = modal.find("[name='nombre']").val();
@@ -510,21 +501,33 @@
             elemento.descripcion = descripcion;
 
             modal.modal("hide"); 
-            await construirGrilla();
-            definirInputsGrilla();
+
+            //=====================>>>
+
+            if (pasarSiguientePagina)
+            {
+                this.paginaActual = (Math.ceil((this.nextIndex + 1) / this.registrosPorPagina)) - 1;
+
+                setTimeout(() => {
+                    abrirModalEditar(this.nextIndex);
+                    construirGrilla();
+                }, 500);
+            }
+            else {
+                construirGrilla();
+            }
         }
 
-        async function eliminarRegistro(index)
+        function eliminarRegistro(index)
         {
             this.listaObjetos.splice(index, 1);     // Elimina la posición del arreglo
 
             this.listaObjetos.sort((a, b) => a.prelacion - b.prelacion).forEach((x, index) => x.prelacion = index + 1);  // Re asigna prelacion a todos los elementos del arreglo
             
-            await construirGrilla();
-            definirInputsGrilla();
+            construirGrilla();
         }
 
-        async function editarNombre(index)
+        function editarNombre(index)
         {
             let elemento = this.listaObjetos[index];
             let nuevoNombre = prompt("Escriba el nombre", elemento.nombre);
@@ -536,9 +539,14 @@
                     return toastr.error("El nombre es requerido");
 
                 elemento.nombre = nuevoNombre;
-                await construirGrilla();
-                definirInputsGrilla();
+                construirGrilla();
             } 
+        }
+
+        function mostrarParamSQL()
+        {
+            let cadena = JSON.stringify(JSON.stringify(this.listaObjetos));
+            console.log(cadena);
         }
 
         function obtenerDatos() 
