@@ -8,6 +8,15 @@
     <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
     <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
     <style>
+
+        .btn-add{
+          border: none;
+          color: #666;
+          cursor: pointer;
+          border-bottom: 1px solid #666;
+          background-color: transparent;
+        }
+
         .tooltip .tooltip-inner{
             max-width: 1000px !important;
             text-align: left !important;
@@ -166,15 +175,8 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
+                        <div class="row mb-4">
 
-                            <div class="col col-md-6 d-flex justify-content-start">
-
-                                <button type="button" onclick="agregarRegistro()" class="btn btn-default waves-effect waves-light">
-                                    <span>Agregar Nuevo</span>
-                                </button>
-                            </div>
-                            
                             <div class="col-12">
                                 <br/>
 
@@ -195,6 +197,14 @@
                   
                                     </tbody>
                                 </table> 
+                            </div>
+
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col col-md-6 d-flex justify-content-start">
+                                <button type="button" onclick="agregarRegistro()" class="btn-add p-2">
+                                    + Agregar Nueva Fila a la Tabla
+                                </button>
                             </div>
                         </div>
                     </div>
