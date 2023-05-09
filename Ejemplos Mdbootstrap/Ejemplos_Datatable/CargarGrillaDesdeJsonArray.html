@@ -429,7 +429,10 @@
         this.listaObjetos = obtenerDatos(); 
         this.listaObjetosFiltrada = [];
         this.indexDetalle = 0;
+
         this.nextIndex = 0;
+        this.nextIndexSofi = 0;
+
         this.registrosPorPagina = 5;
         this.paginaActual = 0;
 
@@ -657,38 +660,20 @@
             let btnGuardarContinuar = modal.find("[name='btn-guardar-y-continuar']");
 
             //=====================================>>>>>
-            /*
-            //debugger;
-
-            let siguienteElemento = this.listaObjetosFiltrada.find((elemento, i) => i > index);
-            
-            //console.log("siguienteElemento", siguienteElemento);
-
-            this.nextIndex = (siguienteElemento != null) ? (index + 1) : 0;
-            */
-            //=====================================>>>>>
 
             this.nextIndex = 0;
             let siguienteElementoImaginario = this.listaObjetosFiltrada.find(x => x.indexReal > index);
 
+            this.nextIndexSofi = this.listaObjetosFiltrada.findIndex(x => x.indexReal > index);
+            console.log("this.nextIndexSofi", this.nextIndexSofi);
+
             if (siguienteElementoImaginario != null) 
             {
                 let babu = this.listaObjetos.find((elemento, i) => i == siguienteElementoImaginario.indexReal);
-                console.log("babu", babu);
+                //console.log("babu", babu);
                 this.nextIndex = siguienteElementoImaginario.indexReal;
             }
             
-
-            //=====================================>>>>>
-            /*
-            let siguienteIndex = index + 1;
-            let siguienteElementoReal = this.listaObjetos.find((elemento, i) => i > index);
-
-            let siguienteElementoImaginario = this.listaObjetosFiltrada.find(x => x == siguienteElementoReal);
-            console.log("siguienteElementoImaginario", siguienteElementoImaginario);
-
-            this.nextIndex = (siguienteElementoReal != null) ? siguienteIndex : 0;
-            */
             //=====================================>>>>>
             /*
             let siguienteIndex = index + 1;
@@ -745,7 +730,9 @@
 
             if (pasarSiguientePagina)
             {
-                this.paginaActual = (Math.ceil((this.nextIndex + 1) / this.registrosPorPagina)) - 1;
+                // this.paginaActual = (Math.ceil((this.nextIndex + 1) / this.registrosPorPagina)) - 1;    // Original
+
+                this.paginaActual = (Math.ceil((this.nextIndexSofi + 1) / this.registrosPorPagina)) - 1;
 
                 setTimeout(() => {
                     abrirModalEditar(this.nextIndex);
