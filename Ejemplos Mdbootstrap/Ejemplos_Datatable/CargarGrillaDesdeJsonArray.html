@@ -219,7 +219,7 @@
                           </div>
                           <div class="col col-md-6 d-flex justify-content-end">
         
-                            <button type="button" onclick="limpiarDatos()" class="btn btn-outline waves-effect waves-light">
+                            <button type="button" onclick="limpiarDatos(); construirGrilla()" class="btn btn-outline waves-effect waves-light">
                                 <span>Limpiar Datos</span>
                             </button>
 
@@ -387,7 +387,7 @@
                     <div class="d-flex flex-wrap">
                         <button class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cerrar</button>
 
-                        <button onclick="construirGrilla() "
+                        <button onclick="limpiarDatos(); construirGrilla()"
                         class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Filtrar</button>
                     </div>
                 </div>
@@ -431,7 +431,7 @@
         this.indexDetalle = 0;
 
         this.nextIndex = 0;
-        this.nextIndexSofi = 0;
+        this.nextIndexFiltrado = 0;
 
         this.registrosPorPagina = 5;
         this.paginaActual = 0;
@@ -461,8 +461,6 @@
             this.nextIndex = 0;
             this.registrosPorPagina = 5;
             this.paginaActual = 0;
-
-            construirGrilla();
         }
 
         function definirInputsGrilla()
@@ -657,31 +655,11 @@
             //=================>>>>>
             // Botón Guardar y continuar
 
+            let siguienteElementoFiltrado = this.listaObjetosFiltrada.find(x => x.indexReal > index);
+            this.nextIndexFiltrado = this.listaObjetosFiltrada.findIndex(x => x.indexReal > index);
+            this.nextIndex = (siguienteElementoFiltrado != null) ? siguienteElementoFiltrado.indexReal : 0;
+
             let btnGuardarContinuar = modal.find("[name='btn-guardar-y-continuar']");
-
-            //=====================================>>>>>
-
-            this.nextIndex = 0;
-            let siguienteElementoImaginario = this.listaObjetosFiltrada.find(x => x.indexReal > index);
-
-            this.nextIndexSofi = this.listaObjetosFiltrada.findIndex(x => x.indexReal > index);
-            console.log("this.nextIndexSofi", this.nextIndexSofi);
-
-            if (siguienteElementoImaginario != null) 
-            {
-                let babu = this.listaObjetos.find((elemento, i) => i == siguienteElementoImaginario.indexReal);
-                //console.log("babu", babu);
-                this.nextIndex = siguienteElementoImaginario.indexReal;
-            }
-            
-            //=====================================>>>>>
-            /*
-            let siguienteIndex = index + 1;
-            let siguienteElemento = this.listaObjetos.find(x => x.indexReal == siguienteIndex);
-            this.nextIndex = (siguienteElemento != null) ? siguienteIndex : 0;
-            */
-            //=====================================>>>>>
-
             btnGuardarContinuar.attr("disabled", true).attr("class", "btn");  // Deshabilita botón guardar y continuar
 
             if (this.nextIndex != 0)
@@ -732,7 +710,7 @@
             {
                 // this.paginaActual = (Math.ceil((this.nextIndex + 1) / this.registrosPorPagina)) - 1;    // Original
 
-                this.paginaActual = (Math.ceil((this.nextIndexSofi + 1) / this.registrosPorPagina)) - 1;
+                this.paginaActual = (Math.ceil((this.nextIndexFiltrado + 1) / this.registrosPorPagina)) - 1;
 
                 setTimeout(() => {
                     abrirModalEditar(this.nextIndex);
@@ -784,7 +762,7 @@
                 { ncorr: 103, prelacion: 3, nombre: "Probando 3", descripcion: "Probando descripción 3", fecha: "07-11-2022", estado: "Activo" },
                 { ncorr: 104, prelacion: 4, nombre: "Probando 4", descripcion: "Probando descripción 4", fecha: "07-11-2022", estado: "Inactivo" },
                 { ncorr: 105, prelacion: 5, nombre: "Probando 5", descripcion: "Probando descripción 5", fecha: "07-11-2022", estado: "Activo" },
-                { ncorr: 106, prelacion: 6, nombre: "Probando 6", descripcion: "Probando descripción 6", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 106, prelacion: 6, nombre: "Probando 6", descripcion: "Probando descripción 6", fecha: "07-11-2022", estado: "Inactivo" },
                 { ncorr: 107, prelacion: 7, nombre: "Probando 7", descripcion: "Probando descripción 7", fecha: "07-11-2022", estado: "Activo" },
                 { ncorr: 108, prelacion: 8, nombre: "Probando 8", descripcion: "Probando descripción 8", fecha: "07-11-2022", estado: "Activo" },
                 { ncorr: 109, prelacion: 9, nombre: "Probando 9", descripcion: "Probando descripción 9", fecha: "07-11-2022", estado: "Activo" },
