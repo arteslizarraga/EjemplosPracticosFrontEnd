@@ -7,6 +7,12 @@
     <title>Sistema de definici&oacute;n de Programas Formativos: M&oacute;dulos de Poblamiento del MCTP</title>
     <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
     <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
+    <style>
+        .tooltip .tooltip-inner{
+            max-width: 1000px !important;
+            text-align: left !important;
+        }
+    </style>
 </head>
 <body id="appBody" class="d-flex flex-column">
 
@@ -197,8 +203,8 @@
                       
                           <div class="col col-md-6  d-flex justify-content-start">
 
-                            <button type="button" onclick="mostrarParamSQL()" class="btn btn-outline waves-effect waves-light">
-                                <span>Imprimir parámetro SP</span>
+                            <button type="button" class="btn btn-outline waves-effect waves-light">
+                                <span>Cualquiercosa</span>
                             </button>
                           </div>
                           <div class="col col-md-6 d-flex justify-content-end">
@@ -207,8 +213,8 @@
                                 <span>Limpiar Datos</span>
                             </button>
 
-                            <button type="button" onclick="alert(JSON.stringify(listaObjetos))" class="btn btn-default waves-effect waves-light">
-                              <span>Mostrar Datos</span>
+                            <button type="button" onclick="mostrarJson()" class="btn btn-default waves-effect waves-light">
+                              <span>Mostrar json</span>
                             </button>
                         
                           </div>
@@ -224,7 +230,7 @@
     <!-- ========================================================= -->
 
     <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog sm modal-notify" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
 
               <div class="modal-header">
@@ -237,12 +243,34 @@
 
                   <div class="row mb-4">
 
-                      <div class="col-12 col-md-6">
-                          <div class="md-form mb-3">
-                              <input type="text" name="nombre" class="form-control mb-0" placeholder="Ingrese nombre">
-                              <label class="active">Nombre</label>
-                          </div>
-                      </div>
+                    <div class="col-12 col-md-6">
+                        <div class="md-form">
+                            <p name="posicion" class="form-control" style="border: none"></p>
+                            <label class="active">Posición</label>
+                        </div>
+                    </div> 
+                    <div class="col-12 col-md-6">
+                        <div class="md-form">
+                            <p name="fecha" class="form-control" style="border: none"></p>
+                            <label class="active">Fecha</label>
+                        </div>
+                    </div> 
+
+                    <div class="col-12 col-md-6">
+                        <div class="md-form">
+                            <select name="prelacion" class="chosen-select">
+                                <option value="" selected>Seleccione</option>
+                            </select>
+                            <label class="active">Prelación</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <div class="md-form mb-3">
+                            <input type="text" name="nombre" class="form-control mb-0" placeholder="Ingrese nombre">
+                            <label class="active">Nombre</label>
+                        </div>
+                    </div>
 
                   </div>
                   <div class="row mb-4">
@@ -271,6 +299,90 @@
 
           </div>
       </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- 9-5-2023 -->
+
+    <div class="modal fade" id="ModalVerJson" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+
+              <div class="modal-header">
+                  <p class="heading lead">Ver json</p>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body px-0">
+
+                  <div class="row mb-4">
+
+                      <div class="col-12 col-md-6">
+                          <div class="md-form mb-3">
+                              <textarea name="jsonSinEditar" rows="15" placeholder="Ingrese Json" class="form-control md-textarea"></textarea>
+                              <label class="active">Json sin editar</label>
+                          </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="md-form mb-3">
+                            <textarea name="jsonParaEnviar" rows="15" placeholder="Ingrese Json" class="form-control md-textarea"></textarea>
+                            <label class="active">Json para enviar</label>
+                        </div>
+                    </div>
+
+                  </div>
+
+              </div>
+              <div class="modal-footer px-0 justify-content-between">
+                  <button type="button" class="btn mx-2 btn-outline waves-effect waves-light" data-dismiss="modal">Cerrar</button>
+              </div>
+
+          </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="ModalFiltrarTablaPrincipal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-notify" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="heading lead">Filtros</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row mb-4">
+
+                        <div class="col-12 col-md-6">
+                            <div class="md-form">
+                                <select name="estado" class="chosen-select">
+                                    <option value="" selected>Seleccione</option>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
+                                </select>
+                                <label class="active">Estado</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button onclick="limpiarFormulario('#ModalFiltrarTablaPrincipal')" type="button" class="btn btn-link px-0 d-flex align-items-center waves-effect waves-light">
+                        <span class="material-icons mr-1">close
+                        </span>
+                        Limpiar Filtros
+                    </button>
+                    <div class="d-flex flex-wrap">
+                        <button class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cerrar</button>
+
+                        <button onclick="construirGrilla() "
+                        class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ========================================================= -->
@@ -377,21 +489,49 @@
         {
             showLoading();
 
+            let limitarTextoCelda = (descripcion, size = 40) =>
+            {
+                if (descripcion != null && typeof descripcion === "string")
+                {
+                    if (descripcion.includes("\\n")) descripcion = descripcion.split("\\n").join("\n");   // Reemplaza saltos de línea con doble backslash por uno normal
+
+                    if (descripcion.length > size)
+                    {
+                        let titulo = descripcion;   // El título sí puede contener <br>
+                        if (titulo.includes("\"")) titulo = titulo.replaceAll("\"", "&quot;");  // Reemplaza comillas dobles por &quot;
+                        if (titulo.includes("\n")) titulo = titulo.split("\n").join("<br/>");
+
+                        return `<container data-html="true" data-toggle="tooltip" data-placement="top" title="${titulo}" style="cursor: pointer">${descripcion.slice(0, size)} ...</container>`;
+                    }
+                }
+
+                return descripcion
+            };
+
             //================>>>>
 
-            let listaDesplegar = this.listaObjetos.map((x, index) => {
+            let listaFiltrada = this.listaObjetos.map((x, index) => {
                 x.indexReal = index;    // Le agrega el index real, para que al filtrar, este index no se pierda    
                 return x;
             });
 
-            // listaDesplegar.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc    (AL HACER ESTO, EL BOTÓN GUARDA Y CONTINUAR CAMBIA SU FUNCIONAMIENTO POR EL this.nextIndex)
+            let modalFiltrar = $("#ModalFiltrarTablaPrincipal");
+
+            let filtro = {
+                estado: modalFiltrar.find("[name='estado']").val()
+            };
+
+            if (validarNuloVacio(filtro.estado))
+                listaFiltrada = listaFiltrada.filter(x => x.estado == filtro.estado);
+
+            // listaFiltrada.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc    (AL HACER ESTO, EL BOTÓN GUARDA Y CONTINUAR CAMBIA SU FUNCIONAMIENTO POR EL this.nextIndex)
 
             //================>>>>
 
             //this.listaObjetos.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
 
             $("#TablaPrincipal").DataTable({
-                data: listaDesplegar,
+                data: listaFiltrada,
                 destroy: true,
                 pageLength: this.registrosPorPagina,
                 dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
@@ -411,14 +551,18 @@
                 fnDrawCallback: () => 
                 {
                     hideLoading();
-                    setTimeout(() => definirInputsGrilla(), 200);   // Nuevo 8-5-2023
+
+                    setTimeout(() => {
+                        definirInputsGrilla();
+                        $('[data-toggle="tooltip"]').tooltip();  // Activar tooltips
+                    }, 200);   
                 },
                 columns: [
                     { "className": "text-nowrap", "render": (data, type, row, meta) => row.indexReal },
                     { data: "ncorr", "className": "text-nowrap", "searchable": true, "sortable": true, "render": (data, type, row, meta) => row.ncorr ?? "No tiene" },
                     { data: "prelacion", "className": "text-nowrap", "searchable": true, "sortable": true },
-                    { data: "nombre", "className": "text-nowrap", "searchable": true, "sortable": true },
-                    { data: "descripcion", "className": "text-nowrap", "searchable": true, "sortable": true },
+                    { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.nombre) },
+                    { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.descripcion) },
                     {
                         "data": "fecha", "name": "fecha", "className": "text-nowrap", "render": (data, type, row, meta) => 
                         {
@@ -445,7 +589,6 @@
                         {
                             return `
                             <button onclick="abrirModalEditar(${row.indexReal})">Editar</button>
-                            <button onclick="editarNombre(${row.indexReal})">Editar Nombre</button>
                             <button onclick="eliminarRegistro(${row.indexReal})">Eliminar</button>
                             `;
                         }
@@ -458,13 +601,39 @@
                 setTimeout(() => definirInputsGrilla(), 200);
             })
             .page(this.paginaActual).draw(false);     
+
+            $("#TablaPrincipal_wrapper .top").append(`
+                <div class="dataTables_custom-buttons">
+                <button type="button" class="btn btn-rounded btn-default waves-effect" data-toggle="modal" data-target="#ModalFiltrarTablaPrincipal">
+                    <span class="d-flex align-items-center">
+                        <span class="material-icons mr-2">filter_list</span>
+                        <span>Filtros</span>
+                    </span>
+                </button>
+                </div>
+            `);
+
         }
 
         function abrirModalEditar(index)
         {
             let elemento = this.listaObjetos[index];
             this.indexDetalle = index;                  // Almacena el index para así poder actualizar
+
+            llenarSelect({ 
+                selectedValue: elemento.prelacion,
+                querySelector: "#ModalEditar [name='prelacion']", 
+                data: this.listaObjetos.map((x, index) => {
+                    let numero = index + 1;
+                    return { codigo: numero, descripcion: numero };
+                })
+            });
+
             let modal = $("#ModalEditar");
+
+            // Coloca textos para orientar al usuario
+            modal.find("[name='posicion']").html(index);
+            modal.find("[name='fecha']").html(elemento.fecha);
 
             modal.find("[name='nombre']").val(elemento.nombre); 
             modal.find("[name='descripcion']").val(elemento.descripcion); 
@@ -493,10 +662,32 @@
         function guardarDatosModalEditar(pasarSiguientePagina = false)
         {
             let modal = $("#ModalEditar");
+            let prelacion = modal.find("[name='prelacion']").val();
             let nombre = modal.find("[name='nombre']").val();
             let descripcion = modal.find("[name='descripcion']").val();
 
+            //============>>>>
+
+            let errores = [];
+
+            if (!validarNuloVacio(prelacion))
+                errores.push("La prelación es requerida");
+
+            if (!validarNuloVacio(nombre))
+                errores.push("El nombre es requerido");    
+
+            if (!validarNuloVacio(descripcion))
+                errores.push("La descripción es requerida");
+
+            if (errores.length > 0) {
+                errores.reverse().forEach(error => toastr.error(error));
+                return;
+            }
+
+            //============>>>>
+
             let elemento = this.listaObjetos[this.indexDetalle];
+            elemento.prelacion = prelacion;
             elemento.nombre = nombre;
             elemento.descripcion = descripcion;
 
@@ -527,26 +718,27 @@
             construirGrilla();
         }
 
-        function editarNombre(index)
+        function mostrarJson()
         {
-            let elemento = this.listaObjetos[index];
-            let nuevoNombre = prompt("Escriba el nombre", elemento.nombre);
-            console.log(nuevoNombre);
+            let cadenaJsonSinEditar = JSON.stringify(this.listaObjetos);
 
-            if (nuevoNombre != null) 
-            {
-                if (nuevoNombre == "")
-                    return toastr.error("El nombre es requerido");
+            let modal = $("#ModalVerJson");
+            modal.find("[name='jsonSinEditar']").val(cadenaJsonSinEditar);
+            
+            let copiaDetallesParaEnviar = this.listaObjetos.map(x => {
+                return {
+                    tu_tabla_prelacion: x.prelacion,
+                    tu_tabla_nombre: x.nombre,
+                    tu_tabla_descripcion: x.descripcion,
+                    tu_tabla_fecha: x.fecha,
+                    tu_tabla_estado: x.estado
+                }
+            });
 
-                elemento.nombre = nuevoNombre;
-                construirGrilla();
-            } 
-        }
+            let p_json_datos = JSON.stringify(copiaDetallesParaEnviar);
+            modal.find("[name='jsonParaEnviar']").val(p_json_datos);
 
-        function mostrarParamSQL()
-        {
-            let cadena = JSON.stringify(JSON.stringify(this.listaObjetos));
-            console.log(cadena);
+            modal.modal("show"); 
         }
 
         function obtenerDatos() 
@@ -568,6 +760,19 @@
                 { ncorr: 114, prelacion: 14, nombre: "Probando 14", descripcion: "Probando descripción 14", fecha: "07-11-2022", estado: "Activo" }
             ];
         }
+
+        const limpiarFormulario = (querySelector) =>
+        {
+            Array.from($(querySelector).find(":input"))
+                .filter(x => x.className.includes("form-control") && x.attributes.getNamedItem("no-limpiar") == null).forEach(x => {
+                    x.value = "";
+                });
+
+            Array.from($(querySelector).find("select"))
+                .filter(x => x.attributes.getNamedItem("no-limpiar") == null).forEach(x => {
+                    $(`${querySelector} [name='${x.name}']`).find("option:first-child").prop("selected", true).trigger("chosen:updated");
+                });
+        };
 
         function quitarSeleccionSelect(querySelector) 
         {
@@ -635,6 +840,14 @@
 
         function hideLoading() {
             $('#loadingOverlay').hide();
+        }
+
+        function validarNuloVacio(contenido)
+        {
+            if (contenido == null || contenido == "")
+                return false;
+            else
+                return true;
         }
 
         /*
