@@ -520,7 +520,6 @@
             };
 
             //================>>>>
-            // ACA -> EN VEZ DE USAR listaFiltrada , USAR  this.listaObjetosFiltrada
 
             this.listaObjetosFiltrada = this.listaObjetos.map((x, index) => {
                 x.indexReal = index;    // Le agrega el index real, para que al filtrar, este index no se pierda    
@@ -656,9 +655,47 @@
             // Botón Guardar y continuar
 
             let btnGuardarContinuar = modal.find("[name='btn-guardar-y-continuar']");
+
+            //=====================================>>>>>
+            /*
+            //debugger;
+
+            let siguienteElemento = this.listaObjetosFiltrada.find((elemento, i) => i > index);
+            
+            //console.log("siguienteElemento", siguienteElemento);
+
+            this.nextIndex = (siguienteElemento != null) ? (index + 1) : 0;
+            */
+            //=====================================>>>>>
+
+            this.nextIndex = 0;
+            let siguienteElementoImaginario = this.listaObjetosFiltrada.find(x => x.indexReal > index);
+
+            if (siguienteElementoImaginario != null) 
+            {
+                let babu = this.listaObjetos.find((elemento, i) => i == siguienteElementoImaginario.indexReal);
+                console.log("babu", babu);
+                this.nextIndex = siguienteElementoImaginario.indexReal;
+            }
+            
+
+            //=====================================>>>>>
+            /*
             let siguienteIndex = index + 1;
-            let siguienteElemento = this.listaObjetosFiltrada.find(x => x.indexReal == siguienteIndex);
+            let siguienteElementoReal = this.listaObjetos.find((elemento, i) => i > index);
+
+            let siguienteElementoImaginario = this.listaObjetosFiltrada.find(x => x == siguienteElementoReal);
+            console.log("siguienteElementoImaginario", siguienteElementoImaginario);
+
+            this.nextIndex = (siguienteElementoReal != null) ? siguienteIndex : 0;
+            */
+            //=====================================>>>>>
+            /*
+            let siguienteIndex = index + 1;
+            let siguienteElemento = this.listaObjetos.find(x => x.indexReal == siguienteIndex);
             this.nextIndex = (siguienteElemento != null) ? siguienteIndex : 0;
+            */
+            //=====================================>>>>>
 
             btnGuardarContinuar.attr("disabled", true).attr("class", "btn");  // Deshabilita botón guardar y continuar
 
@@ -757,8 +794,8 @@
             return [
                 { ncorr: 101, prelacion: 1, nombre: "Probando 1", descripcion: "Probando descripción 1", fecha: "07-11-2022", estado: "Activo" },
                 { ncorr: 102, prelacion: 2, nombre: "Probando 2", descripcion: "Probando descripción 2", fecha: "07-11-2022", estado: "Inactivo" },
-                { ncorr: 103, prelacion: 3, nombre: "Probando 3", descripcion: "Probando descripción 3", fecha: "07-11-2022", estado: "Inactivo" },
-                { ncorr: 104, prelacion: 4, nombre: "Probando 4", descripcion: "Probando descripción 4", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 103, prelacion: 3, nombre: "Probando 3", descripcion: "Probando descripción 3", fecha: "07-11-2022", estado: "Activo" },
+                { ncorr: 104, prelacion: 4, nombre: "Probando 4", descripcion: "Probando descripción 4", fecha: "07-11-2022", estado: "Inactivo" },
                 { ncorr: 105, prelacion: 5, nombre: "Probando 5", descripcion: "Probando descripción 5", fecha: "07-11-2022", estado: "Activo" },
                 { ncorr: 106, prelacion: 6, nombre: "Probando 6", descripcion: "Probando descripción 6", fecha: "07-11-2022", estado: "Activo" },
                 { ncorr: 107, prelacion: 7, nombre: "Probando 7", descripcion: "Probando descripción 7", fecha: "07-11-2022", estado: "Activo" },
