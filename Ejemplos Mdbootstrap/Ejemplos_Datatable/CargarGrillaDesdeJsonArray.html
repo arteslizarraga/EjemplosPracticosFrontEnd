@@ -219,8 +219,8 @@
                           </div>
                           <div class="col col-md-6 d-flex justify-content-end">
         
-                            <button type="button" onclick="limpiarDatos(); construirGrilla()" class="btn btn-outline waves-effect waves-light">
-                                <span>Limpiar Datos</span>
+                            <button type="button" onclick="resetearPaginacion(); construirGrilla()" class="btn btn-outline waves-effect waves-light">
+                                <span>Resetear Paginación</span>
                             </button>
 
                             <button type="button" onclick="mostrarJson()" class="btn btn-default waves-effect waves-light">
@@ -387,7 +387,7 @@
                     <div class="d-flex flex-wrap">
                         <button class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cerrar</button>
 
-                        <button onclick="limpiarDatos(); construirGrilla()"
+                        <button onclick="resetearPaginacion(); construirGrilla()"
                         class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Filtrar</button>
                     </div>
                 </div>
@@ -454,9 +454,8 @@
             construirGrilla();
         }
 
-        function limpiarDatos()
+        function resetearPaginacion()
         {
-            this.listaObjetos = obtenerDatos(); 
             this.indexDetalle = 0;
             this.nextIndex = 0;
             this.registrosPorPagina = 5;
@@ -726,7 +725,7 @@
         {
             this.listaObjetos.splice(index, 1);     // Elimina la posición del arreglo
 
-            this.listaObjetos.sort((a, b) => a.prelacion - b.prelacion).forEach((x, index) => x.prelacion = index + 1);  // Re asigna prelacion a todos los elementos del arreglo
+            // this.listaObjetos.sort((a, b) => a.prelacion - b.prelacion).forEach((x, index) => x.prelacion = index + 1);  // Re asigna prelacion a todos los elementos del arreglo
             
             construirGrilla();
         }
