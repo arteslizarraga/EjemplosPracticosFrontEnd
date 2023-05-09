@@ -427,6 +427,7 @@
     <script>
 
         this.listaObjetos = obtenerDatos(); 
+        this.listaObjetosFiltrada = [];
         this.indexDetalle = 0;
         this.nextIndex = 0;
         this.registrosPorPagina = 5;
@@ -519,8 +520,9 @@
             };
 
             //================>>>>
+            // ACA -> EN VEZ DE USAR listaFiltrada , USAR  this.listaObjetosFiltrada
 
-            let listaFiltrada = this.listaObjetos.map((x, index) => {
+            this.listaObjetosFiltrada = this.listaObjetos.map((x, index) => {
                 x.indexReal = index;    // Le agrega el index real, para que al filtrar, este index no se pierda    
                 return x;
             });
@@ -532,16 +534,16 @@
             };
 
             if (validarNuloVacio(filtro.estado))
-                listaFiltrada = listaFiltrada.filter(x => x.estado == filtro.estado);
+                this.listaObjetosFiltrada = this.listaObjetosFiltrada.filter(x => x.estado == filtro.estado);
 
-            // listaFiltrada.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc    (AL HACER ESTO, EL BOTÓN GUARDA Y CONTINUAR CAMBIA SU FUNCIONAMIENTO POR EL this.nextIndex)
+            // this.listaObjetosFiltrada.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc    (AL HACER ESTO, EL BOTÓN GUARDA Y CONTINUAR CAMBIA SU FUNCIONAMIENTO POR EL this.nextIndex)
 
             //================>>>>
 
             //this.listaObjetos.sort((a, b) => b.prelacion - a.prelacion);   // Ordena por prelacion desc
 
             $("#TablaPrincipal").DataTable({
-                data: listaFiltrada,
+                data: this.listaObjetosFiltrada,
                 destroy: true,
                 pageLength: this.registrosPorPagina,
                 dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
@@ -654,10 +656,9 @@
             // Botón Guardar y continuar
 
             let btnGuardarContinuar = modal.find("[name='btn-guardar-y-continuar']");
-            let siguienteElemento = this.listaObjetos[index + 1];
-
-            this.nextIndex = (typeof siguienteElemento !== "undefined" && this.listaObjetos.includes(siguienteElemento)) ?
-                (index + 1) : 0;
+            let siguienteIndex = index + 1;
+            let siguienteElemento = this.listaObjetosFiltrada.find(x => x.indexReal == siguienteIndex);
+            this.nextIndex = (siguienteElemento != null) ? siguienteIndex : 0;
 
             btnGuardarContinuar.attr("disabled", true).attr("class", "btn");  // Deshabilita botón guardar y continuar
 
