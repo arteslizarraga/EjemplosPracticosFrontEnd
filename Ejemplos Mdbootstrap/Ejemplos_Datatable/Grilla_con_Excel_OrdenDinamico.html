@@ -194,7 +194,7 @@
                                 <span>Ejemplo</span>
                             </button>
 
-                            <button type="button" onclick="alert(JSON.stringify(datos))" class="btn btn-default waves-effect waves-light">
+                            <button type="button" onclick="alert(JSON.stringify(listaObjetos))" class="btn btn-default waves-effect waves-light">
                               <span>Ejemplo</span>
                             </button>
                         
@@ -235,7 +235,7 @@
 
         $("body").tooltip({ selector: "[data-toggle=tooltip]", trigger: "hover" });  // Habilitar tooltips
 
-        let datos = obtenerDatos(); 
+        this.listaObjetos = []; 
 
         let infoCargaTabla = [
             { atributo: "codigoPerfil", descripcion: "Código de perfil" },
@@ -247,27 +247,30 @@
 
         (async () =>  // Al cargar página
         {
-            await construirGrillaPerfilesOcupacionalesCualificacion(datos);
+            this.listaObjetos = await obtenerDatos(); 
+            construirGrilla();
         })();
 
         function limitarTextoCelda(descripcion, size = 40)
         {
-            if (descripcion.length > size)
+            if (descripcion != null && typeof descripcion === "string")
             {
-                let titulo = descripcion;   // El título sí puede contener <br>
+                if (descripcion.includes("\\n")) descripcion = descripcion.split("\\n").join("\n");   // Reemplaza saltos de línea con doble backslash por uno normal
 
-                if (titulo.includes("\""))
-                    titulo = titulo.replaceAll("\"", "&quot;");  // Reemplaza comillas dobles por &quot;
+                if (descripcion.length > size)
+                {
+                    let titulo = descripcion;   // El título sí puede contener <br>
+                    if (titulo.includes("\"")) titulo = titulo.replaceAll("\"", "&quot;");  // Reemplaza comillas dobles por &quot;
+                    if (titulo.includes("\n")) titulo = titulo.split("\n").join("<br/>");
 
-                if (descripcion.includes("<br>") || descripcion.includes("<br/>")) 
-                    descripcion = descripcion.replaceAll("<br>", "").replaceAll("<br/>", "");
-                
-                return `<container data-html="true" data-toggle="tooltip" data-placement="top" title="${titulo}" style="cursor: pointer">${descripcion.slice(0, size)} ...</container>`;
+                    return `<container data-html="true" data-toggle="tooltip" data-placement="top" title="${titulo}" style="cursor: pointer">${descripcion.slice(0, size)} ...</container>`;
+                }
             }
+
             return descripcion
         }
 
-        function construirGrillaPerfilesOcupacionalesCualificacion(datosRecibidos)
+        function construirGrilla()
         {
             showLoading();
 
@@ -280,7 +283,7 @@
 
             // Poblar tbody
 
-            datosRecibidos.forEach(dato => 
+            this.listaObjetos.forEach(dato => 
             {
                 let td = infoCargaTabla.map(y => 
                 {
@@ -302,91 +305,70 @@
             
             //=================================>>>
 
-            return new Promise((resolve, reject) =>
-            {
-                tabla.DataTable({
-                    // data: datosRecibidos,  // COMENTADO
-                    destroy: true,
-                    pageLength: 10,
-                    dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
-                    //scrollY: "60vh",
-                    //"scrollX": true,  // Si la tabla tiene poco tamaño hacia el lado, esto hace que se vea pequeña
-                    //lengthMenu: [[10, 20, 30], [10, 20, 30]],
-                    bLengthChange: false, // Oculta el select de registros por página
-                    columnDefs: [
-                        //{ "width": "260px", "targets": 4 }  // Ancho de la columna acciones
-                    ],
-                    aaSorting: [],
-                    processing: true,
-                    //serverSide: true, 
-                    filter: true,
-                    orderMulti: false,
-                    responsive: true,
-                    // fnDrawCallback: () => {
-                    //     hideLoading();
-                    //     resolve(true)
-                    // },
-                    fnDrawCallback: () =>
+            tabla.DataTable({
+                // data: this.listaObjetos,  // COMENTADO
+                destroy: true,
+                pageLength: 5,
+                dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
+                //scrollY: "60vh",
+                //"scrollX": true,  // Si la tabla tiene poco tamaño hacia el lado, esto hace que se vea pequeña
+                //lengthMenu: [[10, 20, 30], [10, 20, 30]],
+                bLengthChange: false, // Oculta el select de registros por página
+                columnDefs: [
+                    //{ "width": "260px", "targets": 4 }  // Ancho de la columna acciones
+                ],
+                aaSorting: [],
+                processing: true,
+                //serverSide: true, 
+                filter: true,
+                orderMulti: false,
+                responsive: true,
+                // fnDrawCallback: () => {
+                //     hideLoading();
+                // },
+                fnDrawCallback: () =>
+                {
+                    let recordsTotal = $("#TablaPrincipal").DataTable().page.info().recordsDisplay      // Al usar paginacion front
+
+                    if (recordsTotal > 0)
                     {
-                        let recordsTotal = $("#TablaPrincipal").DataTable().page.info().recordsDisplay      // Al usar paginacion front
+                        $("#TablaPrincipal_filter").show();            // Muestra search box
+                        $("#table-search").attr("maxlength", "20");    // Search box maxlength
 
-                        if (recordsTotal > 0)
+                        $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length, #divDescargaReportes").show();
+
+                        if (!$("#divDescargaReportes").length)   // Si no existe, lo crea
                         {
-                            $("#TablaPrincipal_filter").show();            // Muestra search box
-                            $("#table-search").attr("maxlength", "20");    // Search box maxlength
+                            let divBotonesTabla = `
+                            <div id="divDescargaReportes" class="dataTables_actions-buttons">
+                                <button type="button" onclick="descargarExcel()"
+                                class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" data-toggle="tooltip"
+                                data-placement="top" title="Descargar Excel">
+                                    <i class="material-icons icon-1x">arrow_downward</i>
+                                </button>
+                            </div>
+                            `;
 
-                            $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length, #divDescargaReportes").show();
-
-                            if (!$("#divDescargaReportes").length)   // Si no existe, lo crea
-                            {
-                                let divBotonesTabla = `
-                                <div id="divDescargaReportes" class="dataTables_actions-buttons">
-                                    <button type="button" onclick="descargarExcel()"
-                                    class="btn btn-round btn-outline dataTables_actions-button waves-effect waves-light" data-toggle="tooltip"
-                                    data-placement="top" title="Descargar Excel">
-                                        <i class="material-icons icon-1x">arrow_downward</i>
-                                    </button>
-                                </div>
-                                `;
-
-                                $("#TablaPrincipal_wrapper .dataTables_actions").append(divBotonesTabla);
-                            }
-                            else {
-                                $("#divDescargaReportes").show();
-                            }
+                            $("#TablaPrincipal_wrapper .dataTables_actions").append(divBotonesTabla);
                         }
                         else {
-                            $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length, #divDescargaReportes").hide();
+                            $("#divDescargaReportes").show();
                         }
+                    }
+                    else {
+                        $("#TablaPrincipal_info, #TablaPrincipal_paginate, #TablaPrincipal_length, #divDescargaReportes").hide();
+                    }
 
-                        hideLoading();
-                        resolve(true)
-                    },
-                    /*  // COMENTADO
-                    columns: [
-                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.codigoPerfil) },
-                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.nombre) },
-                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.descripcion) },
-                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.fechaEfectiva) },
-                        { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.estado) }
-                    
-                        // { data: "codigoPerfil", "className": "text-nowrap", "searchable": true, "sortable": true },
-                        // { data: "nombre", "className": "text-nowrap", "searchable": true, "sortable": true },
-                        // { data: "descripcion", "className": "text-nowrap", "searchable": true, "sortable": true },
-                        // { data: "fechaEfectiva", "className": "text-nowrap", "searchable": true, "sortable": true },
-                        // { data: "estado", "className": "text-nowrap", "searchable": true, "sortable": true }
-                    ]
-                    */
-                })
-                .on("page.dt", () => { 
-                    console.log("Cambio de página");
-                } )
+                    hideLoading();
+                }
+            })
+            .on("page.dt", () => { 
+                console.log("Cambio de página");
+            } )
 
-                //.on("draw", () => { resolve(true); });
+            //.on("draw", () => { resolve(true); });
 
-                //setTimeout(() => resolve(true), 800);
-                
-            });
+            //setTimeout(() => resolve(true), 800);
         }
 
         function descargarExcel()
@@ -394,9 +376,7 @@
             let data = [infoCargaTabla.map(x => x.descripcion)];  // Agrega header:  [[ "Código de perfil", "Nombre", "Descripción", "Fecha Efectiva", "Estado" ]]
             let atributos = infoCargaTabla.map(x => x.atributo);
 
-            let datosRecibidos = obtenerDatos();
-
-            datosRecibidos.forEach(dato => 
+            this.listaObjetos.forEach(dato => 
             {
                 let arreglo = atributos.map(atributo => dato[atributo]);
                 data.push(arreglo);
@@ -409,37 +389,24 @@
         {
             let textoGrande = "El lenguaje de programación C# es totalmente orientado a componentes y orientado a objetos. C# proporciona construcciones de lenguaje para admitir directamente estos conceptos, por lo que se trata de un lenguaje natural en el que crear y usar componentes de software. Desde su origen, C# ha agregado características para admitir nuevas cargas de trabajo y prácticas de diseño de software emergentes. En el fondo, C# es un lenguaje orientado a objetos. Defina los tipos y su comportamiento. Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
-            return [
-                { codigoPerfil: 1, nombre: "PER OCUP 1", descripcion: `Perfil Ocupacional Cualificacion 1. ${textoGrande}`, fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 2, nombre: "PER OCUP 2", descripcion: "Perfil Ocupacional Cualificacion 2", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
-                { codigoPerfil: 3, nombre: "PER OCUP 3", descripcion: "Perfil Ocupacional Cualificacion 3", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
-                { codigoPerfil: 4, nombre: "PER OCUP 4", descripcion: "Perfil Ocupacional Cualificacion 4", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 5, nombre: "PER OCUP 5", descripcion: "Perfil Ocupacional Cualificacion 5", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 6, nombre: "PER OCUP 6", descripcion: "Perfil Ocupacional Cualificacion 6", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 7, nombre: "PER OCUP 7", descripcion: "Perfil Ocupacional Cualificacion 7", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 8, nombre: "PER OCUP 8", descripcion: "Perfil Ocupacional Cualificacion 8", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 9, nombre: "PER OCUP 9", descripcion: "Perfil Ocupacional Cualificacion 9", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 10, nombre: "PER OCUP 10", descripcion: "Perfil Ocupacional Cualificacion 10", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 11, nombre: "PER OCUP 11", descripcion: "Perfil Ocupacional Cualificacion 11", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 12, nombre: "PER OCUP 12", descripcion: "Perfil Ocupacional Cualificacion 12", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 13, nombre: "PER OCUP 13", descripcion: "Perfil Ocupacional Cualificacion 13", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 14, nombre: "PER OCUP 14", descripcion: "Perfil Ocupacional Cualificacion 14", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 15, nombre: "PER OCUP 15", descripcion: "Perfil Ocupacional Cualificacion 15", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 16, nombre: "PER OCUP 16", descripcion: "Perfil Ocupacional Cualificacion 16", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 17, nombre: "PER OCUP 17", descripcion: "Perfil Ocupacional Cualificacion 17", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 18, nombre: "PER OCUP 18", descripcion: "Perfil Ocupacional Cualificacion 18", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 19, nombre: "PER OCUP 19", descripcion: "Perfil Ocupacional Cualificacion 19", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 20, nombre: "PER OCUP 20", descripcion: "Perfil Ocupacional Cualificacion 20", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 21, nombre: "PER OCUP 21", descripcion: "Perfil Ocupacional Cualificacion 21", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 22, nombre: "PER OCUP 22", descripcion: "Perfil Ocupacional Cualificacion 22", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 23, nombre: "PER OCUP 23", descripcion: "Perfil Ocupacional Cualificacion 23", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 24, nombre: "PER OCUP 24", descripcion: "Perfil Ocupacional Cualificacion 24", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 25, nombre: "PER OCUP 25", descripcion: "Perfil Ocupacional Cualificacion 25", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 26, nombre: "PER OCUP 26", descripcion: "Perfil Ocupacional Cualificacion 26", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 27, nombre: "PER OCUP 27", descripcion: "Perfil Ocupacional Cualificacion 27", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 28, nombre: "PER OCUP 28", descripcion: "Perfil Ocupacional Cualificacion 28", fechaEfectiva: "07-11-2022", estado: "Activo" },
-                { codigoPerfil: 29, nombre: "PER OCUP 29", descripcion: "Perfil Ocupacional Cualificacion 29", fechaEfectiva: "07-11-2022", estado: "Activo" }
-            ];
+            return new Promise((resolve, reject) =>
+            {
+                resolve([
+                    { codigoPerfil: 1, nombre: "PER OCUP 1", descripcion: `Perfil Ocupacional Cualificacion 1. ${textoGrande}`, fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 2, nombre: "PER OCUP 2", descripcion: "Perfil Ocupacional Cualificacion 2", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
+                    { codigoPerfil: 3, nombre: "PER OCUP 3", descripcion: "Perfil Ocupacional Cualificacion 3", fechaEfectiva: "07-11-2022", estado: "Inactivo" },
+                    { codigoPerfil: 4, nombre: "PER OCUP 4", descripcion: "Perfil Ocupacional Cualificacion 4", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 5, nombre: "PER OCUP 5", descripcion: "Perfil Ocupacional Cualificacion 5", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 6, nombre: "PER OCUP 6", descripcion: "Perfil Ocupacional Cualificacion 6", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 7, nombre: "PER OCUP 7", descripcion: "Perfil Ocupacional Cualificacion 7", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 8, nombre: "PER OCUP 8", descripcion: "Perfil Ocupacional Cualificacion 8", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 9, nombre: "PER OCUP 9", descripcion: "Perfil Ocupacional Cualificacion 9", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 10, nombre: "PER OCUP 10", descripcion: "Perfil Ocupacional Cualificacion 10", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 11, nombre: "PER OCUP 11", descripcion: "Perfil Ocupacional Cualificacion 11", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 12, nombre: "PER OCUP 12", descripcion: "Perfil Ocupacional Cualificacion 12", fechaEfectiva: "07-11-2022", estado: "Activo" },
+                    { codigoPerfil: 13, nombre: "PER OCUP 13", descripcion: "Perfil Ocupacional Cualificacion 13", fechaEfectiva: "07-11-2022", estado: "Activo" }
+                ]);
+            });
         }
 
         function showLoading() {
