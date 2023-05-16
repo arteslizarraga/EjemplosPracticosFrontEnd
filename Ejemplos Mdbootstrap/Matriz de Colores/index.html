@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Sistema de definici&oacute;n de Programas Formativos: M&oacute;dulo Dise&ntilde;o MCTP</title>
+  <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+  <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-6767823-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <style>
+    .list-card {
+      padding: 0;
+      list-style: none;
+      font-weight: 700;
+    }
+
+    .list-card li {
+      margin-bottom: 1rem;
+      font-size: 14px;
+    }
+
+    .card-home {
+      height: 100%;
+      min-height: 50vh;
+    }
+
+    .separator-inacap {
+      width: 100%;
+      height: 1px;
+      background-color: #ccc;
+    }
+
+    .table button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    label.count {
+      right: 0;
+      left: auto;
+      top: -20px;
+      font-size: 85%;
+      transform: none !important;
+    }
+
+    table.table-bordered th:last-child,
+    table.table-bordered td:last-child {
+      width: 200px;
+    }
+
+    .color {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+    }
+
+    .txt-nvl {
+      min-width: 200px;
+      max-width: 280px;
+      white-space: initial;
+    }
+
+    .r-1 {
+      background-color: #ff1f1f;
+    }
+
+    .r-2 {
+      background-color: #cc0000;
+    }
+
+    .r-3 {
+      background-color: #a70000;
+    }
+
+    .r-4 {
+      background-color: #ff8585;
+    }
+
+    .g-1 {
+      background-color: #8cf5eb;
+    }
+
+    .g-2 {
+      background-color: #b2dfdb;
+    }
+
+    .g-3 {
+      background-color: #00bfa5;
+    }
+
+    .g-4 {
+      background-color: #14766d;
+    }
+
+    .b-1 {
+      background-color: #141c64;
+    }
+
+    .b-2 {
+      background-color: #051cc4;
+    }
+
+    .b-3 {
+      background-color: #4b5cc3;
+    }
+
+    .b-4 {
+      background-color: #cbd3ff;
+    }
+
+    .a-1 {
+      background-color: #ffe082;
+    }
+
+    .a-2 {
+      background-color: #ffc107;
+    }
+
+    .a-3 {
+      background-color: #ffa000;
+    }
+
+    .a-4 {
+      background-color: #ffa999;
+    }
+
+    .btn-add {
+      border: none;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 1px solid #666;
+      background-color: transparent;
+    }
+
+    /***seccion resultados de búsqueda**/
+    .select-sort,
+    .opciones {
+      font-family: inherit;
+      font-size: 1rem;
+      color: #495057;
+    }
+
+    .select-sort,
+    .f-input {
+      border-bottom: 1px solid #ced4da;
+    }
+
+    .f-input {
+      width: 250px;
+    }
+
+    .f-input input {
+      width: 100%;
+    }
+
+    .f-input input::placeholder {
+      font-family: inherit;
+      font-size: 14px;
+      color: #495057;
+    }
+
+    .f-input input,
+    .f-input input:focus-visible {
+      font-family: 'roboto_condensedregular', Helvetica, sans-serif;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .f-input input:focus-visible {
+      outline: none;
+    }
+
+    /* ======================================================================================= */
+    /* Antes era    #acordeon-niveles   ->  fue cambiado a    .acordeon-niveles  */
+
+    .acordeon-niveles .dropdown-toggle {
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid #ced4da;
+      font-size: 1rem;
+      color: #495057;
+      cursor: pointer;
+    }
+
+    .acordeon-niveles .dropdown-menu {
+      font-size: 1rem;
+    }
+
+    .acordeon-niveles .dropdown-menu a span {
+      color: #495057;
+    }
+
+    .acordeon-niveles .dropdown-menu a:hover {
+      background-color: #f0f0f0;
+      color: #495057;
+      box-shadow: none;
+    }
+
+    .acordeon-niveles .dropdown-toggle::after {
+      margin-top: 10px;
+    }
+
+    /* ======================================================================================= */
+
+    .sort,
+    .form-check-label {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .select-sort i {
+      font-size: 24px;
+    }
+
+    .select-sort {
+      min-width: 215px;
+    }
+
+    .opciones {
+      position: absolute;
+      top: 35px;
+      background-color: #fff;
+      box-shadow: 0px 8px 24px #00000026;
+      z-index: 9;
+      width: 100%;
+      min-width: 250px;
+    }
+
+    .opciones .form-check label:after,
+    .opciones .form-check label:before {
+      opacity: 0;
+    }
+
+    .opciones .form-check:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+
+</head>
+
+<body id="appBody" class="d-flex flex-column">
+
+  <div class="page-content">
+
+    <div class="navbar-overlay"></div>
+
+    <main id="main" class="container">
+
+      <section>
+
+        <div class="card" id="editar">
+
+          <div class="card-header">
+
+            <div class="row">
+
+              <div class="col">
+                <h4 class="float-left heading h4-responsive mb-0">Editar Definici&oacute;n del Tipo de Asignatura</h4>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="card-body">
+
+            <!-- ============================================================== -->
+
+            <div class="row mb-4">
+
+              <div class="col-12 col-md-4">
+                  <div class="md-form">
+                      <select name="prelacion" class="chosen-select" searchable="Buscar">
+                          <option value="" selected>Seleccione</option> 
+                      </select>
+                      <label class="active">Prelación</label>
+                  </div>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <div class="md-form">
+                    <select name="tipoAsignatura" class="chosen-select" searchable="Buscar">
+                        <option value="" selected>Seleccione</option> 
+                    </select>
+                    <label class="active">Tipo de Asignatura</label>
+                </div>
+              </div>
+  
+              <div class="col-12 col-md-4">
+                <div class="md-form">
+                    <select name="tipoOrigenAsignatura" class="chosen-select" searchable="Buscar">
+                        <option value="" selected>Seleccione</option> 
+                    </select>
+                    <label class="active">Tipo de Origen Asignatura</label>
+                </div>
+              </div>
+  
+            </div>
+
+            <!-- ============================================================== -->
+
+            <div id="acordeon-niveles-descripcion"></div>
+  
+          </div>
+
+          <div class="card-footer">
+
+            <div class="row my-4">
+
+              <div class="col col-md-12  d-flex justify-content-between">
+                <button id="btnVolverEditar" class="btn btn-outline waves-effect waves-light">
+                  <span>Volver</span>
+                </button>
+
+                <button id="btnGuardar" class="btn btn-default waves-effect waves-light">
+                  <span>Guardar Cambios</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+
+
+
+      </section>
+    </main>
+
+  </div>
+
+
+  <footer class="page-footer">
+    <div class="container py-3">
+      <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+        <div class="logo-gst"><img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png" alt=""></div>
+        <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Loading Overlay -->
+  <div class="loading-backdrop" id="loadingOverlay">
+    <div class="loading-circle">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-white-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Eliminar -->
+  <div class="modal fade" id="ModalEliminar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-warning" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+
+            <div class="col-md-12">
+              <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
+              <p class="text-center m-0">
+                &iquest;Est&aacute; seguro de que quiere eliminar esta informaci&oacute;n&quest; Una vez eliminada no
+                podr&aacute; ser recuperada.
+              </p>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
+          <button id="btnEliminarModal" class="btn mx-2 btn-default waves-effect waves-light alerta">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Filtrar -->
+  <div class="modal fade" id="ModalFiltrarTabla" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-notify" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="heading lead">Filtrar</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-4">
+
+            <div class="col-12 col-md-4">
+              <div class="md-form">
+                <select class="mdb-select" id="filtrar_definiciones_tipo_asign_prod_campo_01" searchable="Buscar">
+                  <option value="" disabled selected>Seleccione producto</option>
+                  <option value="1">Producto 1</option>
+                  <option value="2">Producto 2</option>
+                </select>
+                <label id="filtrar_definiciones_tipo_asign_prod_campo_01">Producto</label>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="md-form">
+                <select class="mdb-select" id="filtrar_definiciones_tipo_asign_prod_campo_02" searchable="Buscar">
+                  <option value="" disabled selected>Seleccione tipo de asignatura</option>
+                  <option value="1">Tipo de asignatura 1</option>
+                  <option value="2">Tipo de asignatura 2</option>
+                </select>
+                <label id="filtrar_definiciones_tipo_asign_prod_campo_02">Tipo de Asignatura TFL</label>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="md-form">
+
+                <input name="filtrar_definiciones_tipo_asign_prod_campo_03"
+                  id="filtrar_definiciones_tipo_asign_prod_campo_03" type='text' class="datepicker-input form-control"
+                  placeholder="DD/MM/AAAA" data-position="bottom center" autocomplete="off" />
+                <label for="filtrar_definiciones_tipo_asign_prod_campo_03" class="active">Fecha Efectiva</label>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row mb-4">
+
+            <div class="col-12 col-md-4">
+              <div class="md-form">
+                <select class="mdb-select" id="filtrar_definiciones_tipo_asign_prod_campo_04" searchable="Buscar">
+                  <option value="" disabled selected>Seleccione estado</option>
+                  <option value="1">Estado 1</option>
+                  <option value="2">Estado 2</option>
+                </select>
+                <label id="filtrar_definiciones_tipo_asign_prod_campo_04">Estado</label>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button id="clearFiltersBtn" type="button"
+            class="btn btn-link px-0 d-flex align-items-center waves-effect waves-light">
+            <span class="material-icons mr-1">
+              close
+            </span>
+            Limpiar Filtros
+          </button>
+          <div class="d-flex flex-wrap">
+            <button class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cerrar</button>
+            <button class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Filtrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SCRIPTS -->
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+
+  <script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+
+  <script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+
+  <script src="datos.js"></script>
+  <script src="index.js"></script>
+
+</body>
+
+</html>
