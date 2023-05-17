@@ -1,4 +1,5 @@
 
+let sePuedeModificar = true;
 this.grillaDinamica = {};
 let registrosPorPagina = 10;
 let paginaActual = 0;
@@ -6,19 +7,241 @@ this.indexDetalle = 0;
 
 //======================>>>>>
 
-this.nivelesMctp = obtenerNivelesMctp();
-this.listaObjetos = obtenerListaObjetos();
+this.listaObjetos = [];
+this.listaProductos = [];
+this.objeto = {};
 this.coloresDescripcion = obtenerColoresDescripcion();
+this.coloresProductos = obtenerColoresProductos();
 
 $(document).ready(function() 
 {
+    $('[data-toggle="tooltip"]').tooltip();
+
     // Activar selects
     $(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
     $(".mdb-select").material_select();
 
-    //construirAcordeonNiveles();
-    construirGrilla();
+    //setTimeout(() => {
+    //    construirGrilla();
+    //}, 1000)
+    
 });
+
+(async () =>
+{
+    showLoading();
+
+    try {
+        let res = await obtenerDatos();
+        this.listaObjetos = res.listaObjetos;
+        this.listaProductos = res.listaProductos;
+        construirGrilla();
+    }
+    catch (ex) {
+        if (ex.errores != null) mostrarErroresRespuestaBackend(ex);
+        else toastr.error(ex);
+    }
+    finally { hideLoading() }
+
+})();
+
+function obtenerDatos()
+{
+    return new Promise((resolve, reject) => 
+    {
+        let res = {
+            "objeto":{
+               "listaObjetos":[
+                  {
+                     "prelacion":1,
+                     "tipoAsignatura":"Tipo Asignatura 1",
+                     "def_t_asig_tfl_ncorr":1,
+                     "tipoOrdenAsignatura":"Ejemplo",
+                     "descripciones":[
+                        {
+                           "prelacion":1,
+                           "def_nmctp_ncorr":181,
+                           "descripcionNivel":"2",
+                           "descripcion":"Descripcion Nivel 1",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":2,
+                           "def_nmctp_ncorr":182,
+                           "descripcionNivel":"3",
+                           "descripcion":"Descripcion Nivel 1",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":3,
+                           "def_nmctp_ncorr":183,
+                           "descripcionNivel":"4",
+                           "descripcion":"Descripcion Nivel 1",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":4,
+                           "def_nmctp_ncorr":184,
+                           "descripcionNivel":"5",
+                           "descripcion":"Descripcion Nivel 1",
+                           "color":"#ff1f1f"
+                        }
+                     ]
+                  },
+                  {
+                     "prelacion":2,
+                     "tipoAsignatura":"Tipo Asignatura 2",
+                     "def_t_asig_tfl_ncorr":1,
+                     "tipoOrdenAsignatura":"Ejemplo",
+                     "descripciones":[
+                        {
+                           "prelacion":1,
+                           "def_nmctp_ncorr":181,
+                           "descripcionNivel":"2",
+                           "descripcion":"Descripcion Nivel 2",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":2,
+                           "def_nmctp_ncorr":182,
+                           "descripcionNivel":"3",
+                           "descripcion":"Descripcion Nivel 2",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":3,
+                           "def_nmctp_ncorr":183,
+                           "descripcionNivel":"4",
+                           "descripcion":"Descripcion Nivel 2",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":4,
+                           "def_nmctp_ncorr":184,
+                           "descripcionNivel":"5",
+                           "descripcion":"Descripcion Nivel 2",
+                           "color":"#ff1f1f"
+                        }
+                     ]
+                  },
+                  {
+                     "prelacion":3,
+                     "tipoAsignatura":"Tipo Asignatura 3",
+                     "def_t_asig_tfl_ncorr":1,
+                     "tipoOrdenAsignatura":"Ejemplo",
+                     "descripciones":[
+                        {
+                           "prelacion":1,
+                           "def_nmctp_ncorr":181,
+                           "descripcionNivel":"2",
+                           "descripcion":"Descripcion Nivel 3",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":2,
+                           "def_nmctp_ncorr":182,
+                           "descripcionNivel":"3",
+                           "descripcion":"Descripcion Nivel 3",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":3,
+                           "def_nmctp_ncorr":183,
+                           "descripcionNivel":"4",
+                           "descripcion":"Descripcion Nivel 3",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":4,
+                           "def_nmctp_ncorr":184,
+                           "descripcionNivel":"5",
+                           "descripcion":"Descripcion Nivel 3",
+                           "color":"#ff1f1f"
+                        }
+                     ]
+                  },
+                  {
+                     "prelacion":4,
+                     "tipoAsignatura":"Tipo Asignatura 4",
+                     "def_t_asig_tfl_ncorr":1,
+                     "tipoOrdenAsignatura":"Ejemplo",
+                     "descripciones":[
+                        {
+                           "prelacion":1,
+                           "def_nmctp_ncorr":181,
+                           "descripcionNivel":"2",
+                           "descripcion":"Descripcion Nivel 4",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":2,
+                           "def_nmctp_ncorr":182,
+                           "descripcionNivel":"3",
+                           "descripcion":"Descripcion Nivel 4",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":3,
+                           "def_nmctp_ncorr":183,
+                           "descripcionNivel":"4",
+                           "descripcion":"Descripcion Nivel 4",
+                           "color":"#ff1f1f"
+                        },
+                        {
+                           "prelacion":4,
+                           "def_nmctp_ncorr":184,
+                           "descripcionNivel":"5",
+                           "descripcion":"Descripcion Nivel 4",
+                           "color":"#ff1f1f"
+                        }
+                     ]
+                  }
+               ],
+               "listaProductos":[
+                  {
+                     "prelacion":1,
+                     "tipoAsignatura":"Tipo Asignatura 1 para Producto",
+                     "def_t_asig_tfl_ncorr":1,
+                     "tipoOrdenAsignatura":"Ejemplo para Producto",
+                     "productos":[
+                        {
+                           "descripcionNivel":"2",
+                           "def_nmctp_ncorr":181,
+                           "color":"#ff1f1f",
+                           "lista_def_productos_ncorr":[ "2", "21", "22" ]
+                        },
+                        {
+                           "descripcionNivel":"3",
+                           "def_nmctp_ncorr":182,
+                           "color":"#ff1f1f",
+                           "lista_def_productos_ncorr":[ "2", "21", "22" ]
+                        },
+                        {
+                           "descripcionNivel":"4",
+                           "def_nmctp_ncorr":183,
+                           "color":"#ff1f1f",
+                           "lista_def_productos_ncorr":[ "2", "21", "22" ]
+                        },
+                        {
+                           "descripcionNivel":"5",
+                           "def_nmctp_ncorr":184,
+                           "color":"#ff1f1f",
+                           "lista_def_productos_ncorr":[ "2", "21", "22" ]
+                        }
+                     ]
+                  }
+               ]
+            },
+            "errores":[
+               
+            ],
+            "status": 200,
+            "mensajeExito":null
+        };
+
+        resolve(res.objeto);
+    });
+}
 
 function construirGrilla() 
 {
@@ -41,27 +264,11 @@ function construirGrilla()
         return descripcion
     };
 
-    let obtenerListaObjetosFiltrada = (lista) =>
-    {
-        /*
-        let modalFiltrar = $("#ModalFiltrarTablaAnalisis");
-
-        let filtro = {
-            defNivelMctpNcorr: modalFiltrar.find("[name='defNivelMctpNcorr']").val()
-        };
-
-        if (validarNuloVacio(filtro.defNivelMctpNcorr))
-            lista = lista.filter(x => x.def_nmctp_ncorr == filtro.defNivelMctpNcorr);
-        */
-
-        return lista;
-    };
-
     this.grillaDinamica = {
         thead: [
             { valor: "Prelación" },
             { valor: "Tipo Asignatura" },
-            { valor: "Tipo Orden Asignatura" }
+            { valor: "Tipo Origen Asignatura" }
         ], 
         tbody: []
     };
@@ -69,76 +276,149 @@ function construirGrilla()
 
     // Agrega niveles
     this.nivelesMctp.forEach(x => this.grillaDinamica.thead.push({
-        valor: x.descripcion
+        valor: `Nivel ${x.descripcion}`
     }));
 
     // this.grillaDinamica.thead.push({ valor: "Estado" });
     this.grillaDinamica.thead.push({ html: "Acciones" });   // Si no tiene valor, no se despliega en el Excel
 
-    let listaObjetosFiltrada = obtenerListaObjetosFiltrada(this.listaObjetos);  // Aplicar filtros en caso de que existan
 
     this.listaObjetos.forEach((row, index) =>
     {
-        if (listaObjetosFiltrada.includes(row))
+        let arreglo = [
+            { valor: row.prelacion, atributo: "prelacion" },
+            { valor: row.tipoAsignatura, atributo: "tipoAsignatura" },
+            { valor: row.tipoOrdenAsignatura, atributo: "tipoOrdenAsignatura" } 
+        ];
+
+        this.nivelesMctp.forEach(nivel =>
         {
-            let arreglo = [
-                { valor: row.prelacion, atributo: "prelacion" },
-                { valor: row.tipoAsignatura, atributo: "tipoAsignatura" },
-                { valor: row.tipoOrdenAsignatura, atributo: "tipoOrdenAsignatura" } 
-            ];
-
-            this.nivelesMctp.forEach(nivel =>
+            if (row.descripciones.length > 0)
             {
-                // console.log(nivel);
+                let r = row.descripciones.find(x => x.def_nmctp_ncorr == nivel.def_nmctp_ncorr);
 
-                if (row.niveles.length > 0)
+                if (r != null)
                 {
-                    let r = row.niveles.find(x => x.def_nmctp_ncorr == nivel.def_nmctp_ncorr);
+                    // arreglo.push({ html: limitarTextoCelda(r.descripcion), valor: r.descripcion });
 
-                    if (r != null)
-                    {
-                        // arreglo.push({ html: limitarTextoCelda(r.descripcion), valor: r.descripcion });
-
-                        arreglo.push({
-                            html: `
-                            <div class="d-flex justify-content-start">
-                                <div class="pt-1">
-                                    <div class="color" style="background-color: ${r.color}"></div>
-                                </div>
-                                <div class="txt-nvl ml-2">
-                                    <span>${limitarTextoCelda(r.descripcion)}</span>
-                                </div>
-                            </div>`,
-                            valor: r.descripcion
-                        });
-                    }
+                    arreglo.push({
+                        html: `
+                        <div class="d-flex justify-content-start">
+                            <div class="pt-1">
+                                <div class="color" style="background-color: ${r.color}"></div>
+                            </div>
+                            <div class="txt-nvl ml-2">
+                                <span>${limitarTextoCelda(r.descripcion)}</span>
+                            </div>
+                        </div>`,
+                        valor: r.descripcion
+                    });
                 }
-                else {
-                    arreglo.push({ html: "", valor: "" });  // Si en la fila recorrida, el nivel no tiene contenido, deja en blanco
-                }
-            });
+            }
+            else {
+                arreglo.push({ html: "", valor: "" });  // Si en la fila recorrida, el nivel no tiene contenido, deja en blanco
+            }
+        });
 
-            //arreglo.push({ valor: row.estado });
+        //arreglo.push({ valor: row.estado });
 
-            arreglo.push({  // Si no tiene valor, no se despliega en el Excel
-                html: `
-                <div class="d-flex justify-content-between">
+        arreglo.push({  // Si no tiene valor, no se despliega en el Excel
+            html: `
+            <div class="d-flex justify-content-between">
 
-                    <button type="button" onclick="desplegarCardEditar(${index})" class="btnEditFila mr-0 mr-md-4 d-flex align-items-center float-left">
-                        <i class="material-icons mr-1 icon-lg grey-text">edit</i>
-                        <span class="d-none d-md-inline">Editar</span>
-                    </button>
+                <button type="button" onclick="desplegarCardEditarDescripcion(${index})" class="btnEditFila mr-0 mr-md-4 d-flex align-items-center float-left">
+                    <i class="material-icons mr-1 icon-lg grey-text">edit</i>
+                    <span class="d-none d-md-inline">Editar</span>
+                </button>
 
-                    <button type="button" onclick="abrirModalEliminar(${index})" class="mr-0 mr-md-4 d-flex align-items-center float-left">
-                        <i class="material-icons mr-1 icon-lg grey-text">assignment</i>
-                        <span class="d-none d-md-inline">Eliminar</span>
-                    </button>
-                </div>`
-            });
+                <button type="button" onclick="abrirModalEliminarDescripcion(${index})" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                    <i class="material-icons mr-1 icon-lg grey-text">assignment</i>
+                    <span class="d-none d-md-inline">Eliminar</span>
+                </button>
+            </div>`
+        });
 
-            this.grillaDinamica.tbody.push(arreglo);
-        }
+        this.grillaDinamica.tbody.push(arreglo);
     });
+
+    //========================================================================>>>>
+    // Prueba 17-5-2023
+
+    this.listaProductos.forEach((row, index) =>
+    {
+        let arreglo = [
+            { valor: row.prelacion, atributo: "prelacion" },
+            { valor: row.tipoAsignatura, atributo: "tipoAsignatura" },
+            { valor: row.tipoOrdenAsignatura, atributo: "tipoOrdenAsignatura" } 
+        ];
+
+        this.nivelesMctp.forEach(nivel =>
+        {
+            if (row.productos.length > 0)
+            {
+                let r = row.productos.find(x => x.def_nmctp_ncorr == nivel.def_nmctp_ncorr);
+
+                if (r != null)
+                {
+                    // arreglo.push({ html: limitarTextoCelda(r.color), valor: r.color });
+
+                    //==================>>>>
+
+                    // this.listaProductos[0].productos[0].lista_def_productos_ncorr   // [ "2", "21", "22" ]
+
+                    //==================>>>>
+
+                    arreglo.push({
+                        html: `
+                        <div class="d-flex justify-content-start">
+                            <div class="pt-1">
+                                <div class="color" style="background-color: ${r.color}"></div>
+                            </div>
+                        
+                            <div class="txt-nvl ml-2">
+                                <span>
+                                    ${limitarTextoCelda(r.lista_def_productos_ncorr.map(ncorrProducto =>
+                                    {
+                                        let producto = this.listaCboProductos.find(y => y.codigo == ncorrProducto);
+                                        return (producto != null) ? `${producto.descripcion}<br/>` : "";      
+                                    }).join(""))}
+                                </span>
+                            </div>
+                    
+                        </div>`,
+                        valor: r.descripcion
+                    });
+                }
+            }
+            else {
+                arreglo.push({ html: "", valor: "" });  // Si en la fila recorrida, el nivel no tiene contenido, deja en blanco
+            }
+        });
+
+        //arreglo.push({ valor: row.estado });
+
+        arreglo.push({  // Si no tiene valor, no se despliega en el Excel
+            html: `
+            <div class="d-flex justify-content-between">
+
+                <button type="button" onclick="abrirModalEditarProducto(${index})" class="btnEditFila mr-0 mr-md-4 d-flex align-items-center float-left">
+                    <i class="material-icons mr-1 icon-lg grey-text">edit</i>
+                    <span class="d-none d-md-inline">Editar</span>
+                </button>
+
+                <!--
+                <button type="button" onclick="abrirModalEliminarProducto(${index})" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                    <i class="material-icons mr-1 icon-lg grey-text">assignment</i>
+                    <span class="d-none d-md-inline">Eliminar</span>
+                </button>
+                -->
+            </div>`
+        });
+
+        this.grillaDinamica.tbody.push(arreglo);
+    });
+
+    //========================================================================>>>>
 
     let cadena = `
     <table id="TablaResultados" class="datatables table table-hover table-striped table-bordered m-0">
@@ -203,6 +483,10 @@ function construirGrilla()
 
     // $('#TablaResultados').css('width', '100%');
 
+    setTimeout(() => {
+        $("#TablaResultados").DataTable().columns.adjust().draw();   // Endereza columnas descuadradas
+        $('[data-toggle="tooltip"]').tooltip();
+    }, 200);
 }
 
 function descargarExcel()
@@ -220,9 +504,16 @@ function descargarExcel()
     generarExcel(data, nombreArchivo);
 }
 
+//============================================================================================================================>>>>>
 
-function abrirModalAgregarNuevaFila()
+//#region Trabajar con Descripciones
+
+function abrirModalAgregarNuevaDescripcion()
 {
+    if (!sePuedeModificar) return;
+
+    limpiarFormulario("#ModalAgregarNuevaDescripcion");
+
     //==============================>>>>
     // Llenar selector de prelación
 
@@ -247,7 +538,7 @@ function abrirModalAgregarNuevaFila()
     if (arregloPrelaciones.length == 0)
         arregloPrelaciones = [{ codigo: 1, descripcion: 1 }];
     
-    llenarCombobox("#ModalAgregarNuevaFila [name='prelacion']", arregloPrelaciones);
+    llenarCombobox("#ModalAgregarNuevaDescripcion [name='prelacion']", arregloPrelaciones);
 
     //==============================>>>>
 
@@ -255,16 +546,16 @@ function abrirModalAgregarNuevaFila()
         prelacion: 0,
         tipoAsignatura: "",
         tipoOrdenAsignatura: "",
-        niveles: this.nivelesMctp.map(x =>
+        descripciones: this.nivelesMctp.map(x =>
         {
-            return { def_nmctp_ncorr: x.def_nmctp_ncorr, descripcion: "", color: null };
+            return { def_nmctp_ncorr: x.def_nmctp_ncorr, descripcion: "", descripcionNivel: x.descripcion, color: null };
         })
     };
 
     let cadena = `
     <div class="acordeon-niveles accordion md-accordion" id="acordeon-niveles-descripcion-crear" role="tablist" aria-multiselectable="true">
 
-        ${this.objeto.niveles.map((nivel, indexNivel) => 
+        ${this.objeto.descripciones.map((nivel, indexNivel) =>
         {
             return `
             <div class="accordion-item">
@@ -272,7 +563,7 @@ function abrirModalAgregarNuevaFila()
                 <div class="accordion-header grey lighten-3" role="tab" id="heading-nivel-${nivel.def_nmctp_ncorr}">
                     <a data-toggle="collapse" data-parent="#acordeon-niveles-descripcion-crear" href="#collapse-nivel-${nivel.def_nmctp_ncorr}" aria-expanded="false" aria-controls="collapse-nivel-${nivel.def_nmctp_ncorr}">
                     <h5 class="mb-0 pl-3 pr-3">
-                        Nivel ${nivel.def_nmctp_ncorr}
+                        Nivel ${nivel.descripcionNivel}
                         <span class="accordion-arrow"><i class="material-icons rotate-icon float-right">keyboard_arrow_down</i></span>
                     </h5>
                     </a>
@@ -285,10 +576,10 @@ function abrirModalAgregarNuevaFila()
 
                             <div class="col-12 col-md-6">
                                 <div class="md-form mb-3">
-                                    <textarea onkeyup="objeto.niveles[${indexNivel}].descripcion = this.value" 
+                                    <textarea onkeyup="objeto.descripciones[${indexNivel}].descripcion = this.value"
                                     name="descripcion" rows="3" placeholder="Ingrese Descripción" class="form-control md-textarea">${nivel.descripcion}</textarea>
 
-                                    <label class="active">Nivel ${nivel.def_nmctp_ncorr}</label>
+                                    <label class="active">Nivel ${nivel.descripcionNivel}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
@@ -337,22 +628,26 @@ function abrirModalAgregarNuevaFila()
 
     //============================================================>>>>
 
-    $("#ModalAgregarNuevaFila").modal("show");
+    $("#ModalAgregarNuevaDescripcion").modal("show");
 }
 
-function agregarNuevaFila()
+function agregarNuevaDescripcion()
 {
-    let modal = $("#ModalAgregarNuevaFila");
+    let modal = $("#ModalAgregarNuevaDescripcion");
     let prelacion = modal.find("[name='prelacion']").val();
+    let tipoAsignaturaNcorr = modal.find("[name='tipoAsignaturaNcorr']").val();
     let errores = [];
 
     if (!validarNuloVacio(prelacion))
         errores.push("La prelación es requerida");
 
-    if (this.objeto.niveles.some(x => !validarNuloVacio(x.descripcion)))
+    if (!validarNuloVacio(tipoAsignaturaNcorr))
+        errores.push("El tipo de asignatura es requerido");
+
+    if (this.objeto.descripciones.some(x => !validarNuloVacio(x.descripcion)))
         errores.push("Todos los niveles deben poseer una descripción");
 
-    if (this.objeto.niveles.some(x => !validarNuloVacio(x.color)))
+    if (this.objeto.descripciones.some(x => !validarNuloVacio(x.color)))
         errores.push("Todos los niveles deben poseer un color");
 
     if (errores.length > 0) {
@@ -361,13 +656,15 @@ function agregarNuevaFila()
     }
 
     this.objeto.prelacion = prelacion;
+    this.objeto.tipoAsignatura = modal.find("[name='tipoAsignaturaNcorr'] option:selected").text();
+    this.objeto.def_t_asig_tfl_ncorr = tipoAsignaturaNcorr;     // Foreign Key de la tabla    DEF_T_ASIG_TFL
 
     this.listaObjetos.push(this.objeto);
-    cerrarModal("#ModalAgregarNuevaFila");
+    cerrarModal("#ModalAgregarNuevaDescripcion");
     construirGrilla();
 }
 
-function desplegarCardEditar(index)
+function desplegarCardEditarDescripcion(index)
 {
     showLoading();
     this.indexDetalle = index;
@@ -392,10 +689,13 @@ function desplegarCardEditar(index)
 
     //=====================================>>>>>
 
+    $("#editar [name='tipoAsignaturaNcorr']").val(this.objeto.def_t_asig_tfl_ncorr).trigger("chosen:updated");
+
+
     let cadena = `
     <div class="acordeon-niveles accordion md-accordion" id="acordeon-niveles-descripcion-editar" role="tablist" aria-multiselectable="true">
 
-        ${this.objeto.niveles.map((nivel, indexNivel) => 
+        ${this.objeto.descripciones.map((nivel, indexNivel) =>
         {
             return `
             <div class="accordion-item">
@@ -403,7 +703,7 @@ function desplegarCardEditar(index)
                 <div class="accordion-header grey lighten-3" role="tab" id="heading-nivel-${nivel.def_nmctp_ncorr}">
                     <a data-toggle="collapse" data-parent="#acordeon-niveles-descripcion-editar" href="#collapse-nivel-${nivel.def_nmctp_ncorr}" aria-expanded="false" aria-controls="collapse-nivel-${nivel.def_nmctp_ncorr}">
                     <h5 class="mb-0 pl-3 pr-3">
-                        Nivel ${nivel.def_nmctp_ncorr}
+                        Nivel ${nivel.descripcionNivel}
                         <span class="accordion-arrow"><i class="material-icons rotate-icon float-right">keyboard_arrow_down</i></span>
                     </h5>
                     </a>
@@ -416,10 +716,10 @@ function desplegarCardEditar(index)
 
                             <div class="col-12 col-md-6">
                                 <div class="md-form mb-3">
-                                    <textarea onkeyup="objeto.niveles[${indexNivel}].descripcion = this.value" 
+                                    <textarea onkeyup="objeto.descripciones[${indexNivel}].descripcion = this.value"
                                     name="descripcion" rows="3" placeholder="Ingrese Descripción" class="form-control md-textarea">${nivel.descripcion}</textarea>
 
-                                    <label class="active">Nivel ${nivel.def_nmctp_ncorr}</label>
+                                    <label class="active">Nivel ${nivel.descripcionNivel}</label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
@@ -468,7 +768,7 @@ function desplegarCardEditar(index)
 
     setTimeout(() => 
     {
-        this.objeto.niveles.forEach(x => 
+        this.objeto.descripciones.forEach(x =>
         {
             let a = Array.from(document.querySelectorAll(`#acordeon-niveles-descripcion-editar #collapse-nivel-${x.def_nmctp_ncorr} [name='colorNivel'] a`))
             .find(y => y.getAttribute("codigo") == x.color);
@@ -479,6 +779,7 @@ function desplegarCardEditar(index)
         });
 
         hideLoading();
+        habilitarDeshabilitarElementos({ querySelector: "#editar", habilitado: sePuedeModificar });
     }, 200);
 }
 
@@ -488,24 +789,28 @@ function seleccionarColorDescripcion(e, indexNivel, color)
     e.parentElement.previousElementSibling.innerHTML  = e.innerHTML;
     //console.log(color);
 
-    let elemento = this.objeto.niveles[indexNivel];
+    let elemento = this.objeto.descripciones[indexNivel];
     elemento.color = color;
 }
 
-function actualizarDetalle()
+function actualizarDescripcion()
 {
     let card = $("#editar");
     let prelacion = card.find("[name='prelacion']").val();
+    let tipoAsignaturaNcorr = card.find("[name='tipoAsignaturaNcorr']").val();
 
     let errores = [];
 
     if (!validarNuloVacio(prelacion))
         errores.push("La prelación es requerida");
 
-    if (this.objeto.niveles.some(x => !validarNuloVacio(x.descripcion)))
+    if (!validarNuloVacio(tipoAsignaturaNcorr))
+        errores.push("El tipo de asignatura es requerido");
+
+    if (this.objeto.descripciones.some(x => !validarNuloVacio(x.descripcion)))
         errores.push("Todos los niveles deben poseer una descripción");
 
-    if (this.objeto.niveles.some(x => !validarNuloVacio(x.color)))
+    if (this.objeto.descripciones.some(x => !validarNuloVacio(x.color)))
         errores.push("Todos los niveles deben poseer un color");
 
     if (errores.length > 0) {
@@ -515,11 +820,13 @@ function actualizarDetalle()
 
     let elemento = this.listaObjetos[this.indexDetalle];
     elemento.prelacion = prelacion;
+    elemento.tipoAsignatura = card.find("[name='tipoAsignaturaNcorr'] option:selected").text();
+    elemento.def_t_asig_tfl_ncorr = tipoAsignaturaNcorr;     // Foreign Key de la tabla    DEF_T_ASIG_TFL
 
-    elemento.niveles.forEach((x, index) =>
+    elemento.descripciones.forEach((x, index) =>
     {
-        x.descripcion = this.objeto.niveles[index].descripcion;
-        x.color = this.objeto.niveles[index].color;
+        x.descripcion = this.objeto.descripciones[index].descripcion;
+        x.color = this.objeto.descripciones[index].color;
     });
 
     document.querySelector("#editar").style.display = "none";
@@ -527,10 +834,414 @@ function actualizarDetalle()
     construirGrilla();
 }
 
+function abrirModalEliminarDescripcion(index)
+{
+    if (!sePuedeModificar) return;
+
+    this.indexDetalle = index;
+    $("#ModalEliminarDescripcion").modal("toggle");
+}
+
+function eliminarDescripcion()
+{
+    this.listaObjetos.splice(this.indexDetalle, 1);     // Elimina la posición del arreglo
+
+    // this.listaObjetos.sort((a, b) => a.prelacion - b.prelacion).forEach((x, i) => x.prelacion = i + 1);  // Re asigna prelacion a todos los elementos del arreglo
+
+    cerrarModal("#ModalEliminarDescripcion");
+    construirGrilla();
+}
+
 function volverGrilla()
 {
     document.querySelector("#editar").style.display = "none";
     document.querySelector("#resultados").style.display = "block";
+}
+
+//#endregion Trabajar con Descripciones
+
+//============================================================================================================================>>>>>
+
+//#region Trabajar con Productos
+
+function abrirModalEditarProducto(index)
+{
+    showLoading();
+    this.indexDetalle = index;
+
+    this.objeto = JSON.parse(JSON.stringify(this.listaProductos[index]));   // Hace una copia del detalle
+
+    //=====================================>>>>>
+    // Llenar selector de prelación
+    llenarCombobox(
+        "#ModalEditarProducto [name='prelacion']",
+        this.listaProductos.map((x, index) => {
+            let numero = index + 1;
+            return { codigo: numero, descripcion: numero };
+        })
+    );
+
+    setTimeout(() => {
+        $("#ModalEditarProducto [name='prelacion']").val(this.objeto.prelacion).trigger("chosen:updated");
+    }, 200);
+
+    //=====================================>>>>>
+
+    $("#editar [name='tipoAsignaturaNcorr']").val(this.objeto.def_t_asig_tfl_ncorr).trigger("chosen:updated");
+
+
+    let cadena = `
+    <div class="acordeon-niveles accordion md-accordion" id="acordeon-niveles-producto-editar" role="tablist" aria-multiselectable="true">
+
+        ${this.objeto.productos.map((nivel, indexNivel) =>
+        {
+            return `
+            <div class="accordion-item">
+    
+                <div class="accordion-header grey lighten-3" role="tab" id="heading-nivel-${nivel.def_nmctp_ncorr}">
+                    <a data-toggle="collapse" data-parent="#acordeon-niveles-producto-editar" href="#collapse-nivel-${nivel.def_nmctp_ncorr}" aria-expanded="false" aria-controls="collapse-nivel-${nivel.def_nmctp_ncorr}">
+                    <h5 class="mb-0 pl-3 pr-3">
+                        Nivel ${nivel.descripcionNivel}
+                        <span class="accordion-arrow"><i class="material-icons rotate-icon float-right">keyboard_arrow_down</i></span>
+                    </h5>
+                    </a>
+                </div>
+                <div id="collapse-nivel-${nivel.def_nmctp_ncorr}" class="collapse ${indexNivel == 0 ? "show" : ""}" role="tabpanel" aria-labelledby="heading-nivel-${nivel.def_nmctp_ncorr}" data-parent="#acordeon-niveles-descripcion-editar">
+    
+                    <div class="accordion-body p-3 pt-3 pb-2">
+    
+                        <div class="row mb-4">
+
+                            <!--
+                            <div class="col-12 col-md-6">
+                                <div class="md-form mb-3">
+                                    <textarea onkeyup="objeto.productos[${indexNivel}].descripcion = this.value"
+                                    name="descripcion" rows="3" placeholder="Ingrese Descripción" class="form-control md-textarea">${nivel.descripcion}</textarea>
+
+                                    <label class="active">Nivel ${nivel.descripcionNivel}</label>
+                                </div>
+                            </div>
+                            -->
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-group"> 
+                                    <label>Programa de Formación Recomendados</label> 
+
+                                    <select name="defProgramaFormativoRecomendado" class="form-control select2" multiple="" style="width: 100%;">
+                                        ${this.listaCboProductos.map(x => `<option value="${x.codigo}">${x.descripcion}</option>`).join("")}
+                                    </select> 
+                                </div> 
+                            </div>
+
+                            <div class="col-12 col-md-4">
+    
+                                <div class="md-form">
+                                    <label class="active">Color</label>
+                                </div>
+                                <div name="colorNivel" class="dropdown">
+                                    <button class="dropdown-toggle d-flex col drop-color text-left p-1 pl-0" type="button" data-toggle="dropdown" aria-expanded="false">Seleccione color</button>
+                                    <div class="dropdown-menu col">
+                                        
+                                        ${this.coloresProductos.map(x =>
+                                        {
+                                            return `
+                                            <a codigo="${x.codigo}" onclick="seleccionarColorProducto(this, ${indexNivel}, '${x.codigo}')" class="dropdown-item d-flex">
+                                                <div class="d-flex">
+                                                    <div class="circle pt-1">
+                                                        <div class="color" style="background-color: ${x.codigo}"></div>
+                                                    </div>
+                                                    <span class="ml-2">${x.descripcion}</span>
+                                                </div>
+                                            </a>
+                                            `;
+                                        }).join("")}
+
+                                    </div>
+                                </div>
+    
+                            </div>
+    
+                        </div>  <!-- Fin div row mb-4 -->
+    
+                    </div>  <!-- Fin div accordion-body -->
+    
+                </div>   <!-- Fin div collapse-nivel-${nivel.def_nmctp_ncorr} -->
+    
+            </div>  <!-- Fin div accordion-item -->
+            `;
+        })
+        .join("")}
+
+    </div>
+    `;
+
+    document.querySelector("#acordeon-niveles-producto-editar").innerHTML = cadena;
+
+    setTimeout(() => 
+    {
+        this.objeto.productos.forEach(x =>
+        {
+            let a = Array.from(document.querySelectorAll(`#acordeon-niveles-producto-editar #collapse-nivel-${x.def_nmctp_ncorr} [name='colorNivel'] a`))
+            .find(y => y.getAttribute("codigo") == x.color);
+
+            if (a != null) {
+                a.click()
+            }
+
+            //=====================>>>>
+            // Select2
+
+            let cbo = $(`#acordeon-niveles-producto-editar #collapse-nivel-${x.def_nmctp_ncorr} [name='defProgramaFormativoRecomendado']`);
+
+            if (Array.isArray(x.lista_def_productos_ncorr) && x.lista_def_productos_ncorr.length > 0) {
+                cbo.val(x.lista_def_productos_ncorr).change();
+            }
+
+            cbo.select2({ allowClear: true, closeOnSelect: false, multiple: true, placeholder: "Seleccione" });
+
+            //=====================>>>>
+        });
+
+        habilitarDeshabilitarElementos({ querySelector: "#ModalEditarProducto", habilitado: sePuedeModificar });
+        hideLoading();
+    }, 200);
+
+    //==========================================>>>>>
+
+    $("#ModalEditarProducto").modal("show");
+}
+
+function seleccionarColorProducto(e, indexNivel, color)
+{
+    // console.log(e);
+    e.parentElement.previousElementSibling.innerHTML  = e.innerHTML;
+    //console.log(color);
+
+    let elemento = this.objeto.productos[indexNivel];
+    elemento.color = color;
+}
+
+function actualizarProducto()
+{
+    if (!sePuedeModificar) return;
+
+    let faltanProductos = false;
+
+    this.objeto.productos.forEach(x =>
+    {
+        let cbo = $(`#acordeon-niveles-producto-editar #collapse-nivel-${x.def_nmctp_ncorr} [name='defProgramaFormativoRecomendado']`);
+        let valor = cbo.select2("val");
+        if (Array.isArray(valor) && valor.length == 0) faltanProductos = true;
+    });
+
+    let modal = $("#ModalEditarProducto");
+    let prelacion = modal.find("[name='prelacion']").val();
+
+    let errores = [];
+
+    if (faltanProductos)
+        errores.push("Todos los niveles debe tener programa de formación recomendados");
+
+    if (!validarNuloVacio(prelacion))
+        errores.push("La prelación es requerida");
+
+    if (errores.length > 0) {
+        errores.reverse().forEach(x => toastr.error(x));
+        return;
+    }
+
+    //======================>>>>>
+
+    let elemento = this.listaProductos[this.indexDetalle];
+    elemento.prelacion = prelacion;
+    //elemento.tipoAsignatura = card.find("[name='tipoAsignaturaNcorr'] option:selected").text();
+    //elemento.def_t_asig_tfl_ncorr = tipoAsignaturaNcorr;     // Foreign Key de la tabla    DEF_T_ASIG_TFL
+
+    elemento.productos.forEach((x, index) =>
+    {
+        //x.descripcion = this.objeto.descripciones[index].descripcion;
+        x.color = this.objeto.productos[index].color;
+
+        let cbo = $(`#acordeon-niveles-producto-editar #collapse-nivel-${x.def_nmctp_ncorr} [name='defProgramaFormativoRecomendado']`);
+        x.lista_def_productos_ncorr = cbo.select2("val");  // ["2", "21", "22"]
+    });
+
+    construirGrilla();
+    cerrarModal("#ModalEditarProducto");
+}
+
+function abrirModalEliminarProducto(index)
+{
+    if (!sePuedeModificar) return;
+
+    this.indexDetalle = index;
+    $("#ModalEliminarProducto").modal("toggle");
+}
+
+function eliminarProducto()
+{
+    this.listaProductos.splice(this.indexDetalle, 1);     // Elimina la posición del arreglo
+
+    // this.listaObjetos.sort((a, b) => a.prelacion - b.prelacion).forEach((x, i) => x.prelacion = i + 1);  // Re asigna prelacion a todos los elementos del arreglo
+
+    cerrarModal("#ModalEliminarProducto");
+    construirGrilla();
+}
+
+//#endregion Trabajar con Productos
+
+//============================================================================================================================>>>>>
+
+function guardarBorrador()
+{
+    grabar(true)
+    .then(res => 
+    {
+        toastr.success(res.mensajeExito);
+
+        let fechaHoy = new Date().toJSON().slice(0, 10).split("-").reverse().join("/");
+        $("#resultados [name='fechaPoblamiento']").html(fechaHoy);
+    })
+    .catch(ex => toastr.error(ex));
+}
+
+function abrirModalGuardarPublicar()
+{
+    let txtFecha = $("#ModalGuardarPublicar [name='fechaPublicacion']");
+    let fechaHoy = new Date().toJSON().slice(0, 10).split("-").reverse().join("/");  // "24/01/2023" 
+    txtFecha.val(fechaHoy);
+
+    if (txtFecha.data("datepicker") == null)  // Si no ha sido inicializado
+        txtFecha.datepicker({ language: "es", autoClose: true });
+
+    $("#ModalGuardarPublicar").modal("show");
+}
+
+function guardar_y_publicar()
+{
+    grabar(false)
+    .then(res => 
+    {
+        toastr.success(res.mensajeExito);
+        definirMensaje({ mostrar: true, icono: "lock", mensaje: "Matriz de colores publicada, no se puede modificar" });
+        sePuedeModificar = false;
+
+        let infoCabecera = $("#resultados");
+
+        let fechaHoy = new Date().toJSON().slice(0, 10).split("-").reverse().join("/");
+        let fechaPublicacion = $("#ModalGuardarPublicar [name='fechaPublicacion']").val();
+
+        infoCabecera.find("[name='fechaPoblamiento']").html(fechaHoy);
+        infoCabecera.find("[name='fechaPublicacion']").html(fechaPublicacion);
+
+        Array.from(document.querySelectorAll(".deshabilitar-publicado")).forEach(x => x.disabled = true);  // Deshabilita botones
+    })
+    .catch(ex => toastr.error(ex));
+}
+
+function grabar(esBorrador)
+{
+    /*
+    // Valida que todas las preguntas estén respondidas
+    let estaCompleto = listaObjetos
+        .every(x => x.respuestas.some(y => y.esRespuestaObligatoria && validarNuloVacio(y.ademanda_rsp_respuesta)));
+
+    if (!estaCompleto && !esBorrador)
+        return Promise.reject("Existen preguntas requeridas sin responder");
+    */
+
+    let copiaDetallesParaEnviar = this.listaObjetos.map(x => 
+    {
+        return {
+            def_tasig_mc_estado: (esBorrador) ? "C" : "P",       // Tabla DEF_TASIG_MC      |     Estado del Registro ("C": En Creación, "P": Publicada)
+            descripcion: x.descripciones.map(y => 
+            {
+                return {
+                    def_mtasig_mc_color: y.color,
+                    def_mtasig_mc_tdesc: y.descripcion,
+                    def_mtasig_mc_prelacion: y.prelacion,   
+                    def_nmctp_ncorr_mc: y.def_nmctp_ncorr,    // Foreign Key de la tabla    DEF_NMCTP
+                    def_t_asig_tfl_ncorr: "1"                 // Foreign Key de la tabla    DEF_T_ASIG_TFL   |   CAMBIAR EL VALOR
+                };
+            })
+        };
+    });
+
+    let p_json_datos = JSON.stringify(copiaDetallesParaEnviar);
+    console.log(p_json_datos);
+
+    // let fechaPublicacion = (!esBorrador) ? $("#ModalGuardarPublicar [name='fechaPublicacion']").val() : "";
+    // let params = obtenerParamsFiltro();
+
+    return new Promise((resolve, reject) => {
+        resolve({ status: 200, mensajeExito: "Exito" });
+    });
+
+    /*
+    return new Promise((resolve, reject) =>
+    {
+        $.ajax({
+            method: "POST",
+            url: "DEF_TASIG_MC.aspx/DEF_TASIG_MC_GRABAR",
+            data: JSON.stringify({
+                p_json_datos,       
+                p_consignara_ec,                    // Consignará elementos complementarios
+                p_ecomplemetarios_fpublicacion,     // Fecha publicación
+                p_def_tfl_ncorr: params.tfl,
+                esBorrador
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            beforeSend: () => showLoading(),
+            success: async (res) =>
+            {
+                if (res.status == 200)
+                    resolve(res);
+                else {
+                    mostrarErroresRespuestaBackend(res);
+                    reject(false);
+                }
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+
+                let msn = (esBorrador) ? "Ocurrió un error al guardar el borrador" : "Ocurrió un error al guardar";
+                toastr.error(msn);
+                reject(false);
+            },
+            complete: () => hideLoading()
+        });
+    });
+    */
+}
+
+function definirMensaje(datos = {})
+{
+    // definirMensaje({ mostrar: false });
+    // definirMensaje({ mostrar: true, icono: "warning", mensaje: "Hay duplicados. Revisar" });
+    // definirMensaje({ mostrar: true, icono: "lock", mensaje: "No se puede modificar" });
+
+    let querySelector = datos.querySelector ?? "#resultados #mensaje";
+    let mensajeNoModificar = document.querySelector(querySelector);
+
+    if (datos.mostrar && datos.mensaje != null)
+    {
+        mensajeNoModificar.style.cssText = "visibility: visible";  // Muestra mensaje "Análisis de Demanda publicada, no se puede modificar"
+        let p = Array.from(mensajeNoModificar.children).find(x => x.tagName.toLowerCase() == "p");
+        let i = Array.from(mensajeNoModificar.children).find(x => x.tagName.toLowerCase() == "i");
+
+        p.textContent = datos.mensaje;
+        i.textContent = datos.icono ?? "error";
+
+        let color = (datos.icono == "warning") ?
+            "#ffa000"   // Amarillo
+            : "#c00";   // Rojo
+
+        p.style.color = color;
+        i.style.color = color;
+    }
+    else {
+        mensajeNoModificar.style.cssText = "visibility: hidden";
+    }
 }
 
 //============================================================================================================================>>>>>

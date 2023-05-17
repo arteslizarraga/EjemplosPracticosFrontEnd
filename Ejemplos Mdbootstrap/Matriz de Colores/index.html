@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -253,6 +255,9 @@
     }
   </style>
 
+  <!-- Select 2-->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 </head>
 
 <body id="appBody" class="d-flex flex-column">
@@ -264,6 +269,8 @@
     <main id="main" class="container">
 
       <section>
+
+        
 
         <div class="card" id="resultados" style="display: block;">
           
@@ -281,44 +288,60 @@
           <div class="card-body">
 
             <div class="row mb-4">
-              <div class="col-md-4 col-12 mb-3">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Período:</p>
-                  <p class="font-weight-bold mb-1">lorem ipsum dolor sit amet</p>
+                
+                <div class="col-12 col-md-3">
+                    <div class="md-form">
+                        <p name="periodo" class="form-control" style="border: none">CAMBIAR</p>
+                        <label class="active">Período</label>
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-4 col-12 mb-3">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Dirección Sectorial:</p>
-                  <p class="font-weight-bold mb-1">lorem ipsum dolor sit amet</p>
+                <div class="col-12 col-md-3">
+                    <div class="md-form">
+                        <p name="direccionSectorial" class="form-control" style="border: none">CAMBIAR</p>
+                        <label class="active">Dirección Sectorial</label>
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-4 col-12 mb-3">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Área:</p>
-                  <p class="font-weight-bold mb-1">lorem ipsum dolor sit amet</p>
+                <div class="col-12 col-md-3">
+                    <div class="md-form">
+                        <p name="area" class="form-control" style="border: none">CAMBIAR</p>
+                        <label class="active">Área</label>
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-4 col-12 mb-3">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">TFL:</p>
-                  <p class="font-weight-bold mb-1">lorem ipsum dolor sit amet</p>
+                <div class="col-12 col-md-3">
+                    <div class="md-form">
+                        <p name="tfl" class="form-control" style="border: none">CAMBIAR</p>
+                        <label class="active">TFL</label>
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-4 col-12 mb-3">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Fecha Efectiva:</p>
-                  <p class="font-weight-bold mb-1">31/12/2023</p>
+                <div class="col-12 col-md-3">
+                    <div class="md-form">
+                        <p name="versionTFL" class="form-control" style="border: none">CAMBIAR</p>
+                        <label class="active">Versión TFL</label>
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-4 col-12 mb-3">
-                <div class="d-flex flex-wrap">
-                  <p class="fb-100 fb-lg-32 mb-1">Estado:</p>
-                  <p class="font-weight-bold mb-1">lorem ipsum dolor sit amet</p>
+                <div class="col-12 col-md-3">
+                    <div class="md-form">
+                        <p name="fechaEfectiva" class="form-control" style="border: none">CAMBIAR</p>
+                        <label class="active">Fecha Efectiva</label>
+                    </div>
                 </div>
-              </div>
+
+                <div class="col-12 col-md-3">
+                    <div class="md-form">
+                        <p name="fechaPublicacion" class="form-control" style="border: none">CAMBIAR</p>
+                        <label class="active">Fecha Publicación</label>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-start">
+                    <div id="mensaje" style="visibility: hidden;" class="text-small flex-md-row flex-column legends select d-flex">
+                      <i class="material-icons mr-4 icon-lg" style="color: #c00; margin-right: 0px !important; font-size: 1.7em !important"></i>
+                      <p class="mx-2 m-0 text-center" style="color: #c00; margin-top: 1px !important"></p>
+                    </div>
+                </div>
+
             </div>
-            
+
             <div class="row mb-4">
               <div class="col-12">
                 
@@ -331,7 +354,7 @@
 
             <div class="row mb-4">
               <div class="col-12">
-                <button type="button" onclick="abrirModalAgregarNuevaFila()" class="btn-add p-2">+ Agregar Nueva Fila a la Tabla</button>
+                <button type="button" onclick="abrirModalAgregarNuevaDescripcion()" class="btn-add p-2">+ Agregar Nueva Fila a la Tabla</button>
               </div>
             </div>
 
@@ -346,12 +369,16 @@
                   <span>Volver</span>
                 </button>
                 <div>
-                  <button id="btnVolverResultados" class="btn btn-secondary waves-effect waves-light">
-                    <span>Guardar Borrador</span>
-                  </button>
-                  <button id="btnVolverResultados" class="btn btn-default waves-effect waves-light">
-                    <span>Guardar y Publicar</span>
-                  </button>
+
+                    <button type="button" data-target="#ModalGuardarBorrador" data-toggle="modal" class="deshabilitar-publicado btn btn-secondary waves-effect waves-light">
+                       <span>Guardar Borrador</span>
+                    </button>
+
+
+                    <button type="button" onclick="abrirModalGuardarPublicar()" class="deshabilitar-publicado btn btn-default waves-effect waves-light">
+                        Guardar y Publicar
+                    </button>
+
                 </div>
               </div>
 
@@ -360,6 +387,8 @@
           </div>
           
         </div>
+
+        
 
         <div class="card" id="editar" style="display: none">
 
@@ -392,8 +421,19 @@
 
               <div class="col-12 col-md-4">
                 <div class="md-form">
-                    <select name="tipoAsignatura" class="chosen-select" searchable="Buscar">
+                    <select name="tipoAsignaturaNcorr" class="chosen-select" searchable="Buscar">
                         <option value="" selected>Seleccione</option> 
+                        
+                            <option value="82">COMÚN</option>
+                        
+                            <option value="101">PRUEBA DEF_T_ASIG_TFL 11-5-2023</option>
+                        
+                            <option value="103">PRUEBA_JOSE DEF_T_ASIG_TFL 12-5-2023</option>
+                        
+                            <option value="102">DESCRIPCIÓN PRUEBA JOSE_DEF_T_ASIG_TFL 4-4-2023</option>
+                        
+                            <option value="1">TRONCAL INTRODUCTORIO	</option>
+                        
                     </select>
                     <label class="active">Tipo de Asignatura</label>
                 </div>
@@ -425,7 +465,7 @@
                   <span>Volver</span>
                 </button>
 
-                <button onclick="actualizarDetalle()" class="btn btn-default waves-effect waves-light">
+                <button onclick="actualizarDescripcion()" class="deshabilitar-publicado btn btn-default waves-effect waves-light">
                   <span>Guardar Cambios</span>
                 </button>
               </div>
@@ -442,7 +482,8 @@
 
   </div>
 
-    <div class="modal fade" id="ModalAgregarNuevaFila" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal fade" id="ModalAgregarNuevaDescripcion" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -452,8 +493,6 @@
               </button>
             </div>
             <div class="modal-body">
-
-               <!-- ============================================================== -->
 
                 <div class="row mb-4">
 
@@ -468,8 +507,19 @@
 
                   <div class="col-12 col-md-4">
                     <div class="md-form">
-                        <select name="tipoAsignatura" class="chosen-select" searchable="Buscar">
+                        <select name="tipoAsignaturaNcorr" class="chosen-select" searchable="Buscar">
                             <option value="" selected>Seleccione</option> 
+                            
+                                <option value="82">COMÚN</option>
+                            
+                                <option value="101">PRUEBA DEF_T_ASIG_TFL 11-5-2023</option>
+                            
+                                <option value="103">PRUEBA_JOSE DEF_T_ASIG_TFL 12-5-2023</option>
+                            
+                                <option value="102">DESCRIPCIÓN PRUEBA JOSE_DEF_T_ASIG_TFL 4-4-2023</option>
+                            
+                                <option value="1">TRONCAL INTRODUCTORIO	</option>
+                            
                         </select>
                         <label class="active">Tipo de Asignatura</label>
                     </div>
@@ -486,17 +536,189 @@
   
                 </div>
 
-                <!-- ============================================================== -->
-
                 <div id="acordeon-niveles-descripcion-crear"></div>
 
             </div>
             <div class="modal-footer justify-content-end">
               <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
 
-              <button type="button" onclick="agregarNuevaFila()" 
+              <button type="button" onclick="agregarNuevaDescripcion()" 
               class="deshabilitar-publicado btn mx-2 btn-default waves-effect waves-light">Guardar</button>
 
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalEliminarDescripcion" tabindex="-1" role="dialog" aria-labelledby="Danger" aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-sm modal-danger" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="heading lead">Eliminar</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="material-icons icon-3x mb-3 animated rotateIn">delete</i>
+                        <p>El detalle será eliminado</p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button class="btn btn-secondary waves-effect px-3 px-3" data-dismiss="modal">Cancelar</button>
+                    <button onclick="eliminarDescripcion()" class="btn btn-default px-3 px-3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalEditarProducto" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <p class="heading lead">Editar</p>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row mb-4">
+
+                  <div class="col-12 col-md-4">
+                      <div class="md-form">
+                          <select name="prelacion" class="chosen-select" searchable="Buscar">
+                              <option value="" selected>Seleccione</option> 
+                          </select>
+                          <label class="active">Prelación</label>
+                      </div>
+                  </div>
+
+
+  
+
+  
+                </div>
+
+                <div id="acordeon-niveles-producto-editar"></div>
+
+            </div>
+            <div class="modal-footer justify-content-end">
+              <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
+
+              <button type="button" onclick="actualizarProducto()" 
+              class="deshabilitar-publicado btn mx-2 btn-default waves-effect waves-light">Guardar</button>
+
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalEliminarProducto" tabindex="-1" role="dialog" aria-labelledby="Danger" aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-sm modal-danger" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="heading lead">Eliminar</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="material-icons icon-3x mb-3 animated rotateIn">delete</i>
+                        <p>El detalle será eliminado</p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button class="btn btn-secondary waves-effect px-3 px-3" data-dismiss="modal">Cancelar</button>
+                    <button onclick="eliminarProducto()" class="btn btn-default px-3 px-3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalGuardarBorrador" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-notify modal-warning" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <p class="heading lead">Guardar Borrador</p>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            
+              <div class="row mb-4">
+
+                <div class="col-md-12">
+                  <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
+                  <p class="text-center m-0">
+                    Se guardar&aacute; el resultado de las cualificaciones seleccionadas sin fecha de publicaci&oacute;n.
+                  </p>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <div class="col-12 justify-content-center d-flex flex-wrap">
+
+                <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
+
+                <button type="button" onclick="guardarBorrador()" 
+                class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Aceptar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalGuardarPublicar" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-notify modal-warning" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <p class="heading lead">Guardar y Publicar</p>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="row mb-4">
+
+                <div class="col-md-12">
+                  <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
+                  <p class="text-center m-0">
+                    Se guardará el resultado de las cualificaciones seleccionadas.
+                  </p>
+                </div>
+
+              </div>
+              <div class="row mb-4">
+
+                <div class="col-12 col-md-6 offset-3">
+                    <div class="md-form mb-3">
+
+                        <input name="fechaPublicacion" type="text"
+                        class="datepicker-input form-control" placeholder="DD/MM/AAAA"
+                        data-position="bottom center" autocomplete="off" readonly="readonly" />
+
+                        <label class="active">Seleccione la fecha de Publicación</label>
+                    </div>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <div class="col-12 justify-content-center d-flex flex-wrap">
+                <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light"
+                data-dismiss="modal">Cancelar</button>
+
+                <button type="button" onclick="guardar_y_publicar()"
+                class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Aceptar</button>
+              </div>
             </div>
           </div>
         </div>
@@ -531,9 +753,29 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
-  <script src="datos.js"></script>
+    <!-- Select 2-->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-  <script src="index.js"></script>
+    <script>
+
+        this.listaCboProductos = [];
+        this.listaCboProductos.push({ codigo: "2", descripcion: "COD_PROD_01 - Cursos de Oficios o Básicos" });
+        this.listaCboProductos.push({ codigo: "21", descripcion: "COD_PROD_02 - (Asignaturas Técnico Nivel Superior)" });
+        this.listaCboProductos.push({ codigo: "22", descripcion: "COD_PROD_03 - Título Técnico Nivel Superior" });
+        
+
+        this.nivelesMctp = [];
+        this.nivelesMctp.push({ def_nmctp_ncorr: 181, descripcion: "2" });
+        this.nivelesMctp.push({ def_nmctp_ncorr: 182, descripcion: "3" });
+        this.nivelesMctp.push({ def_nmctp_ncorr: 183, descripcion: "4" });
+        this.nivelesMctp.push({ def_nmctp_ncorr: 184, descripcion: "5" });
+        
+
+    </script>
+
+    <script src="datos.js"></script>
+
+    <script src="index.js"></script>
 
 </body>
 

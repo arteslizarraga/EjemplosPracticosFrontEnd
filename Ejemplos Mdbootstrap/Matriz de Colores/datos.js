@@ -15,6 +15,22 @@ function obtenerColoresDescripcion()
     ];
 }
 
+function obtenerColoresProductos()
+{
+    return [
+        { codigo: "#ff1f1f", descripcion: "Opción 01" },
+        { codigo: "#cc0000", descripcion: "Opción 02" },
+        { codigo: "#a70000", descripcion: "Opción 03" },
+        { codigo: "#ff8585", descripcion: "Opción 04" },
+        { codigo: "#8cf5eb", descripcion: "Opción 05" },
+        { codigo: "#b2dfdb", descripcion: "Opción 06" },
+        { codigo: "#00bfa5", descripcion: "Opción 07" },
+        { codigo: "#14766d", descripcion: "Opción 08" },
+        { codigo: "#141c64", descripcion: "Opción 09" },
+        { codigo: "#051cc4", descripcion: "Opción 10" }
+    ];
+}
+
 function obtenerNivelesMctp()
 {
     return [
@@ -24,6 +40,16 @@ function obtenerNivelesMctp()
         { def_nmctp_ncorr: 4, descripcion: "Descripcion Nivel 4" },
         { def_nmctp_ncorr: 5, descripcion: "Descripcion Nivel 5" }
     ];
+
+ 
+    //return [
+    //    { "def_nmctp_ncorr": "82","descripcion":"COMÚN"},
+	   // {"def_nmctp_ncorr":"101","descripcion":"PRUEBA DEF_T_ASIG_TFL 11-5-2023"},
+	   // {"def_nmctp_ncorr":"103","descripcion":"PRUEBA_JOSE DEF_T_ASIG_TFL 12-5-2023"},
+    //    { "def_nmctp_ncorr": "102","descripcion":"DESCRIPCIÓN PRUEBA JOSE_DEF_T_ASIG_TFL 4-4-2023"},
+    //    { "def_nmctp_ncorr": "1","descripcion":"TRONCAL INTRODUCTORIO\t"}
+    //];
+    
 }
 
 function obtenerListaObjetos()
@@ -32,8 +58,9 @@ function obtenerListaObjetos()
         {
             prelacion: 1,
             tipoAsignatura: "Tipo Asignatura 1",
+            def_t_asig_tfl_ncorr: 1,
             tipoOrdenAsignatura: "Ejemplo",
-            niveles: [
+            descripciones: [
                 { def_nmctp_ncorr: 1, descripcion: "Descripcion Nivel 1", color: "#ff1f1f" },
                 { def_nmctp_ncorr: 2, descripcion: "Descripcion Nivel 2", color: "#cc0000" },
                 { def_nmctp_ncorr: 3, descripcion: "Descripcion Nivel 3", color: "#a70000" },
@@ -44,8 +71,9 @@ function obtenerListaObjetos()
         {
             prelacion: 2,
             tipoAsignatura: "Tipo Asignatura 2",
+            def_t_asig_tfl_ncorr: 1,
             tipoOrdenAsignatura: "Ejemplo",
-            niveles: [
+            descripciones: [
                 { def_nmctp_ncorr: 1, descripcion: "Descripcion Nivel 1", color: "#ff1f1f" },
                 { def_nmctp_ncorr: 2, descripcion: "Descripcion Nivel 2", color: "#cc0000" },
                 { def_nmctp_ncorr: 3, descripcion: "Descripcion Nivel 3", color: "#a70000" },
@@ -56,8 +84,9 @@ function obtenerListaObjetos()
         {
             prelacion: 3,
             tipoAsignatura: "Tipo Asignatura 3",
+            def_t_asig_tfl_ncorr: 1,
             tipoOrdenAsignatura: "Ejemplo",
-            niveles: [
+            descripciones: [
                 { def_nmctp_ncorr: 1, descripcion: "Descripcion Nivel 1", color: "#ff1f1f" },
                 { def_nmctp_ncorr: 2, descripcion: "Descripcion Nivel 2", color: "#cc0000" },
                 { def_nmctp_ncorr: 3, descripcion: "Descripcion Nivel 3", color: "#a70000" },
