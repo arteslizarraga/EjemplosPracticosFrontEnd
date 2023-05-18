@@ -10,8 +10,6 @@ this.indexDetalle = 0;
 this.listaObjetos = [];
 this.listaProductos = [];
 this.objeto = {};
-this.coloresDescripcion = obtenerColoresDescripcion();
-this.coloresProductos = obtenerColoresProductos();
 
 $(document).ready(function() 
 {
@@ -208,25 +206,25 @@ function obtenerDatos()
                            "descripcionNivel":"2",
                            "def_nmctp_ncorr":181,
                            "color":"#ff1f1f",
-                           "lista_def_productos_ncorr":[ "2", "21", "22" ]
+                           "lista_def_productos_ncorr": [ "2", "21", "22" ]
                         },
                         {
                            "descripcionNivel":"3",
                            "def_nmctp_ncorr":182,
                            "color":"#ff1f1f",
-                           "lista_def_productos_ncorr":[ "2", "21", "22" ]
+                           "lista_def_productos_ncorr": [ "2", "21", "22" ]
                         },
                         {
                            "descripcionNivel":"4",
                            "def_nmctp_ncorr":183,
                            "color":"#ff1f1f",
-                           "lista_def_productos_ncorr":[ "2", "21", "22" ]
+                           "lista_def_productos_ncorr": [ "2", "21", "22" ]
                         },
                         {
                            "descripcionNivel":"5",
                            "def_nmctp_ncorr":184,
                            "color":"#ff1f1f",
-                           "lista_def_productos_ncorr":[ "2", "21", "22" ]
+                           "lista_def_productos_ncorr": [ "2", "21", "22" ]
                         }
                      ]
                   }
@@ -235,7 +233,7 @@ function obtenerDatos()
             "errores":[
                
             ],
-            "status": 200,
+            "status":200,
             "mensajeExito":null
         };
 

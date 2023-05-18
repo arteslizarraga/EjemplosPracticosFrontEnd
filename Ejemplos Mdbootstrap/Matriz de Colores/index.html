@@ -743,33 +743,28 @@
 
 
 
-  <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
-  <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
-  <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
-  <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
-  <script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
-  <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>   
-  <script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>  
+<script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+<script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+<script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+<script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+<script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+<script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>   
+<script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>  
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <!-- Select 2-->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
 
-        this.listaCboProductos = [];
-        this.listaCboProductos.push({ codigo: "2", descripcion: "COD_PROD_01 - Cursos de Oficios o Básicos" });
-        this.listaCboProductos.push({ codigo: "21", descripcion: "COD_PROD_02 - (Asignaturas Técnico Nivel Superior)" });
-        this.listaCboProductos.push({ codigo: "22", descripcion: "COD_PROD_03 - Título Técnico Nivel Superior" });
+        this.listaCboProductos = [{"codigo":"2","descripcion":"COD_PROD_01 - Cursos de Oficios o Básicos"},{"codigo":"21","descripcion":"COD_PROD_02 - (Asignaturas Técnico Nivel Superior)"},{"codigo":"22","descripcion":"COD_PROD_03 - Título Técnico Nivel Superior"}];
         
+        this.nivelesMctp = [{"def_nmctp_ncorr":181,"descripcion":"2"},{"def_nmctp_ncorr":182,"descripcion":"3"},{"def_nmctp_ncorr":183,"descripcion":"4"},{"def_nmctp_ncorr":184,"descripcion":"5"}];
+        
+        this.coloresDescripcion = [{"codigo":"#ff1f1f","descripcion":"Opción 01"},{"codigo":"#cc0000","descripcion":"Opción 02"},{"codigo":"#a70000","descripcion":"Opción 03"},{"codigo":"#ff8585","descripcion":"Opción 04"},{"codigo":"#8cf5eb","descripcion":"Opción 05"},{"codigo":"#b2dfdb","descripcion":"Opción 06"},{"codigo":"#00bfa5","descripcion":"Opción 07"},{"codigo":"#14766d","descripcion":"Opción 08"},{"codigo":"#141c64","descripcion":"Opción 09"},{"codigo":"#051cc4","descripcion":"Opción 10"},{"codigo":"#4b5cc3","descripcion":"Opción 11"},{"codigo":"#cbd3ff","descripcion":"Opción 12"},{"codigo":"#ffe082","descripcion":"Opción 13"},{"codigo":"#ffc107","descripcion":"Opción 14"},{"codigo":"#ffa000","descripcion":"Opción 15"},{"codigo":"#ffa999","descripcion":"Opción 16"}]; 
 
-        this.nivelesMctp = [];
-        this.nivelesMctp.push({ def_nmctp_ncorr: 181, descripcion: "2" });
-        this.nivelesMctp.push({ def_nmctp_ncorr: 182, descripcion: "3" });
-        this.nivelesMctp.push({ def_nmctp_ncorr: 183, descripcion: "4" });
-        this.nivelesMctp.push({ def_nmctp_ncorr: 184, descripcion: "5" });
-        
+        this.coloresProductos = [{"codigo":"#ff1f1f","descripcion":"Opción 01"},{"codigo":"#cc0000","descripcion":"Opción 02"},{"codigo":"#a70000","descripcion":"Opción 03"},{"codigo":"#ff8585","descripcion":"Opción 04"},{"codigo":"#8cf5eb","descripcion":"Opción 05"},{"codigo":"#b2dfdb","descripcion":"Opción 06"},{"codigo":"#00bfa5","descripcion":"Opción 07"},{"codigo":"#14766d","descripcion":"Opción 08"},{"codigo":"#141c64","descripcion":"Opción 09"},{"codigo":"#051cc4","descripcion":"Opción 10"},{"codigo":"#4b5cc3","descripcion":"Opción 11"},{"codigo":"#cbd3ff","descripcion":"Opción 12"},{"codigo":"#ffe082","descripcion":"Opción 13"},{"codigo":"#ffc107","descripcion":"Opción 14"},{"codigo":"#ffa000","descripcion":"Opción 15"},{"codigo":"#ffa999","descripcion":"Opción 16"}]; 
 
     </script>
 
