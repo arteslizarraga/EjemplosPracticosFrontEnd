@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <title>PDFMake Convert Raw HTML to PDF Document</title>
+  <!-- pdfmake files: -->
+  <script src='https://cdn.jsdelivr.net/npm/pdfmake@latest/build/pdfmake.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/pdfmake@latest/build/vfs_fonts.min.js'></script>
+  <!-- html-to-pdfmake file: -->
+  <script src="https://cdn.jsdelivr.net/npm/html-to-pdfmake/browser.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+
+	body, html {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+	  font-family: Arial;
+	  font-size: 13px;                   /* Tamaño de las letras */
+	}
+
+	pagina {
+		background: white;
+		width: 1040px;      /* Largo de la seccion blanca de la hoja */
+		height: 1372px;     /* Carta: 1350px        Oficio: 1550px */
+		display: block;
+	}
+
+	.invoice-box {
+		padding: 30px;
+		min-height: 1300px;
+	}
+
+	p { word-break: break-word; }     /* Impedir textos enormes que desbordan la página */ 
+
+	ul {
+		list-style-type: initial;   /* Puntos negros */
+	}
+
+	/* Organizar tablas en caso de que sobrepasen la página */
+
+	tr {
+		page-break-before: always;
+		page-break-after: always;
+		page-break-inside: avoid;
+	}
+	table {
+		word-break: break-word;  /* Impedir que textos enormes dentro de la celda desbordan la página */
+	}
+	table td {
+		word-break: break-word;  /* Impedir que textos enormes dentro de la celda desbordan la página */
+	}
+
+	.tabla-portada { height: 100%; width: 100%; border-collapse: collapse; }
+	.tabla-portada tr:nth-child(1) { height: 30%; }
+	.tabla-portada tr:nth-child(2) { height: 55%; }
+	.tabla-portada tr:nth-child(3) { height: 15%; }
+
+	.tabla-portada td {
+		/* border: 1px solid black; */
+		padding: 10px;
+		vertical-align: top;   /* Coloca el texto arriba */
+	}
+
+	/* =================================================================== */
+	/* Importante: Esto es solo para visualizar la página en el navegador como si fuera una hoja carta / oficio */
+
+	body {
+	  background: rgb(204,204,204);    /* Color de fondo para ver de que tamaño queda la pagina */
+	}
+
+	pagina {
+		margin: 0 auto;
+		margin-bottom: 0.5cm;
+	}
+
+	/* =================================================================== */
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">
+      Raw HTML to PDF Document
+    </h1>
+    
+	<div class="form-group">
+		<label for="html">Enter Raw HTML:</label>
+		<textarea class="form-control" id="html" cols="30" rows="10"></textarea>
+	</div>
+	<button type="button" onclick="generarPDF()" class="btn btn-danger btn-block">Convert to PDF</button>
+
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    function generarPDF()
+	{
+      var htmlString = $("#html").val();
+
+	//   var contenido = htmlToPdfmake(htmlString, {
+    //     window: window,
+    //     style: true
+    //   }); 
+      
+      var contenido = window.htmlToPdfmake(htmlString, {
+        window: window,
+        importCSS: true
+      }); 
+
+      var docDefinition = {
+		content: contenido,
+		pageSize: 'LETTER',
+  		pageMargins: [40, 40, 40, 40],
+	  };
+
+      pdfMake.createPdf(docDefinition).download();
+    }
+  </script>
+</body>
+</html>
