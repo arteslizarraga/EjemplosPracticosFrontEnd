@@ -6,6 +6,11 @@
 
 <body>
 
+	<label>Input solo números</label>
+	<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+
+	<br/><br/>
+	
 	<label>Formatear Número Entero</label>
 	<input name="valor" type="text" oninput="this.value = formatearNumeroEntero(this.value)" maxlength="30" />
 	
