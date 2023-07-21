@@ -34,6 +34,9 @@
         arreglo.sort((a, b) => a.nombre.localeCompare(b.nombre));     // Ordena alfabeticamente
 
         //console.log(arreglo.find(c => c.edad == 2));
+		
+		let sumaEdades = arreglo.reduce((acumulador, elemento) => acumulador + elemento.edad, 0);
+		console.log(`La suma de todas las edades es: ${sumaEdades}`); 
 
         const contar = (lambda) => arreglo.filter(lambda).length;  // Esta es una función expresada, es decir, a una variable se asigna una función anónima
 
