@@ -9,7 +9,22 @@
     <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
     <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
 
+    <style>
 
+        label.count {
+          right: 0;
+          left: auto;
+          top: -20px;
+          font-size: 85%;
+          transform: none !important;
+        }
+        
+        .tooltip .tooltip-inner{
+            max-width: 1000px !important;
+            text-align: left !important;
+        }
+
+    </style>
 </head>
 
 <body id="appBody" class="d-flex flex-column">
@@ -55,20 +70,18 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
+							
+								<div class="col-12 col-md-6">
+									<div class="md-form mb-3">
+										<textarea name="ejemplo-textarea" rows="20" placeholder="Probando" class="form-control md-textarea" 
+										maxlength="1000" autocomplete="off" oninput="actualizarTexto(this)">
+										</textarea>
+										
+										<label class="count">0/100</label>
+										<label class="active">No formateado</label>
+									</div>
+								</div>
 
-                                <div class="col-12 col-md-4">
-                                    <div class="md-form">
-                                        <textarea name="ejemplo-textarea" rows="20" placeholder="Probando"
-                                        maxlength="10000" class="form-control md-textarea"
-                                        autocomplete="off" oninput="actualizarTexto(this)"></textarea>
-
-                                        <!-- <textarea name="ejemplo-textarea" rows="20"
-                                        placeholder="Probando" maxlength="10000"
-                                        class="form-control md-textarea">Línea 1&#10;Línea 2&#10;Línea 3&#10;Línea 4</textarea> -->
-
-                                        <label class="active">No formateado</label>
-                                    </div>
-                                </div>
                                 <div class="col-12 col-md-4">
                                     <div class="md-form">
                                         <p name="resultado-impreso"></p>
@@ -140,7 +153,14 @@
 
         $(document).ready(function ()
         {
-            $('[data-toggle="tooltip"]').tooltip();
+            setTimeout(() => {
+				$('[data-toggle="tooltip"]').tooltip();
+			}, 1000); 
+			
+			limitarTextarea({
+				querySelector: "#miFormulario [name='ejemplo-textarea']",
+				maxlength: 1000
+			});
         });
 
         document.querySelector("#miFormulario [name='ejemplo-textarea']").value = texto;
@@ -167,6 +187,7 @@
         {
             texto = e.value;
             mostrarTextoImpreso(); 
+			$('[data-toggle="tooltip"]').tooltip();
         }
 
         function mostrarTextoImpreso() 
@@ -182,6 +203,41 @@
             document.querySelector("#miFormulario [name='ejemplo-textarea']").value = texto;
             mostrarTextoImpreso(); 
         }
+		
+		function limitarTextarea(datos) 
+		{
+			let textareas = document.querySelectorAll(datos.querySelector);
+			let maxlength = datos.maxlength;
+
+			// Itera sobre todos los textareas seleccionados
+			textareas.forEach((textarea) => 
+			{
+				let countLabel = textarea.closest(".md-form").querySelector(".count");
+				
+				// Función para actualizar el conteo de caracteres
+				function actualizarConteo() {
+				  const textoIngresado = textarea.value.length;
+				  countLabel.textContent = `${textoIngresado}/${maxlength}`;
+				}
+
+				// Escuchar el evento 'input' para detectar cambios en el textarea
+				textarea.addEventListener("input", function () 
+				{
+					let textoIngresado = textarea.value.length;
+					
+					if (textoIngresado > maxlength) {
+						textarea.value = textarea.value.substring(0, maxlength); // Limitar la longitud del texto
+						actualizarConteo(); // Actualizar el conteo después de recortar el texto
+					} 
+					else {
+						actualizarConteo(); // Actualizar el conteo normalmente
+					}
+				});
+
+				// Llamar a actualizarConteo inicialmente para configurar el conteo inicial
+				actualizarConteo();
+			});
+		}
 
     </script>
 
