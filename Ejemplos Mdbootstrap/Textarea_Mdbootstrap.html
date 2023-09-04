@@ -149,7 +149,14 @@
 
     <script>
 
-        let texto = "Línea 1\nLínea 2\nLínea 3\nLínea 4\nLínea 5\nLínea 6\nLínea 7\nLínea 8";
+        let texto = "Línea 1\\nLínea 2\nLínea 3\nLínea 4\nLínea 5\nLínea 6\nLínea 7\nLínea 8";
+		
+		let limpiarCaracteres = (texto) => {
+			if (texto == null) return null;
+			texto = texto.split("\\n").join("\n");      // Limpia saltos de línea con doble backslash
+			texto = texto.split("&quot;").join("\"");   // Reemplaza &quot; por "
+			return texto
+		};
 
         $(document).ready(function ()
         {
@@ -161,10 +168,11 @@
 				querySelector: "#miFormulario [name='ejemplo-textarea']",
 				maxlength: 1000
 			});
-        });
+			
+			$("#miFormulario [name='ejemplo-textarea']").val(limpiarCaracteres(texto));
 
-        document.querySelector("#miFormulario [name='ejemplo-textarea']").value = texto;
-        mostrarTextoImpreso();
+			mostrarTextoImpreso();
+        });
 
         function limitarTextoCelda(descripcion, size = 40)
         {
@@ -192,9 +200,22 @@
 
         function mostrarTextoImpreso() 
         {
-            document.querySelector("#miFormulario [name='resultado-impreso']").innerHTML = texto.split("\n").join("<br/>"); 
+		    let limpiarSaltosLineaDobles = (texto) => {
+				if (texto == null) return null;
+				return texto.split("\\n").join("\n");
+			};
+			
+			let colocar_BR = (texto) => {
+				if (texto == null) return null;
+				return texto.split("\n").join("<br/>");
+			};
+			
+			let resultadoImpreso = limpiarSaltosLineaDobles(texto);
+			resultadoImpreso = colocar_BR(resultadoImpreso);
+	
+			$("#miFormulario [name='resultado-impreso']").html(resultadoImpreso);
 
-            document.querySelector("#miFormulario [name='resultado-impreso-tooltip']").innerHTML = limitarTextoCelda(texto);
+            document.querySelector("#miFormulario [name='resultado-impreso-tooltip']").innerHTML = limitarTextoCelda(limpiarSaltosLineaDobles(texto));
         }
 
         function limpiarDatos() 
