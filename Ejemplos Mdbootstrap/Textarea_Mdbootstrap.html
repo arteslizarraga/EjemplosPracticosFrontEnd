@@ -193,7 +193,12 @@
                 
         function actualizarTexto(e)
         {
-            texto = e.value;
+		    let reemplazarCaracteres = (cadena) => {
+				if (cadena == null) return null;
+				return cadena.split(`"`).join("&quot;");
+			};
+	
+            texto = reemplazarCaracteres(e.value);
             mostrarTextoImpreso(); 
 			$('[data-toggle="tooltip"]').tooltip();
         }
