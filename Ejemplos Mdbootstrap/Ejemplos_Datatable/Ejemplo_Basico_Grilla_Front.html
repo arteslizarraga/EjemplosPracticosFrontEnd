@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Sistema de definici&oacute;n de Programas Formativos: M&oacute;dulos de Poblamiento del MCTP</title>
+    <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+    <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
+
+    <style>
+
+        /* ==================================================================================================== */
+        /* Grilla */
+
+        /* Botones Acciones */
+        .table button {
+          border: none;
+          background: transparent;
+          cursor: pointer;
+        }
+    
+        /* Esto hace que la tabla se descuadre al usar el scroll horizontal */
+        /* table.table-bordered th:last-child, table.table-bordered td:last-child {
+          max-width: 200px !important;
+        } */
+
+        /* ==================================================================================================== */
+
+        .tooltip .tooltip-inner{
+            max-width: 1000px !important;
+            text-align: left !important;
+        }
+    
+      </style>
+    
+
+</head>
+<body id="appBody" class="d-flex flex-column">
+
+    <div class="page-content">
+
+        <main class="container">
+            <section>
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 d-flex align-items-end justify-content-between">
+                                <h4 class="float-left heading h4-responsive mb-0">Ejemplo Grilla</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+
+                            <div class="col-12">
+                                <br/>
+
+                                <table id="TablaPrincipal" class="datatables table table-hover table-striped table-bordered m-0" width="100%">
+                                    <thead>
+                                      <tr>
+                                        <th data-orderable="false">Posición</th>
+                                        <th>Correlativo</th>
+                                        <th>Prelación</th>
+                                        <th>Nombre</th>
+
+                                        <!-- ============================================ -->
+                                        <th>PROBANDO</th>
+                                        <th>PROBANDO</th>
+                                        <th>PROBANDO</th>
+                                        <!-- ============================================ -->
+
+                                        <th>Acciones</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                  
+                                    </tbody>
+                                </table> 
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="row py-2 flex-row">
+                      
+                          <div class="col col-md-6  d-flex justify-content-start">
+
+                            <button type="button" class="btn btn-outline waves-effect waves-light">
+                                <span>Cualquiercosa</span>
+                            </button>
+                          </div>
+                          <div class="col col-md-6 d-flex justify-content-end">
+        
+                            <button type="button" class="btn btn-outline waves-effect waves-light">
+                                <span>Cualquiercosa</span>
+                            </button>
+
+                            <button type="button" class="btn btn-default waves-effect waves-light">
+                              <span>Cualquiercosa</span>
+                            </button>
+                        
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <footer class="page-footer">
+        <div class="container py-3">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="logo-gst">
+                    <img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png" alt="">
+                </div>
+                <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- SCRIPTS -->
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+    
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+
+    <script>
+
+        this.listaObjetos = [
+            { ncorr: 101, prelacion: 1, nombre: "Probando 1", descripcion: "Probando descripción 1", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 102, prelacion: 2, nombre: "Probando 2", descripcion: "Probando descripción 2", fecha: "07-11-2022", estado: "Inactivo" },
+            { ncorr: 103, prelacion: 3, nombre: "Probando 3", descripcion: "Probando descripción 3", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 104, prelacion: 4, nombre: "Probando 4", descripcion: "Probando descripción 4", fecha: "07-11-2022", estado: "Inactivo" },
+            { ncorr: 105, prelacion: 5, nombre: "Probando 5", descripcion: "Probando descripción 5", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 106, prelacion: 6, nombre: "Probando 6", descripcion: "Probando descripción 6", fecha: "07-11-2022", estado: "Inactivo" },
+            { ncorr: 107, prelacion: 7, nombre: "Probando 7", descripcion: "Probando descripción 7", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 108, prelacion: 8, nombre: "Probando 8", descripcion: "Probando descripción 8", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 109, prelacion: 9, nombre: "Probando 9", descripcion: "Probando descripción 9", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 110, prelacion: 10, nombre: "Probando 10", descripcion: "Probando descripción 10", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 111, prelacion: 11, nombre: "Probando 11", descripcion: "Probando descripción 11", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 112, prelacion: 12, nombre: "Probando 12", descripcion: "Probando descripción 12", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 113, prelacion: 13, nombre: "Probando 13", descripcion: "Probando descripción 13", fecha: "07-11-2022", estado: "Activo" },
+            { ncorr: 114, prelacion: 14, nombre: "Probando 14", descripcion: "Probando descripción 14", fecha: "07-11-2022", estado: "Activo" }
+        ];
+
+        this.registrosPorPagina = 5;
+        this.paginaActual = 0;
+
+        $(document).ready(function ()
+        {
+            construirGrilla();
+        });
+
+        function construirGrilla()
+        { 
+            let limitarTextoCelda = (descripcion, size = 40) =>
+            {
+                if (descripcion != null && typeof descripcion === "string")
+                {
+                    if (descripcion.includes("\\n")) descripcion = descripcion.split("\\n").join("\n");   // Reemplaza saltos de línea con doble backslash por uno normal
+
+                    if (descripcion.length > size)
+                    {
+                        let titulo = descripcion;   // El título sí puede contener <br>
+                        if (titulo.includes("\"")) titulo = titulo.replaceAll("\"", "&quot;");  // Reemplaza comillas dobles por &quot;
+                        if (titulo.includes("\n")) titulo = titulo.split("\n").join("<br/>");
+
+                        return `<container data-html="true" data-toggle="tooltip" data-placement="top" title="${titulo}" style="cursor: pointer">${descripcion.slice(0, size)} ...</container>`;
+                    }
+                }
+
+                return descripcion
+            };
+
+            let listaObjetosFiltrada = this.listaObjetos.map((x, index) => {
+                x.indexReal = index;    // Le agrega el index real, para que al filtrar, este index no se pierda    
+                return x;
+            });
+
+            showLoading();
+
+            $("#TablaPrincipal").DataTable({
+                data: listaObjetosFiltrada,
+                destroy: true,
+                pageLength: this.registrosPorPagina,
+                dom: '<"top top-grey"<"dataTables_actions"f>> <t> <"bottom mt-2 d-flex align-items-center justify-content-between flex-wrap"<"d-flex" il>p>',
+                //scrollY: "60vh",
+                scrollX: true,  // Si la tabla tiene poco tamaño hacia el lado, esto hace que se vea pequeña
+                //lengthMenu: [[10, 20, 30], [10, 20, 30]],
+                bLengthChange: false, // Oculta el select de registros por página
+                columnDefs: [
+                    //{ "width": "260px", "targets": 4 }  // Ancho de la columna acciones
+                ],
+                aaSorting: [],
+                processing: true,
+                //serverSide: true, 
+                filter: true,
+                orderMulti: false,
+                responsive: true,
+                fnDrawCallback: () => 
+                {
+                    hideLoading();
+
+                    setTimeout(() => {
+                        $('[data-toggle="tooltip"]').tooltip();  // Activar tooltips
+                    }, 200);   
+                },
+                columns: [
+                    { "className": "text-nowrap", "render": (data, type, row, meta) => row.indexReal },
+                    { "className": "text-nowrap", "searchable": true, "sortable": true, "render": (data, type, row, meta) => row.ncorr ?? "No tiene" },
+                    { data: "prelacion", "className": "text-nowrap", "searchable": true, "sortable": true },
+                    { "className": "text-nowrap", "render": (data, type, row, meta) => limitarTextoCelda(row.nombre) },
+
+                    //=========================================================>>>>>
+
+                    { "className": "text-nowrap", "render": (data, type, row, meta) => "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { "className": "text-nowrap", "render": (data, type, row, meta) => "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { "className": "text-nowrap", "render": (data, type, row, meta) => "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+
+                    //=========================================================>>>>>
+
+                    {
+                        "className": "text-nowrap", "sortable": false, "render": (data, type, row, meta) => 
+                        {
+                            return `<div class="d-flex justify-content-between">
+                                
+                                <button type="button" onclick="alert('${row.indexReal}')" class="btnEditFila mr-0 mr-md-4 d-flex align-items-center float-left">
+                                    <i class="material-icons mr-1 icon-lg grey-text">edit</i>
+                                    <span class="d-none d-md-inline">Responder</span>
+                                </button>
+
+                                <button type="button" onclick="alert('${row.indexReal}')" class="mr-0 mr-md-4 d-flex align-items-center float-left">
+                                    <i class="material-icons mr-1 icon-lg grey-text">assignment</i>
+                                    <span class="d-none d-md-inline">Cambiar Estado</span>
+                                </button>
+                                
+                            </div>`;
+                        }
+                    }
+                ]
+            })
+            .on("page.dt", () =>   // Al cambiar de página
+            {  
+                this.paginaActual = $("#TablaPrincipal").DataTable().page.info().page;
+            })
+            .page(this.paginaActual).draw(false);   
+            
+            setTimeout(() => {
+                $("#TablaPrincipal").DataTable().columns.adjust().page(this.paginaActual).draw(false);   // Endereza columnas descuadradas
+            }, 200);
+        }
+
+        function showLoading() {
+            $('#loadingOverlay').show();
+        }
+
+        function hideLoading() {
+            $('#loadingOverlay').hide();
+        }
+
+    </script>
+
+</body>
+</html>
