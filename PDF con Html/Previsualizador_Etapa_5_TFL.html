@@ -1,0 +1,802 @@
+<html>
+
+<head>
+    <style>
+        .tabla-reporte {
+            width:100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .tabla-reporte th, td {
+            border: 1px solid black;
+        }
+
+        .fila-cabecera {
+            background-color: gray; 
+            color: white;
+            font-weight: bold;
+        }
+        .fila-cabecera td{
+            padding: 15px;
+        }
+        .fila-cabecera-detalle{
+            background-color: #c0c0c0;
+            color: #333;
+            padding: 10px;
+        }
+        .fila-cabecera-detalle td{
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .fila-detalle h4{
+            padding: 10px;
+            text-decoration: underline;
+        }
+        .fila-detalle .fila-cabecera-detalle,
+        .fila-detalle .fila-cabecera-detalle th{
+            border: 1px solid;
+            padding: 10px;
+        }
+        tfoot{
+            font-weight: bold;
+        }
+
+        /* ================================================================================= */
+
+        /* Evita que se repita el encabezado de la tabla en páginas siguientes */
+        thead { display: table-header-group; }
+
+        /* Evita que se repita el cuerpo de la tabla en páginas siguientes. */
+        tbody { display: table-row-group; }
+
+        /* Evita que se divida una fila en dos páginas */
+        table, tr, td, th, tbody, thead, tfoot {
+            page-break-inside: avoid !important;
+        }
+
+        /* ================================================================================= */
+
+        /* Estilos para la tabla */
+        .tabla-reporte {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tabla-reporte th, .tabla-reporte td {
+            line-height: 1.5;
+            border: 1px solid black;
+            padding: 0.5em;
+        }
+
+        .fila-detalle td {
+            text-align: justify;
+            text-rendering: geometricPrecision;   /* Esto es muy importante, sino en el PDF el texto se sale de la pagina al hacer el text-align: justify */
+            word-break: break-word;
+        }
+
+        /* ================================================================================= */
+        /* Importante: Esto es solo para visualizar la página en el navegador como si fuera una hoja carta / oficio */
+
+        body {
+            font-family: Arial;
+            font-size: 13px;
+            /* Tamaño de las letras */
+            background: rgb(204, 204, 204);
+            /* Color de fondo para ver de que tamaño queda la pagina */
+        }
+
+        .pagina {
+            background: white;
+            width: 1040px;
+            /* Largo de la seccion blanca de la hoja */
+            /* height: 4000px; */
+            /* Carta: 1350px        Oficio: 1550px */
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+        }
+
+        .invoice-box {
+            padding: 30px;
+            /* Este es el margen todos los elementos de la pagina */
+            min-height: 1300px;
+        }
+
+        /* ================================================================================= */
+
+    </style>
+
+
+</head>
+
+<body>
+    <div class="pagina">
+        <div class="invoice-box"><br><br>
+
+            <img src="data:image/png;base64,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"
+            style="width: 200px; display: block; margin-left: auto;" />
+
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr>
+                        <td colspan="3" style="border: none;">
+                            <h2>General</h2>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Código de la Asignatura</td>
+                        <td>Nombre de la Asignatura</td>
+                        <td>Horas Totales</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>SVJ666</td>
+                        <td>Electivo I Alternativa B: Diagnósticos Energéticos para Instalaciones de Consumos Eléctricos
+                        </td>
+                        <td>10</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Tipo de Asignatura</td>
+                        <td>Área Formativa</td>
+                        <td>Función</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Practica</td>
+                        <td>De la Especialidad</td>
+                        <td>Evaluativa</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Horas Presenciales</td>
+                        <td>Horas Online</td>
+                        <td>Modalidad</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>10</td>
+                        <td>0</td>
+                        <td>Presencial</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-descriptor">
+                <thead>
+                    <tr>
+                        <td colspan="3" style="border: none;">
+                            <h2>Descriptor</h2>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Docente Elaborador</td>
+                        <td>Asesor Curricular</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Moisés Muñoz</td>
+                        <td>Moisés Muñoz</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Descripción</td>
+                        <td>Vinculación con el Medio</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Electivo I Alternativa B: Diagnósticos Energéticos para Instalaciones de Consumos Eléctricos
+                            es una asignatura Presencial, del área formativa de De la Especialidad, dictada en modalidad
+                            Presencial. Al finalizar, el estudiante será capaz de fsfs, considerando "Aprendizaje
+                            Continuo o Permanente", "Competencias Habilitantes", "Trabajo Colaborativo y Comunicación" y
+                            "Ética y Ciudadanía.". Esta es una asignatura evaluativa, por lo que contempla una unidad
+                            final que tiene el objetivo de realizar una evaluación intermedia del Perfil de Egreso.</td>
+                        <td> Las estrategias "Aprendizaje Basado en Desafíos (ABDe), Aprendizaje Basado en Investigación
+                            (ABI) y Aprendizaje Centrado en la Resolución de Problemas en el Aula (ACERPA)" favorecen el
+                            aprendizaje integrado al sector productivo y de servicios.</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Nivel MCTP</td>
+                        <td>Cualificación</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>2</td>
+                        <td>Gestión de operaciones gastronómicas </td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Perfil ChileValora</td>
+                        <td>UCL asociadas</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>CHEF EJECUTIVO </td>
+                        <td>SUPERVISAR INVENTARIO DE MATERIAS PRIMAS Y EQUIPAMIENTO DE COCINA, SEGÚN PROTOCOLOS Y
+                            PROCEDIMIENTOS DEL SECTOR CONFECCIONAR MENÚS Y CARTAS DE PREPARACIONES CULINARIAS, DE
+                            ACUERDO A PROTOCOLOS Y PROCEDIMIENTOS DEL SECTOR SUPERVISAR LA PLANIFICACIÓN GASTRONÓMICA,
+                            SEGÚN PROTOCOLOS Y PROCEDIMIENTOS ESTABLECIDOS Y NORMATIVA LEGAL VIGENTE </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="3" style="text-align: center;">Cluster Competencias transversales</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Competencias Transversales</td>
+                        <td>Descripción</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td style="padding: 0.5em;">Aprendizaje Continuo o Permanente</td>
+                        <td style="padding: 0.5em;">Propone un énfasis en el saber analizar y actuar en un contexto
+                            caracterizado por la generación dinámica de información y de conocimiento, en permanente
+                            transformación, evaluando su trayectoria formativo laboral y actuando con autonomía y
+                            flexibilidad para proyectar sus desafíos de aprendizaje, integrando formatos híbridos e
+                            innovadores en su actualización, para el logro de sus objetivos personales y profesionales.
+                        </td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td style="padding: 0.5em;">Competencias Habilitantes</td>
+                        <td style="padding: 0.5em;">Busca Reforzar y Habilitar al estudiante en la alfabetización
+                            numérica, comunicacional y digital, como en pensamiento crítico, entendiéndolos como
+                            recursos claves a movilizar en &nbsp;proceso formativo superior y en su desarrollo
+                            profesional. </td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td style="padding: 0.5em;">Ética y Ciudadanía.</td>
+                        <td style="padding: 0.5em;">Propone un énfasis en el saber ser y convivir en una sociedad
+                            global, respetando códigos y normas sociales y específicas del trabajo, interactuando con
+                            personas y grupos de distintos orígenes y ámbitos en espacios presenciales y virtuales, y
+                            aportando activamente a los desafíos ambientales, los económicos y productivos de la
+                            sociedad, con un sentido crítico y constructivo.</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td style="padding: 0.5em;">Trabajo Colaborativo y Comunicación</td>
+                        <td style="padding: 0.5em;">Propone un énfasis en el saber actuar cooperativo y colaborativo en
+                            espacios presenciales y virtuales,&nbsp; y en el marco de las relaciones sociales y
+                            laborales,&nbsp; integrándose con flexibilidad en espacios intersectoriales e
+                            interdisciplinarios, y utilizando herramientas comunicacionales para el diálogo y la
+                            negociación, incluyendo herramientas digitales, para enfrentar desafíos complejos,
+                            contribuyendo colectivamente a la creación de valor.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr>
+                        <td colspan="2" style="border: none;">
+                            <h2>Unidades</h2>
+                        </td>
+                    </tr>
+                    <tr class="fila-cabecera">
+                        <td colspan="13" style="text-align: center;">Desglose de Horas por Unidad</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td rowspan="2" colspan="2" class="text-uppercase">Unidad de Aprendizaje</td>
+                        <td colspan="7" class="text-uppercase">Hrs. Presenciales</td>
+                        <td colspan="2" class="text-uppercase">Hrs. Online</td>
+                        <td rowspan="2" class="text-uppercase">Hrs. Totales</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td class="text-uppercase">H. Aula</td>
+                        <td class="text-uppercase">H. Lab.</td>
+                        <td class="text-uppercase">Tipo Lab.</td>
+                        <td class="text-uppercase">H. Taller</td>
+                        <td class="text-uppercase">Tipo Taller</td>
+                        <td class="text-uppercase">H. Terreno</td>
+                        <td class="text-uppercase">H. Campo Clinico</td>
+                        <td class="text-uppercase">Sincronicas</td>
+                        <td class="text-uppercase">Asincronicas</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td class="teunidad.-nowrap">27</td>
+                        <td class="teunidad.-nowrap">Unidad 1</td>
+                        <td class="teunidad.-nowrap">0</td>
+                        <td class="teunidad.-nowrap">0</td>
+                        <td class="teunidad.-nowrap">Lab 3</td>
+                        <td class="teunidad.-nowrap">0</td>
+                        <td class="teunidad.-nowrap"></td>
+                        <td class="teunidad.-nowrap">0</td>
+                        <td class="teunidad.-nowrap">0</td>
+                        <td class="teunidad.-nowrap">0</td>
+                        <td class="teunidad.-nowrap">0</td>
+                        <td class="teunidad.-nowrap">0</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td class="teunidad.-nowrap">28</td>
+                        <td class="teunidad.-nowrap">Unidad 2</td>
+                        <td class="teunidad.-nowrap">11</td>
+                        <td class="teunidad.-nowrap">100</td>
+                        <td class="teunidad.-nowrap">Enfermería</td>
+                        <td class="teunidad.-nowrap">11</td>
+                        <td class="teunidad.-nowrap"></td>
+                        <td class="teunidad.-nowrap">10</td>
+                        <td class="teunidad.-nowrap">111</td>
+                        <td class="teunidad.-nowrap">1</td>
+                        <td class="teunidad.-nowrap">11</td>
+                        <td class="teunidad.-nowrap">255</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="fila-detalle">
+                        <td colspan="2" class="text-nowrap font-weight-bold">TOTAL</td>
+                        <td class="tet-nowrap font-weight-bold">11</td>
+                        <td class="tet-nowrap font-weight-bold">100</td>
+                        <td class="tet-nowrap font-weight-bold">N/A</td>
+                        <td class="tet-nowrap font-weight-bold">11</td>
+                        <td class="tet-nowrap font-weight-bold">N/A</td>
+                        <td class="tet-nowrap font-weight-bold">10</td>
+                        <td class="tet-nowrap font-weight-bold">111</td>
+                        <td class="tet-nowrap font-weight-bold">1</td>
+                        <td class="tet-nowrap font-weight-bold">11</td>
+                        <td class="tet-nowrap font-weight-bold">255</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="8" style="text-align: center;">Desglose por Unidad</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Unidad de Aprendizaje</td>
+                        <td>Horas <br>Presenciales</td>
+                        <td>Horas <br>Online</td>
+                        <td>Aprendizajes <br>Esperados</td>
+                        <td>Criterios de <br>Evaluación</td>
+                        <td>Contenidos</td>
+                        <td>H. Terreno</td>
+                        <td>Actividades Mínimas Obligatorias</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td rowspan="3"> Unidad 1 </td>
+                        <td rowspan="3"> 0 </td>
+                        <td rowspan="3"> 0 </td>
+                        <td rowspan="3"> 1.1 - Aprendizaje </td>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.1.1 - Hola3</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.1.2 - Hola3</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.1.3 - Hola3</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">- fdfd</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td rowspan="3"> 0 </td>
+                        <td rowspan="3"> Remítase al material instruccional elaborado por el Área </td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.2.1 - fdfdfd</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.2.2 - fdfd</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">- fdfdf</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.3.1 - AprendizajeAprendizaje</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.3.2 - Aprendizaje</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.3.3 - Aprendizaje</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.3.4 - Aprendizaje</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">- Aprendizaje</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">- Aprendizaje</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td rowspan="1"> Unidad 2 </td>
+                        <td rowspan="1"> 243 </td>
+                        <td rowspan="1"> 12 </td>
+                        <td rowspan="1"> 2.1 - Aprendizaje Unidad 2 </td>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">2.1.1 - Criterios de Evaluación 1</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">2.1.2 - Criterios de Evaluación </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">- Criterios de Evaluación</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">- Criterios de Evaluación</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">- Criterios de Evaluación</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">- Criterios de Evaluación</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td rowspan="1"> 10 </td>
+                        <td rowspan="1"> Remítase al material instruccional elaborado por el Área </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr>
+                        <td colspan="2" style="border: none;">
+                            <h2>Estrategias Metodológicas</h2>
+                        </td>
+                    </tr>
+                    <tr class="fila-cabecera">
+                        <td colspan="2" style="text-align: center;">Estrategia Metodológica</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td class="text-uppercase">Unidad de Aprendizaje</td>
+                        <td class="text-uppercase">Estrategia Didáctica</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td>Unidad 1</td>
+                        <td>Aprendizaje Basado en Desafíos (ABDe)</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Unidad 1</td>
+                        <td>Aprendizaje Basado en Investigación (ABI)</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Unidad 1</td>
+                        <td>Aprendizaje Centrado en la Resolución de Problemas en el Aula (ACERPA)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="2" style="text-align: center;">Técnicas de Aprendizaje</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td class="text-uppercase">Unidad de Aprendizaje</td>
+                        <td class="text-uppercase">Complementada con la(s) Técnica(s)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td>Unidad</td>
+                        <td>Técnicas</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Unidad 1</td>
+                        <td>Clase Expositiva (CEX) </td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Unidad 1</td>
+                        <td>Clase Invertida (CI)</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Unidad 1</td>
+                        <td>Curación de contenidos (CC)</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Unidad 1</td>
+                        <td>Debate (DBT)</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Unidad 1</td>
+                        <td>Demostración (DMT)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr>
+                        <td colspan="8" style="border: none;">
+                            <h2>Sistema de Evaluación</h2>
+                            <p>Para resguardar el logro de los aprendizajes esperados de esta asignatura, el sistema de
+                                evaluación debe incluir las siguientes instancias evaluativas:</p>
+                            <ul>
+                                <li><strong>Evaluación Diagnóstica:</strong> Evaluación de inicio del proceso formativo,
+                                    orientada a indagar en los conocimientos previos de los estudiantes, como punto de
+                                    partida del módulo. Esta evaluación puede ser considerada para la evaluación final,
+                                    pues permite detectar el resultado final del proceso del aprendizaje de los
+                                    estudiantes. </li>
+                                <li><strong>Evaluación Formativa:</strong> Evaluación de proceso, destinada a la entrega
+                                    de retroalimentación del avance de los estudiantes, con foco en la mejora del
+                                    proceso de enseñanza y aprendizaje. </li>
+                                <li><strong>Evaluación Sumativa:</strong> Evaluación final de cada unidad de
+                                    aprendizaje, dirigida a valorar los resultados del aprendizaje de los estudiantes y
+                                    verificar el logro del estándar de aprendizaje. </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="fila-cabecera">
+                        <td colspan="8" style="text-align: center;">Estrategia Metodológica</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td class="text-uppercase">Nº Evaluación</td>
+                        <td class="text-uppercase">UA</td>
+                        <td class="text-uppercase">Evidencia</td>
+                        <td class="text-uppercase">Criterios de Evaluación</td>
+                        <td class="text-uppercase">Situación de Evaluación</td>
+                        <td class="text-uppercase">Instrumento de Evaluación</td>
+                        <td class="text-uppercase">% Parcial</td>
+                        <td class="text-uppercase">Total</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td>1</td>
+                        <td> </td>
+                        <td>v</td>
+                        <td></td>
+                        <td>vd</td>
+                        <td>d</td>
+                        <td>80%</td>
+                        <td rowspan="2">105%</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>2</td>
+                        <td> </td>
+                        <td>Respuestas de los estudiantes a evaluaciones breves online sobre los contenidos estudiados
+                            en la 0</td>
+                        <td></td>
+                        <td>Cada estudiante rendirá individualmente una evaluación breve online para cada (unidad o
+                            semana), la cual estará disponible en el Ambiente Aprendizaje INACAP (AAI) de la asignatura.
+                            Para el cálculo de la nota, se considerarán las (2 a 6) mejores</td>
+                        <td>Evaluaciones online (pruebas de respuestas breves)</td>
+                        <td>25%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte">
+                <thead>
+                    <tr>
+                        <td colspan="2" style="border: none;">
+                            <h2>Perfil Docente</h2>
+                        </td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td class="text-uppercase">Preferencia</td>
+                        <td class="text-uppercase">Título <br>Profesional</td>
+                        <td class="text-uppercase">Grado <br>Académico</td>
+                        <td class="text-uppercase">Experiencia Docente</td>
+                        <td class="text-uppercase">Experiencia<br> Profesional</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td>1</td>
+                        <td> del área de Gestión</td>
+                        <td>Doctor</td>
+                        <td>10</td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>1</td>
+                        <td> del área de Gestión</td>
+                        <td>Doctor en Biología</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-perfil-docente">
+                <tbody>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Certificaciones Habilitantes</td>
+                        <td>Dominio de Herramientas</td>
+                        <td>Observaciones</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>El perfil docente se definió como el conjunto de conocimientos, habilidades y destrezas
+                            necesarios que posee un profesor determinado para el desempeño de una profesión, conforme a
+                            las condiciones socioculturales del contexto donde interactúa.</td>
+                        <td>El perfil docente se definió como el conjunto de conocimientos, habilidades y destrezas
+                            necesarios que posee un profesor determinado para el desempeño de una profesión, conforme a
+                            las condiciones socioculturales del contexto donde interactúa.</td>
+                        <td>El perfil docente se definió como el conjunto de conocimientos, habilidades y destrezas
+                            necesarios que posee un profesor determinado para el desempeño de una profesión, conforme a
+                            las condiciones socioculturales del contexto donde interactúa.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr>
+                        <td colspan="2" style="border: none;">
+                            <h2>Bibliografía</h2>
+                        </td>
+                    </tr>
+                    <tr class="fila-cabecera">
+                        <td colspan="8" style="text-align: center;">Bibliografía Básica</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Título <br>Profesional</td>
+                        <td>Autor</td>
+                        <td>Año</td>
+                        <td>ISBN/ISSN</td>
+                        <td>Editorial</td>
+                        <td>Fuente</td>
+                        <td>Nombre Recurso Digital</td>
+                        <td>Tipo de Material</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td>Probabilidad</td>
+                        <td>Blanco Castañeda, Liliana</td>
+                        <td>2010</td>
+                        <td>9789587750393</td>
+                        <td>Universidad Nacional de Colombia</td>
+                        <td>-</td>
+                        <td>e-Libro</td>
+                        <td>ebook</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Probabilidad y estadística : para bachilleratos tecnológicos</td>
+                        <td>Salazar Guerrero, Ludwing Javier</td>
+                        <td>2018</td>
+                        <td>9786077448860</td>
+                        <td>Grupo Editorial Patria</td>
+                        <td>-</td>
+                        <td>e-Libro</td>
+                        <td>ebook</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Problemas resueltos de iniciación al análisis estadístico de datos</td>
+                        <td>Martín Arevalillo, Jorge</td>
+                        <td>2012</td>
+                        <td>9788436262131</td>
+                        <td>UNED - Universidad Nacional de Educación a Distancia</td>
+                        <td>-</td>
+                        <td>e-Libro</td>
+                        <td>ebook</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Técnicas de la auditoría informática</td>
+                        <td>Derrien, Yann</td>
+                        <td>1994</td>
+                        <td>9781449209667</td>
+                        <td>Marcombo</td>
+                        <td>-</td>
+                        <td>e-Libro</td>
+                        <td>ebook</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Tecnologías del hidrógeno y perspectivas para Chile. Disponible en:
+                            https://4echile-datastore.s3.eu-central-1.amazonaws.com/wp-content/uploads/2020/07/24213909/Tecnologías-del-hidrógeno-y-perspectivas-para-Chile_2019.pdf
+                        </td>
+                        <td>Vásquez, Rodrigo</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>GIZ</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Sitio Web</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="8" style="text-align: center;">Bibliografía Sugerida</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Título <br>Profesional</td>
+                        <td>Autor</td>
+                        <td>Año</td>
+                        <td>ISBN/ISSN</td>
+                        <td>Editorial</td>
+                        <td>Fuente</td>
+                        <td>Nombre Recurso Digital</td>
+                        <td>Tipo de Material</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr>
+                        <td colspan="2" style="border: none;">
+                            <h2>Recursos de Aprendizaje</h2>
+                        </td>
+                    </tr>
+                    <tr class="fila-cabecera">
+                        <td colspan="3" style="text-align: center;">Equipo</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td class="text-uppercase">Equipo</td>
+                        <td class="text-uppercase">Especificación Técnica</td>
+                        <td class="text-uppercase">Cantidad</td>
+                    </tr>
+                </thead>
+                <tbody ng-reflect-ng-switch="false">
+                    <tr>
+                        <td colspan="3" class="text-nowrap">
+                            <p class="mb-0 text-center">No Aplica</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="3" style="text-align: center;">Insumo</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td class="text-uppercase">Insumo</td>
+                        <td class="text-uppercase">Descripción</td>
+                        <td class="text-uppercase">Cantidad</td>
+                    </tr>
+                </thead>
+                <tbody ng-reflect-ng-switch="true">
+                    <tr class="fila-detalle">
+                        <td>Insumo 1</td>
+                        <td>sdsads</td>
+                        <td>10</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="2" style="text-align: center;">Software</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td class="text-uppercase">Software</td>
+                        <td class="text-uppercase">Descripción</td>
+                    </tr>
+                </thead>
+                <tbody ng-reflect-ng-switch="true">
+                    <tr class="fila-detalle">
+                        <td>ACL</td>
+                        <td>moises</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
