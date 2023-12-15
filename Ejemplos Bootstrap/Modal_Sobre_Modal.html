@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <style>
+        .modal-oscuro::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Ajusta el valor alfa para controlar la opacidad del oscurecimiento */
+            z-index: 1050; /* Asegúrate de que el fondo oscuro esté detrás del modal */
+        }
+    </style>
+	
+    <script>
+	
+		function oscurecerModal(querySelector) {
+			// $(querySelector).css("opacity", "0.5");
+            $(querySelector).addClass("modal-oscuro");
+        }
+
+        function aclararModal(querySelector) {
+			// $(querySelector).css("opacity", "");
+            $(querySelector).removeClass("modal-oscuro");
+        }
+		
+		function definirModal(datos) 
+		{
+			if (datos.open != null && typeof datos.open === "function")
+				$(datos.querySelector).on("show.bs.modal", datos.open);
+			
+			if (datos.close != null && typeof datos.close === "function")
+				$(datos.querySelector).on("hidden.bs.modal", datos.close);
+		}
+			
+        $(document).ready(function () 
+		{
+			definirModal({
+				querySelector: "#modal2",
+				open: () => {
+					oscurecerModal("#modal1");
+				},
+				close: () => {
+					aclararModal("#modal1");
+				}
+			});
+			
+            //$("#modal2").on("show.bs.modal", () => oscurecerModal("#modal1"));
+            //$("#modal2").on("hidden.bs.modal", () => aclararModal("#modal1"));
+        });
+		
+		function abrirPrimerModal() {
+			$("#modal1").modal("show");
+		}
+		
+		function abrirSegundoModal() {
+			$("#modal2").modal("show");
+		}
+		
+    </script>
+</head>
+
+<body>
+    <div class="container theme-showcase">
+	
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">
+            Abrir Modal 1 Directamente
+        </button>
+		
+		<button type="button" onclick="abrirPrimerModal()" class="btn btn-success">
+            Abrir Modal 1 con Función
+        </button>
+		
+        <!-- Modal 1 -->
+        <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal 1</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Contenido del Modal 1</p>
+						
+						<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+						<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+						
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal2">
+                            Abrir Modal 2
+                        </button>
+						
+						<button type="button" onclick="abrirSegundoModal()" class="btn btn-success">
+							Abrir Modal 2 con Función
+						</button>
+						
+						<button type="button" onclick="alert('aaaaaaa')" class="btn btn-info">
+                            Probando
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 2 -->
+        <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal 2</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Contenido del Modal 2</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

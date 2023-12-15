@@ -2,22 +2,47 @@
 
 <head>
     <style>
-		body, table {
-		  font-family: 'Calibri', sans-serif;
-		}
-		
-        .tabla-reporte {
-            width:100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
+
+        /* ========================================================== */
+        /* PROBANDO */
+
+        /* .encabezado-grilla {
+            width:100%; border-collapse: collapse;
         }
 
+        .encabezado-grilla .titulo-principal {
+            border: none; font-size: 1.5em; font-weight: bold; padding-bottom: 1em;
+        }
+
+        .encabezado-grilla .titulo-secundario {
+            border-bottom: none; text-align: center; padding: 0.5em; background-color: gray; color: white; font-weight: bold;
+        } */
+
+        /* ========================================================== */
+		
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,400;1,500;1,700&display=swap');
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .fuente-normal { font-weight: normal; }
+        /* .gris-claro { background-color: #f4f4f4; } */
+
+        body, table {
+            font-family: 'Roboto', sans-serif;
+        }
+        .tabla-reporte {
+            width:100%;
+            /* border-collapse: collapse; */
+            margin-bottom: 15px;
+        }
         .tabla-reporte th, td {
             border: 1px solid black;
         }
-
         .fila-cabecera {
-            background-color: gray; 
+            background-color: gray;
             color: white;
             font-weight: bold;
         }
@@ -26,14 +51,12 @@
         }
         .fila-cabecera-detalle{
             background-color: #c0c0c0;
-            color: #333;
             padding: 10px;
         }
         .fila-cabecera-detalle td{
             padding: 10px;
             font-weight: bold;
         }
-
         .fila-detalle h4{
             padding: 10px;
             text-decoration: underline;
@@ -46,9 +69,7 @@
         tfoot{
             font-weight: bold;
         }
-
         /* ================================================================================= */
-
         /* Evita que se repita el encabezado de la tabla en páginas siguientes */
         thead { display: table-header-group; }
 
@@ -61,19 +82,17 @@
         }
 
         /* ================================================================================= */
-
         /* Estilos para la tabla */
         .tabla-reporte {
             width: 100%;
-            border-collapse: collapse;
+            /* border-collapse: collapse; */
         }
-
         .tabla-reporte th, .tabla-reporte td {
             line-height: 1.5;
             border: 1px solid black;
-            padding: 0.5em;
+            padding: 0.2em;
+            vertical-align: top;
         }
-
         .fila-detalle td {
             text-align: justify;
             text-rendering: geometricPrecision;   /* Esto es muy importante, sino en el PDF el texto se sale de la pagina al hacer el text-align: justify */
@@ -112,7 +131,6 @@
 
     </style>
 
-
 </head>
 
 <body>
@@ -124,99 +142,77 @@
 
             <table class="tabla-reporte tabla-reporte-general">
                 <thead>
-                    <tr>
-                        <td colspan="3" style="border: none;">
-                            <h2>General</h2>
-                        </td>
-                    </tr>
+                  
+                  <tr>
+                    <td colspan="3" style="border: none">
+                      <h2>General</h2>
+                    </td>
+                  </tr>
+      
+                  <!-- <tr class="fila-cabecera">
+                      <td colspan="3">General</td>
+                  </tr> -->
                 </thead>
                 <tbody>
-                    <tr class="fila-cabecera-detalle">
-                        <td>Código de la Asignatura</td>
-                        <td>Nombre de la Asignatura</td>
-                        <td>Horas Totales</td>
+                    <tr class="fila-detalle">
+                        <td style="width: 50%"><b>Código:</b> {{objeto.codigoAsignatura}}</td>
+                        <td><b>Nombre:</b> {{objeto.nombreAsignatura}}</td>
                     </tr>
                     <tr class="fila-detalle">
-                        <td>SVJ666</td>
-                        <td>Electivo I Alternativa B: Diagnósticos Energéticos para Instalaciones de Consumos Eléctricos
+                        <td><b>Tipo:</b> {{objeto.tipoAsignatura}}</td>
+                        <td><b>Área Formativa:</b> {{objeto.areaFormativa}}</td>
+                    </tr>
+
+                    <tr class="fila-detalle">
+                        <td><b>Función:</b> {{objeto.funcion}}</td>
+                        <td><b>Modalidad:</b> {{objeto.modalidad}}</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td><b>Horas</b></td>
+                        <td colspan="2">
+                            <span><b>Presenciales:</b> {{objeto.horasPresenciales}}</span> <br/>
+                            <span><b>Online:</b> {{objeto.horasOnline}}</span> <br/>
+                            <span><b>Totales:</b> {{objeto.horasTotales}}</span>
                         </td>
-                        <td>10</td>
-                    </tr>
-                    <tr class="fila-cabecera-detalle">
-                        <td>Tipo de Asignatura</td>
-                        <td>Área Formativa</td>
-                        <td>Función</td>
-                    </tr>
-                    <tr class="fila-detalle">
-                        <td>Practica</td>
-                        <td>De la Especialidad</td>
-                        <td>Evaluativa</td>
-                    </tr>
-                    <tr class="fila-cabecera-detalle">
-                        <td>Horas Presenciales</td>
-                        <td>Horas Online</td>
-                        <td>Modalidad</td>
-                    </tr>
-                    <tr class="fila-detalle">
-                        <td>10</td>
-                        <td>0</td>
-                        <td>Presencial</td>
                     </tr>
                 </tbody>
             </table>
+
             <table class="tabla-reporte tabla-reporte-descriptor">
                 <thead>
-                    <tr>
-                        <td colspan="3" style="border: none;">
-                            <h2>Descriptor</h2>
-                        </td>
-                    </tr>
+      
+                  <tr>
+                    <td colspan="3" style="border: none">
+                      <h2>Descriptor</h2>
+                    </td>
+                  </tr>
+      
+                  <!-- <tr class="fila-cabecera">
+                      <td colspan="3">Descriptor</td>
+                  </tr> -->
                 </thead>
                 <tbody>
-                    <tr class="fila-cabecera-detalle">
-                        <td>Docente Elaborador</td>
-                        <td>Asesor Curricular</td>
+                    <tr class="fila-detalle">
+                        <td style="width: 50%"><b>Docente Elaborador:</b> {{objeto.docenteElaborador}}</td>
+                        <td><b>Asesor Curricular:</b> {{objeto.asesorCurricular}}</td>
                     </tr>
                     <tr class="fila-detalle">
-                        <td>Moisés Muñoz</td>
-                        <td>Moisés Muñoz</td>
-                    </tr>
-                    <tr class="fila-cabecera-detalle">
-                        <td>Descripción</td>
-                        <td>Vinculación con el Medio</td>
+                        <td><b>Descripción:</b> {{objeto.descripcion}}</td>
+                        <td><b>Vinculación con el Medio:</b> {{objeto.vinculacionConElMedio}}</td>
                     </tr>
                     <tr class="fila-detalle">
-                        <td>Electivo I Alternativa B: Diagnósticos Energéticos para Instalaciones de Consumos Eléctricos
-                            es una asignatura Presencial, del área formativa de De la Especialidad, dictada en modalidad
-                            Presencial. Al finalizar, el estudiante será capaz de fsfs, considerando "Aprendizaje
-                            Continuo o Permanente", "Competencias Habilitantes", "Trabajo Colaborativo y Comunicación" y
-                            "Ética y Ciudadanía.". Esta es una asignatura evaluativa, por lo que contempla una unidad
-                            final que tiene el objetivo de realizar una evaluación intermedia del Perfil de Egreso.</td>
-                        <td> Las estrategias "Aprendizaje Basado en Desafíos (ABDe), Aprendizaje Basado en Investigación
-                            (ABI) y Aprendizaje Centrado en la Resolución de Problemas en el Aula (ACERPA)" favorecen el
-                            aprendizaje integrado al sector productivo y de servicios.</td>
-                    </tr>
-                    <tr class="fila-cabecera-detalle">
-                        <td>Nivel MCTP</td>
-                        <td>Cualificación</td>
+                        <td><b>Nivel MCTP:</b> {{objeto.nivelMctp}}</td>
+                        <td><b>Cualificación:</b> {{objeto.cualificacion}}</td>
                     </tr>
                     <tr class="fila-detalle">
-                        <td>2</td>
-                        <td>Gestión de operaciones gastronómicas </td>
+                        <td><b>Perfil ChileValora:</b> {{objeto.perfilChileValora}}</td>
+                        <td><b>UCL asociadas:</b> {{objeto.uclsAsociadas}}</td>
                     </tr>
-                    <tr class="fila-cabecera-detalle">
-                        <td>Perfil ChileValora</td>
-                        <td>UCL asociadas</td>
-                    </tr>
-                    <tr class="fila-detalle">
-                        <td>CHEF EJECUTIVO </td>
-                        <td>SUPERVISAR INVENTARIO DE MATERIAS PRIMAS Y EQUIPAMIENTO DE COCINA, SEGÚN PROTOCOLOS Y
-                            PROCEDIMIENTOS DEL SECTOR CONFECCIONAR MENÚS Y CARTAS DE PREPARACIONES CULINARIAS, DE
-                            ACUERDO A PROTOCOLOS Y PROCEDIMIENTOS DEL SECTOR SUPERVISAR LA PLANIFICACIÓN GASTRONÓMICA,
-                            SEGÚN PROTOCOLOS Y PROCEDIMIENTOS ESTABLECIDOS Y NORMATIVA LEGAL VIGENTE </td>
-                    </tr>
+
                 </tbody>
+                
             </table>
+
             <table class="tabla-reporte tabla-reporte-general">
                 <thead>
                     <tr class="fila-cabecera">
@@ -263,6 +259,23 @@
                     </tr>
                 </tbody>
             </table>
+
+            <!-- ==================================================== -->
+            <!-- PROBANDO -->
+
+            <!-- <table class="encabezado-grilla">
+                <tr>
+                    <td class="titulo-principal">Unidades</td>
+                </tr>
+            </table>
+            <table class="encabezado-grilla">
+                <tr>
+                    <td class="titulo-secundario">Desglose de Horas por Unidad</td>
+                </tr>
+            </table> -->
+
+            <!-- ==================================================== -->
+
             <table class="tabla-reporte tabla-reporte-general">
                 <thead>
                     <tr>
@@ -337,103 +350,193 @@
                     </tr>
                 </tfoot>
             </table>
-            <table class="tabla-reporte tabla-reporte-general">
+
+            <table class="tabla-reporte" style="margin-bottom: 0px !important">
+                <tr class="fila-cabecera">
+                    <td colspan="3" style="text-align: center">Desglose por Unidad</td>
+                </tr>
+         
+                <!-- ================================================================================================== -->
+
+                <tr class="fila-cabecera-detalle">
+                    <td rowspan="2" style="width: 33.3%">Unidad de Aprendizaje {{indexUnidad}}: <span class="fuente-normal">{{unidad.descripcion}}</span></td>
+                    <td colspan="2">Horas Presenciales: <span class="fuente-normal">{{obtenerSumaHorasPresencialesPorUnidad(unidad)}} horas</span></td>
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td colspan="2">Horas Online: <span class="fuente-normal">{{obtenerSumaHorasOnlinePorUnidad(unidad)}} horas</span></td> 
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td><b>Aprendizajes Esperados</b></td>
+                    <td style="width: 33.3%"><b>Criterios de Evaluación</b></td>
+                    <td><b>Contenidos</b></td>
+                </tr>
+                <tr>
+                    <td>ELEMENTO RECORRIDO 1</td>
+                    <td>ELEMENTO RECORRIDO 1</td>
+                    <td>ELEMENTO RECORRIDO 1</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Actividades Mínimas Obligatorias:</b> {{obtenerActividadesMinimasObligatoriasUnidad(unidad)}}</td>
+                </tr>
+
+                <!-- ================================================================================================== -->
+
+            </table>
+            <table class="tabla-reporte" style="margin-bottom: 0px !important">
+                <!-- <tr class="fila-cabecera">
+                    <td colspan="3" style="text-align: center">Desglose por Unidad</td>
+                </tr> -->
+         
+                <!-- ================================================================================================== -->
+
+                <tr class="fila-cabecera-detalle">
+                    <td rowspan="2" style="width: 33.3%">Unidad de Aprendizaje {{indexUnidad}}: <span class="fuente-normal">{{unidad.descripcion}}</span></td>
+                    <td colspan="2">Horas Presenciales: <span class="fuente-normal">{{obtenerSumaHorasPresencialesPorUnidad(unidad)}} horas</span></td>
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td colspan="2">Horas Online: <span class="fuente-normal">{{obtenerSumaHorasOnlinePorUnidad(unidad)}} horas</span></td> 
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td><b>Aprendizajes Esperados</b></td>
+                    <td style="width: 33.3%"><b>Criterios de Evaluación</b></td>
+                    <td><b>Contenidos</b></td>
+                </tr>
+                <tr>
+                    <td>ELEMENTO RECORRIDO 2</td>
+                    <td>ELEMENTO RECORRIDO 2</td>
+                    <td>ELEMENTO RECORRIDO 2</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Actividades Mínimas Obligatorias:</b> {{obtenerActividadesMinimasObligatoriasUnidad(unidad)}}</td>
+                </tr>
+
+                <!-- ================================================================================================== -->
+
+            </table>
+
+            <!-- <table class="tabla-reporte tabla-reporte-general">
+                <tr class="fila-cabecera">
+                    <td colspan="3" style="text-align: center">Desglose por Unidad</td>
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td rowspan="2" style="width: 33.3%">Unidad de Aprendizaje {{indexUnidad}}: <span class="fuente-normal">{{unidad.descripcion}}</span></td>
+                    <td colspan="2">Horas Presenciales: <span class="fuente-normal">{{obtenerSumaHorasPresencialesPorUnidad(unidad)}} horas</span></td>
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td colspan="2">Horas Online: <span class="fuente-normal">{{obtenerSumaHorasOnlinePorUnidad(unidad)}} horas</span></td> 
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td><b>Aprendizajes Esperados</b></td>
+                    <td style="width: 33.3%"><b>Criterios de Evaluación</b></td>
+                    <td><b>Contenidos</b></td>
+                </tr>
+                <tr>
+                    <td>ELEMENTO RECORRIDO 1</td>
+                    <td>ELEMENTO RECORRIDO 1</td>
+                    <td>ELEMENTO RECORRIDO 1</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Actividades Mínimas Obligatorias:</b> {{obtenerActividadesMinimasObligatoriasUnidad(unidad)}}</td>
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td rowspan="2" style="width: 33.3%">Unidad de Aprendizaje {{indexUnidad}}: <span class="fuente-normal">{{unidad.descripcion}}</span></td>
+                    <td colspan="2">Horas Presenciales: <span class="fuente-normal">{{obtenerSumaHorasPresencialesPorUnidad(unidad)}} horas</span></td>
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td colspan="2">Horas Online: <span class="fuente-normal">{{obtenerSumaHorasOnlinePorUnidad(unidad)}} horas</span></td> 
+                </tr>
+                <tr class="fila-cabecera-detalle">
+                    <td><b>Aprendizajes Esperados</b></td>
+                    <td style="width: 33.3%"><b>Criterios de Evaluación</b></td>
+                    <td><b>Contenidos</b></td>
+                </tr>
+                <tr>
+                    <td>ELEMENTO RECORRIDO 2</td>
+                    <td>ELEMENTO RECORRIDO 2</td>
+                    <td>ELEMENTO RECORRIDO 2</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Actividades Mínimas Obligatorias:</b> {{obtenerActividadesMinimasObligatoriasUnidad(unidad)}}</td>
+                </tr>
+            </table> -->
+
+            <!-- <table class="tabla-reporte tabla-reporte-general">
                 <thead>
                     <tr class="fila-cabecera">
-                        <td colspan="8" style="text-align: center;">Desglose por Unidad</td>
+                        <td colspan="5" style="text-align: center;">Desglose por Unidad</td>
                     </tr>
                     <tr class="fila-cabecera-detalle">
-                        <td>Unidad de Aprendizaje</td>
-                        <td>Horas <br>Presenciales</td>
-                        <td>Horas <br>Online</td>
+                        <td><b>Unidad de Aprendizaje 1: {{unidad.descripcion}}</b></td>
                         <td>Aprendizajes <br>Esperados</td>
                         <td>Criterios de <br>Evaluación</td>
                         <td>Contenidos</td>
-                        <td>H. Terreno</td>
-                        <td>Actividades Mínimas Obligatorias</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="fila-detalle">
-                        <td rowspan="3"> Unidad 1 </td>
-                        <td rowspan="3"> 0 </td>
-                        <td rowspan="3"> 0 </td>
-                        <td rowspan="3"> 1.1 - Aprendizaje </td>
+                        <td style="vertical-align: top;" rowspan="1"> 
+                            Ejemplo Unidad 1.
+                            <br><br>
+                            <table class="tabla-reporte tabla-reporte-general" style="width: 60%; white-space: nowrap;">
+                                <tr class="fila-detalle">
+                                    <td><b>Horas Presenciales:</b></td>
+                                    <td>0</td>
+                                </tr>
+                                <tr class="fila-detalle">
+                                    <td><b>Horas Online:</b></td>
+                                    <td>0</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td rowspan="1"> 1.1 - Diagnostica problemas técnicos de instalaciones eléctricas de un edificio
+                            habitacional sobre 7 pisos con potencia instalada hasta 500 kW, para determinar la gravedad del
+                            error y su impacto, considerando lo exigido en la normativa vigente ydesde la perspectiva de la
+                            ética y la ciudadanía. </td>
                         <td>
                             <table style="width: 100%;">
                                 <tr>
-                                    <td style="border: none; font-size: 1em;">1.1.1 - Hola3</td>
+                                    <td style="border: none; font-size: 1em;">1.1.1 - CAMBIAR. </td>
                                 </tr>
                                 <tr>
-                                    <td style="border: none; font-size: 1em;">1.1.2 - Hola3</td>
+                                    <td style="border: none; font-size: 1em;">1.1.2 - CAMBIAR</td>
                                 </tr>
                                 <tr>
-                                    <td style="border: none; font-size: 1em;">1.1.3 - Hola3</td>
+                                    <td style="border: none; font-size: 1em;">1.1.3 - CAMBIAR</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none; font-size: 1em;">1.1.4 - CAMBIAR</td>
                                 </tr>
                             </table>
                         </td>
                         <td>
                             <table style="width: 100%;">
                                 <tr>
-                                    <td style="border: none; font-size: 1em;">- fdfd</td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td rowspan="3"> 0 </td>
-                        <td rowspan="3"> Remítase al material instruccional elaborado por el Área </td>
-                    </tr>
-                    <tr class="fila-detalle">
-                        <td>
-                            <table style="width: 100%;">
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">1.2.1 - fdfdfd</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">1.2.2 - fdfd</td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td>
-                            <table style="width: 100%;">
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">- fdfdf</td>
+                                    <td style="border: none; font-size: 1em;">- Esta unidad de aprendizaje no comprende contenidos nuevos.</td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                     <tr class="fila-detalle">
-                        <td>
-                            <table style="width: 100%;">
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">1.3.1 - AprendizajeAprendizaje</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">1.3.2 - Aprendizaje</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">1.3.3 - Aprendizaje</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">1.3.4 - Aprendizaje</td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td>
-                            <table style="width: 100%;">
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">- Aprendizaje</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">- Aprendizaje</td>
-                                </tr>
-                            </table>
-                        </td>
+                        <td colspan="4"><b>Actividades Mínimas Obligatorias:</b> Remítase al material instruccional elaborado por el Área</td>
                     </tr>
                     <tr class="fila-detalle">
-                        <td rowspan="1"> Unidad 2 </td>
-                        <td rowspan="1"> 243 </td>
-                        <td rowspan="1"> 12 </td>
-                        <td rowspan="1"> 2.1 - Aprendizaje Unidad 2 </td>
+                        <td style="vertical-align: top;" rowspan="1"> 
+                            Ejemplo Unidad 2. <br><br>
+                            <table class="tabla-reporte tabla-reporte-general" style="width: 60%; white-space: nowrap;">
+                                <tr class="fila-detalle">
+                                    <td><b>Horas Presenciales:</b></td>
+                                    <td>243</td>
+                                </tr>
+                                <tr class="fila-detalle">
+                                    <td><b>Horas Online:</b></td>
+                                    <td>12</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td rowspan="1"> 2.1 - Diseña proyectos de instalaciones eléctricas para edificio habitacional sobre
+                            7pisos con potencia instalada de hasta 500 kW, proponiendo soluciones a los problemas técnicos
+                            diagnosticados, considerando la normativa vigente con énfasisen la resolución de problemas,
+                            innovación y emprendimiento. </td>
                         <td>
                             <table style="width: 100%;">
                                 <tr>
@@ -447,24 +550,21 @@
                         <td>
                             <table style="width: 100%;">
                                 <tr>
-                                    <td style="border: none; font-size: 1em;">- Criterios de Evaluación</td>
+                                    <td style="border: none; font-size: 1em;">- Esta unidad de aprendizaje no comprende contenidos nuevos. </td>
                                 </tr>
                                 <tr>
-                                    <td style="border: none; font-size: 1em;">- Criterios de Evaluación</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">- Criterios de Evaluación</td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none; font-size: 1em;">- Criterios de Evaluación</td>
+                                    <td style="border: none; font-size: 1em;">- </td>
                                 </tr>
                             </table>
                         </td>
-                        <td rowspan="1"> 10 </td>
-                        <td rowspan="1"> Remítase al material instruccional elaborado por el Área </td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td colspan="4"><b>Actividades Mínimas Obligatorias:</b> Remítase al material instruccional
+                            elaborado por el Área</td>
                     </tr>
                 </tbody>
-            </table>
+            </table> -->
+
             <table class="tabla-reporte tabla-reporte-general">
                 <thead>
                     <tr>
