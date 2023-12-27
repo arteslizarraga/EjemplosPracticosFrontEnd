@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+	<script>
+		var fechaTerminoSesion = "27-12-2023 18:44:00";
+		var fechaObtenida = getDateFromString(fechaTerminoSesion);
+		var minutosPrevioAviso = 5;
+		var seAcabaElTiempo = seTerminaElTiempoLimite(fechaObtenida, minutosPrevioAviso);
+
+		if (seAcabaElTiempo) {
+			alert(`Quedan ${minutosPrevioAviso} minutos o menos para que termine la sesión`);
+		}
+
+		function getDateFromString(cadena) 
+		{
+			// Parsea la cadena de fecha manualmente en el formato adecuado
+			let partesFecha = cadena.split(' ');
+			let partesFechaNumerica = partesFecha[0].split('-');
+			let partesHoraNumerica = partesFecha[1].split(':');
+
+			let ano = parseInt(partesFechaNumerica[2], 10);
+			let mes = parseInt(partesFechaNumerica[1], 10) - 1; // Resta 1 porque los meses en JavaScript son 0-indexados
+			let dia = parseInt(partesFechaNumerica[0], 10);
+			let hora = parseInt(partesHoraNumerica[0], 10);
+			let minuto = parseInt(partesHoraNumerica[1], 10);
+			let segundo = parseInt(partesHoraNumerica[2], 10);
+
+			// Crea el objeto Date
+			let fechaTerminoSesion = new Date(ano, mes, dia, hora, minuto, segundo);
+			return fechaTerminoSesion;
+		}
+
+		function seTerminaElTiempoLimite(fechaTermino, minutosPrevioAviso)
+		{
+			let fechaActual = new Date();		
+			let diferenciaEnMilisegundos = fechaTermino - fechaActual;  					// Calcula la diferencia en milisegundos
+			let diferenciaEnMinutos = Math.floor(diferenciaEnMilisegundos / (1000 * 60));  	// Calcula la diferencia en minutos
+			let retorno = (diferenciaEnMinutos <= minutosPrevioAviso && diferenciaEnMinutos >= 0);  // Verifica si quedan N minutos o menos
+			return retorno;  // true / false
+		}
+
+	</script>
+</body>
+</html>
