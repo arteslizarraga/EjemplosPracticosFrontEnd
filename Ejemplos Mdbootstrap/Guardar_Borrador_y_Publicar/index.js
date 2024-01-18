@@ -35,7 +35,7 @@ $(document).ready(function ()
     finally { hideLoading() }
 })();
 
-function agregarRegistro()
+function agregarRegistroAutomatico()
 {
     let prelacion = (this.listaObjetos.length > 0) ? (Math.max(...this.listaObjetos.map(o => o.prelacion)) + 1) : 1;
     let fechaHoy = new Date().toJSON().slice(0,10).split("-").reverse().join("-");  // "28-12-2022"
@@ -177,56 +177,74 @@ function construirGrilla()
 
 function abrirModalEditar(index)
 {
-    let elemento = this.listaObjetos[index];
-    this.indexDetalle = index;                  // Almacena el index para así poder actualizar
-
-    llenarSelect({ 
-        selectedValue: elemento.prelacion,
-        querySelector: "#ModalEditar [name='prelacion']", 
-        data: this.listaObjetos.map((x, index) => {
-            let numero = index + 1;
-            return { codigo: numero, descripcion: numero };
-        })
-    });
-
-    let limpiarCaracteres = (texto) => {
-        if (texto == null) return null;
-        texto = texto.split("\\n").join("\n");      // Limpia saltos de línea con doble backslash
-        texto = texto.split("&quot;").join("\"");   // Reemplaza &quot; por "
-        return texto
-    };
-
     let modal = $("#ModalEditar");
-
-    // Coloca textos para orientar al usuario
-    modal.find("[name='posicion']").html(index);
-    modal.find("[name='fecha']").html(elemento.fecha);
-
-    modal.find("[name='nombre']").val(elemento.nombre); 
-    modal.find("[name='descripcion']").val(limpiarCaracteres(elemento.descripcion)); 
-
-    modal.modal("show"); 
-
-    //=================>>>>>
-    // Botón Guardar y continuar
-
-    let siguienteElementoFiltrado = this.listaObjetosFiltrada.find(x => x.indexReal > index);
-    this.nextIndexFiltrado = this.listaObjetosFiltrada.findIndex(x => x.indexReal > index);
-    this.nextIndex = (siguienteElementoFiltrado != null) ? siguienteElementoFiltrado.indexReal : 0;
+    this.indexDetalle = index;                  // Almacena el index para así poder actualizar
 
     let btnGuardarContinuar = modal.find("[name='btn-guardar-y-continuar']");
     btnGuardarContinuar.attr("disabled", true).attr("class", "btn");  // Deshabilita botón guardar y continuar
 
-    if (this.nextIndex != 0)
-        btnGuardarContinuar.removeAttr("disabled").attr("class", "btn btn-default waves-effect waves-light");
-    else
-        toastr.success("Último registro");
+    let elemento = null;
 
-    //=================>>>>>
+    if (index != null)  // Editar
+    {
+        modal.find("[name='titulo']").html("Editar");
+        elemento = this.listaObjetos[index];
+
+        let limpiarCaracteres = (texto) => {
+            if (texto == null) return null;
+            texto = texto.split("\\n").join("\n");      // Limpia saltos de línea con doble backslash
+            texto = texto.split("&quot;").join("\"");   // Reemplaza &quot; por "
+            return texto
+        };
+
+        // Coloca textos para orientar al usuario
+        modal.find("[name='posicion']").html(index);
+        modal.find("[name='fecha']").html(elemento.fecha);
+
+        modal.find("[name='nombre']").val(elemento.nombre); 
+        modal.find("[name='descripcion']").val(limpiarCaracteres(elemento.descripcion)); 
+
+        modal.modal("show"); 
+
+        //=================>>>>>
+        // Definir comportamiento botón guardar y continuar
+
+        let siguienteElementoFiltrado = this.listaObjetosFiltrada.find(x => x.indexReal > index);
+        this.nextIndexFiltrado = this.listaObjetosFiltrada.findIndex(x => x.indexReal > index);
+        this.nextIndex = (siguienteElementoFiltrado != null) ? siguienteElementoFiltrado.indexReal : 0;
+
+        if (this.nextIndex != 0)
+            btnGuardarContinuar.removeAttr("disabled").attr("class", "btn btn-default waves-effect waves-light");   // Habilita botón
+        else
+            toastr.success("Último registro");
+
+        //=================>>>>>
+    }
+    else  // Crear
+    {
+        modal.find("[name='titulo']").html("Crear");
+        modal.find("[name='posicion']").html("-");
+        modal.find("[name='fecha']").html("-");
+
+        limpiarFormulario("#ModalEditar");
+        modal.modal("show"); 
+    }
+
+    let arregloPrelaciones = (this.listaObjetos.length > 0) ? 
+        Array.from({ length: (this.listaObjetos.length + 1) }, (_, index) => index + 1).map(x => ({ codigo: x, descripcion: x })) 
+        : [{ codigo: 1, descripcion: 1 }];
+
+    llenarSelect({ 
+        selectedValue: (elemento != null) ? elemento.prelacion : null,
+        querySelector: "#ModalEditar [name='prelacion']", 
+        data: arregloPrelaciones
+    });
 }
 
 function guardarDatosModalEditar(pasarSiguientePagina = false)
 {
+    //console.log("this.indexDetalle", this.indexDetalle);
+
     let reemplazarCaracteres = (cadena) => {
         if (cadena == null) return null;
 
@@ -236,6 +254,7 @@ function guardarDatosModalEditar(pasarSiguientePagina = false)
     };
 
     let modal = $("#ModalEditar");
+
     let prelacion = modal.find("[name='prelacion']").val();
     let nombre = modal.find("[name='nombre']").val();
     let descripcion = reemplazarCaracteres(modal.find("[name='descripcion']").val());
@@ -260,27 +279,44 @@ function guardarDatosModalEditar(pasarSiguientePagina = false)
 
     //============>>>>
 
-    let elemento = this.listaObjetos[this.indexDetalle];
-    elemento.prelacion = prelacion;
-    elemento.nombre = nombre;
-    elemento.descripcion = descripcion;
-
-    modal.modal("hide"); 
-
-    //=====================>>>
-
-    if (pasarSiguientePagina)
+    if (this.indexDetalle != null)   // Editar
     {
-        // this.paginaActual = (Math.ceil((this.nextIndex + 1) / this.registrosPorPagina)) - 1;    // Original
+        let elemento = this.listaObjetos[this.indexDetalle];
+        elemento.prelacion = prelacion;
+        elemento.nombre = nombre;
+        elemento.descripcion = descripcion;
 
-        this.paginaActual = (Math.ceil((this.nextIndexFiltrado + 1) / this.registrosPorPagina)) - 1;
+        modal.modal("hide"); 
 
-        setTimeout(() => {
-            abrirModalEditar(this.nextIndex);
+        //=====================>>>
+
+        if (pasarSiguientePagina)
+        {
+            // this.paginaActual = (Math.ceil((this.nextIndex + 1) / this.registrosPorPagina)) - 1;    // Original
+
+            this.paginaActual = (Math.ceil((this.nextIndexFiltrado + 1) / this.registrosPorPagina)) - 1;
+
+            setTimeout(() => {
+                abrirModalEditar(this.nextIndex);
+                construirGrilla();
+            }, 500);
+        }
+        else {
             construirGrilla();
-        }, 500);
+        }
     }
-    else {
+    else  // Crear
+    {
+        this.listaObjetos.push({ 
+            ncorr: null, 
+            prelacion, 
+            nombre, 
+            descripcion, 
+            fecha: "07-11-2022", 
+            estado: "Activo" 
+        });
+
+        modal.modal("hide");
         construirGrilla();
     }
 }
@@ -370,13 +406,18 @@ function grabar(esBorrador)
             return Promise.reject("Todos los detalles deben tener el campo nombre"); 
     }
 
+    let limpiarSaltosLinea = (texto) => {  // Esto es porque al editar, a los saltos de línea se les agrega solo un backslash adicional
+        if (texto == null) return null;
+        return texto.split("\\n").join("\n");
+    };
+
     let copiaDetallesParaEnviar = this.listaObjetos.map(x => 
     {
         return { 
             p_ncorr: x.ncorr, 
             p_prelacion: x.prelacion, 
             p_nombre: x.nombre, 
-            p_descripcion: x.descripcion, 
+            p_descripcion: limpiarSaltosLinea(x.descripcion), 
             p_fecha: x.fecha, 
             p_estado: x.estado
         };
@@ -423,7 +464,7 @@ function obtenerDatos()
 {
     return new Promise((resolve, reject) => 
     {
-        resolve([
+        let retorno = [
             { ncorr: 101, prelacion: 1, nombre: "Probando 1", descripcion: "Probando descripción 1", fecha: "07-11-2022", estado: "Activo" },
             { ncorr: 102, prelacion: 2, nombre: "Probando 2", descripcion: "Probando descripción 2", fecha: "07-11-2022", estado: "Inactivo" },
             { ncorr: 103, prelacion: 3, nombre: "Probando 3", descripcion: "Probando descripción 3", fecha: "07-11-2022", estado: "Activo" },
@@ -438,7 +479,11 @@ function obtenerDatos()
             { ncorr: 112, prelacion: 12, nombre: "Probando 12", descripcion: "Probando descripción 12", fecha: "07-11-2022", estado: "Activo" },
             { ncorr: 113, prelacion: 13, nombre: "Probando 13", descripcion: "Probando descripción 13", fecha: "07-11-2022", estado: "Activo" },
             { ncorr: 114, prelacion: 14, nombre: "Probando 14", descripcion: "Probando descripción 14", fecha: "07-11-2022", estado: "Activo" }
-        ]);
+        ];
+
+        retorno[0].descripcion = "Línea 1\\nLínea 2\nLínea 3\nLínea 4\nLínea 5\nLínea 6\nLínea 7";
+
+        resolve(retorno);
     });
 }
 

@@ -240,8 +240,12 @@
                         </div>
                         <div class="row mb-4">
                             <div class="col col-md-6 d-flex justify-content-start">
-                                <button type="button" onclick="agregarRegistro()" class="btn-add p-2">
-                                    + Agregar Nueva Fila a la Tabla
+                                <button type="button" onclick="agregarRegistroAutomatico()" class="btn-add p-2">
+                                    + Agregar Nueva Fila automática
+                                </button>
+
+                                <button type="button" onclick="abrirModalEditar(null)" class="btn-add p-2" style="margin-left: 2em">
+                                    + Agregar Fila
                                 </button>
                             </div>
                         </div>
@@ -283,7 +287,7 @@
           <div class="modal-content">
 
               <div class="modal-header">
-                  <p class="heading lead">Modificar Informaci&oacute;n</p>
+                  <p name="titulo" class="heading lead">-</p>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
