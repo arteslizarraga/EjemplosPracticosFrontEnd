@@ -319,13 +319,13 @@ function guardarDatosModalEditar(pasarSiguientePagina = false)
 
 function abrirModalEliminarDetalle(index)
 {
-    this.index = index;
+    this.indexDetalle = index;
     $("#ModalEliminarDetalle").modal("show");
 }
 
 function eliminarDetalle()
 {
-    this.listaObjetos.splice(this.index, 1);     // Elimina la posición del arreglo
+    this.listaObjetos.splice(this.indexDetalle, 1);     // Elimina la posición del arreglo
 
     // this.listaObjetos.sort((a, b) => a.prelacion - b.prelacion).forEach((x, index) => x.prelacion = index + 1);  // Re asigna prelacion a todos los elementos del arreglo
     
