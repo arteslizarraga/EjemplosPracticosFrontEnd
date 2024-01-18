@@ -210,7 +210,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12 d-flex align-items-end justify-content-between">
-                                <h4 class="float-left heading h4-responsive mb-0">Ejemplo Grilla</h4>
+                                <h4 class="float-left heading h4-responsive mb-0">Guardar Borrador y Publicar</h4>
                             </div>
                         </div>
                     </div>
@@ -257,12 +257,13 @@
                           </div>
                           <div class="col col-md-6 d-flex justify-content-end">
         
-                            <button type="button" class="btn btn-outline waves-effect waves-light">
-                                <span>Cualquiercosa</span>
+                            <button type="button" data-target="#ModalGuardarBorrador" data-toggle="modal"
+                            class="btn btn-outline waves-effect waves-light">
+                                <span>Guardar Borrador</span>
                             </button>
 
-                            <button type="button" class="btn btn-default waves-effect waves-light">
-                              <span>Cualquiercosa</span>
+                            <button type="button" onclick="abrirModalGuardarPublicar()" class="btn btn-default waves-effect waves-light">
+                              <span>Guardar y Publicar</span>
                             </button>
                         
                           </div>
@@ -410,6 +411,91 @@
                 <div class="modal-footer justify-content-center">
                     <button class="btn btn-secondary waves-effect px-3 px-3" data-dismiss="modal">Cancelar</button>
                     <button onclick="eliminarDetalle()" class="btn btn-default px-3 px-3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalGuardarBorrador" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-notify modal-warning" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="heading lead">Guardar Borrador</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row mb-4">
+
+                        <div class="col-md-12">
+                            <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
+                            <p class="text-center m-0">
+                                <%= infoUsuario.msjGuardarBorrador %>
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <div class="col-12 justify-content-center d-flex flex-wrap">
+                        <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
+
+                        <button type="button" onclick="guardarBorrador()"
+                        class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalGuardarPublicar" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-notify modal-warning" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="heading lead">Guardar y Publicar</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row mb-4">
+
+                        <div class="col-md-12">
+                            <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
+                            <p class="text-center m-0">
+                                <%= infoUsuario.msjPublicar %>
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="row mb-4">
+
+                        <div class="col-12 col-md-6 offset-3">
+                            <div class="md-form mb-3">
+
+                                <input name="fechaPublicacion" type="text"
+                                class="datepicker-input form-control" placeholder="DD/MM/AAAA"
+                                data-position="bottom center" autocomplete="off" readonly="readonly" />
+
+                                <label class="active">Seleccione la fecha de Publicación</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <div class="col-12 justify-content-center d-flex flex-wrap">
+                        <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light"
+                        data-dismiss="modal">Cancelar</button>
+
+                        <button type="button" onclick="guardar_y_publicar()"
+                        class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Aceptar</button>
+                    </div>
                 </div>
             </div>
         </div>

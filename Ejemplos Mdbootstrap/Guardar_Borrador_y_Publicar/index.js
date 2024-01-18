@@ -189,6 +189,13 @@ function abrirModalEditar(index)
         })
     });
 
+    let limpiarCaracteres = (texto) => {
+        if (texto == null) return null;
+        texto = texto.split("\\n").join("\n");      // Limpia saltos de línea con doble backslash
+        texto = texto.split("&quot;").join("\"");   // Reemplaza &quot; por "
+        return texto
+    };
+
     let modal = $("#ModalEditar");
 
     // Coloca textos para orientar al usuario
@@ -196,7 +203,7 @@ function abrirModalEditar(index)
     modal.find("[name='fecha']").html(elemento.fecha);
 
     modal.find("[name='nombre']").val(elemento.nombre); 
-    modal.find("[name='descripcion']").val(elemento.descripcion); 
+    modal.find("[name='descripcion']").val(limpiarCaracteres(elemento.descripcion)); 
 
     modal.modal("show"); 
 
@@ -220,10 +227,18 @@ function abrirModalEditar(index)
 
 function guardarDatosModalEditar(pasarSiguientePagina = false)
 {
+    let reemplazarCaracteres = (cadena) => {
+        if (cadena == null) return null;
+
+        return cadena
+            .replaceAll(`"`, "&quot;")
+            .replaceAll("\t", "");
+    };
+
     let modal = $("#ModalEditar");
     let prelacion = modal.find("[name='prelacion']").val();
     let nombre = modal.find("[name='nombre']").val();
-    let descripcion = modal.find("[name='descripcion']").val();
+    let descripcion = reemplazarCaracteres(modal.find("[name='descripcion']").val());
 
     //============>>>>
 
@@ -284,6 +299,124 @@ function eliminarDetalle()
     
     cerrarModal("#ModalEliminarDetalle");
     construirGrilla();
+}
+
+function guardarBorrador()
+{
+    showLoading();
+
+    grabar(true).then(res => 
+    {
+        toastr.success(res.mensajeExito);
+
+        // let fechaHoy = new Date().toJSON().slice(0, 10).split("-").reverse().join("/"); 
+        // $("#cardResultadosBusqueda [name='fechaPoblamiento']").html(fechaHoy);
+    })
+    .catch(ex => 
+    {
+        if (ex.errores != null) mostrarErroresRespuestaBackend(ex);
+        else toastr.error(ex);
+    })
+    .finally(() => hideLoading());
+}
+
+function abrirModalGuardarPublicar()
+{
+    let txtFecha = $("#ModalGuardarPublicar [name='fechaPublicacion']");
+    let fechaHoy = new Date().toJSON().slice(0, 10).split("-").reverse().join("/"); 
+    txtFecha.val(fechaHoy);
+
+    if (txtFecha.data("datepicker") == null)  // Si no ha sido inicializado
+        txtFecha.datepicker({ language: "es", autoClose: true });
+
+    $("#ModalGuardarPublicar").modal("show");
+}
+
+function guardar_y_publicar()
+{
+    showLoading();
+
+    grabar(false).then(res => 
+    {
+        toastr.success(res.mensajeExito);
+        /*
+        definirMensaje({ mostrar: true, icono: "lock", mensaje: "Estándares Sectoriales (UCL a desarrollar) de la TFL publicada, no se puede modificar" });
+        sePuedeModificar = false;
+
+        let infoCabecera = $("#cardResultadosBusqueda");
+        let fechaPublicacion = $("#ModalGuardarPublicar [name='fechaPublicacion']").val();
+
+        infoCabecera.find("[name='fechaPublicacion']").html(fechaPublicacion);
+
+        Array.from(document.querySelectorAll(".deshabilitar-publicado")).forEach(x => x.disabled = true);  // Deshabilita botones
+        */
+    })
+    .catch(ex => 
+    {
+        if (ex.errores != null) mostrarErroresRespuestaBackend(ex);
+        else toastr.error(ex);
+    })
+    .finally(() => hideLoading());
+}
+
+function grabar(esBorrador)
+{
+    if (esBorrador && !this.listaObjetos.some(x => validarNuloVacio(x.nombre)))
+        return Promise.reject("Al menos un detalle debe poseer la información requerida"); 
+
+    if (!esBorrador)
+    {
+        if (!this.listaObjetos.every(x => validarNuloVacio(x.nombre)))
+            return Promise.reject("Todos los detalles deben tener el campo nombre"); 
+    }
+
+    let copiaDetallesParaEnviar = this.listaObjetos.map(x => 
+    {
+        return { 
+            p_ncorr: x.ncorr, 
+            p_prelacion: x.prelacion, 
+            p_nombre: x.nombre, 
+            p_descripcion: x.descripcion, 
+            p_fecha: x.fecha, 
+            p_estado: x.estado
+        };
+    });
+
+    let p_json_datos = JSON.stringify(copiaDetallesParaEnviar);
+    console.log(p_json_datos);
+
+    return new Promise((resolve, reject) => {
+       resolve({ status: 200, mensajeExito: "Prueba Exito" });
+    });
+
+    // return new Promise((resolve, reject) =>
+    // {
+    //     $.ajax({
+    //         method: "POST",
+    //         url: "ECOMUNES.aspx/ECOMUNES_GRABAR",
+    //         data: JSON.stringify({
+    //             p_json_datos,       
+    //             p_ecomunes_fpublicacion,     // Fecha publicación
+    //             p_def_tfl_ncorr: this.def_tfl_ncorr ,
+    //             esBorrador
+    //         }),
+    //         contentType: "application/json; charset=utf-8",
+    //         dataType: "json",
+    //         success: async (res) =>
+    //         {
+    //             if (res.status == 200)
+    //                 resolve(res);
+    //             else {
+    //                 reject(res);
+    //             }
+    //         },
+    //         error: (XMLHttpRequest, textStatus, errorThrown) => {
+
+    //             let msn = (esBorrador) ? "Ocurrió un error al guardar el borrador" : "Ocurrió un error al guardar";
+    //             reject(msn);
+    //         }
+    //     });
+    // });
 }
 
 function obtenerDatos() 
