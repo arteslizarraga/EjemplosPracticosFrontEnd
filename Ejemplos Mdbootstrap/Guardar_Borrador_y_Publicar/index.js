@@ -230,14 +230,10 @@ function abrirModalEditar(index)
         modal.modal("show"); 
     }
 
-    let arregloPrelaciones = (this.listaObjetos.length > 0) ? 
-        Array.from({ length: (this.listaObjetos.length + 1) }, (_, index) => index + 1).map(x => ({ codigo: x, descripcion: x })) 
-        : [{ codigo: 1, descripcion: 1 }];
-
     llenarSelect({ 
         selectedValue: (elemento != null) ? elemento.prelacion : null,
         querySelector: "#ModalEditar [name='prelacion']", 
-        data: arregloPrelaciones
+        data: Array.from({ length: (this.listaObjetos.length + 1) }, (_, index) => index + 1).map(x => ({ codigo: x, descripcion: x }))
     });
 }
 
