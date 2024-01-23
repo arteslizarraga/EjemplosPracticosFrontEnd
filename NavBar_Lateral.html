@@ -11,7 +11,7 @@
       overflow-x: hidden;
     }
 
-    header {
+    #header-menu-lateral {
       background-color: #333;
       color: #fff;
       padding: 15px;
@@ -19,11 +19,13 @@
       position: relative;
       display: flex;
       align-items: center;
+      height: 20px;
     }
 
     .menu-icon {
       cursor: pointer;
-      margin-left: 16em;
+      margin-left: 9em;
+      font-size: 1.8em;
     }
 
     nav {
@@ -50,16 +52,18 @@
     }
 
     .site-title {
-      margin-left: 250px;
-      transition: 0.5s;
+      margin-left: 100px;
+      transition: 0.2s;
     }
 
     .sub-options {
-      display: none; /* Por defecto, ocultamos las subopciones */
+      display: none;
+      list-style-type: none;
     }
 
     .sub-options.visible {
-      display: block; /* Mostramos las subopciones cuando la clase visible está presente */
+      display: block;
+	  margin-left: -30px;  /* Agregado por mi */
     }
 
     @media screen and (max-width: 600px) {
@@ -72,77 +76,119 @@
       }
 
       .site-title {
-        margin-left: 0;
+        /* margin-left: 0; */
+		display: none;
       }
 
       body.menu-open {
         margin-left: 250px;
       }
-	  
-	  .menu-icon {
-		margin-left: 15px;
-	  }
+
+      .menu-icon {
+        margin-left: 15px;
+      }
     }
+	
+	.flecha-derecha::before {
+		content: "→ ";
+		font-weight: bold;
+	}
+	
+	.flecha-abajo::before {
+		content: "↓ ";
+		font-weight: bold;
+	}
   </style>
 </head>
 <body>
 
-  <header>
+  <header id="header-menu-lateral">
     <span onclick="abrirCerrarNav()" class="menu-icon">&#9776;</span>
-    <h1 class="site-title">Nombre de tu Sitio</h1>
+    <h3 class="site-title">Nombre de tu Sitio</h3>
   </header>
 
   <nav>
     <a href="#">Inicio</a>
     <a href="#">Opción 1</a>
     <a href="#">Opción 2</a>
-    <a href="#">Opción 3</a>
-    <a href="#" class="sub-options-toggle">Países</a>
+
+    <!-- ================================================== -->
+
+    <a href="#" class="sub-options-toggle flecha-derecha">Países</a>
     <ul class="sub-options">
       <li><a href="#">Chile</a></li>
       <li><a href="#">Argentina</a></li>
-      <li><a href="#">Bolivia</a></li>
+	  
+      <li>
+		<a href="#" class="sub-options-toggle">Bolivia (Con sus Departamentos)</a>
+		<ul class="sub-options">
+			<li><a href="#">La Paz</a></li>
+			<li><a href="#">El Beni</a></li>
+		</ul>
+	  </li>
     </ul>
+
+    <!-- ================================================== -->
+
+    <a href="#" class="sub-options-toggle flecha-derecha">Piedras</a>
+    <ul class="sub-options">
+      <li><a href="#">Jade</a></li>
+      <li><a href="#">Agata</a></li>
+      <li><a href="#">Esmeralda</a></li>
+    </ul>
+
+    <!-- ================================================== -->
+
   </nav>
 
   <script>
   
-	let estaAbiertoNav = true;
-	
+    let estaAbiertoNav = true;
+
     document.addEventListener('DOMContentLoaded', function() 
 	{
-      const subOptionsToggle = document.querySelector('.sub-options-toggle');
-      const subOptions = document.querySelector('.sub-options');
+      const subOptionsToggles = document.querySelectorAll('.sub-options-toggle');
+      const subOptionsList = document.querySelectorAll('.sub-options');
 
-      subOptionsToggle.addEventListener('click', function() {
-        subOptions.classList.toggle('visible');
+      subOptionsToggles.forEach((toggle, index) => 
+	  {
+        toggle.addEventListener("click", () => 
+		{
+			//=============>>>
+			
+			if (toggle.classList.contains("flecha-derecha")) 
+			{
+				toggle.classList.remove("flecha-derecha");  // Quita la clase "flecha-derecha"
+				toggle.classList.add("flecha-abajo");  		// Agrega la clase "flecha-abajo"
+			} 
+			else {
+				toggle.classList.remove("flecha-abajo");  	// Quita la clase "flecha-abajo"
+				toggle.classList.add("flecha-derecha");		// Agrega la clase "flecha-derecha"
+			}
+			
+			//=============>>>
+			
+			subOptionsList[index].classList.toggle('visible');
+        });
       });
     });
-	
-	function abrirCerrarNav()
-	{
-		const nav = document.querySelector('nav');
-		const body = document.querySelector('body');
-		
-		//==============>>>>
-		
-        //nav.style.left = (nav.style.left === '0px') ? '-250px' : '0px';
-		
-		let anchoPantalla = window.innerWidth;
 
-		if (anchoPantalla <= 600)  // La pantalla tiene 600px o menos de ancho
-			nav.style.left = (estaAbiertoNav) ? '0px' : '-250px';
-		
-		else  // La pantalla tiene más de 600px de ancho
-			nav.style.left = (!estaAbiertoNav) ? '0px' : '-250px';
-		
-		estaAbiertoNav = !estaAbiertoNav;
-		
-		//==============>>>>
-		
-        body.classList.toggle('menu-open');
-	}	
-	
+    function abrirCerrarNav() 
+	{
+      const nav = document.querySelector('nav');
+      const body = document.querySelector('body');
+      let anchoPantalla = window.innerWidth;
+
+      if (anchoPantalla <= 600) {
+        nav.style.left = (estaAbiertoNav) ? '0px' : '-250px';
+      } 
+	  else {
+        nav.style.left = (!estaAbiertoNav) ? '0px' : '-250px';
+      }
+
+      estaAbiertoNav = !estaAbiertoNav;
+      body.classList.toggle('menu-open');
+    }
   </script>
 
 </body>
