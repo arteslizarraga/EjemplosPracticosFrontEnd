@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Sistema de definici&oacute;n de Programas Formativos: M&oacute;dulo Dise&ntilde;o MCTP</title>
+	<link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+	<link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
+</head>
+
+<body id="appBody" class="d-flex flex-column">
+
+	<div class="page-content">
+		<div class="navbar-overlay"></div>
+
+		<main id="main" class="container">
+			<section>
+				<div class="card" id="editar">
+					<div class="card-header">
+						<div class="row">
+							<div class="col">
+								<h4 class="float-left heading h4-responsive mb-0">Ejemplo</h4>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-body">
+						<div class="row mb-4">
+							<div class="col-4">
+								<h5 class="h5-responsive font-weight-bold border-bottom pb-2">Probando Modal Requeridos</h5>
+							</div>
+						</div>
+						<div class="row mb-4">
+							<div class="col-12 col-md-4">
+								<button type="button" onclick="abrirModal()"
+									class="btn btn-default waves-effect waves-light">Abrir Modal</button>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer">
+						<div class="row my-4">
+							<div class="col col-md-12  d-flex justify-content-between">
+								<button class="btn btn-outline waves-effect waves-light">
+									<span>Volver</span>
+								</button>
+								<button class="btn btn-default waves-effect waves-light">
+									<span>Guardar Cambios</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+
+	<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-md modal-notify modal-warning" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="heading lead">Guardar y Publicar</p>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="row mb-4">
+
+						<div class="col-md-12">
+							<p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i>
+							</p>
+							<p class="text-center m-0">
+								<%= infoUsuario.msjPublicar %>
+							</p>
+						</div>
+
+					</div>
+					<div class="row mb-4" style="padding-top: 3em">
+
+						<div class="col-12 col-md-4">
+							<div class="md-form">
+
+								<input name="fechaPublicacion" type="text" class="datepicker-input form-control"
+									placeholder="DD/MM/AAAA" autocomplete="off" readonly="readonly" />
+
+								<label class="active">Seleccione la fecha de Publicación</label>
+							</div>
+						</div>
+
+						<div class="col-12 col-md-8">
+
+							<div name="infoCamposIncompletos" class="md-form">
+								<label class="active" style="font-size: 1em; color: #ffa000; font-weight: bold;">
+									Atención. Los siguientes campos están incompletos
+								</label>
+
+								<div style="padding-top: 0.1em">
+									<ul class="list-group z-depth-1 md-form">
+
+										<li class="list-group-item" style="padding: 0.5rem 0 0">
+											<table>
+												<tbody>
+													<tr>
+														<td style="vertical-align: top">
+															<i class="material-icons"
+																style="font-size: 1.5em; margin-left: 0.5em">warning</i>
+														</td>
+														<td>
+															<p style="word-break: break-word; margin-left: 0.5em">Equipamientos</p>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</li>
+										<li class="list-group-item" style="padding: 0.5rem 0 0">
+											<table>
+												<tbody>
+													<tr>
+														<td style="vertical-align: top">
+															<i class="material-icons"
+																style="font-size: 1.5em; margin-left: 0.5em">warning</i>
+														</td>
+														<td>
+															<p style="word-break: break-word; margin-left: 0.5em">Nombre Asignatura Prerrequisito</p>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</li>
+
+									</ul>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="modal-footer justify-content-end">
+					<div class="d-flex flex-wrap">
+						<button class="btn mx-2 btn-secondary waves-effect waves-light"
+							data-dismiss="modal">Cerrar</button>
+
+						<button type="button" onclick="guardar_y_publicar()"
+							class="btn mx-2 btn-default waves-effect waves-light alerta"
+							data-dismiss="modal">Aceptar</button>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- SCRIPTS -->
+	<script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+
+	<script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+
+	<script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+
+	<script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+
+	<script>
+
+		function abrirModal() 
+		{
+			let modal = $("#modal1");
+
+			let arregloFaltantes = [ "Equipamientos", "Nombre Asignatura Prerrequisito", "Insumos", "Materiales de Construcción" ];
+
+			let txtFecha = modal.find("[name='fechaPublicacion']");
+			let fechaHoy = new Date().toJSON().slice(0, 10).split("-").reverse().join("/");  // "24/01/2023" 
+			txtFecha.val(fechaHoy);
+
+			if (txtFecha.data("datepicker") == null)  // Si no ha sido inicializado
+				txtFecha.datepicker({ language: "es", autoClose: true });
+
+			let cadena = `
+			<label class="active" style="font-size: 1em; color: #ffa000; font-weight: bold;">
+			Atención. ${arregloFaltantes.length > 1 ? "Los siguientes campos están incompletos" : "El siguiente campo está incompleto"}
+			</label>
+
+			<div style="padding-top: 0.1em">
+			<ul class="list-group z-depth-1 md-form">
+
+			${arregloFaltantes.map(x => {
+					return `<li class="list-group-item" style="padding: 0.5rem 0 0">
+					<table>
+						<tr>
+							<td style="vertical-align: top">
+								<i class="material-icons" style="font-size: 1.5em; margin-left: 0.5em">warning</i>
+							</td>
+							<td>
+								<p style="word-break: break-word; margin-left: 0.5em">${x}</p>
+							</td>
+						</tr>
+					</table> 
+				</li>`;
+				}).join("")}	
+
+			</ul>
+			</div>
+			`;
+
+			modal.find("[name='infoCamposIncompletos']").html(cadena);
+			modal.modal("show");
+		}
+
+	</script>
+
+</body>
+
+</html>
