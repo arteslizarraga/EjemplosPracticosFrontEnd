@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <script>
+        // ACA
+
+        let personas = [
+            { genero: "Mujer" }, { genero: "Mujer" }, { genero: "Hombre" }
+        ];
+
+        let calcularPorcentaje = (cantidadTotal, cantidadEspecifica) => (cantidadEspecifica * 100) / cantidadTotal;
+        let contarCantidadEnArreglo = (arreglo, lambda) => cantidad = arreglo.some(lambda) ? arreglo.filter(lambda).length : 0;
+
+        let redondearDecimalesSiExisten = (num, cantidadDecimales = 2) => 
+        {
+            let cadena = num.toString();
+
+            if (cadena.includes("."))
+            {
+                let numero = cadena.split(".")[0];
+                let decimales = cadena.split(".")[1]; 
+                decimales = decimales.substr(0, cantidadDecimales);
+                return `${numero}.${decimales}`;
+            }
+            
+            return cadena;
+        };
+
+        let cantidadTotalItems = personas.length;
+        console.log(`La cantidad de personas es: ${cantidadTotalItems}`);
+        
+        let cantidadMujeres = contarCantidadEnArreglo(personas, (x => x.genero == "Mujer"));
+        let cantidadHombres = contarCantidadEnArreglo(personas, (x => x.genero == "Hombre"));
+        
+        console.log(`Cantidad mujeres: ${cantidadMujeres} | Cantidad hombres: ${cantidadHombres}`);
+        
+        let porcentajeMujeres = calcularPorcentaje(cantidadTotalItems, cantidadMujeres);
+        let porcentajeHombres = calcularPorcentaje(cantidadTotalItems, cantidadHombres);
+        
+        console.log(`Porcentaje de mujeres = ${porcentajeMujeres}% | Porcentaje de hombres = ${porcentajeHombres}%`);   
+        console.log(`Porcentaje de mujeres = ${redondearDecimalesSiExisten(porcentajeMujeres)}% | Porcentaje de hombres = ${redondearDecimalesSiExisten(porcentajeHombres)}%`);
+     
+    </script>
+</body>
+</html>
