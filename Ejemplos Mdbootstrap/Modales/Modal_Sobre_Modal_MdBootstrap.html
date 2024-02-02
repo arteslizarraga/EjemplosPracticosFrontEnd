@@ -22,6 +22,10 @@
 			z-index: 1050;
 			/* Asegúrate de que el fondo oscuro esté detrás del modal */
 		}
+
+		.modal {
+			overflow-y: auto;  /* Importante. Sin esto, al abrir el modal 2, el modal 1 pierde el scroll */
+		}
 	</style>
 
 </head>
@@ -114,6 +118,15 @@
 							</div>
 						</div>
 
+						<div class="col-12 col-md-4">
+							<div class="md-form d-flex align-items-center">
+								<div onclick="abrirSegundoModal()" style="cursor: pointer">
+									<span class="mr-2">Abrir Segundo Modal</span>
+									<i class="material-icons icon-lg" style="vertical-align: text-bottom">visibility</i>
+								</div>
+							</div>
+						</div>
+
 					</div>
 
 					<div id="div-row-textareas-preguntas" class="row mb-4">
@@ -153,6 +166,30 @@
 							</div>
 						</div>
 
+					</div>
+
+					<!-- <div class="row mb-4">
+						<div class="col-12 col-md-4">
+							<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+						</div>
+					</div> -->
+
+					<div class="row mb-4">
+						<div class="col-12 col-md-4">
+							<div class="md-form">
+								<select name="ademanda_nivel" class="chosen-select">
+									<option value="" selected>Seleccione</option>                      
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+								</select>
+								<label class="active">Nivel Análisis de Demanda</label>
+							</div>
+						</div>
+						
 					</div>
 
 				</div>
@@ -260,7 +297,8 @@
 
 	<script>
 
-		$(document).ready(function () {
+		$(document).ready(function () 
+		{
 			$(".chosen-select").chosen({
 				disable_search_threshold: 10,
 				no_results_text: "Sin Resultados para: ",
@@ -278,20 +316,20 @@
 			});
 		});
 
+
 		//abrirPrimerModal();
 		//abrirSegundoModal(); 
 
 		function oscurecerModal(querySelector) {
-			// $(querySelector).css("opacity", "0.5");
 			$(querySelector).addClass("modal-oscuro");
 		}
 
 		function aclararModal(querySelector) {
-			// $(querySelector).css("opacity", "");
 			$(querySelector).removeClass("modal-oscuro");
 		}
 
-		function definirModal(datos) {
+		function definirModal(datos)
+		{
 			if (datos.open != null && typeof datos.open === "function")
 				$(datos.querySelector).on("show.bs.modal", datos.open);
 
