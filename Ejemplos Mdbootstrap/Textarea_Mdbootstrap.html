@@ -120,7 +120,30 @@
                     </form>
                 </div>
 
+                <!-- ============================================================================================================================ -->
+                <br/><br/><br/>
 
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="row">
+                        
+                            <div class="col-12 col-md-6">
+                                <div class="md-form mb-3">
+                                    <textarea id="textareaAjeno" rows="3" placeholder="blablabla" class="form-control md-textarea" 
+                                    maxlength="1000" autocomplete="off" oninput=""></textarea>
+                                    
+                                    <label class="count">0/100</label>
+                                    <label class="active">Textarea Ajeno</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                 
+                </div>
+
+                <!-- ============================================================================================================================ -->
             </section>
 
         </main>
@@ -164,10 +187,9 @@
 				$('[data-toggle="tooltip"]').tooltip();
 			}, 1000); 
 			
-			limitarTextarea({
-				querySelector: "#miFormulario [name='ejemplo-textarea']",
-				maxlength: 1000
-			});
+			limitarTextarea({ querySelector: "#miFormulario [name='ejemplo-textarea']", maxlength: 100 });
+
+            limitarTextarea({ querySelector: "#textareaAjeno", maxlength: 100 });
 			
 			$("#miFormulario [name='ejemplo-textarea']").val(limpiarCaracteres(texto));
 
@@ -238,10 +260,11 @@
 			// Itera sobre todos los textareas seleccionados
 			textareas.forEach((textarea) => 
 			{
+                console.log(textarea);
 				let countLabel = textarea.closest(".md-form").querySelector(".count");
 				
-				// Función para actualizar el conteo de caracteres
-				function actualizarConteo() {
+				const actualizarConteo = () =>  // Función para actualizar el conteo de caracteres
+                { 
 				  const textoIngresado = textarea.value.length;
 				  countLabel.textContent = `${textoIngresado}/${maxlength}`;
 				}
@@ -260,8 +283,7 @@
 					}
 				});
 
-				// Llamar a actualizarConteo inicialmente para configurar el conteo inicial
-				actualizarConteo();
+				actualizarConteo();   // Llamar a actualizarConteo inicialmente para configurar el conteo inicial
 			});
 		}
 
