@@ -252,40 +252,39 @@
             mostrarTextoImpreso(); 
         }
 		
-		function limitarTextarea(datos) 
-		{
-			let textareas = document.querySelectorAll(datos.querySelector);
-			let maxlength = datos.maxlength;
+        function limitarTextarea(datos) 
+        {
+            let textareas = document.querySelectorAll(datos.querySelector);
+            let maxlength = datos.maxlength;
 
-			// Itera sobre todos los textareas seleccionados
-			textareas.forEach((textarea) => 
-			{
-                console.log(textarea);
-				let countLabel = textarea.closest(".md-form").querySelector(".count");
-				
-				const actualizarConteo = () =>  // Función para actualizar el conteo de caracteres
-                { 
-				  const textoIngresado = textarea.value.length;
-				  countLabel.textContent = `${textoIngresado}/${maxlength}`;
-				}
+            // Itera sobre todos los textareas seleccionados
+            textareas.forEach((textarea) => 
+            {
+                let countLabel = textarea.closest(".md-form").querySelector(".count");
 
-				// Escuchar el evento 'input' para detectar cambios en el textarea
-				textarea.addEventListener("input", function () 
-				{
-					let textoIngresado = textarea.value.length;
-					
-					if (textoIngresado > maxlength) {
-						textarea.value = textarea.value.substring(0, maxlength); // Limitar la longitud del texto
-						actualizarConteo(); // Actualizar el conteo después de recortar el texto
-					} 
-					else {
-						actualizarConteo(); // Actualizar el conteo normalmente
-					}
-				});
+                const actualizarConteo = () => { 
+                    const textoIngresado = textarea.value.length;
+                    countLabel.textContent = `${textoIngresado}/${maxlength}`;
+                }
 
-				actualizarConteo();   // Llamar a actualizarConteo inicialmente para configurar el conteo inicial
-			});
-		}
+                const inputListener = () =>
+                {
+                    let textoIngresado = textarea.value.length;
+
+                    if (textoIngresado > maxlength) {
+                        textarea.value = textarea.value.substring(0, maxlength);
+                        actualizarConteo();
+                    } else {
+                        actualizarConteo();
+                    }
+                };
+
+                textarea.removeEventListener("input", inputListener);   // Remover evento input previamente asignado, si existe
+                textarea.addEventListener("input", inputListener);      // Agregar nuevo evento input
+
+                actualizarConteo();   
+            });
+        }
 
     </script>
 
