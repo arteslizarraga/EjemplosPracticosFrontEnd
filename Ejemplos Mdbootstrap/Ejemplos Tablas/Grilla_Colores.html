@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Ejemplo Grilla</title>
+    <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+    <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
+</head>
+
+<body id="appBody" class="d-flex flex-column">
+
+    <div class="page-content">
+        <main class="container">
+
+            <section>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 d-flex align-items-end justify-content-between">
+                                <h4 class="float-left heading h4-responsive mb-0">Ejemplo Grilla</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12">
+                                <style>
+                                    .tabla-colores td {
+                                        padding: 1em !important; 
+                                    }              
+                                                            
+                                    .tabla-colores td.seleccionado {
+                                        border: 2px solid red !important;
+                                        font-weight: bold !important;
+                                        border-collapse: collapse;
+                                    }
+
+                                    .tabla-colores td.no-seleccionado {
+                                        color: #717171 !important;
+                                    }
+                                </style>
+                                
+                                
+                                <table name="tabla-colores" class="table table-bordered table-striped tabla-colores">
+                                    <tbody><tr>
+                                        <td style="font-weight: bold; width: 8%">GLOSARIO</td>
+                                        <td style="font-weight: bold; width: 46%">DEMANDA</td>
+                                        <td style="font-weight: bold; width: 46%">FACTIBILIDAD</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #E06666 ;font-weight: bold">Baja</td>
+                                        <td class="seleccionado">Indicadores de demanda son negativos en general (en términos de demanda, empleabilidad, ingresos, articulación, etc.)</td>
+                                        <td class="no-seleccionado">Es poco factible de implementar, debido a altos niveles de inversión en infraestructura, equipos, herramientas, software, materiales, capacitación.</td>
+                                    </tr><tr>
+                                        <td style="background-color: #FFC666">Medio</td>
+                                        <td class="no-seleccionado">Indicadores de demanda son mixtos o intermedios (en términos de demanda, empleabilidad, ingresos, articulación, etc.)</td>
+                                        <td class="no-seleccionado">Es medianamente factible de implementar, debido a que el nivel de inversión es intermedio (la rentabilidad dependerá del nivel de demanda).</td>
+                                    </tr><tr>
+                                        <td style="background-color: #93CF96 ;font-weight: bold">Alto</td>
+                                        <td class="no-seleccionado">Indicadores de demanda son positivos en general (en términos de demanda, empleabilidad, ingresos, articulación, etc.)</td>
+                                        <td class="seleccionado">Es factible de implementar, debido a bajos niveles de inversión en infraestructura, equipos, herramientas, software, materiales, capacitación.</td>
+                                    </tr>
+                                </tbody></table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <footer class="page-footer">
+        <div class="container py-3">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="logo-gst">
+                    <img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png" alt="">
+                </div>
+                <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+
+    <script>
+
+        function reemplazarCaracteres() {
+            let caracterEncontrar = $("[name='caracterEncontrar']").val();
+            let reemplazarPor = $("[name='reemplazarPor']").val();
+            let textoOriginal = $("[name='textoOriginal']").val();
+
+            if (caracterEncontrar == "" || textoOriginal == "")
+                return alert("Faltan datos");
+
+            let nuevoTexto = textoOriginal.replaceAll(caracterEncontrar, reemplazarPor);
+            $("[name='textoReemplazado']").val(nuevoTexto);
+        }
+
+        function limpiarDatos() {
+            $("[name='caracterEncontrar']").val("");
+            $("[name='reemplazarPor']").val("");
+            $("[name='textoOriginal']").val("");
+            $("[name='textoReemplazado']").val("");
+        }
+
+    </script>
+
+</body>
+
+</html>
