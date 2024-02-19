@@ -1,0 +1,713 @@
+<html>
+
+<head>
+    <style>
+
+        .tabla-reporte {
+            width:100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .tabla-reporte td {
+            border: 1px solid black;
+        }
+
+        .fila-cabecera {
+            background-color: gray; 
+            color: white;
+            font-weight: bold;
+        }
+        .fila-cabecera td{
+            padding: 15px;
+        }
+        .fila-cabecera-detalle{
+            background-color: #c0c0c0;
+            color: #333;
+            padding: 10px;
+        }
+        .fila-cabecera-detalle td{
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .fila-detalle td {
+            padding: 10px;
+            word-wrap: break-word;
+            vertical-align: top;
+            
+        }
+        .fila-detalle h4{
+            padding: 10px;
+            text-decoration: underline;
+        }
+        .fila-detalle .fila-cabecera-detalle,
+        .fila-detalle .fila-cabecera-detalle th{
+            border: 1px solid;
+            padding: 10px;
+        }
+        tfoot{
+            font-weight: bold;
+        }
+
+        table, tr, td, th, tbody, thead, tfoot {
+            page-break-inside: avoid !important;
+        }
+
+        /* =================================================================== */
+        /* Importante: Esto es solo para visualizar la página en el navegador como si fuera una hoja carta / oficio */
+
+        body {
+          font-family: Arial;
+          font-size: 13px;                   /* Tamaño de las letras */
+          background: rgb(204,204,204);  /* Color de fondo para ver de que tamaño queda la pagina */
+        }
+
+        pagina {
+            background: white;
+            width: 1040px;      /* Largo de la seccion blanca de la hoja */
+            height: 1350px;     /* Carta: 1350px        Oficio: 1550px */
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+        }
+
+        .invoice-box {
+            padding: 30px;  /* Este es el margen todos los elementos de la pagina */
+            min-height: 1300px;
+        }
+
+        /* =================================================================== */
+    </style>
+</head>
+
+<body>
+
+    <pagina>
+
+        <div class="invoice-box">
+
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbAAAAB0CAMAAADTnpcOAAAAk1BMVEX///8AAADBAB/k5OTAABbOR1eenp6+AAD44+bu7u756OvOUFw4ODjHx8eIiIi3t7cgICB1dXWkpKTSYGxQUFDCwsLNzc3h4eHy8vLq6upCQkKYmJj5+fmzs7N8fHwaGhoRERFlZWUwMDCQkJDX19dubm4oKChKSkpjY2NbW1vQWGXEHTD88PIdHR0MDAxWVlbMOkx27cpLAAAHtUlEQVR4nO2d63riNhBArdJly5aY4HIx4BCuSbbtJn3/pyuETbBmRrI0cnY93875iyXLOrYuI9lkv30Yv3/KlPZRYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJQYcJIc2Kjwn4ASb7+/sviH7+wec/PYlA1lbZsyiMoF0feC1eWg4iLOJegTL4Mz0WkCPv8r53Xn9YzBoUNTCOb3SS/63mutGjOw5j74VN/FmOtnBXH5YM7w3XURRjzvHvZjwbu82WrgItYHosDdRFJwr7YeSULu/AwnrmuNEjYhadRs6kz89VjU1b59egyvACPfaezfmAWm+NUgrATt0WysBP9Zl3FMCAfnrAT40WasBP38CK6KezETbowY/ANyqk4tjBj9qnCTtg3b2eF1XsOtjBz9Oi6Cc0kQZh5oB6yOGFmV8+ju8LM1xaEmUenr3VwHinCjJknC7Naig4LM+MWhJkJratchmeRJszgZyxamFmJEGbQQI8hjGxas9IzikckCvvWgrBrZ9hpYQZORDjCyOFLjK9UYfiWYQh7H3p0Wxgc3bOE4Ts8m0RlkCoMdWMcYeYgQdhzG8LMHfQVWWHJwl7aEPa9uem2MANiHncPQxe7jTOTW1Bfi8hC1Jq08tZZgOHGXQIQbuMJG/9kYctJjcfl7pkqZJ4FU1XlYtonG7uDfeTWVSWb5WQ7zhGBQa5TAcrZ3ZHSBubPUFi+L77Tz4+TIVkTb5fx84TBgGG5GH1FZVyG1VX9NERk1a6vOVkbu/2UG+e3qUZ4RLOzD4HCQA5lb7SmtL+2rD9PGDV4O6BCMmpsgSrM1n4k6uJITG/54DPYc7EGYa9Mb3Epz49Yt4RlI1hGTkXiPqr+KzVuOLiyYoJm5XZQM0QY1XKfA20dE5bde680ENSp14Xgkeazb+2KBWp1V9bPYcKyJ1TSsnvC4G2FhuQhoIeofi68/NVqc3gBjn3suXOgsArevefQT9eEwft/RR7VBFzlqmnHLSLvFH6gkon3V1cud7CoT90TBjsxekGpib3byQxWwqaVsSEAnsUeJoYKy9DAo3vC4JWSodtG4HNam86hUT/vlmgAjnvsuXuwsBwWdt45YXBgj5dYQpi6hW1hHTiW8RNpRxia5ow6Jwwe5RO2OBwONyMK2CTWhH0DPz14TtDEYH44zMgCwJadKQx6P7XtXRMG2xJa2GC6enFH7jA1YfAn3iNcHfrHmCUarjA4oRtLFFYWEavFF67CUAg6YGsVYrqNLQBXGNzHsJQnrEQdcQBXYWhKSxfDR0EEjZrgCoNt+704YSh2FcRVGOrGnZtWHfRCdjIiuMJQWEaaMHjHBXIVhqZhkWEOlD4MrjA0dRYmLGBTOklrwvByQhhcYWjvpCxhzNu7PWFVzNC0DlcYKq4sYYze/kJbwsbcAvyaTSJvC84Zz6AjZimsxy7AryksajOhRUvD+vDd3RCuMNRpSxLG7sG8E2fHi00k/AJwhcFJp6h5GDVjHq5Xd7MbyAzemO2Epqg7ZnPcF1NUgBt4KFfYFhwpKtKBZ6xj19o+HA3XhMF2NSL4iycVS2cP2JIwdMWChFWoutytmWd5BQ30fO9U26DNUMQLUW+0Iww14JKi9WiIBjdA1/AIQ0PN8AVM9Ih71qrbEYYGiVNBwojFPCceYXgbafAWAZjQ93pnO8Je4Cl7koV5prweYRkKVgTvQoAJfbt3WhGGGpXn7u3pcAuDEnxr+z5heDIVOrKPSdeKMPSAjSUJa+sJI+K3gcZgso9+wnBkZyZaGK8PI/ZRG7Nt/NrQGZjqg/swNOJ4fTVRjjA0Wti6q8srjFwDzQM2T6HQmOfYZGEL4p2N84BWjjC8Zde9WOwVRszAz0yKpjjwFibxvL0GjowTVs4K1H2dObcDcoRlO3QBuWvS64l0ZL6g5G47zvsF5K2keLn7q/OeAQf6hb2fKc/HxyfnHoTXqxAkjNx987LGb0zm+Za61CuRy1pv435S9JJ4ZfMEOMovLJBKmDDu8rzBbVfcwvF7an4B2hB2efNKkDCiTQwFCqPfmm1Mzdlhd6EFYd9rQpIwPM4NBY0Ogj8MZqWO/fzAlXRhbx/NkiSMmkGFgYdzMcauqbm7ttKFDd8inqKEsfdUEOPviB6xlpp7y6QKm7xHqEUJw/HEQKgJUxm8hbeWmvV1GJMsrBafliWM243RM9zQequnZj7kScLu61UlTBhzJ44jJDEI2wZlpY750OKVFGF2jFmasKykvovShDOGNFjBF/yaU3PGeGxhuwKsr4oTdppExe+/9X2yapY3ze9g6jLEsg1P2G6Pw5ufUwDCPtm//ucXRn8yBQojlzCqm33jx+YtGr4xtpit1o+uT3KRS9KH/lNctMRK3Szsebnuz8g9YX+kAPL6Yv8KdIJ/wZg7tlKAozwfqQn4X4+AXGpUVY/K0pm6JA8nC2BHqaEwcHD1ER+iUBII35eodAIVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJgwVJowEYf8DsBzQd1xVjyEAAAAASUVORK5CYII="
+            style='width: 200px;' />
+
+            <br><br><br>
+
+            <table class="tabla-reporte tabla-reporte-general">
+                <thead>
+
+                    <tr class="fila-cabecera">
+                        <td colspan="3">General</td>
+                    
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Código de la Asignatura</td>
+                        <td>Nombre de la Asignatura</td>
+                        <td>Horas Totales</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>1234567890</td>
+                        <td>Nombre nombre</td>
+                        <td>Horas horas</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Tipo de Asignatura</td>
+                        <td>Área Formativa</td>
+                        <td>Función</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Tipo de asignatura</td>
+                        <td>Área</td>
+                        <td>Función</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Horas Presenciales</td>
+                        <td>Horas Online</td>
+                        <td>Modalidad</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Asignatura</td>
+                        <td>Horas</td>
+                        <td>Modalidad</td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <table class="tabla-reporte tabla-reporte-descriptor">
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="3">Descriptor</td>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Docente Elaborador</td>
+                        <td>Asesor Curricular</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Nombre docente</td>
+                        <td>Nombre Asesor</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Descripción</td>
+                        <td>Vinculación con el Medio</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Descripción</td>
+                        <td>Descripción</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Nivel MCTP</td>
+                        <td>Cualificación</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Nivel</td>
+                        <td>Cualificación</td>
+                    </tr>
+                    <tr class="fila-cabecera-detalle">
+                        <td>Perfil ChileValora</td>
+                        <td>UCL asociadas</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Perfil</td>
+                        <td>UCL</td>
+                    </tr>
+
+
+                    <tr class="fila-detalle">
+                        <td colspan="2">
+                            <table class="tabla-reporte">
+                                <h4>Cluster Competencias transversales</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                        <td>Competencias Transversales</td>
+                                        <td>Descripción</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Competencias Transversalesa</td>
+                                        <td>Descripción</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+    </pagina>
+
+    <pagina>
+
+        <div class="invoice-box">
+
+            <table class="tabla-reporte tabla-reporte-unidades">
+                
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="3">Unidades</td>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td colspan="2">
+                            <table class="tabla-reporte">
+                                <h4>Desglose de Horas por Unidad</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      <th rowspan="2" colspan="2" class="text-uppercase">Unidad de Aprendizaje</th>
+                                      <th colspan="7" class="text-uppercase">Hrs. Presenciales</th>
+                                      <th colspan="2" class="text-uppercase">Hrs. Online</th>
+                                      <th rowspan="2" class="text-uppercase">Hrs. Totales</th>
+                                    </tr>
+                                    <tr class="fila-cabecera-detalle">
+                                      <th class="text-uppercase">H. Aula</th>
+                                      <th class="text-uppercase">H. Lab.</th>
+                                      <th class="text-uppercase">Tipo Lab.</th>
+                                      <th class="text-uppercase">H. Taller</th>
+                                      <th class="text-uppercase">Tipo Taller</th>
+                                      <th class="text-uppercase">H. Terreno</th>
+                                      <th class="text-uppercase">H. Campo Clinico</th>
+                                      <th class="text-uppercase">Sincronicas</th>
+                                      <th class="text-uppercase">Asincronicas</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                <tr class="fila-detalle">
+                                    <td class="text-nowrap">1</td>
+                                    <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam consequatur natus quis odit.</td>
+                                    <td class="text-nowrap">0</td>
+                                    <td class="text-nowrap">8</td>
+                                    <td class="text-nowrap">N/A</td>
+                                    <td class="text-nowrap">0</td>
+                                    <td class="text-nowrap">N/A</td>
+                                    <td class="text-nowrap">8</td>
+                                    <td class="text-nowrap">0</td>
+                                    <td class="text-nowrap">0</td>
+                                    <td class="text-nowrap">0</td>
+                                    <td class="text-nowrap">16</td>
+                                </tr>
+                                </tbody>
+                                
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-nowrap font-weight-bold">TOTAL</td>
+                                    <td class="tet-nowrap font-weight-bold">200</td>
+                                    <td class="tet-nowrap font-weight-bold">200</td>
+                                    <td class="tet-nowrap font-weight-bold">N/A</td>
+                                    <td class="tet-nowrap font-weight-bold">200</td>
+                                    <td class="tet-nowrap font-weight-bold">N/A</td>
+                                    <td class="tet-nowrap font-weight-bold">200</td>
+                                    <td class="tet-nowrap font-weight-bold">0</td>
+                                    <td class="tet-nowrap font-weight-bold">0</td>
+                                    <td class="tet-nowrap font-weight-bold">0</td>
+                                    <td class="tet-nowrap font-weight-bold">200</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr class="fila-detalle">
+                        <td colspan="2">
+                            <table class="tabla-reporte">
+                                <h4>Desglose por Unidad</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      <th class="text-uppercase">Unidad de<br> Aprendizaje</th>
+                                      <th class="text-uppercase">Hrs.<br> Presenciales</th>
+                                      <th class="text-uppercase">Hrs.<br> Online</th>
+                                      <th class="text-uppercase">Aprendizajes Esperados</th>
+                                      <th class="text-uppercase">Criterios de Evaluación</th>
+                                      <th class="text-uppercase">H. Terreno</th>
+                                      <th class="text-uppercase">Actividades Mínimas Obligatorias</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                <tr class="fila-detalle">
+                                    <td class="text-nowrap">Unidad</td>
+                                    <td class="text-nowrap">2</td>
+                                    <td class="text-nowrap">0</td>
+                                    <td class="text-nowrap">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                                    <td class="text-nowrap">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                                    <td class="text-nowrap">9</td>
+                                    <td class="text-nowrap">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+
+            <table class="tabla-reporte tabla-reporte-estrategias-metodologicas">
+                
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="3">Estrategias Metodológicas</td>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td colspan="2">
+                            <table class="tabla-reporte">
+                                <h4>Estrategia Metodológica</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      <th class="text-uppercase">Unidad de Aprendizaje</th>
+                                      <th class="text-uppercase">Estrategia Didáctica</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Unidad</td>
+                                        <td class="text-nowrap">Estrategia</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr class="fila-detalle">
+                        <td colspan="2">
+                            <table class="tabla-reporte">
+                                <h4>Técnicas de Aprendizaje</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      <th class="text-uppercase">Unidad de Aprendizaje</th>
+                                      <th class="text-uppercase">Complementada con la(s) Técnica(s)</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Unidad</td>
+                                        <td class="text-nowrap">Técnicas</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+
+        </div>
+
+    </pagina>
+
+    <pagina>
+
+        <div class="invoice-box">
+            <table class="tabla-reporte tabla-reporte-sistema-evaluacion">
+                
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="3">Sistema de Evaluación</td>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td colspan="2">
+                            <table class="tabla-reporte">
+                                <h4>Estrategia Metodológica</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      <th class="text-uppercase">Nº Evaluación</th>
+                                      <th class="text-uppercase">UA</th>
+                                      <th class="text-uppercase">Evidencia</th>
+                                      <th class="text-uppercase">Criterios de Evaluación</th>
+                                      <th class="text-uppercase">Situación de Evaluación</th>
+                                      <th class="text-uppercase">Instrumento de Evaluación</th>
+                                      <th class="text-uppercase">% Parcial</th>
+                                      <th class="text-uppercase">Total</th>
+                                      
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">1</td>
+                                        <td class="text-nowrap">unidad 1, unidad 2</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">10%</td>
+                                        <td rowspan="2" class="text-nowrap">10%</td>
+                                    </tr>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">2</td>
+                                        <td class="text-nowrap">unidad 1, unidad 2</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">10%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+
+            <table class="tabla-reporte tabla-reporte-perfil-docente">
+                
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="3">Perfil Docente</td>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td colspan="3">
+                            <table class="tabla-reporte">
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      <th class="text-uppercase">Preferencia</th>
+                                      <th class="text-uppercase">Título <br>Profesional</th>
+                                      <th class="text-uppercase">Grado <br>Académico</th>
+                                      <th class="text-uppercase">Experiencia Docente</th>
+                                      <th class="text-uppercase">Situación de Evaluación</th>
+                                      <th class="text-uppercase">Experiencia<br> Profesional</th>
+                                      
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+
+                    <tr class="fila-cabecera-detalle">
+                        <td>Certificaciones Habilitantes</td>
+                        <td>Dominio de Herramientas</td>
+                        <td>Observaciones</td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+
+    </pagina>
+    <pagina>
+        <div class="invoice-box">
+
+
+            <table class="tabla-reporte tabla-reporte-bibliografia">
+                
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="3">Bibliografía</td>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td colspan="3">
+                            <table class="tabla-reporte">
+                                <h4>Bibliografía Básica</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      
+                                      <th class="text-uppercase">Título <br>Profesional</th>
+                                      <th class="text-uppercase">Autor</th>
+                                      <th class="text-uppercase">Año</th>
+                                      <th class="text-uppercase">ISBN/ISSN</th>
+                                      <th class="text-uppercase">Editorial</th>
+                                      <th class="text-uppercase">Fuente</th>
+                                      <th class="text-uppercase">Nombre Recurso Digital</th>
+                                      
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="fila-detalle">
+                        <td colspan="3">
+                            <table class="tabla-reporte">
+                                <h4>Bibliografía Sugerida</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      
+                                      <th class="text-uppercase">Título <br>Profesional</th>
+                                      <th class="text-uppercase">Autor</th>
+                                      <th class="text-uppercase">Año</th>
+                                      <th class="text-uppercase">ISBN/ISSN</th>
+                                      <th class="text-uppercase">Editorial</th>
+                                      <th class="text-uppercase">Fuente</th>
+                                      <th class="text-uppercase">Nombre Recurso Digital</th>
+                                      
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+    </pagina>
+
+    <pagina>
+        <div class="invoice-box">
+
+
+            <table class="tabla-reporte tabla-reporte-bibliografia">
+                
+                <thead>
+                    <tr class="fila-cabecera">
+                        <td colspan="3">Recursos de Aprendizaje</td>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila-detalle">
+                        <td colspan="3">
+                            <table class="tabla-reporte">
+                                <h4>Equipo</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      
+                                      <th class="text-uppercase">Equipo</th>
+                                      <th class="text-uppercase">Especificación Técnica</th>
+                                      <th class="text-uppercase">Cantidad</th>
+                                      
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr class="fila-detalle">
+                        <td colspan="3">
+                            <table class="tabla-reporte">
+                                <h4>Insumo</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      
+                                      <th class="text-uppercase">Insumo</th>
+                                      <th class="text-uppercase">Descripción</th>
+                                      <th class="text-uppercase">Cantidad</th>
+                                      
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr class="fila-detalle">
+                        <td colspan="3">
+                            <table class="tabla-reporte">
+                                <h4>Software</h4>
+                                <thead>
+                                    <tr class="fila-cabecera-detalle">
+                                      
+                                      <th class="text-uppercase">Insumo</th>
+                                      <th class="text-uppercase">Descripción</th>
+                                      
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                    <tr class="fila-detalle">
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        <td class="text-nowrap">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+    </pagina>
+    
+</body>
+
+</html>
