@@ -1,0 +1,299 @@
+
+#detalle-progreso .card{
+  min-height: 375px;
+}
+.no-card{
+  background-color: transparent;
+  box-shadow: none;
+}
+.no-label{
+  font-size: 0.8em;
+  margin-bottom: 0.5rem;
+  color: #999;
+}
+#detalle-progreso .card .card-body{
+  font-size: .875rem;
+}
+
+#detalle-progreso .card .card-footer button{
+  border: none;
+  background-color: transparent;
+  color: #1565C0;
+  padding: 0;
+  cursor: pointer;
+  min-height: 50px;
+}
+#detalle-progreso .card .card-footer button:disabled{
+  color: #ccc;
+}
+#detalle-progreso .card .card-footer{
+  position: absolute;
+  bottom: 0;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+.btn-separator:after {
+  content: '';
+  position: absolute;
+  background-color: #ccc;
+  width: 1px;
+  height: 100%;
+  right: 0;
+}
+.c-requerido{
+  color: #c00;
+  font-size: .75rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .3s;
+}
+.separator{
+  height: 1px;
+  background-color: #d8d8d8;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}
+.btn{
+  min-width: 90px;
+}
+.btn-round{
+  min-width: initial;
+}
+.table button{
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.btn-add{
+  border: none;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 1px solid #666;
+  background-color: transparent;
+}
+.btn-default.btn:disabled{
+  background-color: #ccc!important;
+  color: #999!important;
+}
+label.count {
+  right: 0;
+  left: auto;
+  top: -20px;
+  font-size: 85%;
+  transform: none !important;
+}
+#ModalEditarAprendizaje .md-form .form-control.focus,
+#ModalEditarAprendizaje .select-wrapper.focus-select input.select-dropdown{
+  color: #cdcdcd;
+}
+#tabla-detalle-estructura-horaria tfoot tr td:nth-child(1),
+#tabla-detalle-estructura-horaria tbody tr td:nth-child(2),
+#tabla-detalle-estructura-horaria tbody tr td:nth-child(3){
+  background-color: #f1f1f1;
+}
+table.table-bordered th:last-child, table.table-bordered td:last-child{
+  width: 180px;
+}
+#tabla-sistema-evaluacion.table.table-bordered th:last-child, 
+#tabla-sistema-evaluacion.table.table-bordered td:last-child,
+#tabla-sistema-evaluacion.table.table-bordered th:first-child, 
+#tabla-sistema-evaluacion.table.table-bordered td:first-child{
+  width: 80px;
+}
+#prev-tabla-estrategia.table.table-bordered th:first-child,
+#prev-tabla-estrategia.table.table-bordered td:first-child,
+#prev-tabla-tecnicas.table.table-bordered th:first-child,
+#prev-tabla-tecnicas.table.table-bordered td:first-child{
+  width: 180px;
+}
+#tablaEstrategiaDidactica.table.table-bordered th:last-child, 
+#tablaEstrategiaDidactica.table.table-bordered td:last-child,
+#tablaComplemento.table.table-bordered th:last-child, 
+#tablaComplemento.table.table-bordered td:last-child{
+ min-width: 600px;
+}
+
+.alert-titulos{
+  width: 100%;
+  background-color: #FAF1E0;
+  border: 1px solid #ffa000;
+  border-radius: 7px;
+}
+
+
+/* Tabs */
+.tabs-asignaturas .tab-content{
+  height: 80vh;
+}
+.tabs-asignaturas .tab-pane{
+  height: calc(80vh - 30px);
+  overflow-y: scroll;
+  overflow-x: hidden; 
+}
+.tabs-asignaturas .tab-pane .card-header{
+  height: 65px;
+  position: sticky;
+  background-color: #fff;
+  top: 0;
+  z-index: 10;
+  transition: all .3s;
+}
+.tabs-asignaturas .tab-pane .card-body{
+  min-height: calc(80vh - 145px);
+}
+.tabs-asignaturas .tab-pane .card-footer{
+  height: 50px;
+}
+.table-basic-scroll{
+  overflow: auto; 
+  position: relative; 
+  width: 100%;
+}
+.tabs-asignaturas ul .nav-item{
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+
+@keyframes checkCompletitud{
+  from{
+    opacity: 0;
+    transition: all .3s;
+
+  }
+  to{
+    opacity: 1;
+    transition: all .3s;
+  }      
+}
+
+.checkedCompletitud{
+  animation-name: checkCompletitud;
+  animation-duration: .5s;
+}
+@media (min-width: 992px){
+  .vertical-tabs-list {
+      height: 80vh;
+      /* flex-basis: initial;
+      width: 200px; */
+  }
+}
+
+.card-header .select-wrapper input.select-dropdown{
+  font-family: "Fjalla";
+  font-size: 125%;
+  font-weight: 400;
+  text-decoration: underline;
+  border-bottom: none;
+}
+
+.bs-tooltip-bottom .arrow::before, 
+.bs-tooltip-auto[x-placement^="bottom"] .arrow::before,
+.tooltip-inner{
+  background-color: #fff!important;
+  border: 1px solid #ccc;
+  text-align: left;
+  color: #333;
+  font-family: "Roboto Condensed",sans-serif;
+}
+.bs-tooltip-bottom .arrow::before{
+  color: #000;
+}
+
+.tooltip-inner .tootltip-header{
+  font-weight: bold;
+}
+.tooltip-inner .tootltip-body{
+  font-size: .75rem;
+}
+.select-header{
+  display: block;
+}
+.select-header select{
+  display: block!important;
+  border: none;
+  font-size: 1.5rem;
+  font-family: 'Fjalla';
+  text-decoration: underline;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.loading-backdrop{
+  z-index: 9999;
+}
+.badge{
+  font-size: 1rem;
+}
+.fila-unidad{
+  width: 250px;
+  height: auto;
+}
+.border-bottom.fila-unidad:last-child,
+.border-bottom.criterio-fila:last-child{
+  border-bottom: none!important;
+}
+#tabla-sistema-evaluacion tfoot tr td{
+  border: none;
+  background-color: rgba(0,0,0,0.03);
+}
+
+.editar-sist-evaluacion .md-form .form-control.editar-focus,
+.editar-sist-evaluacion .select-wrapper.editar-focus-select input.select-dropdown,
+.editar-solicitud-titulo-nuevo .md-form .form-control.editar-focus,
+.editar-solicitud-titulo-nuevo .select-wrapper.editar-focus-select input.select-dropdown{
+  color: #cdcdcd;
+}
+.estrategias-metodologicas .card-header .material-icons{
+  color: #666666;
+}
+#prev-tabla-sistema-evaluacion td.acciones-tabla,
+#prev-tabla-bibliografia-basica td.acciones-tabla,
+#prev-tabla-bibliografia-sugerida td.acciones-tabla,
+#prev-tabla-equipos td.acciones-tabla,
+#prev-tabla-insumos td.acciones-tabla,
+#prev-tabla-software td.acciones-tabla{
+  display: none;
+}
+#prev-tabla-equipos td:nth-child(1),
+#prev-tabla-equipos td:nth-child(2),
+#prev-tabla-insumos td:nth-child(1),
+#prev-tabla-insumos td:nth-child(2),
+#prev-tabla-software td:nth-child(1),
+#prev-tabla-software td:nth-child(2){
+  width: 50%!important;
+}
+.dark .tabs-asignaturas .tab-pane .card-header,
+.dark .select-header select{
+  background-color: #383838;
+}
+.dark .select-header select{
+  color: #fff;
+}
+.dark .select-wrapper input.select-dropdown:disabled{
+  color: rgba(255,255,255,0.1);
+}
+.dark .btn-add,
+.dark .form-control,
+.dark tr button{
+  color: #f9f9f9;
+}
+.dark .alert-titulos{
+  color: #333;
+}
+@media screen and (min-width: 768px) {
+  .vertical-tabs-list {
+      height: auto;
+  }
+  .vertical-tabs-list .nav-link{
+    padding: 0.8rem;
+  }
+  .tabs-asignaturas .tab-pane .card-header{
+    height: auto;
+  }
+}

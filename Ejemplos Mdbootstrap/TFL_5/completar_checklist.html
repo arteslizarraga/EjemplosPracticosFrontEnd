@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Completar Checklist</title>
+  <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+  <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
+  <link rel="stylesheet" href="estilos.css">
+
+</head>
+
+<body id="appBody" class="d-flex flex-column">
+
+  <div class="page-content">
+
+    <div class="navbar-overlay"></div>
+
+    <header class="header">
+
+      <div class="header-container">
+
+        <!--Logo-->
+        <div class="header-logo">
+          <a href="https://www.inacap.cl">
+            <img src="https://www.inacap.cl/web/template-aplicaciones/img/isotipo.png" alt="INACAP" class="logo-mobile">
+            <img src="https://www.inacap.cl/web/template-aplicaciones/img/logo-inacap.png" alt="INACAP" class="logo">
+          </a>
+        </div>
+
+        <!--Titulo, recuerda que tambien debes reemplazar el nombre en el script m&aacute;s abajo-->
+        <div class="header-title">
+          <h1 id="title">Sistema de definición de Programas Formativos: Módulo Diseño MCTP</h1>
+        </div>
+
+        <!--Datos del Usuario-->
+        <div class="user-info">
+
+          <!--Nombre-->
+          <div class="user-name mr-4">
+            <p>Nombre Colaborador</p>
+          </div>
+
+
+          <!-- Iconos encabezado - Mobile -->
+          <div class="user-mobile-menu user-button dropdown dropdown-toggle" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="material-icons">more_vert</i>
+
+            <div class="dropdown-menu dropdown-menu-right">
+              <p class="dropdown-user-name">Colaborador X</p>
+              <p class="dropdown-title dropdown-title--border">Accesibilidad</p>
+              <ul class="accesibility-menu">
+                <li class="accesibility-menu__item">
+                  <div class="d-flex align-items-center justify-content-between" onclick="darkMode();">
+                    <span class="tipo-de-modo">Modo Oscuro</span>
+                    <div class="d-flex justify-content-center">
+                      <span>
+                        <i class="material-icons"> brightness_medium</i>
+                      </span>
+                    </div>
+                  </div>
+                </li>
+                <li class="accesibility-menu__item">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <span>Tamaño de letra</span>
+                    <div class="d-flex justify-content-center">
+                      <span tabindex="0" role="button"
+                        class="btnDecrease btn btn-round btn-fonts btn-secondary d-flex align-items-center justify-content-center waves-effect waves-light">
+                        <i class="material-icons">remove</i>
+                      </span>
+                      <span tabindex="0" role="button"
+                        class="btnEnlarge btn btn-round btn-fonts btn-default d-flex align-items-center justify-content-center ml-2 mr-0 waves-effect waves-light">
+                        <i class="material-icons">add</i>
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <!--- Cerrar Sesi&oacute;n-->
+              <p class="dropdown-title dropdown-title--border">Cuenta</p>
+              <ul class="accesibility-menu">
+                <li class="accesibility-menu__item">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <span id="tipo-de-modo">Cerrar Sesión</span>
+                    <div class="d-flex justify-content-center">
+                      <span>
+                        <i class="material-icons">exit_to_app</i>
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
+          <!-- Iconos encabezado - Mobile -->
+
+          <!-- Iconos encabezado - Escritorio-->
+          <div class="user-desktop-icons">
+
+            <div class="user-accesibility user-button dropdown dropdown-toggle" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+
+              <i class="material-icons ">accessibility</i>
+
+              <div class="dropdown-menu dropdown-menu-right">
+                <p class="dropdown-title">Accesibilidad</p>
+                <ul class="accesibility-menu">
+                  <li class="accesibility-menu__item">
+                    <div class="d-flex align-items-center justify-content-between" onclick="darkMode();">
+                      <span class="tipo-de-modo">Modo Oscuro</span>
+                      <div class="d-flex justify-content-center">
+                        <span>
+                          <i class="material-icons"> brightness_medium</i>
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="accesibility-menu__item">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <span>Tamaño de letra</span>
+                      <div class="d-flex justify-content-center">
+                        <span tabindex="0" role="button"
+                          class="btnDecrease btn btn-round btn-fonts btn-secondary d-flex align-items-center justify-content-center waves-effect waves-light"><i
+                            class="material-icons">remove</i></span>
+                        <span tabindex="0" role="button"
+                          class="btnEnlarge btn btn-round btn-fonts btn-default d-flex align-items-center justify-content-center ml-2 mr-0 waves-effect waves-light"><i
+                            class="material-icons">add</i></span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+            <div class="user-logout user-button">
+              <a href="#"><i class="material-icons">exit_to_app</i></a>
+            </div>
+
+          </div>
+          <!-- Iconos encabezado - Escritorio-->
+
+        </div>
+      </div>
+
+    </header>
+
+    <nav class="navbar toggle-navbar-lg">
+      <div class="container">
+        <button class="d-lg-none d-flex align-items-center pl-0" id="toggle-navbar" aria-label="Ver Menu"
+          onclick="openNav()">
+          <i class="material-icons icon-lg mr-1">menu</i>
+          <span>Menu</span>
+        </button>
+
+        <ul id="offCanvas" class="nav navbar-nav navbar-offcanvas navbar-expand-lg justify-content-start">
+          <a href="javascript:void(0)" class="d-lg-none closebtn waves-effect waves-light" onclick="closeNav()">
+            <span role="button" class="material-icons">
+              close
+            </span>
+          </a>
+          <li class="nav-item">
+            <a href="../../index.html" class="nav-link waves-effect active">Menú Operacional</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main id="main" class="container">
+
+      <section class="row breadcrumb">
+
+        <span class="breadcrumb-item">Menú Operacional</span>
+        <span class="breadcrumb-item">Buscar Asignaturas</span>
+
+        <span class="breadcrumb-item">Resultado de búsqueda</span><span class="breadcrumb-item">Matematica Aplicada
+          I</span><span class="breadcrumb-item">Detalle Progreso para Oficializar</span><span
+          class="breadcrumb-item active">Completar Checklist</span>
+      </section>
+
+      <section class="d-flex justify-content-center flex-column align-items-center">
+
+        <div class="card col-12 " id="completar-checklist" style="display: block;">
+
+          <div class="card-header">
+
+            <div class="row">
+
+              <div class="col-12 d-flex align-items-end justify-content-between">
+                <h4 class="float-left heading h4-responsive mb-0">Completar Checklist</h4>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="card-body">
+
+            <div class="row mb-4">
+              <div class="col-12 col-md-4">
+                <p>
+                  <span class="font-weight-bold">Nombre Criterio:</span>
+                  <span id="prev-general-01">Nombre Criterio</span>
+                </p>
+              </div>
+              <div class="col-12 col-md-4">
+                <p>
+                  <span class="font-weight-bold">Estado:</span>
+                  <span id="prev-general-02">En proceso</span>
+                </p>
+              </div>
+              <div class="col-12 col-md-4">
+                <p>
+                  <span class="font-weight-bold">Fecha Efectiva:</span>
+                  <span id="prev-general-03">31/12/2024</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-12">
+                <table id="tabla-completar-checklist" class="table table-striped table-bordered mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase">ítems</th>
+                      <th class="text-uppercase">Cumple / No Cumple</th>
+                      <th class="text-uppercase">Prelación</th>
+                      <th class="text-uppercase">Req. Autorización</th>
+                      <th class="text-uppercase">Req. Revisión</th>
+                      <th class="text-uppercase">Req. Evidencia</th>
+                      <th class="text-uppercase">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="seleccionado">
+                      <td class="text-nowrap item-td">Lorem ipsum dolor sit, amet consectetur adipisicing elit</td>
+                      <td class="text-nowrap cumple-td">Cumple</td>
+                      <td class="text-nowrap prelacion-td">1</td>
+                      <td class="text-nowrap autorizacion-td">Si</td>
+                      <td class="text-nowrap revision-td">No</td>
+                      <td class="text-nowrap evidencia-td">Si</td>
+                      <td class="text-nowrap" valign="top">
+                        <div class="d-flex flex-column justify-content-center">
+                          <button type="button" onclick="abrirModalEditar()" class="btn-editar-item mr-0 d-flex align-items-center float-left">
+                            <i class="material-icons mr-1 icon-lg grey-text">edit</i>
+                            <span class="d-none d-md-inline">Editar ítem</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-nowrap item-td">Lorem ipsum dolor sit, amet consectetur adipisicing elit</td>
+                      <td class="text-nowrap cumple-td">Cumple</td>
+                      <td class="text-nowrap prelacion-td">1</td>
+                      <td class="text-nowrap autorizacion-td">Si</td>
+                      <td class="text-nowrap revision-td">No</td>
+                      <td class="text-nowrap evidencia-td">No</td>
+                      <td class="text-nowrap" valign="top">
+                        <div class="d-flex flex-column justify-content-center">
+                          <button type="button" onclick="abrirModalEditar()" class="btn-editar-item mr-0 d-flex align-items-center float-left">
+                            <i class="material-icons mr-1 icon-lg grey-text">edit</i>
+                            <span class="d-none d-md-inline">Editar ítem</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-nowrap item-td">Lorem ipsum dolor sit, amet consectetur adipisicing elit</td>
+                      <td class="text-nowrap cumple-td">No Cumple</td>
+                      <td class="text-nowrap prelacion-td">1</td>
+                      <td class="text-nowrap autorizacion-td">Si</td>
+                      <td class="text-nowrap revision-td">Si</td>
+                      <td class="text-nowrap evidencia-td">Si</td>
+                      <td class="text-nowrap" valign="top">
+                        <div class="d-flex flex-column justify-content-center">
+                          <button type="button" onclick="abrirModalEditar()" class="btn-editar-item mr-0 d-flex align-items-center float-left">
+                            <i class="material-icons mr-1 icon-lg grey-text">edit</i>
+                            <span class="d-none d-md-inline">Editar ítem</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>% Cumple</td>
+                      <td colspan="6">66%</td>
+                    </tr>
+                    <tr>
+                      <td>% No Cumple</td>
+                      <td colspan="6">33%</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="card-footer">
+
+            <div class="row mt-4 justify-content-between">
+
+              <div class="col d-flex justify-content-end">
+                <button onclick="window.location.href = 'cards.html'" class="btn btn-secondary waves-effect waves-light">
+                  <span>Cancelar</span>
+                </button>
+                <button onclick="guardarCambios()" class="btn btn-default waves-effect waves-light">
+                  <span>Guardar Cambios</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+    </main>
+
+  </div>
+
+
+  <footer class="page-footer">
+    <div class="container py-3">
+      <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+        <div class="logo-gst"><img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png" alt=""></div>
+        <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnologías</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Loading Overlay -->
+  <div class="loading-backdrop" id="loadingOverlay" style="display: none;">
+    <div class="loading-circle">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-white-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ModalEditarLVC" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="heading lead">Editar Ítem</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="row mb-4">
+
+            <div class="col-12 col-md-6">
+              <div class="md-form mb-3">
+                <input type="text" name="lvc-editar-campo-01" id="lvc-editar-campo-01"
+                  class="form-control mb-0 editar-focus" placeholder="Ingrese nombre">
+                <label for="lvc-editar-campo-01" class="active">Nombre Ítem</label>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="md-form">
+                  <select name="prelacion" class="chosen-select">
+                      <option value="" selected>Seleccione</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                  </select>
+                  <label class="active">Prelación</label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row mb-4">
+
+            <div class="col-12 col-md-6">
+              <div class="md-form">
+                <select name="cumplimiento" class="chosen-select">
+                  <option value="" selected>Seleccione</option>
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
+                <label class="active">Cumple / No Cumple</label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="separator my-4"></div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+
+            <div class="col-md-3 col-12">
+              <p class="m-0"><span class="no-label">Requiere Autorización</span></p>
+              <p class="m-0"><span id="requiere-autorizacion" class="font-weight-bold ml-4">Si</span></p>
+            </div>
+
+            <div id="persona-autoriza" class="col-12 col-md-9" style="display: block;">
+              <div class="md-form mb-3">
+                <input type="text" name="lvc-editar-campo-04" id="lvc-editar-campo-04"
+                  class="form-control mb-0 editar-focus" placeholder="Ingrese nombre de la persona">
+                <label for="lvc-editar-campo-04" class="active">Persona que Autoriza</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+
+            <div class="col-md-3 col-12">
+              <p class="m-0"><span class="no-label">Requiere Revisión</span></p>
+              <p class="m-0"><span id="requiere-revision" class="font-weight-bold ml-4">Si</span></p>
+            </div>
+
+            <div id="persona-revisa" class="col-12 col-md-9" style="display: block;">
+              <div class="md-form mb-3">
+                <input type="text" name="lvc-editar-campo-05" id="lvc-editar-campo-05"
+                  class="form-control mb-0 editar-focus" placeholder="Ingrese nombre de la persona">
+                <label for="lvc-editar-campo-05" class="active">Persona que Revisa</label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row mb-4">
+
+            <div class="col-md-3 col-12">
+              <p class="m-0"><span class="no-label">Requiere Evidencia</span></p>
+              <p class="m-0"><span id="requiere-evidencia" class="font-weight-bold ml-4">Si</span></p>
+            </div>
+
+            <div id="adjunto-evidencia" class="col-12 col-md-9 mb-4" style="display: block;">
+
+              <form id="inputForm">
+                <div class="md-form mt-0">
+                  <span class="no-label">Adjuntar Evidencia</span>
+                  <div class="file-field d-flex align-items-center">
+
+                    <div class="btn ml-0 d-flex align-items center float-left waves-effect waves-light">
+
+                      <span class="material-icons d-md-none attach-icon">
+                        attach_file
+                      </span>
+                      <span class="d-none d-md-block">Seleccionar Archivo</span>
+
+                      <input type="file">
+                    </div>
+
+
+                    <div class="file-path-wrapper">
+                      <input class="file-path" type="text" placeholder="No hay archivos adjuntos" disabled="">
+
+                      <button id="btnResetForm" class="btn btn-link d-none pr-1 waves-effect waves-light">
+                        <i class="material-icons icon-lg">clear</i>
+                      </button>
+
+                    </div>
+
+                  </div>
+                </div>
+              </form>
+
+            </div>
+
+          </div>
+
+          <div class="row mb-4">
+
+          </div>
+
+        </div>
+        <div class="modal-footer justify-content-end">
+
+          <button type="button" class="btn mx-2 btn-secondary waves-effect waves-light"
+            data-dismiss="modal">Cancelar</button>
+
+          <button onclick="guardarCambiosModalEditar()" type="button"
+            class="btn btnEliminarFila mx-2 btn-default waves-effect waves-light alerta">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+  <div class="hiddendiv common"></div>
+
+  <script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+
+  <script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+
+  <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+  
+  <script>
+
+    $(document).ready(function ()
+    {
+        // Activar selects
+        $(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
+        $(".mdb-select").material_select();
+
+        $('[data-toggle="tooltip"]').tooltip();   // Activar tooltips
+    });
+
+    function abrirModalEditar() {
+      $("#ModalEditarLVC").modal("show"); 
+    }
+
+    function guardarCambiosModalEditar() {
+      $("#ModalEditarLVC").modal("hide"); 
+    }
+
+    function guardarCambios() {
+      window.location.href = "cards.html";
+    }
+
+  </script>
+
+</html>
