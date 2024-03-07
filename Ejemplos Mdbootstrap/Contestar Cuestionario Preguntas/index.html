@@ -443,9 +443,7 @@
         <div class="modal-body">
 
           <div class="row mb-4">
-
-
-              
+ 
             <div class="col-12 col-md-4">
                 <div class="md-form">
                     <p name="numeroDefNmctp" class="form-control" style="border: none"></p>
@@ -464,14 +462,65 @@
                     <label class="active">Versión Cualificación</label>
                 </div>
             </div>  
+
+          </div>
+
+          <!-- =================================== -->
+
+          <div class="row mb-4">  
+
+              <div class="col-12 col-md-4">
+                    <div class="md-form">
+                        <p name="descripcionSituacionDesempenio" class="form-control" style="border: none">
+                          <container data-html="true" data-toggle="tooltip" data-placement="top" title="" 
+                          data-original-title="QUIENES TENGAN ESTA CUALIFICACIÓN PODRÁN EJERCER SUS ACTIVIDADES LABORALES EN ESTABLECIMIENTOS GASTRONÓMICOS DE TODAS LAS CATEGORÍAS A NIVEL NACIONAL. SE DESEMPEÑA BAJO SUPERVISIÓN, PUEDE O NO TENER PERSONAS A CARGO Y TRABAJA COMO PARTE DE UN EQUIPO."
+                          style="cursor: pointer">
+                            QUIENES TENGAN ESTA CUALIFICACIÓN PODRÁN EJERCER SUS ACTIVIDADES LABORALES EN ESTABLECIMIENTOS GASTRONÓMICOS DE TODAS LAS CATEGORÍAS A NIVEL NACIONAL. SE DESEMPEÑA BAJO SUPERVISIÓN, PUEDE O NO TENER P ...
+                          </container>
+                        </p>
+                        <label class="active">Descripción Situación Desempeño</label>
+                    </div>
+              </div> 
+
             <div class="col-12 col-md-4">
                 <div class="md-form">
-                    <p name="nombrePerfilOcupacional" class="form-control" style="border: none"></p>
-                    <label class="active">Perfil Ocupacional</label>
+                    <label class="active">Niveles</label>
+
+                    <div class="form-control" style="border: none">
+                        <table class="table table-bordered table-striped" style="width: 50%; margin-top: 6px">
+                            <tbody><tr>
+                                <td style="width: 50%"><b>Muy Baja:</b></td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td><b>Baja:</b></td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td><b>Alta:</b></td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td><b>Muy Alta:</b></td>
+                                <td>3</td>
+                            </tr>
+                        </tbody></table>
+                    </div>
                 </div>
             </div>  
 
+            <div class="col-12 col-md-4">
+                <div class="md-form d-flex align-items-center">
+                    <div id="informe-indicadores" onclick="alert('No implementado')" style="cursor: pointer; display: block;">
+                        <i class="material-icons icon-lg" style="vertical-align: text-bottom">visibility</i> 
+                        <span class="mr-2" style="margin-left: 0.5em">Ver informe de indicadores</span>
+                    </div>         
+                </div>
+            </div>
+
           </div>
+
+          <!-- =================================== -->
 
           <div id="div-row-textareas-preguntas" class="row mb-4"></div>
 
