@@ -28,22 +28,20 @@
         ] 
     };
 
-
-    function cambiarPosicionTablaIndex(objeto)
+    function cambiarPosicionVertical(index, direccion)
     { 
-        let elemento = entidad.propiedades.find(c=> c.nombre == objeto.getAttribute("nombreAtributo"));
+        let elemento = entidad.propiedades[index];
         let ordenElemento = elemento.orden;
 
-        if (objeto.getAttribute("class").includes("botonAbajo")) 
+        if (direccion == "abajo")
         {
             let siguienteElemento = entidad.propiedades.filter(c=> c.orden > elemento.orden)[0];
-            //let siguienteElemento = entidad.propiedades.find(c=> c.orden > elemento.orden); 
             let ordenSiguienteElemento = siguienteElemento.orden;
             
             siguienteElemento.orden = ordenElemento;
             elemento.orden = ordenSiguienteElemento;
         }
-        if (objeto.getAttribute("class").includes("botonArriba"))
+        if (direccion == "arriba")
         {
             let anteriorElemento = entidad.propiedades.sort((a, b) => Number(a.orden) - Number(b.orden)).find(c=> c.orden == (elemento.orden - 1)); 
             let ordenAnteriorElemento = anteriorElemento.orden;
@@ -55,50 +53,35 @@
         desplegarTablaModificarAtributosPrincipales();   // Asi la tabla se ordena de acuerdo al campo orden 
     }
 
-    function desplegarTablaModificarAtributosPrincipales()
+    function desplegarTablaModificarAtributosPrincipales() 
     {
-        let cadena = "";
+        const tablaHTML = `
+            <h3>Definición del index para la clase ${entidad.nombre}</h3>
+            <table class='tabla-info'>
+                <thead>
+                    <tr>
+                        <th>Atributo</th>
+                        <th>Orden tabla</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${entidad.propiedades.sort((a, b) => Number(a.orden) - Number(b.orden)).map((c, index) => `
+                        <tr>
+                            <td>${c.nombre}</td>
+                            <td>
+                                ${index > 0 ? `<button onclick="cambiarPosicionVertical(${index}, 'arriba')">&uarr;</button>` : ''}
+                                ${(index + 1) < entidad.propiedades.length ? `<button onclick="cambiarPosicionVertical(${index}, 'abajo')">&darr;</button>` : ''}
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+            <br/><br/>
+        `;
 
-        //===============================================================>>>>>
-        // Despliegue de tabla con los detalles del index
-        
-        cadena = "<h3> Definición del index para la clase "+entidad.nombre +" </h3>";  // Inicializa de nuevo la cadena
-        
-        cadena += "<table class='tabla-info'>";
-        
-        cadena += "<thead>";
-            cadena += "<tr>";
-                cadena += "<th> Atributo </th>";
-                cadena += "<th> Orden tabla </th>";
-            cadena += "</tr>";
-        cadena += "</thead>";
-        
-        cadena += "<tbody>";
-            entidad.propiedades.sort((a, b) => Number(a.orden) - Number(b.orden)).forEach((c, index) => 
-            {
-                cadena += "<tr>";  
-                    cadena += "<td> " + c.nombre + " </td>";
-                    
-                    cadena += "<td>";
-
-                        if (index > 0) {
-                            cadena += "<button nombreAtributo='" + c.nombre + "' onclick='cambiarPosicionTablaIndex(this);' class='botonArriba'> &uarr; </button>";
-                        }
-                        if ((index + 1) < entidad.propiedades.length) {
-                            cadena += "<button nombreAtributo='" + c.nombre + "' onclick='cambiarPosicionTablaIndex(this);' class='botonAbajo'> &darr; </button>";
-                        }
-
-                    cadena += "</td>";
-            
-                cadena += "</tr>";
-            });
-        cadena += "</tbody>";
-
-        cadena += "</table> <br/><br/>";
-
-        document.querySelector("#divTablaElementosIndex").innerHTML = cadena; 
+        document.querySelector("#divTablaElementosIndex").innerHTML = tablaHTML;
     }
-    
+
     desplegarTablaModificarAtributosPrincipales();
 
     </script>
