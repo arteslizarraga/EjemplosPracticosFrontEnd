@@ -11,11 +11,56 @@
 </head>
 
 <body>
-    <div class="container theme-showcase">
-        <button type="button" onclick="probando_1()" class="btn btn-success">Probando 1</button>
-        <button type="button" onclick="probando_2()" class="btn btn-primary">Probando 2</button>
-    </div>
 
+    <main class="container">
+
+        <section>
+
+            <div class="card">
+                <form id="miFormulario">
+
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 d-flex align-items-end justify-content-between">
+                                <h4 class="float-left heading h4-responsive mb-0">Reemplazar Caracteres</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">         
+                            <div class="col-12 col-md-6">
+                                <button type="button" onclick="probando_1()" class="btn btn-success">Probando 1</button>
+                                <button type="button" onclick="probando_2()" class="btn btn-primary">Probando 2</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="card-footer">
+                        <div class="row py-2 flex-row">
+
+                            <div class="col col-md-6  d-flex justify-content-start">
+
+                            </div>
+                            <div class="col col-md-6 d-flex justify-content-end">
+
+                                <button type="button" class="btn btn-outline waves-effect waves-light">
+                                    <span>Probando</span>
+                                </button>
+
+                                <button type="button" class="btn btn-default waves-effect waves-light">
+                                    <span>Probando</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+
+
+        </section>
+
+    </main>
+    
     <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
     <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
     <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
@@ -31,7 +76,8 @@
 			let confirmacion = await abrirModalConfirmarGenerico({ 
                 class: "modal-dialog modal-notify modal-warning modal-sm",
                 titulo: "Confirmar 1", 
-                mensaje: "Probando 1" 
+                mensaje: "Probando 1",
+                cerrar: () => console.log("Se ha cerrado el modal sin seleccionar ninguna opción") 
             });
 
 			console.log("confirmacion", confirmacion);
@@ -60,101 +106,87 @@
                         <i class="material-icons icon-3x mb-3 animated rotateIn">delete</i>
                         <p>El detalle será eliminado</p>
                     </div>`,
+                    botones: [ 
+                        { titulo: "No Borrar", confirmar: false }, 
+                        { titulo: "Sí Borrar", confirmar: true, class: "btn btn-primary waves-effect waves-light" }
+                    ],
                     confirmar: () => { console.log("SE HA ELIMINADO"); },
                     cancelar: () => { console.log("SE HA CANCELADO"); }
                 });
 			}
         }
 
-        function abrirModalConfirmarGenerico(datos = {
-            titulo: "Confirmar",
-            contenido: `<div class="row"><div class="col-md-12"><p>AAAAAAAAAAAAAAAAAAAAAAAAAAA</p></div></div>`,
-            //confirmar: () => { alert("AAAAAAAAAAA"); }
-        }) 
+        function abrirModalConfirmarGenerico(datos) 
 		{
             return new Promise((resolve, reject) => 
 			{
                 let modal = $("#modalConfirmarGenerico");
-                if (modal.length > 0) modal.remove();      // Si ya existe, lo elimina
+                if (modal.length > 0) modal.remove();      // Si ya existe el modal, lo elimina
                 
-                //============================>>>>
-
                 if (datos.contenido == null) 
                 {
-                    if (datos.mensaje != null)
-                    {
-                        datos.contenido = `<div class="row mb-4">
-                            <div class="col-md-12">
-                                <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
-                                <p class="text-center m-0">${datos.mensaje}</p>
-                            </div>
-                        </div>`;
-                    }   
-                    else
-                    {
-                        datos.contenido = `<div class="row mb-4">
-                            <div class="col-md-12">
-                                <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
-                                <p class="text-center m-0">CAMBIAR ESTE CONTENIDO</p>
-                            </div>
-                        </div>`;
-                    }    
+                    datos.contenido = `<div class="row mb-4">
+                        <div class="col-md-12">
+                            <p class="text-center"><i class="material-icons icon-3x mb-3 animated rotateIn">warning</i></p>
+                            <p class="text-center m-0">${datos.mensaje}</p>
+                        </div>
+                    </div>`;          
                 }
 
-                if (datos.class == null) 
-                    datos.class = "modal-dialog modal-notify modal-danger modal-sm";
+                if (datos.class == null) datos.class = "modal-dialog modal-notify modal-danger modal-sm";
 
-                let cadena = `
-                <div class="modal fade" id="modalConfirmarGenerico" tabindex="-1" role="dialog" aria-hidden="true">
+                if (datos.botones == null) 
+                    datos.botones = [ { titulo: "Cancelar", confirmar: false }, { titulo: "Aceptar", confirmar: true }];
+
+                let cadena = `<div class="modal fade" id="modalConfirmarGenerico" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="${datos.class}" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <p class="heading lead">${datos.titulo}</p>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <button type="button" name="cerrarBtn" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
-                            <div class="modal-body">
-                                ${datos.contenido}
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <div class="col-12 justify-content-center d-flex flex-wrap">
-                                    <button type="button" name="cancelarBtn" class="btn mx-2 btn-secondary waves-effect waves-light" data-dismiss="modal">Cancelar</button>
+                            <div class="modal-body">${datos.contenido}</div>
+                            <div class="modal-footer">
+                                <div class="col-12 justify-content-center d-flex">
+                                    ${datos.botones.map(x => 
+                                    {
+                                        if (x.confirmar) {
+                                            if (x.class == null) x.class = "btn mx-2 btn-default waves-effect waves-light";
+                                            return `<button type="button" name="confirmarBtn" class="${x.class}" data-dismiss="modal">${x.titulo}</button>`;
+                                        }    
 
-                                    <button type="button" name="confirmarBtn" class="btn mx-2 btn-default waves-effect waves-light alerta" data-dismiss="modal">Aceptar</button>
+                                        if (x.class == null) x.class = "btn mx-2 btn-secondary waves-effect waves-light";
+                                        return `<button type="button" name="cancelarBtn" class="${x.class}" data-dismiss="modal">${x.titulo}</button>`;
+                                    })
+                                    .join("")}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                `;
+                </div>`;
 
-                let contenedor = document.body;
-                contenedor.insertAdjacentHTML("beforeend", cadena); // Pone el modal en el html, ya que no existe.
-                //============================>>>>
+                document.body.insertAdjacentHTML("beforeend", cadena); // Pone el modal en el html, ya que no existe.
 
-                modal = $("#modalConfirmarGenerico");
+                modal = $("#modalConfirmarGenerico").modal({ backdrop: 'static', keyboard: false });
                 modal.modal("show");
 
-                modal.find("[name='confirmarBtn']").on("click", () => 
-                {
-                    if (datos.confirmar != null && typeof datos.confirmar === "function") 
-                        datos.confirmar();
-
+                modal.find("[name='confirmarBtn']").on("click", () => {
+                    if (datos.confirmar != null && typeof datos.confirmar === "function") datos.confirmar();
                     modal.modal("hide");
                     resolve(true);
                 });
 
-                modal.find("[name='cancelarBtn']").on("click", () => 
-                {
-                    if (datos.cancelar != null && typeof datos.cancelar === "function") 
-                        datos.cancelar();
+                modal.find("[name='cancelarBtn']").on("click", () => {
+                    if (datos.cancelar != null && typeof datos.cancelar === "function") datos.cancelar();
                 });
 
-                modal.on("hidden.bs.modal", () => {
-                    resolve(false); // Resuelve con false si se cancela el modal
+                modal.find("[name='cerrarBtn']").on("click", () => {
+                    if (datos.cerrar != null && typeof datos.cerrar === "function") datos.cerrar();
                 });
 
+                modal.on("hidden.bs.modal", () => {  
+                    resolve(false); 
+                });
             });
         }
     </script>
