@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>Ordenar Vertical-Horizontal</title> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .btn-babu { min-width: 30px; }
+    </style>
+</head>
+
+<body>
+    <div id="contenido">
+        <div class="container mt-4">
+            
+            <button type="button" onclick="abrirModalAtributo(null, null)" class="btn btn-success">+</button> 
+            <button type="button" onclick="respaldarLocalStorage()" class="btn btn-primary">Respaldar en LocalStorage</button> 
+            <button type="button" onclick="limpiarLocalStorage()" class="btn btn-warning">Limpiar LocalStorage</button>
+            <br/><br/>
+
+            <div id="contenidoTablas"></div>
+        </div>
+    </div>
+
+    <div id="modalAtributo" class="modal fade in" data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;" role="dialog"> 
+		<div class="modal-dialog modal-md modal-dialog-centered"> 
+			<div class="modal-content"> 
+				<div class="modal-header"> 
+					<h4 name="titulo" class="modal-title"></h4> 
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
+				</div> 
+				<div class="modal-body"> 
+                    <div class="col-12 mb-3 campo-atributo"> 
+                        <div class="form-group"> 
+                            <label>Nombre</label> 
+                            <input type="text" name="nombre" class="form-control" autocomplete="off" /> 
+                        </div> 
+                    </div> 
+				</div> 
+				<div class="modal-footer"> 
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button> 
+					<button type="button" name="botonGuardar" onclick="guardarAtributo()" class="btn btn-primary">Agregar</button> 
+				</div> 
+			</div> 
+		</div> 
+	</div> 
+
+    <script>
+        // alert("Probando");
+
+        this.indexCabecera = 0;
+        this.indexDetalle = 0;
+
+        window.onload = () => 
+        { 
+            let babu = localStorage.getItem("babu");
+
+            if (babu !== null) {
+                this.listaObjetos = JSON.parse(babu);
+            } 
+            else {
+                this.listaObjetos = obtenerDatosDummy();
+            }
+
+            desplegarTabla();
+        }; 
+
+        function respaldarLocalStorage() 
+        {
+            let babu = JSON.stringify(this.listaObjetos);
+            localStorage.setItem("babu", babu); 
+        }
+
+        function limpiarLocalStorage() {
+            localStorage.removeItem("babu");
+        }
+
+        function abrirModalAtributo(indexCabecera, indexDetalle = null) 
+        { 
+            this.indexCabecera = indexCabecera;
+            this.indexDetalle = indexDetalle;
+
+            let modal = document.querySelector("#modalAtributo");
+            
+            if (indexCabecera != null) 
+            {
+                modal.querySelector("[name='titulo']").textContent = `${indexDetalle == null ? 'Agregar nuevo' : 'Editar'} Atributo`; 
+                modal.querySelector("[name='botonGuardar']").textContent = (indexDetalle == null ? "Agregar" : "Actualizar"); 
+            }
+            else {
+                modal.querySelector("[name='titulo']").textContent = "Agregar Atributo en una nueva Fila"; 
+                modal.querySelector("[name='botonGuardar']").textContent = "Agregar Atributo en una nueva Fila"; 
+            }
+
+            if (this.indexDetalle != null) 
+            {
+                let fila = this.listaObjetos[this.indexCabecera];
+                let detalle = fila.atributos[this.indexDetalle];
+                modal.querySelector("[name='nombre']").value = detalle.nombre;  
+            }
+            else {
+                modal.querySelector("[name='nombre']").value = "";  
+            }
+
+            $("#modalAtributo").modal("show"); 
+        } 
+
+        function guardarAtributo() 
+        {
+            try 
+            {
+                let nombre = document.querySelector("#modalAtributo [name='nombre']");
+
+                let errores = [];
+                if (nombre.value == "") errores.push("Nombre es requerido");
+                if (errores.length > 0) return alert(errores.join("\n"));
+            
+                let fila = null;
+
+                if (this.indexCabecera != null) 
+                    fila = this.listaObjetos[this.indexCabecera];
+                else 
+                {
+                    let orden = (this.listaObjetos.length > 0) ? 
+                        ((this.listaObjetos.reduce((a, b) => (a.orden > b.orden) ? a : b).orden) + 1) : 1;
+
+                    fila = {
+                        orden: orden,
+                        atributos: []
+                    };
+
+                    this.listaObjetos.push(fila);
+                }
+                
+                //=======================>>>>
+
+                let detalle = (this.indexDetalle != null) ? fila.atributos[this.indexDetalle] : {};
+
+                detalle.nombre = nombre.value;  
+
+                if (this.indexDetalle == null) 
+                {
+                    detalle.orden = (fila.atributos.length > 0) ? ((fila.atributos.reduce((a, b) => (a.orden > b.orden) ? a : b).orden) + 1) : 1;
+                    fila.atributos.push(detalle);
+                }
+
+                desplegarTabla();
+                nombre.value = "";
+                $("#modalAtributo").modal("hide");
+            } 
+            catch (error) 
+            {
+                console.error('Se produjo un error:', error.message);
+                console.error('El error ocurrió en la siguiente línea:', error.stack);
+            }
+        }
+
+        function eliminarColumna(indexCabecera, orden)
+        {
+            let fila = this.listaObjetos[indexCabecera];
+
+            let cont = 1;
+            fila.atributos = fila.atributos.filter(x => x.orden != orden).sort((a, b) => a.orden - b.orden);
+
+            fila.atributos.forEach(x => {
+                x.orden = cont;
+                cont ++;
+            });
+
+            desplegarTabla();
+        }
+
+        function trasladarAtributoVertical(indexCabecera, indexDetalle, direccion) 
+        {
+            let fila = this.listaObjetos[indexCabecera];
+            let copia = JSON.parse(JSON.stringify(fila.atributos[indexDetalle]));
+            fila.atributos.splice(indexDetalle, 1);  // Elimina atributo de la fila
+
+            let filaEscogida = null;
+
+            if (direccion == "abajo") 
+                filaEscogida = this.listaObjetos[indexCabecera + 1];
+
+            if (direccion == "arriba") 
+                filaEscogida = this.listaObjetos[indexCabecera - 1];
+
+            let siguienteOrden = filaEscogida.atributos.reduce((x, y) => Math.max(x, y.orden), 0);
+            copia.orden = (siguienteOrden + 1);
+            filaEscogida.atributos.push(copia);
+
+            desplegarTabla();
+        }
+
+        function desplegarTabla()
+        {
+            let maxAtributos = Math.max(...this.listaObjetos.map(objeto => objeto.atributos.length));
+
+            document.querySelector("#contenidoTablas").innerHTML = this.listaObjetos.sort((a, b) => a.orden - b.orden).map((fila, indexCabecera) => 
+            {
+                let atributosDesplegadosEnOrden = fila.atributos.sort((a, b) => a.orden - b.orden);
+
+                let cantidadFaltantes = maxAtributos - fila.atributos.length;
+
+                let celdasFaltantes = (cantidadFaltantes > 0) ? 
+                    Array.from({length: cantidadFaltantes}, (_, index) => index + 1).map(x => `<td style="width: 20%"></td>`).join("") 
+                    : "";
+
+                return `
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width: 4%">
+                            <button type="button" onclick="eliminarFila(${indexCabecera})" class="btn btn-danger">x</button>
+                        </td>
+
+                        ${atributosDesplegadosEnOrden.map((x, indexDetalle) => 
+                        {
+                            let contenidoTd = "";
+
+                            if (indexDetalle > 0) 
+                                contenidoTd += `<button onclick="cambiarPosicionHorizontal(${indexCabecera}, ${indexDetalle}, 'izquierda')" class="btn-babu">&larr;</button>`;
+                                
+                            if ((indexDetalle + 1) < fila.atributos.length) 
+                                contenidoTd += `<button onclick="cambiarPosicionHorizontal(${indexCabecera}, ${indexDetalle}, 'derecha')" class="btn-babu">&rarr;</button>`;
+
+                            if (indexCabecera > 0)
+                                contenidoTd += `<button onclick="trasladarAtributoVertical(${indexCabecera}, ${indexDetalle}, 'arriba')" class="btn-babu" style="background-color: orange">&uarr;</button>`;
+
+                            if ((indexCabecera + 1) < this.listaObjetos.length)
+                                contenidoTd += `<button onclick="trasladarAtributoVertical(${indexCabecera}, ${indexDetalle}, 'abajo')" class="btn-babu" style="background-color: orange">&darr;</button>`;
+
+                            return `<td style="width: 20%">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td>${contenidoTd}</td>
+                                        <td></td>
+                                        <td style="text-align: right;">
+                                            <button type="button" onclick="eliminarColumna(${indexCabecera}, ${x.orden})" class="btn-babu"> X </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>`;
+                        })
+                        .join("")}
+
+                        ${celdasFaltantes}
+                        <td style="width: 4%"></td>
+                    </tr>  
+                    <tr>
+                        <td>
+                            <button type="button" onclick="abrirModalAtributo(${indexCabecera}, null)" class="btn btn-primary">+</button>    
+                        </td>
+                        ${atributosDesplegadosEnOrden.map((x, indexDetalle) => 
+                        {
+                            if (x.esVacio != null && x.esVacio) return "<td><b>VACÍO</b></td>";
+
+                            return `<td onclick="abrirModalAtributo(${indexCabecera}, ${indexDetalle})" style="cursor: pointer"> 
+                                <b>${x.nombre}</b>
+                            </td>`;
+                        }).join("")}
+
+                        ${celdasFaltantes}
+                        <td>
+                            ${indexCabecera > 0 ? `<button onclick="cambiarPosicionVertical(${indexCabecera}, 'arriba')" class="btn-babu">&uarr;</button>` : ''}
+                            ${(indexCabecera + 1) < this.listaObjetos.length ? `<button onclick="cambiarPosicionVertical(${indexCabecera}, 'abajo')" class="btn-babu">&darr;</button>` : ''}
+                        </td>
+                    </tr>
+                </table>
+                `;
+            }).join("<br/><br/>"); 
+        }
+
+        function cambiarPosicionVertical(indexCabecera, direccion)
+        { 
+            let fila = this.listaObjetos[indexCabecera];
+            let otraFila = null;
+
+            if (direccion == "abajo")
+                otraFila = this.listaObjetos[indexCabecera + 1];
+            
+            if (direccion == "arriba")
+                otraFila = this.listaObjetos[indexCabecera - 1];
+
+            // Cambia de lugar los elementos
+            let ordenOtraFila = otraFila.orden;
+            otraFila.orden = fila.orden;
+            fila.orden = ordenOtraFila;
+
+            desplegarTabla();
+        }
+
+        function cambiarPosicionHorizontal(indexCabecera, indexDetalle, direccion)
+        { 
+            let fila = this.listaObjetos[indexCabecera];
+            let atributo = fila.atributos[indexDetalle];
+            let otroAtributo = null;
+
+            if (direccion == "derecha") 
+                otroAtributo = fila.atributos[indexDetalle + 1];
+
+            if (direccion == "izquierda")
+                otroAtributo = fila.atributos[indexDetalle - 1]; 
+
+            // Cambia de lugar los elementos
+            let ordenOtroAtributo = otroAtributo.orden;
+            otroAtributo.orden = atributo.orden;
+            atributo.orden = ordenOtroAtributo;
+
+            desplegarTabla();
+        }
+
+        function eliminarFila(indexCabecera) 
+        {
+            this.listaObjetos.splice(indexCabecera, 1);
+            desplegarTabla();
+        }
+
+        function obtenerDatosDummy() 
+        {
+            return [
+                {
+                    orden: 1,
+                    atributos: [
+                        { nombre: "codigo", orden: 1 }, 
+                        { nombre: "nombre", orden: 2 }, 
+                        { nombre: "apellido", orden: 3 }, 
+                        { nombre: "edad", orden: 4 }
+                    ]
+                },
+                {
+                    orden: 2,
+                    atributos: [
+                        { nombre: "fechaNacimiento", orden: 1 }, 
+                        { nombre: "pais", orden: 2 },
+                        { nombre: "descripcion", orden: 3 }
+                    ]
+                },
+                {
+                    orden: 3,
+                    atributos: [
+                        { nombre: "probando", orden: 1 }, 
+                        { nombre: "tratando", orden: 2 },
+                        { nombre: "intentando", orden: 3 }
+                    ]
+                }
+            ];
+        }
+
+    </script>
+
+</body>
+
+</html>
