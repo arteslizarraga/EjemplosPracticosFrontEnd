@@ -1,4 +1,14 @@
 
+public botonVolver = {
+	texto: "Volver a Editar Asignatura",
+	click: () => this.returnPrincipal()
+};
+
+<button (click)="botonVolver.click()" class="btn btn-outline waves-effect waves-light">
+	{{botonVolver.texto}}
+</button>
+
+//=================================================================================================================>>>>>>
 // Loops
 /*
 <ng-container *ngFor="let numero of [0,1,2,3,4,5,6]">
