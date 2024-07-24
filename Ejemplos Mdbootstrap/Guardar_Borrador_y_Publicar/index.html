@@ -330,8 +330,17 @@
 
                       <div class="col-12 col-md-12">
                           <div class="md-form mb-3">
-                              <textarea name="descripcion" rows="4" placeholder="Ingrese descripción" class="form-control md-textarea"></textarea>
-                              <label class="active">Descripción</label>
+                                <textarea name="descripcion" rows="4" placeholder="Ingrese descripción" class="form-control md-textarea"></textarea>
+
+                                <!-- ESTO ES PARA IMPEDIR POR COMPLETO LOS SALTOS DE LÍNEA TANTO AL ESCRIBIR COMO AL PEGAR TEXTO -->
+                                <!--  
+                                <textarea name="descripcion" rows="4" placeholder="Ingrese descripción" 
+                                oninput="let p = this.selectionStart; this.value = this.value.replace(/\n/g, ' ');this.setSelectionRange(p, p);"
+                                onkeydown="if (event.keyCode === 13) { event.preventDefault(); }"
+                                class="form-control md-textarea"></textarea>
+                                -->
+
+                                <label class="active">Descripción</label>
                           </div>
                       </div>
 

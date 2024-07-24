@@ -215,3 +215,20 @@ Revisé hasta el 2060
 
 =======================================================================================================================================>>>>>>
 
+Tanto en el año 1420 como en el 2033 hay eclipses que corresponden al mismo saros:
+
+2033 Mar 30 (Total Solar Eclipse) 		=> Saros 120
+2033 Oct 24 (Partial Solar Eclipse)  	=> Saros 30
+
+
+1420 Mar 14 (Annular Solar Eclipse) 	=> Saros 120
+1420 Oct 26 (Hybrid Solar Eclipse)    	=> Saros 30
+
+
+https://eclipse.gsfc.nasa.gov/SEsaros/SEsaros030.html
+https://eclipse.gsfc.nasa.gov/SEsaros/SEsaros120.html
+
+=======================================================================================================================================>>>>>>
+
+
+
