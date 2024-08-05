@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Probando</title>
+
+    <style>
+        .tabla-ejemplo {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .tabla-ejemplo, .tabla-ejemplo th, .tabla-ejemplo td {
+            border: 1px solid black;
+        }
+
+        .tabla-ejemplo th, .tabla-ejemplo td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .michi {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            min-height: 270px;  /* Ajusta la altura mínima si es necesario */
+            min-width: 150px;   /* Ajusta el ancho mínimo si es necesario */
+            border: 2px dashed #ccc; /* Agrega un borde para mejor visualización */
+        }
+
+        .sofi {
+            width: 125px;
+            height: 125px;
+            background-color: #3498db;
+            cursor: pointer;
+            padding: 2em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-12 d-flex align-items-end justify-content-between">
+                        <h4 class="float-left heading h4-responsive mb-0">Probando</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <table id="babu" class="tabla-ejemplo" border="2" width="100%"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row py-2 flex-row">
+                    <div class="col col-md-6 d-flex justify-content-start">
+                    </div>
+                    <div class="col col-md-6 d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary me-2" onclick="llenarTabla()">Llenar Tabla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            llenarTabla();
+        });
+
+        function llenarTabla() 
+        {
+            let contContenedor = 1;
+            let contElemento = 1;
+
+            let cadena = `<table id="babu" class="tabla-ejemplo" border="2" width="100%">
+                ${[1,2,3].map(x => 
+                {
+                    return `<tr>
+                        ${[1,2,3].map(y => 
+                        {
+                            let ncorrContenedor = (contContenedor++);
+
+                            return `<td>
+                                <h4>${ncorrContenedor}</h4>
+
+                                <div ncorr="${ncorrContenedor}" class="michi">
+                                    ${["A","B", "C","D"].map((letra, index) => 
+                                    {
+                                        let ncorrElemento = (contElemento++);
+
+                                        return `<div ncorr="${ncorrElemento}" class="sofi" contenedor-origen-ncorr="${ncorrContenedor}">${ncorrElemento}</div>`;
+                                    }).join("")}
+                                </div>
+                            </td>`;
+                        }).join("")}
+                    </tr>`;
+                }).join("")}
+            </table>
+            `;
+            
+            document.querySelector("#babu").innerHTML = cadena;
+            definirMecanismoDeArrastre();
+        }
+
+        function definirMecanismoDeArrastre() 
+        {
+            $(".sofi").draggable({
+                revert: "invalid" // Revertir el elemento si no es soltado en un droppable
+            });
+
+            $(".michi").droppable({
+                accept: ".sofi", 
+                drop: (event, ui) => 
+                {
+                    const elementoSofi = ui.draggable;
+                    const contenedorMichi = $(event.target);
+
+                    const ncorrElemento = elementoSofi.attr("ncorr");
+                    const ncorrContenedor = contenedorMichi.attr("ncorr");
+                    const ncorrContenedorOrigen = elementoSofi.attr("contenedor-origen-ncorr");
+
+                    if (ncorrContenedor != ncorrContenedorOrigen) 
+                    {
+                        console.log("ncorr Elemento arrastrado:", ncorrElemento);
+                        console.log("ncorr Contenedor destino:", ncorrContenedor);
+                        console.log("ncorr Contenedor de origen:", ncorrContenedorOrigen);
+
+                        elementoSofi.attr("contenedor-origen-ncorr", ncorrContenedor);
+                    }
+
+                    contenedorMichi.append(ui.helper);  // Agregar el elemento arrastrado al contenedor de destino
+                    ui.helper.css({top: 0, left: 0});   // Ajustar la posición del elemento arrastrado
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>
