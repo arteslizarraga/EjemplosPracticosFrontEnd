@@ -190,6 +190,8 @@ function abrirModalEditar(index)
         modal.find("[name='titulo']").html("Editar");
         elemento = this.listaObjetos[index];
 
+		// En TFLETAPA1_x_WEB/DEF_PPROF/DEF_PPROF.js   Hay un ejemplo de como implementar lo de la comilla doble en el textarea
+		
         let limpiarCaracteres = (texto) => {
             if (texto == null) return null;
             texto = texto.split("\\n").join("\n");      // Limpia saltos de línea con doble backslash
@@ -241,6 +243,8 @@ function guardarDatosModalEditar(pasarSiguientePagina = false)
 {
     //console.log("this.indexDetalle", this.indexDetalle);
 
+	// En TFLETAPA1_x_WEB/DEF_PPROF/DEF_PPROF.js   Hay un ejemplo de como implementar lo de la comilla doble en el textarea
+	
     let reemplazarCaracteres = (cadena) => {
         if (cadena == null) return null;
 
