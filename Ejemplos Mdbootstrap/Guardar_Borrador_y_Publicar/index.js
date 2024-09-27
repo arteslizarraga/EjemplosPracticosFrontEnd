@@ -191,6 +191,7 @@ function abrirModalEditar(index)
         elemento = this.listaObjetos[index];
 
 		// En TFLETAPA1_x_WEB/DEF_PPROF/DEF_PPROF.js   Hay un ejemplo de como implementar lo de la comilla doble en el textarea
+		// Está en TFLETAPA2_x_WEB/MCTP_Diseño/configuraciones.js   =>  UtilidadesService.sanitizarStringParaTextarea
 		
         let limpiarCaracteres = (texto) => {
             if (texto == null) return null;
@@ -244,6 +245,7 @@ function guardarDatosModalEditar(pasarSiguientePagina = false)
     //console.log("this.indexDetalle", this.indexDetalle);
 
 	// En TFLETAPA1_x_WEB/DEF_PPROF/DEF_PPROF.js   Hay un ejemplo de como implementar lo de la comilla doble en el textarea
+	// Está en TFLETAPA2_x_WEB/MCTP_Diseño/configuraciones.js   =>  JsonService.sanitizarString
 	
     let reemplazarCaracteres = (cadena) => {
         if (cadena == null) return null;
