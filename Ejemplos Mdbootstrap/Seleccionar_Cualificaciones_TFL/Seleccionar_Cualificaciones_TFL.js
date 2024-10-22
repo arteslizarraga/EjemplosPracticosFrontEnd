@@ -59,10 +59,10 @@ function buscarCualificaciones()
     fechaEfectiva: card.find("[name='fechaEfectiva']").val(),
     sectorProductivo: card.find("[name='sectorProductivo']").val(),
     subSectorProductivo: card.find("[name='subSectorProductivo']").val(),
-    ruta: card.find("[name='ruta']").val(),
-    status: 200   // Solo para probar con json placeholder
+    ruta: card.find("[name='ruta']").val()
   };  
 
+  /*
   console.log(params); 
 
   if (!validarNuloVacio(params.tfl))
@@ -70,66 +70,37 @@ function buscarCualificaciones()
 
   if (!validarNuloVacio(params.sectorProductivo))
     return toastr.error("El sector productivo es requerido"); 
+  */
 
   // Si la TFL seleccionada tiene cualificaciones asociadas y ya está publicada, debe aparecer un mensaje de que no se puede continuar porque ya está publicada
 
-  validarDisponibilidad_TFL(params.tfl).then(() => 
+  buscar(params).then(() => 
   {
-    buscar(params).then(() => 
-    {
-      limpiarFormulario("#buscar"); 
-      document.querySelector("#resultados").style.display = "block";
-      document.querySelector("#buscar").style.display = "none"; 
-  
-      let probandoTexto = "CAMBIAR TEXTO";
-      let card = $("#card-mostrar-filtros-seleccionados");
-  
-      card.find("[name='sectorProductivo']").html(probandoTexto);
-      card.find("[name='subSectorProductivo']").html(probandoTexto);
-      card.find("[name='rutaFormativoLaboral']").html(probandoTexto);
-    })
-    .catch(ex => toastr(ex));
+    limpiarFormulario("#buscar"); 
+    document.querySelector("#resultados").style.display = "block";
+    document.querySelector("#buscar").style.display = "none"; 
+
+    let probandoTexto = "CAMBIAR TEXTO";
+    let card = $("#card-mostrar-filtros-seleccionados");
+
+    card.find("[name='sectorProductivo']").html(probandoTexto);
+    card.find("[name='subSectorProductivo']").html(probandoTexto);
+    card.find("[name='rutaFormativoLaboral']").html(probandoTexto);
   })
+  .catch(ex => toastr(ex));
 }
 
 async function abrirModalVerCualificacionesSeleccionadas() 
 {
-  $.ajax({
-      method: "POST",
-      url: "https://jsonplaceholder.typicode.com/posts",
-      data: JSON.stringify({ cualquiercosa: 1, status: 200}),
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      beforeSend: () => {
-          showLoading();
-      },
-      success: async (res) =>
-      {
-        if (res.status == 200)
-        {
-            let o = res.objeto;
+  let datos = [
+    { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" },
+    { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" },
+    { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }
+  ];
 
-          let datos = [
-            { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" },
-            { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" },
-            { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }, { ejemplo: "CAMBIAR" }
-          ];
-      
-          await construirGrillaVerCualificacionesSeleccionadas(datos);
-          hideLoading();
-          $("#ModalVerCualificacionesSeleccionadas").modal("show");
-
-        }
-        else
-            mostrarErroresRespuestaBackend(res);
-      },
-      error: (XMLHttpRequest, textStatus, errorThrown) => {
-          hideLoading();
-          toastr.error("Ocurrió un error al guardar el sector productivo");
-      }
-      //complete: (res) => hideLoading()
-  });
-
+  await construirGrillaVerCualificacionesSeleccionadas(datos);
+  hideLoading();
+  $("#ModalVerCualificacionesSeleccionadas").modal("show");
 }
 
 function construirGrillaVerCualificacionesSeleccionadas(perfilesOcupacionalesCualificacion)
@@ -170,35 +141,7 @@ function construirGrillaVerCualificacionesSeleccionadas(perfilesOcupacionalesCua
 
 function guardarPublicar()
 {
-  console.log("btnGuardarPublicar 28-12-2022");
-
-  $.ajax({
-    method: "POST",
-    url: "https://jsonplaceholder.typicode.com/posts",
-    data: JSON.stringify({ cualquiercosa: 1, status: 200 }),
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    beforeSend: () => {
-        showLoading();
-    },
-    success: async (res) =>
-    {
-      if (res.status == 200)
-      {
-        //let o = res.objeto;
-
-        toastr.success('Datos publicados con &eacute;xito');
-
-      }
-      else
-          mostrarErroresRespuestaBackend(res);
-    },
-    error: (XMLHttpRequest, textStatus, errorThrown) => {
-        hideLoading();
-        toastr.error("Ocurrió un error al guardar el sector productivo");
-    },
-    complete: (res) => hideLoading()
-  });
+  toastr.success('Datos publicados con Éxito');
 }
 
 const 
@@ -210,54 +153,23 @@ function validarDisponibilidad_TFL(tfl_ncorr)
 {
   return new Promise((resolve, reject) =>
   {
-    $.ajax({
-      method: "POST",
-      url: "https://jsonplaceholder.typicode.com/posts",
-      data: JSON.stringify({ tfl_ncorr, status: 200 }),
-      //data: JSON.stringify({ tfl_ncorr, status: 401, errores: ["La TFL ya está publicada"] }),
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      beforeSend: () => {
-          showLoading();
-      },
-      success: async (res) =>
-      {
-          if (res.status == 200)
-          {
-            resolve(true);
-          }
-          else
-          {
-            mostrarErroresRespuestaBackend(res);
-            reject(false);
-          }
-      },
-      error: (XMLHttpRequest, textStatus, errorThrown) => {
-          hideLoading();
-          toastr.error("Ocurrió un error al validar la disponibilidad de la TFL");
-          reject(false);
-      },
-      complete: (res) => hideLoading()
-    });
+    resolve(true);
   });
 } 
 
 function validar_TFL_Seleccionada_Filtro()
 {
-  // ACA
-
-  console.log("Se valida si la TFL seleccionada tiene cualificaciones asociadas o no");
+  // console.log("Se valida si la TFL seleccionada tiene cualificaciones asociadas o no");
   // Si la TFL seleccionada tiene cualificaciones asociadas y ya está publicada, debe aparecer un mensaje de que no se puede continuar porque ya está publicada
 
+  /*
   let tfl = $("#buscar [name='tfl']").val();
 
   if (!validarNuloVacio(tfl))
     return toastr.error("Es necesario seleccionar una TFL");  
+  */ 
 
-  validarDisponibilidad_TFL(tfl).then(() => 
-  {
-    abrirItemAcordeon("#collapse2");
-  });
+  abrirItemAcordeon("#collapse2");
 }
 
 function abrirItemAcordeon(querySelectorItem) {
@@ -269,133 +181,56 @@ function guardarBorrador_y_buscar()
 {
   console.log("guardarBorrador_y_buscar");
 
-  $.ajax({
-    method: "POST",
-    url: "https://jsonplaceholder.typicode.com/posts",
-    data: JSON.stringify({ cualquiercosa: 1, status: 200 }),
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    beforeSend: () => {
-        showLoading();
-    },
-    success: async (res) =>
-    {
-      if (res.status == 200)
-      {
-          let o = res.objeto;
-
-        document.querySelector("#buscar").style.display = "block";
-        document.querySelector("#resultados").style.display = "none"; 
-        hideLoading();
-        toastr.success('Borrador Guardado con &eacute;xito');
-      }
-      else
-          mostrarErroresRespuestaBackend(res);
-    },
-    error: (XMLHttpRequest, textStatus, errorThrown) => {
-        hideLoading();
-        toastr.error("Ocurrió un error al guardar el sector productivo");
-    },
-    complete: (res) => hideLoading()
-  });
+  document.querySelector("#buscar").style.display = "block";
+  document.querySelector("#resultados").style.display = "none"; 
+  hideLoading();
+  toastr.success('Borrador Guardado con Éxito');
 }
 
 function guardarBorrador()
 {
-  $.ajax({
-    method: "POST",
-    url: "https://jsonplaceholder.typicode.com/posts",
-    data: JSON.stringify({ cualquiercosa: 1, status: 200 }),
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    beforeSend: () => {
-        showLoading();
-    },
-    success: async (res) =>
-    {
-      if (res.status == 200)
-      {
-        let o = res.objeto;
-
-        toastr.success('Borrador Guardado con &eacute;xito');
-
-      }
-      else
-          mostrarErroresRespuestaBackend(res);
-    },
-    error: (XMLHttpRequest, textStatus, errorThrown) => {
-        hideLoading();
-        toastr.error("Ocurrió un error al guardar el sector productivo");
-    },
-    complete: (res) => hideLoading()
-  });
+  toastr.success('Borrador Guardado con Éxito');
 }
 
-function abrirModalPerfiles(idCualificacion)
+async function abrirModalPerfiles(idCualificacion)
 {
-    $.ajax({
-        method: "POST",
-        //url: "CONSULTA_MCTP.aspx/ObtenerPerfilesOcupacionalesCualificacion",
-        url: "https://jsonplaceholder.typicode.com/posts",
-        data: JSON.stringify({ idCualificacion: idCualificacion, status: 200}),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        beforeSend: () => {
-            showLoading();
-        },
-        success: async (res) =>
-        {
-          if (res.status == 200)
-          {
-            // let o = res.objeto;
+  let o = {
+    cualificacion: {
+      cualificaciones_nombre: "CAMBIAR",
+      cualificaciones_version: "CAMBIAR",
+      DEF_SPRODUCTIVOS_NOMBRE: "CAMBIAR",
+      DEF_SSPRODUCTIVOS_NOMBRE: "CAMBIAR",
+      cualificaciones_estado_iprosp: "CAMBIAR",
+      CUALIFICACIONES_FPUBLICACION: "CAMBIAR"
+    },
+    perfilesOcupacionalesCualificacion: [
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
+      { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" }
+    ]
+  };
 
-            let o = {
-              cualificacion: {
-                cualificaciones_nombre: "CAMBIAR",
-                cualificaciones_version: "CAMBIAR",
-                DEF_SPRODUCTIVOS_NOMBRE: "CAMBIAR",
-                DEF_SSPRODUCTIVOS_NOMBRE: "CAMBIAR",
-                cualificaciones_estado_iprosp: "CAMBIAR",
-                CUALIFICACIONES_FPUBLICACION: "CAMBIAR"
-              },
-              perfilesOcupacionalesCualificacion: [
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" },
-                { def_nmctp_numero: "CAMBIAR", def_pocupacionales_ccod: "CAMBIAR", def_pocupacionales_Nombre: "CAMBIAR", pocupacionales_cualificacion_estado: "CAMBIAR" }
-              ]
-            };
+  let c = o.cualificacion;
 
-            let c = o.cualificacion;
+  $("#ModalPerfiles [name='cualificacion']").text(c.cualificaciones_nombre);
+  $("#ModalPerfiles [name='versionCualificacion']").text(c.cualificaciones_version);
+  $("#ModalPerfiles [name='sectorProductivo']").text(c.DEF_SPRODUCTIVOS_NOMBRE);
+  $("#ModalPerfiles [name='subSectorProductivo']").text(c.DEF_SSPRODUCTIVOS_NOMBRE);
+  $("#ModalPerfiles [name='estadoCualificacion']").text(c.cualificaciones_estado_iprosp);
+  $("#ModalPerfiles [name='fechaPublicacion']").text(c.CUALIFICACIONES_FPUBLICACION);
 
-            $("#ModalPerfiles [name='cualificacion']").text(c.cualificaciones_nombre);
-            $("#ModalPerfiles [name='versionCualificacion']").text(c.cualificaciones_version);
-            $("#ModalPerfiles [name='sectorProductivo']").text(c.DEF_SPRODUCTIVOS_NOMBRE);
-            $("#ModalPerfiles [name='subSectorProductivo']").text(c.DEF_SSPRODUCTIVOS_NOMBRE);
-            $("#ModalPerfiles [name='estadoCualificacion']").text(c.cualificaciones_estado_iprosp);
-            $("#ModalPerfiles [name='fechaPublicacion']").text(c.CUALIFICACIONES_FPUBLICACION);
-
-            await construirGrillaPerfilesOcupacionalesCualificacion(o.perfilesOcupacionalesCualificacion);
-            hideLoading();
-            $("#ModalPerfiles").modal("show");
-          }
-          else
-              mostrarErroresRespuestaBackend(res);
-        },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-            hideLoading();
-            toastr.error("Ocurrió un error al guardar el sector productivo");
-        }
-        //complete: (res) => hideLoading()
-    });
+  await construirGrillaPerfilesOcupacionalesCualificacion(o.perfilesOcupacionalesCualificacion);
+  hideLoading();
+  $("#ModalPerfiles").modal("show");
 }
 
 function construirGrillaPerfilesOcupacionalesCualificacion(perfilesOcupacionalesCualificacion)
@@ -437,75 +272,50 @@ function construirGrillaPerfilesOcupacionalesCualificacion(perfilesOcupacionales
 
 function abrirModalDetalle(idCualificacion)
 {
-    $.ajax({
-        method: "POST",
-        //url: "CONSULTA_MCTP.aspx/ObtenerDetalleCualificacion",
-        url: "https://jsonplaceholder.typicode.com/posts",
-        data: JSON.stringify({ idCualificacion: idCualificacion, status: 200}),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        beforeSend: () => {
-            showLoading();
-        },
-        success: (res) =>
-        {
-          if (res.status == 200)
-          {
-              //let o = res.objeto;
-
-              let o = {
-                tituloModal: "CAMBIAR",
-                listaPoblarDetalle: [
-                  { titulo: "Código Cualificación", contenido: "CAMBIAR" },
-                  { titulo: "Nombre Cualificación", contenido: "CAMBIAR" },
-                  { titulo: "Versión Cualificación", contenido: "CAMBIAR" },
-                  { titulo: "Estado Cualificación", contenido: "CAMBIAR" }, 
-                  { titulo: "Fecha Publicación de la Versión", contenido: "CAMBIAR" },
-                  { titulo: "Descripción General Cualificación", col: "col-12", contenido: "CAMBIAR" },
-                  { titulo: "Descripción Escenario y Condiciones Laborales", col: "col-12", contenido: "CAMBIAR" },
-                  { titulo: "Descripción Campo Laboral", col: "col-12", contenido: "CAMBIAR" },
-                  { titulo: "Descripción Situación de Desempeño", col: "col-12", contenido: "CAMBIAR" },
-                  { titulo: "Descripción Equipamiento e Infraestructura", col: "col-12", contenido: "CAMBIAR" },
-                  { titulo: "Es Perfil Ocupacional?", contenido: "CAMBIAR" },
-                  
-                  { titulo: "Código Definición Tipo Nivel del MCTP", contenido: "CAMBIAR" },
-                  { titulo: "Definición Nivel del MCTP", contenido: "CAMBIAR" },
-                  { titulo: "Sub Nivel MCTP", contenido: "CAMBIAR" },
-                  { titulo: "Sector Productivo Preferente", contenido: "CAMBIAR" },
-                  { titulo: "Sub Sector Productivo Preferente", contenido: "CAMBIAR" },
-                  { titulo: "País", contenido: "CAMBIAR" }
-                ]
-              };
+  let o = {
+    tituloModal: "CAMBIAR",
+    listaPoblarDetalle: [
+      { titulo: "Código Cualificación", contenido: "CAMBIAR" },
+      { titulo: "Nombre Cualificación", contenido: "CAMBIAR" },
+      { titulo: "Versión Cualificación", contenido: "CAMBIAR" },
+      { titulo: "Estado Cualificación", contenido: "CAMBIAR" }, 
+      { titulo: "Fecha Publicación de la Versión", contenido: "CAMBIAR" },
+      { titulo: "Descripción General Cualificación", col: "col-12", contenido: "CAMBIAR" },
+      { titulo: "Descripción Escenario y Condiciones Laborales", col: "col-12", contenido: "CAMBIAR" },
+      { titulo: "Descripción Campo Laboral", col: "col-12", contenido: "CAMBIAR" },
+      { titulo: "Descripción Situación de Desempeño", col: "col-12", contenido: "CAMBIAR" },
+      { titulo: "Descripción Equipamiento e Infraestructura", col: "col-12", contenido: "CAMBIAR" },
+      { titulo: "Es Perfil Ocupacional?", contenido: "CAMBIAR" },
       
-              $("#ModalDetalle [name='tituloModal']").text(o.tituloModal);
+      { titulo: "Código Definición Tipo Nivel del MCTP", contenido: "CAMBIAR" },
+      { titulo: "Definición Nivel del MCTP", contenido: "CAMBIAR" },
+      { titulo: "Sub Nivel MCTP", contenido: "CAMBIAR" },
+      { titulo: "Sector Productivo Preferente", contenido: "CAMBIAR" },
+      { titulo: "Sub Sector Productivo Preferente", contenido: "CAMBIAR" },
+      { titulo: "País", contenido: "CAMBIAR" }
+    ]
+  };
 
-              let cadena = o.listaPoblarDetalle.map(x =>
-              {
-                  let tieneContenido = (x.contenido != null && x.contenido != "");
-                  let contenido = tieneContenido ? x.contenido : "- - -";
+  $("#ModalDetalle [name='tituloModal']").text(o.tituloModal);
 
-                  return `
-                  <div class="${x.col != null && tieneContenido ? x.col : "col-12 col-md-4"}">
-                      <div class="md-form">
-                          <p name="">${contenido}</p>
-                          <label class="active">${x.titulo}</label>
-                      </div>
-                  </div>
-                  `;
-              }).join("");
+  let cadena = o.listaPoblarDetalle.map(x =>
+  {
+      let tieneContenido = (x.contenido != null && x.contenido != "");
+      let contenido = tieneContenido ? x.contenido : "- - -";
 
-              document.getElementById("ver-detalle-cualificacion").innerHTML = cadena;
+      return `
+      <div class="${x.col != null && tieneContenido ? x.col : "col-12 col-md-4"}">
+          <div class="md-form">
+              <p name="">${contenido}</p>
+              <label class="active">${x.titulo}</label>
+          </div>
+      </div>
+      `;
+  }).join("");
 
-              $("#ModalDetalle").modal("show");
-          }
-          else
-              mostrarErroresRespuestaBackend(res);
-        },
-        error: (XMLHttpRequest, textStatus, errorThrown) => {
-            toastr.error("Ocurrió un error al guardar el sector productivo");
-        },
-        complete: (res) => hideLoading()
-    });
+  document.getElementById("ver-detalle-cualificacion").innerHTML = cadena;
+
+  $("#ModalDetalle").modal("show");
 }
 
 //=====================================================================================================>>>>>

@@ -14,36 +14,9 @@ function buscar(params)
 
     return new Promise((resolve, reject) => 
     {
-        $.ajax({
-            method: "POST",
-            url: "https://jsonplaceholder.typicode.com/posts",
-            data: JSON.stringify(params),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            beforeSend: () => {
-                showLoading();
-            },
-            success: async (res) =>
-            {
-                if (res.status == 200)
-                {
-                //     let o = res.objeto;
-        
-                    arregloRutas = obtenerDatos_1();
-                    generarTabla();
-                    resolve(true);
-        
-                }
-                else
-                    mostrarErroresRespuestaBackend(res);
-            },
-            error: (XMLHttpRequest, textStatus, errorThrown) => {
-                hideLoading();
-                toastr.error("Ocurrió un error al guardar el sector productivo");
-                reject(JSON.stringify(errorThrown));
-            },
-            complete: () => hideLoading()
-        });
+        arregloRutas = obtenerDatos_1();
+        generarTabla();
+        resolve(true);
     });
 }
 
