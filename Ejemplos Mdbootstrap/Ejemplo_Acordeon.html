@@ -124,6 +124,13 @@
 
   <script>
     
+    let arreglo = [ 
+      { numero: 1, nombre: "Ejemplo 1", descripcion: "AAAAAAA" },
+      { numero: 2, nombre: "Ejemplo 2", descripcion: "BBBBBBB" },
+      { numero: 3, nombre: "Ejemplo 3", descripcion: "CCCCCCC" },
+      { numero: 4, nombre: "Ejemplo 4", descripcion: "DDDDDDD" }
+    ];
+
     $(document).ready(function() 
     {
         construirAcordeonNiveles();
@@ -131,25 +138,23 @@
 
     function construirAcordeonNiveles()
     {
-        let arreglo = [ 1, 2, 3, 4, 5 ];
-
         let cadena = `
         <div class="acordeon-niveles accordion md-accordion" id="acordeon-niveles-descripcion" role="tablist" aria-multiselectable="true">
 
-            ${arreglo.map((numero, index) => 
+            ${arreglo.map((x, index) => 
             {
                 return `
                 <div class="accordion-item">
         
-                    <div class="accordion-header grey lighten-3" role="tab" id="heading-nivel-${numero}">
-                        <a data-toggle="collapse" data-parent="#acordeon-niveles-descripcion" href="#collapse-nivel-${numero}" aria-expanded="false" aria-controls="collapse-nivel-${numero}">
+                    <div class="accordion-header grey lighten-3" role="tab" id="heading-nivel-${x.numero}">
+                        <a data-toggle="collapse" data-parent="#acordeon-niveles-descripcion" href="#collapse-nivel-${x.numero}" aria-expanded="false" aria-controls="collapse-nivel-${x.numero}">
                         <h5 class="mb-0 pl-3 pr-3">
-                            Número ${numero}
+                            ${x.nombre}
                             <span class="accordion-arrow"><i class="material-icons rotate-icon float-right">keyboard_arrow_down</i></span>
                         </h5>
                         </a>
                     </div>
-                    <div id="collapse-nivel-${numero}" class="collapse ${index == 0 ? "show" : ""}" role="tabpanel" aria-labelledby="heading-nivel-${numero}" data-parent="#acordeon-niveles-descripcion">
+                    <div id="collapse-nivel-${x.numero}" class="collapse ${index == 0 ? "show" : ""}" role="tabpanel" aria-labelledby="heading-nivel-${x.numero}" data-parent="#acordeon-niveles-descripcion">
         
                         <div class="accordion-body p-3 pt-3 pb-2">
         
@@ -157,10 +162,10 @@
 
                                 <div class="col-12 col-md-6">
                                     <div class="md-form mb-3">
-                                        <textarea onkeyup="objeto.niveles[${index}].descripcion = this.value" 
-                                        name="descripcion" rows="3" placeholder="Ingrese Descripción" class="form-control md-textarea">Ejemplo ${numero}</textarea>
+                                        <textarea onkeyup="arreglo[${index}].descripcion = this.value" 
+                                        name="descripcion" rows="3" placeholder="Ingrese Descripción" class="form-control md-textarea">${x.descripcion}</textarea>
 
-                                        <label class="active">Nivel ${numero}</label>
+                                        <label class="active">Nivel ${x.numero}</label>
                                     </div>
                                 </div>
         
@@ -168,7 +173,7 @@
         
                         </div>  <!-- Fin div accordion-body -->
         
-                    </div>   <!-- Fin div collapse-nivel-${numero} -->
+                    </div>   <!-- Fin div collapse-nivel-${x.numero} -->
         
                 </div>  <!-- Fin div accordion-item -->
                 `;
