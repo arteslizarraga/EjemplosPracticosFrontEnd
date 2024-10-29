@@ -1,4 +1,15 @@
+// Habilitar/Deshabilitar botón
 
+public habilitadoCrearAsignatura: boolean = true;
+
+<button (click)="abrirModalCrearAsignatura()" 
+[disabled]="!habilitadoCrearAsignatura"
+[ngClass]="habilitadoCrearAsignatura ? 'btn btn-default waves-effect waves-light' : 'btn'">
+	<span>Crear Asignatura</span>
+</button>
+							
+//=================================================================================================================>>>>>>							
+													
 public botonVolver = {
 	texto: "Volver a Editar Asignatura",
 	click: () => this.returnPrincipal()
