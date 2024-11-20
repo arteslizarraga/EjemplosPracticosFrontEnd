@@ -9,7 +9,18 @@ public habilitadoCrearAsignatura: boolean = true;
 </button>
 							
 //=================================================================================================================>>>>>>							
-													
+// Varias condiciones con [ngClass]
+
+<ng-container *ngFor="let x of lista">
+
+	<span [ngClass]="{'danger-text': (x.estado == 'No Migrado'), 'success-text': (x.estado == 'Migrado')}">
+		{{x.estado}}
+	</span>
+
+</ng-container>
+												
+//=================================================================================================================>>>>>>
+	
 public botonVolver = {
 	texto: "Volver a Editar Asignatura",
 	click: () => this.returnPrincipal()
