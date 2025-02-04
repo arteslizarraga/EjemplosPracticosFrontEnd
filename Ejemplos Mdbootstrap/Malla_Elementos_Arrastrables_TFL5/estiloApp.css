@@ -1,0 +1,541 @@
+.c-requerido{
+  color: #c00;
+  font-size: .75rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .3s;
+}
+.dark .info-text{
+  color: #72a2d9;
+}
+.separator{
+  height: 1px;
+  background-color: #d8d8d8;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}
+.btn{
+  min-width: 90px;
+}
+table td .btn-link{
+  color: #1565C0;
+}
+.mx-h-btn{
+  max-height: 40px;
+}
+.btn-round{
+  min-width: initial;
+}
+.dark .table button{
+  color: #fff;
+}
+.clear-button,
+.table button,
+.footer-actions button{
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.btn-add{
+  border: none;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 1px solid #666;
+  background-color: transparent;
+}
+.btn-default.btn:disabled{
+  background-color: #ccc!important;
+  color: #999!important;
+}
+.btn.btn-agregar-asignatura-semestre,
+.btn.btn-agregar-electivo{
+  background-color: #fff;
+  color: #1565C0;
+  border-radius: 5px;
+  font-size: 0.75rem;
+}
+.button-link{
+  border: none;
+  background-color: transparent;
+}
+.button-link.active{
+  color: #c00;
+}
+
+.card.no-card{
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+/* MENU LATERAL */
+
+.btn-side{
+  cursor: pointer;
+}
+.side-navbar{
+  width: 400px;
+  height: 100%;
+  background-color: #fff;
+  z-index: 9;
+  position: fixed;
+  top: 48px;
+  left: 0;
+  overflow-x: scroll;
+}
+.dark .side-navbar{
+  background-color: #383838;
+}
+.dark .side-navbar button{
+  color: #fff;
+}
+
+.side-navbar button{
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  transition: all .3s;
+}
+.side-navbar button:hover{
+  background-color: #ddd;
+  transition: all .3s;
+}
+.side-navbar ul li:first-child button{
+  position: relative;
+}
+.side-navbar ul li:first-child button:after{
+  content: '';
+  width: 90%;
+  height: 1px;
+  position: absolute;
+  margin: 0 auto;
+  bottom: 0;
+  background: #ccc;
+}
+.side-navbar p{
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #999;
+}
+
+
+
+.table-basic-scroll{
+  overflow: auto; 
+  position: relative; 
+  width: 100%;
+}
+.card-docente-categoria{
+  border-left: 8px solid #ccc;
+  cursor: pointer;
+  transition: all .3s;
+}
+.card-docente-categoria:hover{
+  opacity: 0.7;
+  transform: scale(.95);
+  transition: all .3s;
+}
+.card-docente-categoria .card-header{
+  border-bottom: none;
+}
+.card-docente-categoria .card-body{
+  font-size: 20px;
+}
+#categorizacion-docente .card-body span,
+#categorizacion-acompanamiento-docente .card-body span{
+  color: #1565C0;
+}
+.dark #categorizacion-acompanamiento-docente .card-body span,
+.dark #categorizacion-docente .card-body span{
+  color: #72a2d9;
+}
+#categorizacion-docente-mgdt .card-body span{
+  color: #EF6C00;
+}
+#categorizacion-evaluacion-docente .card-body span{
+  color: #4CAF50;
+}
+
+
+
+.card-formacion-docente,
+.card-formacion-docente .card-body,
+.card-formacion-docente .card-body .row,
+.card-becas,
+.card-becas .card-body,
+.card-becas .card-body .row{
+  min-height: 200px;
+}
+.num{
+  font-size: 2rem;
+  color: #999;
+}
+#ficha-docente img{
+  height: 135px;
+}
+
+/* Card acompañamiento docente */
+.container-icon-card{
+  width: 35px;
+  height: 35px;
+  color: #fff;
+  background-color: #ccc;
+  border-radius: 50%;
+}
+.acompanamiento-docente-proceso{
+  list-style: none;
+}
+.dark .button-footer-card.blue-text{
+  color: #72a2d9!important;
+}
+.button-footer-card{
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+.card-procesos .card-footer{
+  border-top: 1px solid #ccc;
+}
+.card-proceso-estado{
+  font-size: 12px;
+}
+table#historial-categorizacion th:first-child{
+  width: 50%;
+}
+table#historial-categorizacion th:last-child{
+  width: 50%;
+}
+.btn-link{
+  text-decoration: underline;
+  color: #1565C0;
+}
+#card-detalle .card-header{
+  border-bottom: none;
+}
+.info-num{
+  padding: 0;
+  font-size: 2rem;
+}
+#card-detalle .row .col-md-3:nth-child(1) .card{
+  border-left: 10px solid #1565C0;
+}
+#card-detalle .row .col-md-3:nth-child(2) .card{
+  border-left: 10px solid #EF6C00;
+}
+#card-detalle .row .col-md-3:nth-child(3) .card{
+  border-left: 10px solid #A6DFD3;
+}
+.grafico-subdimension .grafico{
+  border-radius: 10px ;
+}
+.grafico.administrativo{
+  height: 90%;
+  background-color: #512DA8;
+}
+.grafico{
+  max-width: 100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+}
+.grafico.disciplinar{
+  height: 50%;
+  background-color: #1565C0;
+}
+.grafico.pedagogico{
+  height: 80%;
+  background-color: #03A9F4;
+}
+.grafico.recomendacion{
+  height: 20%;
+  background-color: #4DD0E1;
+}
+.grafico-subdimension{
+  height: 300px;
+}
+
+.total-de{
+  background-color: #1890FF;
+  color: #fff!important;
+}
+.de{
+  background-color: #B5DBFF;
+}
+.ni{
+  background-color: #C6E4FF;
+}
+.desa,
+.total-des{
+  background-color: #DBEEFF;
+}
+.dark .de,
+.dark .ni,
+.dark .desa,
+.dark .total-des{
+  color: #333!important;
+}
+#overlay-menu{
+  background-color: rgba(0,0,0,0.3);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+}
+
+/* CHECK RADIO */
+.table-check-radio {
+  background-color: rgba(207, 218, 231, 0.8) !important;
+}
+/* STEPPER */
+
+.mobile-stepper-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+/* TOOLTIP */
+.tooltip-inner{
+  font-size: 12px;
+}
+.tooltip-inner ul{
+  padding: 5px 10px;
+  list-style: none;
+  margin: 0;
+}
+.tooltip-inner ul li{
+  text-align: left;
+}
+.card-formacion-docente .card-header button,
+.card-becas .card-header button,
+.ver-ficha-docente{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.dark .ver-ficha-docente{
+  color: #fff;
+}
+#resultados-asignaturas tbody tr td:first-child{
+  max-width: 150px;
+}
+.dark .card-formacion-docente .card-header i,
+.dark .card-becas .card-header i{
+  color: #fff;;
+}
+
+/* td a i{
+  text-decoration: none;
+} */
+.asignacion-visita{
+  cursor: pointer;
+}
+.asignacion-visita,
+.asignacion-visita-seleccionado{
+  background-color: #f0f0f0;
+  border-radius: 30px;
+}
+.nombre-persona{
+  font-size: .875rem;
+}
+.carrera-persona{
+  font-size: .75rem;
+}
+.comite-lista-personas{
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+.img-asignacion-visita img{
+  max-width: 62px;
+  max-height: 62px;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+.detalle-text{
+  font-size: 0.8em;
+  color: #999;
+}
+.table-button{
+  cursor: pointer;
+}
+.no-label{
+  font-size: 0.8em !important;
+  color: #999;
+}
+
+.malla-curricular .card{
+  padding: 8px;
+  min-height: 75px;
+  word-break: normal;
+  max-width: 185px;
+  justify-content: center;
+}
+/* .malla-curricular .card:hover{
+  background-color: #bac0c2;
+  color: #fff;
+} */
+/* .malla-curricular .card:hover:before,
+.malla-curricular .card:hover:after{
+  font-family: 'Material Icons';
+  position: absolute;
+  font-size: 24px;
+}
+.malla-curricular .card:hover:before{
+  content: "\e945";
+}
+.malla-curricular .card:hover:after{
+  content: "Mover";
+} */
+.dialog-malla{
+  background-color: #000;
+  border-radius: 5px;
+  color: #fff;
+  position: absolute;
+  font-size: 0.785rem;
+  top: 5px;
+  right: 5px;
+}
+/* .malla-curricular .card.electivo:hover{
+  background-color: #e2a77b;
+} */
+.dark .malla-curricular .card{
+  background-color: #555;
+}
+.dark .malla-curricular .card:hover{
+  background-color: #999;
+}
+.dark .malla-curricular .card.electivo:hover{
+  background-color: #3D6161!important;
+}
+.malla-curricular .title .title-semestre{
+  background-color: rgb(51,51,51);
+  color: #fff;
+  font-size: 1rem;
+}
+.malla-num span{
+  background-color: #666666;
+  color: #fff;
+  font-size: 10px;
+}
+.col-malla{
+  max-width: 200px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.legend{
+  font-size: .875rem;
+}
+.box{
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+}
+.pre-requisito .box{
+  background-color: rgba(21,101,192, 0.5);
+}
+.asig-referen .box{
+  background-color: rgba(9,153,153, 0.5);
+}
+.asig-requisito .box{
+  background-color: rgba(76,175,80, 0.5);
+}
+.electivos .box{
+  background-color: rgba(226,167,123,1);
+}
+.col-6.card-malla{
+  flex: 0 0 48%;
+  width: 48%;
+}
+.col-6 .icon-empt,
+.col-6 .icon-certi{
+  height: 10px;
+  width: 10px;
+}
+.col-6 .icon-empt i,
+.col-6 .icon-certi i{
+  display: none;
+}
+.icon-empt,
+.icon-certi{
+  height: 18px;
+  width: 18px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-empt{
+  background-color: #000;
+}
+.icon-empt i,
+.icon-certi i{
+  color: #fff;
+  font-size: 1rem !important;
+}
+.icon-certi.certificado-APP,
+.icon-certi.edit-certificado-APP{
+  background-color: #df772a;
+}
+.icon-certi.certificado-intranet,
+.icon-certi.edit-certificado-intranet{
+  background-color: #13b326;
+}
+.icon-certi.certificado-adjunto,
+.icon-certi.edit-certificado-adjunto{
+  background-color: #EA047E;
+}
+.nombre-asignatura{
+  font-size: 14px;
+  max-height: 54px;
+  font-weight: bold;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+}
+.container-card-asignaturas .card-body,
+.container-card-electivo .card-body{
+  height: 90px;
+}
+.container-card-asignaturas,
+.container-card-electivo{
+  min-height: 100px;
+}
+.card-malla{
+  cursor: grab;
+  transition: all 0.3s;
+  margin-bottom: 12px;
+}
+.card-malla:active {
+  cursor: grabbing;
+}
+
+.malla-group{
+  max-width: 220px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.malla-group .title{
+  background-color: #ccc;
+}
+.malla-curricular button i{
+  font-size: 18px !important;
+}
+.box-horas{
+  background-color: #ccc;
+  text-align: center;
+}
