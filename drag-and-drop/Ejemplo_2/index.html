@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Drag and Drop por Categorías</title>
+  <style>
+    .contenedor-categorias {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 20px;
+    }
+
+    .categoria {
+      width: 220px;
+      min-height: 200px;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+
+    .titulo-categoria {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .list-item {
+      padding: 8px 12px;
+      background: #fff;
+      margin: 6px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: grab;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Arrastra elementos entre categorías</h2>
+  <div class="contenedor-categorias">
+    <div id="frutas" class="categoria">
+      <div class="titulo-categoria">Frutas</div>
+    </div>
+    <div id="verduras" class="categoria">
+      <div class="titulo-categoria">Verduras</div>
+    </div>
+    <div id="carnes" class="categoria">
+      <div class="titulo-categoria">Carnes</div>
+    </div>
+    <div id="bebidas" class="categoria">
+      <div class="titulo-categoria">Bebidas</div>
+    </div>
+  </div>
+  
+  <br/><br/>
+  
+  <div id="mostrar-json-string"></div>
+
+  <script type="module">
+    import { dragAndDrop } from 'https://cdn.jsdelivr.net/npm/@formkit/drag-and-drop@0.5.3/+esm';
+
+    // Definimos el estado inicial
+    const estado = {
+      frutas: [
+        { codigo: 1, descripcion: "🍎 Manzana" },
+        { codigo: 2, descripcion: "🍌 Plátano" },
+        { codigo: 3, descripcion: "🍇 Uvas" },
+        { codigo: 4, descripcion: "🍊 Naranja" },
+        { codigo: 5, descripcion: "🍍 Piña" }
+      ],
+      verduras: [
+        { codigo: 6, descripcion: "🥦 Brócoli" },
+        { codigo: 7, descripcion: "🥕 Zanahoria" },
+        { codigo: 8, descripcion: "🌽 Maíz" },
+        { codigo: 9, descripcion: "🥬 Lechuga" },
+        { codigo: 10, descripcion: "🍅 Tomate" }
+      ],
+      carnes: [
+        { codigo: 11, descripcion: "🥩 Bistec" },
+        { codigo: 12, descripcion: "🍗 Pollo" },
+        { codigo: 13, descripcion: "🥓 Tocino" },
+        { codigo: 14, descripcion: "🦐 Camarón" },
+        { codigo: 15, descripcion: "🍖 Costillar" }
+      ],
+      bebidas: [
+        { codigo: 16, descripcion: "🥤 Refresco" },
+        { codigo: 17, descripcion: "☕ Café" },
+        { codigo: 18, descripcion: "🍵 Té" },
+        { codigo: 19, descripcion: "🥛 Leche" },
+        { codigo: 20, descripcion: "🍺 Cerveza" }
+      ]
+    };
+	
+	mostrarJsonString();
+
+    // Función para renderizar los elementos en los contenedores
+    const render = (categoriaId, items) => {
+      const container = document.getElementById(categoriaId);
+      container.innerHTML = ''; // Limpiar el contenedor
+      items.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "list-item";
+        div.textContent = item.descripcion;
+        div.setAttribute("data-codigo", item.codigo);
+        div.draggable = true;
+        container.appendChild(div);
+      });
+    };
+
+    // Inicializamos todos los contenedores con sus elementos
+    Object.entries(estado).forEach(([categoriaId, items]) => {
+      render(categoriaId, items); // Renderizar elementos
+
+      dragAndDrop({
+        parent: document.getElementById(categoriaId),
+        getValues: () => {
+          // Obtener los valores actuales de los items
+          return Array.from(document.getElementById(categoriaId).children).map(el => {
+            const codigo = parseInt(el.getAttribute("data-codigo"));
+            return Object.values(estado).flat().find(i => i.codigo === codigo);
+          });
+        },
+        setValues: (newItems) => {
+          // Actualizar el estado con los nuevos valores
+          estado[categoriaId] = newItems;
+		  mostrarJsonString();
+          render(categoriaId, newItems); // Volver a renderizar los elementos con el nuevo orden
+        },
+        config: {
+          group: "alimentos" // Configuración para compartir entre contenedores
+        }
+      });
+    });
+	
+	function mostrarJsonString() 
+	{
+		const jsonFormatted = JSON.stringify(estado, null, 2); 
+		document.querySelector("#mostrar-json-string").innerHTML = "<pre>" + jsonFormatted + "</pre>"; // Usamos <pre> para preservar el formato
+	}
+
+
+  </script>
+</body>
+</html>

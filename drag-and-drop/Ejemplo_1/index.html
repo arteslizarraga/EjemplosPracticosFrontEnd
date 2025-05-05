@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Drag and Drop con FormKit 0.5.3</title>
+  <style>
+    #drag-list {
+      width: 300px;
+      margin: 30px auto;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0;
+      background: #fafafa;
+    }
+
+    .list-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid #ddd;
+      background-color: #f0f0f0;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .list-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">Arrastra para reordenar</h2>
+  <div id="drag-list">
+    <div class="list-item" draggable="true">🍎 Manzana</div>
+    <div class="list-item" draggable="true">🍌 Plátano</div>
+    <div class="list-item" draggable="true">🍇 Uvas</div>
+    <div class="list-item" draggable="true">🍊 Naranja</div>
+  </div>
+
+  <script type="module">
+    import { dragAndDrop } from 'https://cdn.jsdelivr.net/npm/@formkit/drag-and-drop@0.5.3/+esm';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const parent = document.getElementById('drag-list');
+
+      const getItems = () => {
+        return Array.from(parent.children).map(child => child.textContent);
+      };
+
+      dragAndDrop({
+        parent: parent,
+        getValues: getItems,
+        setValues: (newItems) => {
+          console.log("Nuevo orden de elementos:", newItems);
+
+          // Limpia el contenedor y reconstituye los elementos
+          parent.innerHTML = '';
+          newItems.forEach(itemText => {
+            const item = document.createElement('div');
+            item.classList.add('list-item');
+            item.textContent = itemText;
+            item.draggable = true;
+            parent.appendChild(item);
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
