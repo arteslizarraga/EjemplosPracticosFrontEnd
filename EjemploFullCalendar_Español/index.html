@@ -1,133 +1,245 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset='utf-8' />
-<link href='css/fullcalendar.min.css' rel='stylesheet' />
-<link href='css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-<link href='css/scheduler.min.css' rel='stylesheet' />
-<script src='js/moment.min.js'></script>
-<script src='js/jquery.min.js'></script>
-<script src='js/fullcalendar.min.js'></script>
-<script src='js/scheduler.min.js'></script>
+  <meta charset='utf-8' />
+  <link href='css/fullcalendar-3.9.0.min.css' rel='stylesheet' />
+  <link href='css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+  <link href='css/scheduler-1.9.4.min.css' rel='stylesheet' />
+  <script src='js/moment.min.js'></script>
+  <script src='js/jquery-3.3.1.min.js'></script>
+  <script src='js/fullcalendar-3.9.0.min.js'></script>
+  <script src='js/scheduler-1.9.4.min.js'></script>
 
-<script src="js/idioma-calendario-spanish.js"></script>  <!-- Sin esto, el idioma por defecto sera el ingles -->
+  <script src="js/idioma-calendario-spanish.js"></script>  <!-- Sin esto, el idioma por defecto sera el ingles -->
 
-
-
-<script>
-
-  // defaultView es para establecer que forma se mostrara al abrir esta pagina:   timelineDay, agendaWeek, month y listWeek
-  // resourceLabelText es para poner el titulo usado en la cabecera de las salas. Ej: Aula Magna, Hall de Chesterton, etc.
-  // Asi pones si el evento se muestra con doble click:   element.bind('dblclick', function() {
-  
-
-  $(function() { // document ready
-
-    $('#calendar').fullCalendar({
-      now: '2018-04-07',
-      editable: true, // enable draggable events
-	  
-	  eventLimit: true, // allow "more" link when too many events
-	  selectable: true,
-	  selectHelper: true,
-	  select: function(start, end) {	
-
-		// Esto es para poder seleccionar un periodo entre dos fechas
-		
-		var parametros = "fechaInicioCalendario="+moment(start).format('YYYY-MM-DD HH:mm:ss');
-		parametros = parametros + "&fechaTerminoCalendario="+moment(end).format('YYYY-MM-DD HH:mm:ss');
-		alert(parametros);
-
-	  },
-	  
-	  
-      aspectRatio: 1.8,
-      scrollTime: '00:00', // undo default 6am scrollTime
-	  
-      header: {
-        left: 'today prev,next',
-        center: 'title',
-        right: 'month,agendaWeek,timelineDay,listWeek'       
-      },
-	  
-      defaultView: 'month',
-	  
-      views: {
-        timelineThreeDays: {
-          type: 'timeline',
-          duration: { days: 3 }
-        }
-      },
-	  
-	  eventRender: function(event, element) {
-		element.bind('click', function() {
-			alert("Abro una ventana que llame al evento con el id: "+event.id);
-		});
-      },	
-			
-      resourceLabelText: 'Espacios',
-      resources: [
-        { id: 'a', title: 'Auditorium A' },
-        { id: 'b', title: 'Auditorium B', eventColor: 'green' },
-        { id: 'c', title: 'Auditorium C', eventColor: 'orange' },
-        { id: 'd', title: 'Auditorium D', children: [
-          { id: 'd1', title: 'Room D1' },
-          { id: 'd2', title: 'Room D2' }
-        ] },
-        { id: 'e', title: 'Auditorium E' },
-        { id: 'f', title: 'Auditorium F', eventColor: 'red' },
-        { id: 'g', title: 'Auditorium G' },
-        { id: 'h', title: 'Auditorium H' },
-        { id: 'i', title: 'Auditorium I' },
-        { id: 'j', title: 'Auditorium J' },
-        { id: 'k', title: 'Auditorium K' },
-        { id: 'l', title: 'Auditorium L' },
-        { id: 'm', title: 'Auditorium M' },
-        { id: 'n', title: 'Auditorium N' },
-        { id: 'o', title: 'Auditorium O' },
-        { id: 'p', title: 'Auditorium P' },
-        { id: 'q', title: 'Auditorium Q' },
-        { id: 'r', title: 'Auditorium R' },
-        { id: 's', title: 'Auditorium S' },
-        { id: 't', title: 'Auditorium T' },
-        { id: 'u', title: 'Auditorium U' },
-        { id: 'v', title: 'Auditorium V' },
-        { id: 'w', title: 'Auditorium W' },
-        { id: 'x', title: 'Auditorium X' },
-        { id: 'y', title: 'Auditorium Y' },
-        { id: 'z', title: 'Auditorium Z' }
-      ],
-      events: [
-        { id: '1', resourceId: 'b', start: '2018-04-07T02:00:00', end: '2018-04-07T07:00:00', title: 'event 1' },
-        { id: '2', resourceId: 'c', start: '2018-04-07T05:00:00', end: '2018-04-07T22:00:00', title: 'event 2' },
-        { id: '3', resourceId: 'd', start: '2018-04-06', end: '2018-04-08', title: 'event 3' },
-        { id: '4', resourceId: 'e', start: '2018-04-07T03:00:00', end: '2018-04-07T08:00:00', title: 'event 4' },
-        { id: '5', resourceId: 'f', start: '2018-04-07T00:30:00', end: '2018-04-07T02:30:00', title: 'event 5' }
-      ]
-    });
-  
-  });
-
-</script>
-<style>
-
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 900px;
-    margin: 50px auto;
-  }
-
-</style>
 </head>
+
 <body>
 
-  <div id='calendar'></div>
+  <div style="max-width: 900px; margin: 50px auto">
+
+    <div id="calendar" class="col-centered"></div>
+
+  </div>
+    
+  <script>
+
+    var fechaBuscada = obtenerFechaHoy();  // "2025-05-22"
+
+    if (localStorage.getItem("datos_busqueda_calendario") != null)  // Si se buscó otro mes antes en el calendario
+    {
+        var objeto = JSON.parse(localStorage.getItem("datos_busqueda_calendario"));
+        fechaBuscada = objeto.primerDiaMes;
+    }
+
+    const categorias = [
+      { id: '1', title: 'Aula Magna', eventColor: 'blue' }, 
+      { id: '2', title: 'Hall de Chesterton', eventColor: 'green' }, 
+      { id: '3', title: 'Multicancha', eventColor: 'orange' }, 
+      { id: '4', title: 'Patio Apoquindo', eventColor: 'grey' }
+    ];
+
+    const itemsCalendario = obtenerDatosApi(null, null);
+
+    // defaultView es para establecer que forma se mostrara al abrir esta pagina:   timelineDay, agendaWeek, month y listWeek
+    // resourceLabelText es para poner el titulo usado en la cabecera de las salas. Ej: Aula Magna, Hall de Chesterton, etc.
+    // Asi pones si el evento se muestra con doble click:   element.bind('dblclick', function() {
+    // Los resources tambien se pueden poner asi:  { id: 'z', title: 'Auditorium Z' }
+
+    let mesAnterior = null;
+    var vistaCalendario;   // Esto es para saber que vista del calendario ha sido seleccionada
+
+
+    $(function () 
+    { 
+      $('#calendar').fullCalendar({
+        defaultDate: fechaBuscada,
+        editable: true,       // enable draggable events
+        width: 1000,
+        eventLimit: true,     // allow "more" link when too many events
+        selectable: true,
+        selectHelper: true,
+        select: function (start, end) 
+        {
+          //alert("Al seleccionar un día en el calendario");
+
+          let fechaSeleccionada = moment(start).format('YYYY-MM-DD HH:mm');
+          let nuevaFecha = fechaSeleccionada.replace(" 00:00", "");
+          console.log("fecha: " + nuevaFecha);
+
+          /*
+          var babuStart = moment(start).format('YYYY-MM-DD HH:mm');
+          var babuEnd = moment(end).format('YYYY-MM-DD HH:mm');
+          var babuInicio = moment(start).format('HH:mm');
+          var babuTermino = moment(end).format('HH:mm');
+          
+          alert("Fecha Inicio: " + babuStart + "\n" + "Fecha Termino: " + babuEnd + "\n" + "Hora Inicio: " + babuInicio + "\n" + "Hora Termino: " + babuTermino);
+          */
+        },
+        aspectRatio: 1.8,
+        scrollTime: "00:00", // undo default 6am scrollTime
+        header: {
+          left: "today prev,next",
+          center: "title",
+          //right: "month"                                    // Solo deja el botón para la vista mensual
+          right: "month,agendaWeek,timelineDay,listWeek"      // Deja los botones para las 4 vistas que son Mes, Semana, Dia y Agenda
+        },
+        defaultView: "month",
+        viewRender: function (view, element)  // Si se selecciona una forma de ver el calendario o se abre la pagina por primera vez
+        {
+          //=============================>>>>
+
+              var start = view.start; // incluye días en gris al inicio
+    var end = view.end;     // incluye días en gris al final (exclusivo)
+
+    var lastIncluded = view.end.clone().subtract(1, 'day');
+
+    console.log("Primera fecha mostrada (incluye días en gris):", start.format('YYYY-MM-DD'));
+    console.log("Última fecha mostrada (incluye días en gris):", lastIncluded.format('YYYY-MM-DD'));
+
+          //=============================>>>>
+
+          vistaCalendario = view.name;   // Guardo la vista seleccionada
+
+          const fechaInicio = view.intervalStart.format('YYYY-MM-DD');
+          const fechaFin = view.intervalEnd.format('YYYY-MM-DD');
+
+          const mesVisible = view.intervalStart.format('YYYY-MM'); // YYYY-MM del primer día visible
+
+          if (mesVisible !== mesAnterior) 
+          {
+            mesAnterior = mesVisible;
+            console.log(`El mes usado en el calendario es: ${mesVisible}`);   // El mes usado en el calendario es: 2025-10
+            let datos = obtenerDatosMes(mesVisible);                          // {primerDiaMes: '2025-10-01', ultimoDiaMes: '2025-10-31'}
+            console.log(datos);
+
+            if (datos.esMesActual) {
+              localStorage.removeItem("datos_busqueda_calendario");
+            }
+            else {
+              localStorage.setItem("datos_busqueda_calendario", JSON.stringify(datos));
+            }
+          }
+
+          //=============================>>>>
+        },
+        views: {
+          timelineThreeDays: {
+            type: "timeline",
+            duration: { days: 3 }
+          }
+        },
+        eventRender: function (event, element) 
+        {
+          element.bind("click", function () 
+          {
+            //console.log(`El id es ${event.id} y el nombre es ${event.title}`);
+
+            let elemento = resApi.find(x => x.id === event.id);
+            console.log(elemento);
+          });
+        },
+
+        eventDrop: function (event, delta, revertFunc) 
+        { 
+          alert("No es posible cambiar de posición un evento a través del calendario"); window.location.reload();
+        },
+        resourceLabelText: "Espacios",
+        resources: categorias,
+        events: itemsCalendario
+      });
+
+    });
+
+    function obtenerDatosApi(primeraFechaMostrada, ultimaFechaMostrada)
+    {
+      /*
+      Simula una llamada a una API enviandole estos parámetros: "fecha_inicio=2025-04-28&fecha_termino=2025-06-08"
+      */
+
+      const sumarMinutos = (horaStr, minutosASumar) => {
+        const [horas, minutos, segundos] = horaStr.split(':').map(Number);
+        const fecha = new Date(0, 0, 0, horas, minutos + minutosASumar, segundos);
+        const hh = String(fecha.getHours()).padStart(2, '0');
+        const mm = String(fecha.getMinutes()).padStart(2, '0');
+        const ss = String(fecha.getSeconds()).padStart(2, '0');
+        return `${hh}:${mm}:${ss}`;
+      };
+
+      const resApi = [
+        { id: "1", fecha: "2025-05-25", horaInicio: "09:00:00", titulo: "La Babu 1 (A)", origenId: "1" }, 
+        { id: "2", fecha: "2025-05-25", horaInicio: "11:00:00", titulo: "La Babu 1 (B)", origenId: "2" },
+        { id: "3", fecha: "2025-05-26", horaInicio: "09:00:00", titulo: "La Babu 2", origenId: "3" }, 
+        { id: "4", fecha: "2025-05-27", horaInicio: "09:00:00", titulo: "La Babu 3", origenId: "4" }
+      ];
+
+      const retorno = resApi.map(x => 
+      {
+        const start = `${x.fecha}T${x.horaInicio}`;
+        const end = `${x.fecha}T${sumarMinutos(x.horaInicio, 90)}`;
+        
+        return {
+          id: x.id,
+          resourceId: x.origenId,
+          start: start,
+          end: end,
+          title: x.titulo
+        };
+      });
+
+      /*
+      let retorno = [
+        { id: "1", resourceId: "1", start: "2025-05-25T09:00:00", end: "2025-05-25T10:30:00", title: "La Babu 1 (A)" }, 
+        { id: "2", resourceId: "2", start: "2025-05-25T11:00:00", end: "2025-05-25T12:30:00", title: "La Babu 1 (B)" },
+
+        { id: "3", resourceId: "3", start: "2025-05-26T09:00:00", end: "2025-05-26T10:30:00", title: "La Babu 2" }, 
+        { id: "4", resourceId: "4", start: "2025-05-27T09:00:00", end: "2025-05-27T10:30:00", title: "La Babu 3" }
+      ];
+      */
+
+      return retorno;
+    }
+
+    function obtenerFechaHoy() 
+    {
+      const hoy = new Date();
+      const anio = hoy.getFullYear();
+      const mes = String(hoy.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
+      const dia = String(hoy.getDate()).padStart(2, '0');
+
+      return `${anio}-${mes}-${dia}`;
+    }
+
+    function obtenerDatosMes(mes) 
+    {
+      const [anio, mesStr] = mes.split('-');
+      const anioNum = parseInt(anio, 10);
+      const mesNum = parseInt(mesStr, 10);
+
+      // Crear fechas en UTC
+      const primerDia = new Date(Date.UTC(anioNum, mesNum - 1, 1));
+      const ultimoDia = new Date(Date.UTC(anioNum, mesNum, 0));
+
+      // Obtener mes y año actuales
+      const ahora = new Date();
+      const mesActual = ahora.getMonth() + 1; // getMonth() es 0-based
+      const anioActual = ahora.getFullYear();
+
+      const esMesActual = (mesNum === mesActual && anioNum === anioActual);
+
+      // Formatear a 'YYYY-MM-DD'
+      const formato = fecha => fecha.toISOString().slice(0, 10);
+
+      return {
+        primerDiaMes: formato(primerDia),
+        ultimoDiaMes: formato(ultimoDia),
+        esMesActual: esMesActual
+      };
+    }
+
+  </script>
 
 </body>
+
 </html>
