@@ -102,16 +102,83 @@
             //$("#modal2").on("hidden.bs.modal", () => aclararModal("#modal1"));
         });
 		
-		function abrirPrimerModal() {
+		function abrirPrimerModal() 
+		{
 			$("#modal1").modal("show");
-			$("#paisId").select2();
+			
+			llenarSelect2Front({ 
+				querySelector: "#paisId",
+				data: [
+					{ id: "1", text: "Chile" },
+					{ id: "2", text: "Argentina" },
+					{ id: "3", text: "Bolivia" }
+				],
+				value: "2"
+			});
 		}
 		
-		function abrirSegundoModal() {
+		function abrirSegundoModal() 
+		{
 			$("#modal2").modal("show");
 	
-			$("#regionId").select2();
+			//$("#regionId").select2();
+			
+			llenarSelect2Front({
+				querySelector: "#regionId",
+				data: [
+					{ id: "1", text: "Arica" },
+					{ id: "2", text: "Región de Tarapacá" },
+					{ id: "3", text: "Región de Antofagasta" },
+					{ id: "4", text: "Región de Atacama" },
+					{ id: "5", text: "Región de Coquimbo" },
+					{ id: "6", text: "Región de Valparaíso" },
+					{ id: "7", text: "Región Metropolitana" },
+					{ id: "8", text: "Región del Libertador General Bernardo O'Higgins" },
+					{ id: "9", text: "Región del Maule" },
+					{ id: "10", text: "Región de Ñuble" },
+					{ id: "11", text: "Región del Biobío" },
+					{ id: "12", text: "Región de La Araucanía" },
+					{ id: "13", text: "Región de Los Ríos" },
+					{ id: "14", text: "Región de Los Lagos" },
+					{ id: "15", text: "Región de Aysén del General Carlos Ibáñez del Campo" },
+					{ id: "16", text: "Región de Magallanes y de la Antártica Chilena" }
+				]
+				//value: "7"
+			});
+
+			
 			//$("#empleadoId").select2("open").trigger("focus");
+		}
+		
+		function llenarSelect2Front(datos = {}) 
+		{
+			const select = $(datos.querySelector);
+
+			// Destruir select2 si ya está inicializado
+			if ($.fn.select2 && select.hasClass("select2-hidden-accessible")) {
+				select.select2('destroy');
+			}
+
+			// Limpiar y agregar opción "Seleccione"
+			select.empty().append(new Option('Seleccione', '', false, false));
+
+			// Agregar nuevas opciones
+			if (Array.isArray(datos.data) && datos.data.length > 0) {
+				datos.data.forEach(x => {
+					select.append(new Option(x.text, x.id));
+				});
+			}
+
+			// Establecer el valor seleccionado, si se proporcionó
+			if (datos.value !== undefined && datos.value !== null) {
+				select.val(datos.value);
+			}
+
+			// Inicializar select2 con opciones
+			select.select2({
+				placeholder: "Seleccione",
+				allowClear: true
+			});
 		}
 		
     </script>
@@ -150,9 +217,6 @@
 
 									<select id="paisId" class="form-control select2" style="width: 100%;">
 										<option value="">Seleccione</option>
-										<option value="1">Chile</option>
-										<option value="2">Argentina</option>
-										<option value="3">Bolivia</option>
 									</select>
 								</div>
 							</div>
@@ -188,22 +252,6 @@
 
 									<select id="regionId" class="form-control select2" style="width: 100%;">
 										<option value="">Seleccione</option>
-										<option value="1">Arica</option>
-										<option value="2">Región de Tarapacá</option>
-										<option value="3">Región de Antofagasta</option>
-										<option value="4">Región de Atacama</option>
-										<option value="5">Región de Coquimbo</option>
-										<option value="6">Región de Valparaíso</option>
-										<option value="7">Región Metropolitana</option>
-										<option value="8">Región del Libertador General Bernardo O'Higgins</option>
-										<option value="9">Región del Maule</option>
-										<option value="10">Región de Ñuble</option>
-										<option value="11">Región del Biobío</option>
-										<option value="12">Región de La Araucanía</option>
-										<option value="13">Región de Los Ríos</option>
-										<option value="14">Región de Los Lagos</option>
-										<option value="15">Región de Aysén del General Carlos Ibáñez del Campo</option>
-										<option value="16">Región de Magallanes y de la Antártica Chilena</option>
 									</select>
 								</div>
 							</div>
