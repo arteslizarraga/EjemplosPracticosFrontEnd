@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Probando</title>
+    <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+    <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
+</head>
+
+<body id="appBody" class="d-flex flex-column">
+
+    <div class="page-content">
+
+        <main class="container">
+
+            <section>
+
+                <div class="card">
+					<!-- ================================================================ -->
+					
+					<div class="card-header">
+
+						<div class="row flex-row justify-content-between">
+
+						  <div class="col-3 d-flex align-items-center justify-content-start">
+
+							<div class="mr-3">
+								<i class="material-icons icon-3x checkedCompletitud success-text">check_circle_outline</i>
+							</div>
+
+							<div class="d-flex flex-column">
+							  <h4 class="float-left heading h4-responsive mb-0">Unidades</h4>
+							  <span id="status">Campos pendientes de ser completados</span>
+							</div>
+						  </div>
+
+						  <div class="col d-flex align-items-center justify-content-end">
+
+							<div class="d-flex flex-row align-items-center alert-titulos p-1" style="font-size: 0.8em">
+							  <i class="material-icons warning-text icon-2x mr-4">warning</i>
+							  <p class="mb-0">
+								AAAAAAAAAAA <br>
+								BBBBBBBBBBB <br>
+								CCCCCCCCCCC <br>
+								DDDDDDDDDDD
+							  </p>
+							</div>
+							
+						  </div>
+
+						  <div class="col-2 d-flex align-items-center justify-content-end">
+							<button type="button" class="btn btn-outline waves-effect waves-light d-flex align-items-center" (click)="showPreview()">
+							  <i class="material-icons icon-lg mr-2">visibility</i>
+							  Ver previsualización
+							</button>
+						  </div>
+
+						</div>
+
+					</div>
+					
+					<!-- ================================================================ -->
+					
+                    <div class="card-body">
+
+                        <!-- ======================= -->
+						
+						<div class="row mt-3">
+
+							<!-- Rut + DV -->
+							<div class="col-md-4 mb-4">
+								<div class="form-row">
+								<!-- RUT número -->
+								<div class="col-8">
+									<div class="md-form">
+									<input placeholder="Rut Número" type="text" class="form-control" id="rutNumero">
+									<label for="rutNumero" class="active">RUT</label>
+									</div>
+								</div>
+								<!-- DV -->
+								<div class="col-4">
+									<div class="md-form">
+									<input placeholder="DV" type="text" class="form-control" id="rutDV" maxlength="1">
+									<label for="rutDV" class="active">DV</label>
+									</div>
+								</div>
+								</div>
+							</div>
+
+							<div class="col-md-4 mb-4"> 
+								<div class="md-form">
+								<input placeholder="Probando_1" type="text" class="form-control">
+								<label class="active">Probando 1</label>
+								</div> 
+							</div>
+
+							<div class="col-md-4 mb-4"> 
+								<div class="md-form">
+								<input placeholder="Probando_2" type="text" class="form-control">
+								<label class="active">Probando 2</label>
+								</div> 
+							</div>
+							
+						</div>
+						<div class="row mt-3">
+
+							<div class="col-12 col-md-4 mt-4">
+								<div class="mr-2"></div>
+								<div class="switch">
+									<label> 
+										Todos 
+										<input type="checkbox" id="probandoSwitch_1" checked="checked">
+										<span class="lever"></span> 
+										Solo Algunos 
+									</label>
+								</div>
+							</div>
+							
+							<div class="col-md-4 mb-4"> 
+								<div class="md-form">
+								<input placeholder="Probando_3" type="text" class="form-control">
+								<label class="active">Probando 3</label>
+								</div> 
+							</div>
+
+						</div>
+						
+						<!-- ======================= -->
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="row py-2 flex-row">
+
+                            <div class="col col-md-6  d-flex justify-content-start">
+
+                            </div>
+                            <div class="col col-md-6 d-flex justify-content-end">
+
+                                <button type="button" class="btn btn-outline waves-effect waves-light">
+                                    <span>Probando</span>
+                                </button>
+
+                                <button type="button" class="btn btn-default waves-effect waves-light">
+                                    <span>Probando</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <footer class="page-footer">
+        <div class="container py-3">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="logo-gst">
+                    <img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png" alt="">
+                </div>
+                <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+
+    <script>
+
+        window.onload = () =>
+        {
+
+        };
+
+    </script>
+
+</body>
+
+</html>
