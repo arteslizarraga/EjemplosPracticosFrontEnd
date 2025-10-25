@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+    <style>
+        body {
+          font-family: Arial;
+          font-size: 13px;                   /* Tamaño de las letras */
+          background: rgb(204,204,204);  /* Color de fondo para ver de que tamaño queda la pagina */
+        }
+
+        pagina {
+            background: white;
+            width: 1040px;      /* Largo de la seccion blanca de la hoja */
+            height: 1350px;     /* Carta: 1350px        Oficio: 1550px */
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+        }
+
+        @media print {
+            body, pagina {
+                margin: 0;
+                box-shadow: 0;
+            }
+        }
+
+        table {
+            width: 100%;
+        }
+
+        /* Estilos de la plantilla copiada */
+
+        .invoice-box {
+            padding: 30px;  /* Este es el margen todos los elementos de la pagina */
+            min-height: 1300px;
+        }
+
+    </style>
+
+    <pagina>
+
+        <div class="invoice-box">
+
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="title">
+
+                        <img src="https://tuccitea.com/wp-content/uploads/2021/06/CARAMELOS-VIOLETA-1.jpg"
+                        style="width: 165px; height: 140px;">
+                    </td>
+                    <td>
+                        <div style="font-size: 15px;">
+                            <div style="text-align: left; padding: 2px;"> VENTA AL POR MAYOR Y MENOR DE DULCES Y CONFITES </div>
+                            <div style="text-align: left; font-weight: bold; padding: 2px;"> FONO: 572525555 - cambiar@gmail.com </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="border-image: initial; border: 3px solid red; font-size: 13px;">
+                            <div style="text-align:center; padding: 8px;">
+                                <b style="color :red;">R.U.T.: 4.444.444-K </b>
+                            </div>
+                            <div style="text-align:center; padding: 8px;"><b style="color :red;">FACTURA ELECTRONICA</b></div>
+                            <div style="text-align:center; padding: 8px;"><b style="color :red;">N° 55667</b></div>
+                        </div>
+                        <div style="text-align:center; padding: 8px;"><b style="color :red; font-size: 13px;"> S.I.I. - SANTIAGO </b></div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="information" style="margin-top: 7px;">
+
+                <table style="border: blue 2px solid; width: 100%;">
+                    <tr>
+                        <td>
+                            <table width="100%" style="font-size: 13px; text-align: left">
+                                <tr>
+                                    <td style="text-align: left"> <b> SEÑOR(ES): </b> </td>
+                                    <td style="text-align: left"> JUAN PEREZ </td>
+                                    <td style="text-align: left"> <b> RUT: </b> </td>
+                                    <td style="text-align: left"> 12.222.222-3 </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"> <b> DIRECCIÓN: </b> </td>
+                                    <td style="text-align: left"> ALAMEDA 416 </td>
+                                    <td style="text-align: left"> <b> COMUNA: </b> </td>
+                                    <td style="text-align: left"> SANTIAGO CENTRO </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="text-align: left"> <b> GIRO: </b> </td>
+                                    <td style="text-align: left"> BAZAR </td>
+                                    <td style="text-align: left"> <b> TELÉFONO: </b> </td>
+                                    <td style="text-align: left"> 966554433 </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"> <b> VENDEDOR: </b> </td>
+                                    <td style="text-align: left"> P26 </td>
+                                    <td style="text-align: left"> <b> FECHA EMISIÓN: </b> </td>
+                                    <td style="text-align: left"> Jueves, 16 de agosto de 2022 12:36 </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <style>
+                .tabla-datos {
+                    height: 720px; border: blue 2px solid; border-collapse: collapse; margin-top: 2px;
+                }
+                .tabla-datos tr td {
+                    border-right: solid 1px #000; padding: 3px; font-weight: bold;
+                }
+            </style>
+
+            <table class="tabla-datos">
+                <tr style="height: 25px; border-bottom: 1px solid #000;">
+                    <td> CANTIDAD </td>
+                    <td> UNIDAD </td>
+                    <td> DESCRIPCIÓN </td>
+                    <td> PRECIO UNIT. </td>
+                    <td> T. NETO </td>
+                    <td> TOTAL </td>
+                </tr>
+                <tr style="height: 25px;">
+                    <td style="text-align: right;"> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                </tr>
+                <tr style="height: 25px;">
+                    <td style="text-align: right;"> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <p style='font-size: 12px; font-weight: bold;'> SON CUATROCIENTOS CUATRO MIL QUINIENTOS TRES  PESOS. </p>
+
+            <table width='100%'>
+                <tr>
+                    <td style='width: 297px;'> 
+
+                        <!-- Para factura cedible -->
+                        <table style="border-collapse: collapse; width: 349px;">
+                            <tr>
+                                <td style="border-top: 3px solid #000; border-left: 3px solid #000; border-right: 3px solid #000;"> ACUSE DE RECIBO </td>
+                                <td style="width: 143px;"></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <table style="border-collapse: collapse; border-top: 3px solid #000; border-left: 3px solid #000; border-right: 3px solid #000; border-bottom: 3px solid #000;">
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> NOMBRE: </td>
+                                <td style="border-bottom: 1px solid #000; width: 233px;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> RUT: </td>
+                                <td style="border-bottom: 1px solid #000;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> FECHA: </td>
+                                <td style="border-bottom: 1px solid #000;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> RECINTO: </td>
+                                <td style="border-bottom: 1px solid #000;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> FIRMA: </td>
+                                <td style="border-bottom: 1px solid #000;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="font-size: 9px;">
+                                    <p>
+                                    El acuse de recibo que se declara en este acto, de acuerdo a lo dispuesto en <br/>
+                                    la letra (b) del Art.4° y la letra (c) del Art 5° de la Ley 19.983 acredita que la <br/>
+                                    entrega de mercadería(s) o servicio(s) prestado(s) ha(n) sido recibido(s).
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                    <td>
+
+                      <table>
+                        <tr>
+                          <td>
+                            <img style='float: right; margin-right: 15px;' src='https://upload.wikimedia.org/wikipedia/commons/0/07/Better_Sample_PDF417.png'>    
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div style='float: right; text-align: center; font-size: 10px; margin-right: 30px;'> 
+                              Timbre Electrónico SII  <br />
+                              Resolución Ex. SII N° 80 del 2014. Verifique documento: www.sii.cl
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                        <table style="border: 2px solid black; font-size: 12px; font-weight: bold;">
+                            <tr>
+                                <td>
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td> NETO </td>
+                                            <td> (=) </td>
+                                            <td style="text-align: right; width: 78px;"> 24.373  </td> <!-- Ancho de toda la columna -->
+                                        </tr>
+                                        <tr>
+                                            <td> DESC./REC. GL. </td>
+                                            <td> (-) </td>
+                                            <td style="text-align: right;"> 0% </td>
+                                        </tr>
+                                        <tr>
+                                            <td> AFECTO </td>
+                                            <td> (=) </td>
+                                            <td style="text-align: right;"> 24.373  </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IVA(19%) </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 3.524 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> EXENTO </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 0 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IABA 10% </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 980 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IABA 20,5% </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 1.560 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IABA 18% </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 1.900 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IABA 31,5% </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 2.296 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> TOTAL </td>
+                                            <td> (=) </td>
+                                            <td style="text-align: right;"> 30.373 </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td> <p> Desarrollado por JML </p> </td>
+                    <td></td>
+                    <td> <div style='text-align:center; padding: 8px;'><b style='color :red; font-size: 13px;'> ORIGINAL </b></div> </td>
+                </tr>
+            </table>
+        </div>
+
+    </pagina>
+
+    <pagina>
+
+        <div class="invoice-box">
+
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="title">
+
+                        <img src="https://tuccitea.com/wp-content/uploads/2021/06/CARAMELOS-VIOLETA-1.jpg"
+                        style="width: 165px; height: 140px;">
+                    </td>
+                    <td>
+                        <div style="font-size: 15px;">
+                            <div style="text-align: left; padding: 2px;"> VENTA AL POR MAYOR Y MENOR DE DULCES Y CONFITES </div>
+                            <div style="text-align: left; font-weight: bold; padding: 2px;"> FONO: 572525555 - cambiar@gmail.com </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="border-image: initial; border: 3px solid red; font-size: 13px;">
+                            <div style="text-align:center; padding: 8px;">
+                                <b style="color :red;">R.U.T.: 4.444.444-K </b>
+                            </div>
+                            <div style="text-align:center; padding: 8px;"><b style="color :red;">FACTURA ELECTRONICA</b></div>
+                            <div style="text-align:center; padding: 8px;"><b style="color :red;">N° 55667</b></div>
+                        </div>
+                        <div style="text-align:center; padding: 8px;"><b style="color :red; font-size: 13px;"> S.I.I. - SANTIAGO </b></div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="information" style="margin-top: 7px;">
+
+                <table style="border: blue 2px solid; width: 100%;">
+                    <tr>
+                        <td>
+                            <table width="100%" style="font-size: 13px; text-align: left">
+                                <tr>
+                                    <td style="text-align: left"> <b> SEÑOR(ES): </b> </td>
+                                    <td style="text-align: left"> JUAN PEREZ </td>
+                                    <td style="text-align: left"> <b> RUT: </b> </td>
+                                    <td style="text-align: left"> 12.222.222-3 </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"> <b> DIRECCIÓN: </b> </td>
+                                    <td style="text-align: left"> ALAMEDA 416 </td>
+                                    <td style="text-align: left"> <b> COMUNA: </b> </td>
+                                    <td style="text-align: left"> SANTIAGO CENTRO </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="text-align: left"> <b> GIRO: </b> </td>
+                                    <td style="text-align: left"> BAZAR </td>
+                                    <td style="text-align: left"> <b> TELÉFONO: </b> </td>
+                                    <td style="text-align: left"> 966554433 </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"> <b> VENDEDOR: </b> </td>
+                                    <td style="text-align: left"> P26 </td>
+                                    <td style="text-align: left"> <b> FECHA EMISIÓN: </b> </td>
+                                    <td style="text-align: left"> Jueves, 16 de agosto de 2022 12:36 </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <style>
+                .tabla-datos {
+                    height: 720px; border: blue 2px solid; border-collapse: collapse; margin-top: 2px;
+                }
+                .tabla-datos tr td {
+                    border-right: solid 1px #000; padding: 3px; font-weight: bold;
+                }
+            </style>
+
+            <table class="tabla-datos">
+                <tr style="height: 25px; border-bottom: 1px solid #000;">
+                    <td> CANTIDAD </td>
+                    <td> UNIDAD </td>
+                    <td> DESCRIPCIÓN </td>
+                    <td> PRECIO UNIT. </td>
+                    <td> T. NETO </td>
+                    <td> TOTAL </td>
+                </tr>
+                <tr style="height: 25px;">
+                    <td style="text-align: right;"> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                </tr>
+                <tr style="height: 25px;">
+                    <td style="text-align: right;"> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                    <td> item </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <p style='font-size: 12px; font-weight: bold;'> SON CUATROCIENTOS CUATRO MIL QUINIENTOS TRES  PESOS. </p>
+
+            <table width='100%'>
+                <tr>
+                    <td style='width: 297px;'> 
+
+                        <!-- Para factura cedible -->
+                        <table style="border-collapse: collapse; width: 349px;">
+                            <tr>
+                                <td style="border-top: 3px solid #000; border-left: 3px solid #000; border-right: 3px solid #000;"> ACUSE DE RECIBO </td>
+                                <td style="width: 143px;"></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <table style="border-collapse: collapse; border-top: 3px solid #000; border-left: 3px solid #000; border-right: 3px solid #000; border-bottom: 3px solid #000;">
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> NOMBRE: </td>
+                                <td style="border-bottom: 1px solid #000; width: 233px;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> RUT: </td>
+                                <td style="border-bottom: 1px solid #000;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> FECHA: </td>
+                                <td style="border-bottom: 1px solid #000;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> RECINTO: </td>
+                                <td style="border-bottom: 1px solid #000;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 7px; padding-left: 5px;"> FIRMA: </td>
+                                <td style="border-bottom: 1px solid #000;"> </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="font-size: 9px;">
+                                    <p>
+                                    El acuse de recibo que se declara en este acto, de acuerdo a lo dispuesto en <br/>
+                                    la letra (b) del Art.4° y la letra (c) del Art 5° de la Ley 19.983 acredita que la <br/>
+                                    entrega de mercadería(s) o servicio(s) prestado(s) ha(n) sido recibido(s).
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                    <td>
+
+                      <table>
+                        <tr>
+                          <td>
+                            <img style='float: right; margin-right: 15px;' src='https://upload.wikimedia.org/wikipedia/commons/0/07/Better_Sample_PDF417.png'>    
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div style='float: right; text-align: center; font-size: 10px; margin-right: 30px;'> 
+                              Timbre Electrónico SII  <br />
+                              Resolución Ex. SII N° 80 del 2014. Verifique documento: www.sii.cl
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                        <table style="border: 2px solid black; font-size: 12px; font-weight: bold;">
+                            <tr>
+                                <td>
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td> NETO </td>
+                                            <td> (=) </td>
+                                            <td style="text-align: right; width: 78px;"> 24.373  </td> <!-- Ancho de toda la columna -->
+                                        </tr>
+                                        <tr>
+                                            <td> DESC./REC. GL. </td>
+                                            <td> (-) </td>
+                                            <td style="text-align: right;"> 0% </td>
+                                        </tr>
+                                        <tr>
+                                            <td> AFECTO </td>
+                                            <td> (=) </td>
+                                            <td style="text-align: right;"> 24.373  </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IVA(19%) </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 3.524 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> EXENTO </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 0 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IABA 10% </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 980 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IABA 20,5% </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 1.560 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IABA 18% </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 1.900 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> IABA 31,5% </td>
+                                            <td> (+) </td>
+                                            <td style="text-align: right;"> 2.296 </td>
+                                        </tr>
+                                        <tr>
+                                            <td> TOTAL </td>
+                                            <td> (=) </td>
+                                            <td style="text-align: right;"> 30.373 </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td> <p> Desarrollado por JML </p> </td>
+                    <td></td>
+                    <td> <div style='text-align:center; padding: 8px;'><b style='color :red; font-size: 13px;'> CEDIBLE </b></div> </td>
+                </tr>
+            </table>
+        </div>
+        
+    </pagina>
+    <pagina> <h1>Hola 3</h1> </pagina>
+    <pagina> <h1>Hola 4</h1> </pagina>
+    <pagina> <h1>Hola 5</h1> </pagina>
+    <pagina> <h1>Hola 6</h1> </pagina>
+
+</body>
+</html>
