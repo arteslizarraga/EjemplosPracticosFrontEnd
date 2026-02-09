@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Grilla_Horizontal_Scroll</title>
+    <link rel="shortcut icon" href="https://www.inacap.cl/web/template-aplicaciones/img/favicon.ico" />
+    <link rel="stylesheet" href="https://www.inacap.cl/web/template-aplicaciones/css/mdb.min.css">
+</head>
+
+<body id="appBody" class="d-flex flex-column">
+
+    <div class="page-content">
+        <main class="container">
+
+            <section>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 d-flex align-items-end justify-content-between">
+                                <h4 class="float-left heading h4-responsive mb-0">Ejemplo Grilla Horizontal Scroll</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height: 8em">
+                                    <table id="tablaInfo" class="table table-hover table-striped table-bordered m-0">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <footer class="page-footer">
+        <div class="container py-3">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                <div class="logo-gst">
+                    <img src="http://www.inacap.cl/web/template-aplicaciones/img/logo-gst.png" alt="">
+                </div>
+                <span class="pl-2 pl-md-4">Gerencia de Sistemas y Tecnolog&iacute;as</span>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/jquery-3.3.1.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/popper.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/bootstrap.min.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/mdb.min.js"></script>
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/chosen.jquery.js"></script>
+    <script src="https://www.inacap.cl/web/template-aplicaciones/js/datepicker.js"></script>
+    <script src="http://www.inacap.cl/web/template-aplicaciones/js/datatables.min.js"></script>
+
+    <script>
+        let arreglo = [];
+
+        (() => 
+        {
+            arreglo = [
+                {"titulo":"CARGA_IPROSP_DET_CCLASE","valor":"Código Clase Indicador"},
+                {"titulo":"CARGA_IPROSP_DET_CGRUPO","valor":"Código Grupo Indicador"},
+                {"titulo":"CARGA_IPROSP_DET_CINDIC","valor":"Código Indicador"},
+                {"titulo":"CARGA_IPROSP_DET_CSSDEM","valor":"Código Sub Sector de Demanda"},
+                {"titulo":"CARGA_IPROSP_FPUBLICACION","valor":"Fecha Publicación (formato texto: dd/mm/yyyy)"},
+                {"titulo":"CARGA_IPROSP_FUENTE","valor":"Fuente"},
+                {"titulo":"CARGA_IPROSP_PERIODICIDAD","valor":"Periodicidad"},
+                {"titulo":"CARGA_IPROSP_PPOBLAMIENTO","valor":"Período del Poblamiento"},
+                {"titulo":"CARGA_IPROSP_VALOR","valor":"Valor"},
+                {"titulo":"CARGA_IPROSP_ESTADO","valor":"Estado (A: Activo / I: Inactivo)"}
+            ];
+
+            $("#tablaInfo tbody").html(`
+                <tr>
+                    ${arreglo.map(x => `<td class="text-uppercase font-weight-bold">${x.titulo}</td>`).join("")}
+                </tr>
+                <tr>
+                    ${arreglo.map(x => `<td>${x.valor}</td>`).join("")}
+                </tr>
+            `);
+        })();
+
+    </script>
+
+</body>
+
+</html>
