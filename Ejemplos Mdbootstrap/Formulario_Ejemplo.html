@@ -130,9 +130,38 @@
 						
 						<!-- ======================= -->
 
+						<div class="row mt-3 d-flex align-items-center">
+							<div class="col-auto">
+								<p class="mt-1 font-weight-bold mb-0">Seleccione Tipo de Desarrollo:</p>
+							</div>
+
+							<div class="col-6">
+								<div class="md-form m-0"> 
+									<select id="select_1" class="chosen-select" searchable="Buscar">
+										<option value="" selected>Seleccione</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+									</select>
+
+									<div style="position: absolute; margin-top: 0.5em;">
+										<div class="invalid" style="color: #c00">Este campo es requerido </div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-auto">
+								<button class="btn btn-default waves-effect waves-light m-0">
+									Agregar Nuevo
+								</button>
+							</div>
+						</div>
+
+						<!-- ======================= -->
+
                     </div>
                     <div class="card-footer">
-                        <div class="row py-2 flex-row">
+                        <div class="row mt-5 py-2 flex-row">
 
                             <div class="col col-md-6  d-flex justify-content-start">
 
@@ -182,7 +211,9 @@
 
         window.onload = () =>
         {
-
+			// Activar selects
+			$(".chosen-select").chosen({ disable_search_threshold: 10, no_results_text: "Sin Resultados para: ", width: "100%" });
+			$(".mdb-select").material_select();
         };
 
     </script>
