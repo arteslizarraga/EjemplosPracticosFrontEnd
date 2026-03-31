@@ -1,3 +1,8 @@
+
+<div [style.display]="true ? 'block' : 'none'">
+  Contenido
+</div>
+
 // Habilitar/Deshabilitar botón
 
 public habilitadoCrearAsignatura: boolean = true;
