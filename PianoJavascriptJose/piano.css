@@ -20,6 +20,10 @@ body {
 }
 */
 
+.tecla_pulsada{
+  background:#90ee90!important;
+}
+
 /* Tuts */
 ul#piano {
   display:block;
