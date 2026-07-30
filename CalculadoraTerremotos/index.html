@@ -92,24 +92,6 @@
                     { tipo: "Solar", magnitud: "Anular", fecha: "03-10-2005", saros: 134 }  // El 3 de octubre de 2005 tuvo lugar un eclipse de Sol anular
                 ]
             },
-
-            //===============================================================>>>>>
-            /*
-            { 
-                hipotetico: true,
-                descripcionTerremoto: "Terremoto HIPOTETICO", 
-                magnitud: "8.9",
-                fechaTerremoto: "28-12-2022",
-                eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "04-12-2021", saros: 152 },
-                    { tipo: "Solar", magnitud: "Parcial", fecha: "30-04-2022", saros: 119 },   // Un eclipse solar parcial ocurrió el 30 de abril del 2022   | April 30, 2022   saros 119
-                    { tipo: "Solar", magnitud: "Hibrido", fecha: "20-04-2023", saros: 129 },  // 20 de abril de 2023 - híbrido.  |   April 20, 2023   saros 129
-                    { tipo: "Solar", magnitud: "Anular", fecha: "14-10-2023", saros: 134 }  // October 14, 2023 	18:00:41 	Anular      saros 134
-                ]
-            },
-            */
-            //===============================================================>>>>>
-
             { 
                 descripcionTerremoto: "Terremoto de Alaska", 
                 magnitud: "9.2",
@@ -148,10 +130,24 @@
                 eclipses: [
                     { tipo: "Solar", magnitud: "Total", fecha: "29-08-1867", saros: 123 },  // Eclipse Total de Sol el 29 de agosto de 1867
                     { tipo: "Solar", magnitud: "Anular", fecha: "23-02-1868", saros: 128 }, // 23 February 1868 	saros 128 	Annular 
-                    { tipo: "Solar", magnitud: "Total", fecha: "16-08-1868", saros: 133 },  // Eclipse Total de Sol el 16 de agosto de 1868 (El eclipse del Rey de Siam)
-                    { tipo: "Solar", magnitud: "Anular", fecha: "11-02-1869", saros: 138 }   // 11 February 1869 	saros 138 	Annular 
+					{ tipo: "Solar", magnitud: "Total", fecha: "18-08-1868", saros: 133 },  // Eclipse Total de Sol el 16 de agosto de 1868 (El eclipse del Rey de Siam)
+					{ tipo: "Solar", magnitud: "Anular", fecha: "11-02-1869", saros: 138 }   // 11 February 1869 	saros 138 	Annular 
                 ]
             },
+			{ 
+				// Ocurrió cerca de la 01:00 AM
+				descripcionTerremoto: "Terremoto y Maremoto de Concepción de 1751 (Eclipse solar total el mismo día)", 
+				magnitud: "8.5",
+				fechaTerremoto: "25-05-1751", 
+				eclipses: [
+					// El año anterior (1750) hubo cuatro eclipses solares, la cantidad máxima habitual que puede registrarse en un solo año.
+					// Fueron 3 eclipses solares parciales y 1 solar hibrido
+					
+					{ tipo: "Solar", magnitud: "Total", fecha: "25-05-1751", saros: 114 },  // Su trayectoria cruzó el extremo sur de Sudamérica
+					
+					{ tipo: "Solar", magnitud: "Anular", fecha: "18-11-1751", saros: 119 }
+				]
+			},
             { 
                 descripcionTerremoto: "Terremoto y Maremoto de Lima y Callao", 
                 magnitud: "9.0",
@@ -168,8 +164,11 @@
                 fechaTerremoto: "08-07-1730",   // 8 de julio de 1730
                 eclipses: [
                     { tipo: "Solar", magnitud: "Total", fecha: "18-01-1730", saros: 117 },  // Eclipse Total de Sol el 18 de enero de 1730
-                    { tipo: "Solar", magnitud: "Anular", fecha: "15-07-1730", saros: 122 }, // 15 July 1730 	Anular   |  July 15, 1730 	Annular
-                    { tipo: "Solar", magnitud: "Total", fecha: "08-01-1731", saros: 127 },  // 8 January 1731 	saros 127 	Total 
+                    
+					// El 15-07-1730 la trayectoria del eclipse cruzó Sudamérica de forma diagonal.
+					{ tipo: "Solar", magnitud: "Anular", fecha: "15-07-1730", saros: 122 }, // 15 July 1730 	Anular   |  July 15, 1730 	Annular
+                    
+					{ tipo: "Solar", magnitud: "Total", fecha: "08-01-1731", saros: 127 },  // 8 January 1731 	saros 127 	Total 
                     { tipo: "Solar", magnitud: "Hibrido", fecha: "29-12-1731", saros: 137 }  // 29 December 1731 	saros 137 	Hybrid
                 ]
             },
@@ -182,7 +181,6 @@
                     { tipo: "Solar", magnitud: "Parcial", fecha: "18-02-1700", saros: null }   // eclipse 18 February 1700
                 ]
             },
-
             { 
                 descripcionTerremoto: "Terremoto de Arica de 1604", 
                 magnitud: "9.0",
@@ -192,6 +190,15 @@
                     { tipo: "Solar", magnitud: "Total", fecha: "22-10-1604", saros: 127 },  // 22 October 1604 
                     { tipo: "Solar", magnitud: "Anular", fecha: "18-04-1605", saros: 132 },   // 18 April 1605 	|   saros 132   |  	Annular
                     { tipo: "Solar", magnitud: "Total", fecha: "12-10-1605", saros: 137 }  // 12 October 1605 	saros 137 	Total 
+                ]
+            },
+			{ 
+                descripcionTerremoto: "Terremoto de Arica de 1615",  // Ocurrió 1 día después de la luna concava menguante de 1730
+                magnitud: "8.8",
+                fechaTerremoto: "16-09-1615", 
+                eclipses: [
+                    { tipo: "Solar", magnitud: "Anular", fecha: "29-03-1615", saros: 123 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "22-09-1615", saros: 128 }
                 ]
             },
 			{ 
