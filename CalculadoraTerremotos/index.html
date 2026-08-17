@@ -82,7 +82,7 @@
             },
 			{ 
 				// Algunos dicen que fue a las 14:30 o 15:00 hrs y otros hacia la noche, a las 20:00 hrs. Hay 2 cronicas con horas distintas.
-                descripcionTerremoto: "Terremoto de Valdivia de 1575",  // Luna Llena fue el 17 de diciembre de 1575
+                descripcionTerremoto: "Terremoto de Valdivia de 1575 (Un día antes de la luna llena)",  // La luna llena fue el 17-12-1575
                 magnitud: "9.0",
                 fechaTerremoto: "16-12-1575",
                 eclipses: [
@@ -93,7 +93,19 @@
                 ]
             },
 			{ 
-                descripcionTerremoto: "Terremoto y Maremoto de Lima y Callao", 
+				descripcionTerremoto: "Terremoto del Maule de 2010 (27F) (Un día antes de la luna llena)",  // La luna llena fue el 28-02-2010
+				magnitud: "8.8",
+				fechaTerremoto: "27-02-2010",
+				eclipses: [
+					{ tipo: "Solar", magnitud: "Anular", fecha: "26-01-2009", saros: 131 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "22-07-2009", saros: 136 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "15-01-2010", saros: 141 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "11-07-2010", saros: 146 },
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "04-01-2011", saros: 151 }
+				]
+			},
+			{ 
+                descripcionTerremoto: "Terremoto y Maremoto de Lima y Callao (Un día antes de la luna llena)", // La luna llena fue el 29-10-1746 
                 magnitud: "9.0",
                 fechaTerremoto: "28-10-1746",   // 28 de octubre de 1746
                 eclipses: [
@@ -116,18 +128,6 @@
                     { tipo: "Solar", magnitud: "Total", fecha: "12-10-1605", saros: 137 }  // 12 October 1605 	saros 137 	Total 
                 ]
             },
-			{ 
-				descripcionTerremoto: "Terremoto del Maule de 2010 (27F)", 
-				magnitud: "8.8",
-				fechaTerremoto: "27-02-2010",
-				eclipses: [
-					{ tipo: "Solar", magnitud: "Anular", fecha: "26-01-2009", saros: 131 },
-					{ tipo: "Solar", magnitud: "Total", fecha: "22-07-2009", saros: 136 },
-					{ tipo: "Solar", magnitud: "Anular", fecha: "15-01-2010", saros: 141 },
-					{ tipo: "Solar", magnitud: "Total", fecha: "11-07-2010", saros: 146 },
-					{ tipo: "Solar", magnitud: "Parcial", fecha: "04-01-2011", saros: 151 }
-				]
-			},
 			{ 
                 descripcionTerremoto: "Terremoto de Valparaiso de 1730", 
                 magnitud: "9.0",
@@ -288,14 +288,45 @@
             },
 			{ 
 				// Fue cerca de las 11:00 de la mañana. Duró dos minutos
-                descripcionTerremoto: "Terremoto de Concepción de 1835",  // Ocurrió en la misma luna concava menguante de 1730
+                descripcionTerremoto: "Terremoto de Concepción de 1835 (Un día después del cuarto menguante)",  // Ocurrió en la misma luna concava menguante de 1730
                 magnitud: "8.5",
                 fechaTerremoto: "20-02-1835",
                 eclipses: [
 					{ tipo: "Solar", magnitud: "Total", fecha: "30-11-1834", saros: 120 }, 
+					//{ tipo: "Solar", magnitud: "Total", fecha: "02-03-1835", saros: 20 },  // El 2 de marzo de 1835: Día astronómico completamente normal sin eclipses.
                     { tipo: "Solar", magnitud: "Anular", fecha: "27-05-1835", saros: 125 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "20-11-1835", saros: 130 },
                 ]
-            }
+            },
+			//===================================>>>>
+			// REVISAR
+			/*
+			{ 
+				descripcionTerremoto: "Terremoto de Valdivia de 1837 (Gibosa Creciente)", 
+				magnitud: "8.5",
+				fechaTerremoto: "07-11-1837",
+				eclipses: [
+					{ tipo: "Solar", magnitud: "Total", fecha: "09-11-1836", saros: 141 },
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "04-05-1837", saros: 146 },
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "29-10-1837", saros: 113 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "25-03-1838", saros: 118 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "18-09-1838", saros: 123 }
+				]
+			},
+			{ 
+				descripcionTerremoto: "Terremoto de Valparaíso de 1822 (Fue 3 días antes del Cuarto Creciente)", 
+				magnitud: "8.5",
+				fechaTerremoto: "19-11-1822",
+				eclipses: [
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "27-08-1821", saros: 146 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "21-02-1822", saros: 118 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "16-08-1822", saros: 123 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "12-01-1823", saros: 128 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "08-07-1823", saros: 133 }
+				]
+			}
+			*/
+			//===================================>>>>
         ];
 
         let cadena = `
