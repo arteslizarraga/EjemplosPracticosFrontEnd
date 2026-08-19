@@ -69,7 +69,7 @@
 
         let arregloTerremotos = [
             { 
-                descripcionTerremoto: "Terremoto de Valdivia", 
+                descripcionTerremoto: "Terremoto de Valdivia (Luna menguante)", 
                 magnitud: "9.5",
                 fechaTerremoto: "22-05-1960",
                 eclipses: [
@@ -81,15 +81,14 @@
                 ]
             },
 			{ 
-				// Algunos dicen que fue a las 14:30 o 15:00 hrs y otros hacia la noche, a las 20:00 hrs. Hay 2 cronicas con horas distintas.
-                descripcionTerremoto: "Terremoto de Valdivia de 1575 (Un día antes de la luna llena)",  // La luna llena fue el 17-12-1575
+                descripcionTerremoto: "Terremoto de Arica de 1604 (Luna menguante)", 
                 magnitud: "9.0",
-                fechaTerremoto: "16-12-1575",
+                fechaTerremoto: "24-11-1604",   // 12:30 horas del 24 de noviembre de 1604
                 eclipses: [
-					{ tipo: "Solar", magnitud: "Total", fecha: "10-05-1575", saros: 121 },
-					{ tipo: "Solar", magnitud: "Anular", fecha: "02-11-1575", saros: 126 },
-					{ tipo: "Solar", magnitud: "Total", fecha: "28-04-1576", saros: 131 },
-					{ tipo: "Solar", magnitud: "Anular", fecha: "21-10-1576", saros: 136 }
+                    { tipo: "Solar", magnitud: "Total", fecha: "27-03-1604", saros: 23 }, // 1604 Mar 27    |   The eclipse belongs to Saros 23
+                    { tipo: "Solar", magnitud: "Total", fecha: "22-10-1604", saros: 127 },  // 22 October 1604 
+                    { tipo: "Solar", magnitud: "Anular", fecha: "18-04-1605", saros: 132 },   // 18 April 1605 	|   saros 132   |  	Annular
+                    { tipo: "Solar", magnitud: "Total", fecha: "12-10-1605", saros: 137 }  // 12 October 1605 	saros 137 	Total 
                 ]
             },
 			{ 
@@ -104,6 +103,18 @@
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "04-01-2011", saros: 151 }
 				]
 			},
+			{ 
+				// Algunos dicen que fue a las 14:30 o 15:00 hrs y otros hacia la noche, a las 20:00 hrs. Hay 2 cronicas con horas distintas.
+                descripcionTerremoto: "Terremoto de Valdivia de 1575 (Un día antes de la luna llena)",  // La luna llena fue el 17-12-1575
+                magnitud: "9.0",
+                fechaTerremoto: "16-12-1575",
+                eclipses: [
+					{ tipo: "Solar", magnitud: "Total", fecha: "10-05-1575", saros: 121 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "02-11-1575", saros: 126 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "28-04-1576", saros: 131 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "21-10-1576", saros: 136 }
+                ]
+            },
 			{ 
                 descripcionTerremoto: "Terremoto y Maremoto de Lima y Callao (Un día antes de la luna llena)", // La luna llena fue el 29-10-1746 
                 magnitud: "9.0",
@@ -130,15 +141,17 @@
                 ]
             },
 			{ 
-                descripcionTerremoto: "Terremoto de Arica de 1604", 
+                descripcionTerremoto: "Terremoto de Kamchatka de 1952 (3 días después de la luna llena)", 
                 magnitud: "9.0",
-                fechaTerremoto: "24-11-1604",   // 12:30 horas del 24 de noviembre de 1604
-                eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "27-03-1604", saros: 23 }, // 1604 Mar 27    |   The eclipse belongs to Saros 23
-                    { tipo: "Solar", magnitud: "Total", fecha: "22-10-1604", saros: 127 },  // 22 October 1604 
-                    { tipo: "Solar", magnitud: "Anular", fecha: "18-04-1605", saros: 132 },   // 18 April 1605 	|   saros 132   |  	Annular
-                    { tipo: "Solar", magnitud: "Total", fecha: "12-10-1605", saros: 137 }  // 12 October 1605 	saros 137 	Total 
-                ]
+                fechaTerremoto: "04-11-1952",   // 4 de noviembre de 1952
+				eclipses: [
+					{ "tipo": "Solar", "magnitud": "Anular", "fecha": "01-09-1951", "saros": 134 },
+					{ "tipo": "Solar", "magnitud": "Total", "fecha": "25-02-1952", "saros": 139 },
+					{ "tipo": "Solar", "magnitud": "Anular", "fecha": "20-08-1952", "saros": 144 },
+					{ "tipo": "Solar", "magnitud": "Parcial", "fecha": "14-02-1953", "saros": 149 },
+					{ "tipo": "Solar", "magnitud": "Parcial", "fecha": "11-07-1953", "saros": 116 },
+					{ "tipo": "Solar", "magnitud": "Parcial", "fecha": "09-08-1953", "saros": 154 }
+				]
             },
 			{ 
                 descripcionTerremoto: "Terremoto de Valparaiso de 1730", 
@@ -240,16 +253,6 @@
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "01-06-2011", saros: 118 },
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "01-07-2011", saros: 156 },
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "25-11-2011", saros: 123 }       // 13 de noviembre de 2012 	total
-                ]
-            },
-            { 
-                descripcionTerremoto: "Terremoto de Kamchatka", 
-                magnitud: "9.0",
-                fechaTerremoto: "04-11-1952",   // 4 de noviembre de 1952
-                eclipses: [
-                    { tipo: "Solar", magnitud: "Total", fecha: "25-02-1952", saros: null },  // Eclipse Total de Sol el 25 de febrero de 1952
-                    { tipo: "Solar", magnitud: "Anular", fecha: "20-08-1952", saros: null },  // 20 de agosto de 1952  Anular
-                    { tipo: "Solar", magnitud: "Parcial", fecha: "14-02-1953", saros: null } // 14 de febrero de 1953 	Parcial
                 ]
             },
 			{ 
