@@ -68,8 +68,31 @@
 		*/
 
         let arregloTerremotos = [
+			{ 
+				descripcionTerremoto: "Terremoto y tsunami de Concepción de 1570 (3 días después de la luna nueva)", 
+				magnitud: "8.3",
+				fechaTerremoto: "08-02-1570",  // https://www.moongiant.com/calendar/february/1570/
+				eclipses: [
+					{ tipo: "Solar", magnitud: "Anular", fecha: "17-03-1569", saros: 132 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "10-09-1569", saros: 137 },
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "05-02-1570", saros: 104 },
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "01-08-1570", saros: 109 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "25-01-1571", saros: 114 }
+				]
+			},
+			{ // correcto
+				descripcionTerremoto: "Terremoto y tsunami de Concepción de 1657 (Luna nueva astronómica)",  // https://www.moongiant.com/calendar/march/1657/
+				magnitud: "8.3",
+				fechaTerremoto: "15-03-1657",
+				eclipses: [
+					{ tipo: "Solar", magnitud: "Total", fecha: "21-07-1656", saros: 140 },
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "14-01-1657", saros: 145 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "11-06-1657", saros: 112 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "05-12-1657", saros: 117 }
+				]
+			},
             { 
-                descripcionTerremoto: "Terremoto de Valdivia (Luna menguante)", 
+                descripcionTerremoto: "Terremoto de Valdivia (3 días antes de la luna nueva)", 
                 magnitud: "9.5",
                 fechaTerremoto: "22-05-1960",
                 eclipses: [
@@ -81,7 +104,7 @@
                 ]
             },
 			{ 
-                descripcionTerremoto: "Terremoto de Arica de 1604 (Luna menguante)", 
+                descripcionTerremoto: "Terremoto de Arica de 1604 (3 días después de la luna nueva)",  // https://www.moongiant.com/calendar/november/1604/
                 magnitud: "9.0",
                 fechaTerremoto: "24-11-1604",   // 12:30 horas del 24 de noviembre de 1604
                 eclipses: [
@@ -220,9 +243,9 @@
 				]
 			},
 			{ 
-				descripcionTerremoto: "Terremoto de Valparaíso de 1906", 
+				descripcionTerremoto: "Terremoto de Valparaíso de 1906 (4 días antes de la luna nueva)", 
 				magnitud: "8.2",
-				fechaTerremoto: "16-08-1906",
+				fechaTerremoto: "16-08-1906",  // https://www.moongiant.com/calendar/august/1906/
 				eclipses: [
 					{ tipo: "Solar", magnitud: "Total", fecha: "30-08-1905", saros: 143 },
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "23-02-1906", saros: 148 },
