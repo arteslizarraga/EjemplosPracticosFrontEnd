@@ -69,15 +69,17 @@
 
         let arregloTerremotos = [
 			{ 
-				descripcionTerremoto: "Terremoto y tsunami de Concepción de 1570 (3 días después de la luna nueva)", 
-				magnitud: "8.3",
-				fechaTerremoto: "08-02-1570",  // https://www.moongiant.com/calendar/february/1570/
+				// Ocurrió cerca de la 01:00 AM
+				descripcionTerremoto: "Terremoto y Maremoto de Concepción de 1751 (Eclipse solar total el mismo día)", 
+				magnitud: "8.5",
+				fechaTerremoto: "25-05-1751", 
 				eclipses: [
-					{ tipo: "Solar", magnitud: "Anular", fecha: "17-03-1569", saros: 132 },
-					{ tipo: "Solar", magnitud: "Total", fecha: "10-09-1569", saros: 137 },
-					{ tipo: "Solar", magnitud: "Parcial", fecha: "05-02-1570", saros: 104 },
-					{ tipo: "Solar", magnitud: "Parcial", fecha: "01-08-1570", saros: 109 },
-					{ tipo: "Solar", magnitud: "Total", fecha: "25-01-1571", saros: 114 }
+					// El año anterior (1750) hubo cuatro eclipses solares, la cantidad máxima habitual que puede registrarse en un solo año.
+					// Fueron 3 eclipses solares parciales y 1 solar hibrido
+					
+					{ tipo: "Solar", magnitud: "Total", fecha: "25-05-1751", saros: 114 },  // Su trayectoria cruzó el extremo sur de Sudamérica
+					
+					{ tipo: "Solar", magnitud: "Anular", fecha: "18-11-1751", saros: 119 }
 				]
 			},
 			{ // correcto
@@ -89,6 +91,18 @@
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "14-01-1657", saros: 145 },
 					{ tipo: "Solar", magnitud: "Anular", fecha: "11-06-1657", saros: 112 },
 					{ tipo: "Solar", magnitud: "Total", fecha: "05-12-1657", saros: 117 }
+				]
+			},
+			{ 
+				descripcionTerremoto: "Terremoto y tsunami de Concepción de 1570 (3 días después de la luna nueva)", 
+				magnitud: "8.3",
+				fechaTerremoto: "08-02-1570",  // https://www.moongiant.com/calendar/february/1570/
+				eclipses: [
+					{ tipo: "Solar", magnitud: "Anular", fecha: "17-03-1569", saros: 132 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "10-09-1569", saros: 137 },
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "05-02-1570", saros: 104 },
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "01-08-1570", saros: 109 },
+					{ tipo: "Solar", magnitud: "Total", fecha: "25-01-1571", saros: 114 }
 				]
 			},
             { 
@@ -278,20 +292,6 @@
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "25-11-2011", saros: 123 }       // 13 de noviembre de 2012 	total
                 ]
             },
-			{ 
-				// Ocurrió cerca de la 01:00 AM
-				descripcionTerremoto: "Terremoto y Maremoto de Concepción de 1751 (Eclipse solar total el mismo día)", 
-				magnitud: "8.5",
-				fechaTerremoto: "25-05-1751", 
-				eclipses: [
-					// El año anterior (1750) hubo cuatro eclipses solares, la cantidad máxima habitual que puede registrarse en un solo año.
-					// Fueron 3 eclipses solares parciales y 1 solar hibrido
-					
-					{ tipo: "Solar", magnitud: "Total", fecha: "25-05-1751", saros: 114 },  // Su trayectoria cruzó el extremo sur de Sudamérica
-					
-					{ tipo: "Solar", magnitud: "Anular", fecha: "18-11-1751", saros: 119 }
-				]
-			},
             { 
                 descripcionTerremoto: "Terremoto de Cascadia de 1700 (1 día antes del Cuarto Creciente)", 
                 magnitud: "9.0",
@@ -351,6 +351,39 @@
 					{ tipo: "Solar", magnitud: "Total",    fecha: "16-08-1822", saros: 142 },
 					{ tipo: "Solar", magnitud: "Parcial",  fecha: "12-01-1823", saros: 109 },
 					{ tipo: "Solar", magnitud: "Parcial",  fecha: "08-07-1823", saros: 114 }
+				]
+			},
+			{ 
+				descripcionTerremoto: "Terremoto de Santiago - Terremoto Magno (2 días después del cuarto menguante)",  // correcto
+				magnitud: "8.5",
+				fechaTerremoto: "13-05-1647",  // https://www.moongiant.com/calendar/may/1647
+				eclipses: [
+					{ tipo: "Solar", magnitud: "Total",   fecha: "12-07-1646", saros: 111 },
+					{ tipo: "Solar", magnitud: "Anular",  fecha: "05-01-1647", saros: 116 },
+					{ tipo: "Solar", magnitud: "Total",   fecha: "02-07-1647", saros: 121 },
+					{ tipo: "Solar", magnitud: "Anular",  fecha: "26-12-1647", saros: 126 }
+				]
+			},
+			{ 
+				descripcionTerremoto: "Terremoto de Chillán (4 días después de la luna nueva)",  // correcto
+				magnitud: "8.3",
+				fechaTerremoto: "24-01-1939",   // https://www.moongiant.com/calendar/january/1939
+				eclipses: [
+					{ tipo: "Solar", magnitud: "Total",   fecha: "29-05-1938", saros: 146 },
+					{ tipo: "Solar", magnitud: "Parcial", fecha: "21-11-1938", saros: 151 },
+					{ tipo: "Solar", magnitud: "Anular",  fecha: "19-04-1939", saros: 118 },
+					{ tipo: "Solar", magnitud: "Total",   fecha: "12-10-1939", saros: 123 }
+				]
+			},
+			{ 
+				descripcionTerremoto: "Terremoto de Vallenar / Atacama (Luna gibosa menguante y 2 días antes del cuarto menguante)",   
+				magnitud: "8.5",
+				fechaTerremoto: "10-11-1922",  // https://www.moongiant.com/calendar/november/1922/
+				eclipses: [
+					{ tipo: "Solar", magnitud: "Anular", fecha: "28-03-1922", saros: 128 },
+					{ tipo: "Solar", magnitud: "Total",   fecha: "21-09-1922", saros: 133 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "17-03-1923", saros: 138 },
+					{ tipo: "Solar", magnitud: "Total",   fecha: "10-09-1923", saros: 143 }
 				]
 			}
         ];
