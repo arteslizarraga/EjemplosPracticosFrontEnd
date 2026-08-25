@@ -1,0 +1,18 @@
+
+1730 => 7 días antes eclipse (menguante) => ventana inmediata anterior
+1420 => 7 días antes eclipse (menguante) => ventana inmediata anterior
+1615 => 6 días antes eclipse (menguante) => ventana inmediata anterior
+1868 => 5 días antes eclipse (menguante) => ventana inmediata anterior
+
+1751 => día eclipse (nueva astronomica)  => fase intermedia
+
+2015 => 3 días después eclipse (creciente) => ventana inmediata posterior
+1570 => 3 días después eclipse (creciente) => ventana inmediata posterior
+
+
+1604 => 33 días después eclipse (creciente) 	 	=> ventana posterior 30/60 días
+2010 => 43 días después eclipse (pre luna llena) 	=> ventana posterior 30/60 días
+1575 => 44 días después eclipse (pre luna llena) 	=> ventana posterior 30/60 días
+1877 => 55 días después eclipse (menguante) 	 	=> ventana posterior 30/60 días
+1960 => 56 días después eclipse (menguante) 	 	=> ventana posterior 30/60 días
+1657 => 60 días después eclipse (nueva astronomica) => última fase ventana posterior
