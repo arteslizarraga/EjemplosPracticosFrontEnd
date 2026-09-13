@@ -16,3 +16,11 @@
 1877 => 55 días después eclipse (menguante) 	 	=> ventana posterior 30/60 días
 1960 => 56 días después eclipse (menguante) 	 	=> ventana posterior 30/60 días
 1657 => 60 días después eclipse (nueva astronomica) => última fase ventana posterior
+
+===============================================
+
+Horarios:
+Terremoto de Valparaíso de 1906 (4 días antes de la luna nueva)	=> 19:55	
+Terremoto de Iquique de 1877 (4 días antes de la luna nueva)	=> 21:16
+Terremoto de Arica de 1868 (5 días antes de la luna nueva)	    => 17:05
+Terremoto de Arica de 1615 (6 días antes de la luna nueva)      => (17:00 - 23:00 - 23:30)
