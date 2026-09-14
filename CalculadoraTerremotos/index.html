@@ -51,7 +51,18 @@
     <script src="fechas.js"></script>
 
     <script>
-
+	
+		console.log(`
+		El candidato más parecido a 15-07-1730 y 08-09-1420 es el eclipse anular de 25-10-2041 (Saros 134).
+		Por lo tanto en la madrugada del 17-10-2041 ocurrirá el gigante (un día después del cuarto menguante).
+		Otro que se parece pero no tanto es el eclipse anular de 01-06-2030 (Saros 128). En caso de ser así, el 
+		gigante ocurriría el 25-05-2030 (un día después del cuarto menguante).
+		`);
+		
+		// Estos también son son extremadamente parecidos en su trayectoria y geometría:
+		// Eclipse Solar Anular ocurrido el día 02-11-1575
+		// Eclipse Solar Anular ocurrido el día 06-02-2027
+		
         // https://copro.com.ar/Lista_de_eclipses_solares_en_el_siglo_XX.html
         // https://en.wikipedia.org/wiki/List_of_solar_eclipses_in_the_17th_century
         // https://en.wikipedia.org/wiki/List_of_solar_eclipses_in_the_18th_century
@@ -190,6 +201,22 @@
                 ]
             },
 			{ 
+				hipotetico: true,
+                descripcionTerremoto: "Terremoto HIPOTETICO (Un día antes de la luna llena) (Es el gemelo del 16-12-1575)", 
+                magnitud: "9.0",
+                fechaTerremoto: "21-03-2027",
+                eclipses: [
+					{ tipo: "Solar", magnitud: "Total", fecha: "17-02-2026", saros: 121 },   	// Antártida
+					{ tipo: "Solar", magnitud: "Total", fecha: "12-08-2026", saros: 126 },
+					
+					// Es el sucesor directo del eclipse Solar Anular ocurrido el día 02-11-1575
+                    { tipo: "Solar", magnitud: "Anular", fecha: "06-02-2027", saros: 127 },  // https://www.moongiant.com/calendar/february/2027/
+                    
+					{ tipo: "Solar", magnitud: "Total", fecha: "02-08-2027", saros: 136 },
+					{ tipo: "Solar", magnitud: "Anular", fecha: "26-01-2028", saros: 141 }
+                ]
+            },
+			{ 
                 descripcionTerremoto: "Terremoto de Alaska (Un día antes de la luna llena)", 
                 magnitud: "9.2",
                 fechaTerremoto: "27-03-1964",
@@ -223,8 +250,8 @@
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "24-08-1729", saros: 150 },
                     { tipo: "Solar", magnitud: "Total", fecha: "18-01-1730", saros: 117 },  // Eclipse Total de Sol el 18 de enero de 1730
                     
-					// El 15-07-1730 la trayectoria del eclipse cruzó Sudamérica de forma diagonal.
-					{ tipo: "Solar", magnitud: "Anular", fecha: "15-07-1730", saros: 122 }, // 15 July 1730 	Anular   |  July 15, 1730 	Annular
+					// En 15-07-1730 la trayectoria fue Europa => Asia => (Pacífico occidental (Corea del Sur)) (no llegó a América ni a Sudamérica)
+					{ tipo: "Solar", magnitud: "Anular", fecha: "15-07-1730", saros: 122 }, // https://eclipsewise.com/solar/SEprime/1701-1800/SE1730Jul15Aprime.html
                     
 					{ tipo: "Solar", magnitud: "Total", fecha: "08-01-1731", saros: 127 },  // 8 January 1731 	saros 127 	Total 
 					{ tipo: "Solar", magnitud: "Anular", fecha: "04-07-1731", saros: 132 }
@@ -239,23 +266,13 @@
                 eclipses: [
 					{ tipo: "Solar", magnitud: "Total", fecha: "19-09-1419", saros: 115 },   	// 19 de septiembre de 1419 – Eclipse Total
                     { tipo: "Solar", magnitud: "Anular", fecha: "14-03-1420", saros: 120 },  	// 14 de marzo de 1420 – Eclipse Anular
-                    { tipo: "Solar", magnitud: "Anular", fecha: "08-09-1420", saros: 125 },   	// 8 de septiembre de 1420 – Eclipse Anular
+                    
+					// En 08-09-1420 la trayectoria fue: Asia central => Asia oriental => Pacífico occidental y central (no llegó a América ni a Sudamérica)
+					{ tipo: "Solar", magnitud: "Anular", fecha: "08-09-1420", saros: 125 },   	// https://www.eclipsewise.com/solar/SEprime/1401-1500/SE1420Sep08Aprime.html
+					
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "03-03-1421", saros: 125 },
 					{ tipo: "Solar", magnitud: "Parcial", fecha: "28-08-1421", saros: 135 }
 				]
-            },
-			{ 
-				hipotetico: true,
-                descripcionTerremoto: "Terremoto HIPOTETICO", 
-                magnitud: "9.0",
-                fechaTerremoto: "30-01-2027",
-                eclipses: [
-					{ tipo: "Solar", magnitud: "Total", fecha: "17-02-2026", saros: 121 },   	// Antártida
-					{ tipo: "Solar", magnitud: "Total", fecha: "12-08-2026", saros: 126 },
-                    { tipo: "Solar", magnitud: "Anular", fecha: "06-02-2027", saros: 127 },
-                    { tipo: "Solar", magnitud: "Total", fecha: "02-08-2027", saros: 136 },
-					{ tipo: "Solar", magnitud: "Anular", fecha: "26-01-2028", saros: 141 }
-                ]
             },
 			{ 
                 descripcionTerremoto: "Terremoto de Arica de 1868 (2 días después del cuarto menguante y 5 días antes de la luna nueva)",  // https://www.moongiant.com/calendar/august/1868/
