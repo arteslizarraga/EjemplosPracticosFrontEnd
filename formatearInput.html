@@ -2,109 +2,124 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Compatible con MDBootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 
-	<label>Input solo números</label>
-	<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
 
-	<br/><br/>
-	
-	<label>Formatear Número Entero</label>
-	<input name="valor" type="text" oninput="this.value = formatearNumeroEntero(this.value)" maxlength="30" />
-	
-	<br/><br/>
-	
-	<label>Formatear Número Decimal</label>
-	<input name="valor" type="text" oninput="this.value = formatearNumeroDecimal(this.value)" maxlength="30" />
+                <!-- Estructura Card (Idéntica en Bootstrap 5 y MDBootstrap) -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Formulario de Validación</h5>
+                    </div>
+                    <div class="card-body">
 
-	<br/><br/>
+                        <form id="ejemploForm">
 
-	<label>Formatear Porcentaje</label>
-	<input name="valor" type="text" oninput="this.value = formatearNumeroDecimal(this.value, 1)" maxlength="5" />
+                            <div class="mb-3">
+                                <label class="form-label">Input solo números</label>
+                                <input type="text" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                            </div>
 
-	<br/><br/>
+                            <div class="mb-3">
+                                <label class="form-label">Formatear Número Entero</label>
+                                <input name="txtNumeroEntero" type="text" class="form-control" oninput="this.value = formatearNumeroEntero(this.value)" maxlength="30" />
+                            </div>
 
-	<label>Solo Mayusculas</label>
-	<input type="text" name="nombre" maxlength="100" 
-	oninput="let p = this.selectionStart; this.value = this.value.toUpperCase();this.setSelectionRange(p, p);" />
+                            <div class="mb-3">
+                                <label class="form-label">Formatear Número Decimal</label>
+                                <input name="txtNumeroDecimal" type="text" class="form-control" oninput="this.value = formatearNumeroDecimal(this.value)" maxlength="30" />
+                            </div>
 
-	<br/><br/>
+                            <div class="mb-3">
+                                <label class="form-label">Formatear Porcentaje</label>
+                                <input type="text" class="form-control" oninput="this.value = formatearNumeroDecimal(this.value, 1)" maxlength="5" />
+                            </div>
 
-	<label>Solo Números</label>
-	<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="3">
+                            <div class="mb-3">
+                                <label class="form-label">Solo Mayúsculas</label>
+                                <input type="text" name="nombre" class="form-control" maxlength="100"
+                                oninput="let p = this.selectionStart; this.value = this.value.toUpperCase();this.setSelectionRange(p, p);" />
+                            </div>
 
-	<br/><br/>
+                            <div class="mb-3">
+                                <label class="form-label">Solo Números</label>
+                                <input type="text" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="3">
+                            </div>
+
+                        </form>
+
+                    </div>
+					<div class="card-footer">
+						<button type="button" onclick="poblarConDatos()" class="btn btn-primary">Poblar con Datos</button>
+						<button type="button" onclick="simularEnvio()" class="btn btn-secondary">Simular Envío</button>
+					</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
 
         function formatearNumeroEntero(cadena)
 		{
-			// formatearNumeroEntero("123456789") 
+			// formatearNumeroEntero("123456789") -> "123.456.789"
 
-			if (cadena.charAt(0) == "0")  // Si el primer caracter es un cero
-			{
-				cadena = cadena.substring(1, cadena.length)   // Remueve Primer caracter
+			cadena = cadena.replace(/[^0-9]/g, '');                   // Remueve puntos, letras y cualquier otro caracter
+			cadena = cadena.replace(/^0+(?=\d)/, '');                 // Remueve ceros a la izquierda ("000" -> "0", "0123" -> "123")
 
-				if (cadena.charAt(1) == "0") return "";  // Si el usuario intenta ingregar puros ceros
-				return cadena;
-			}
-
-			cadena = cadena.split(".").join("");  // Remueve puntos
-			cadena = cadena.replace(/[^0-9.]/g, '');   // Remueve letras
-
-			let arreglo = cadena.split("").reverse().map((x, index) => 
-			{ 
-				var cont = index + 1;
-				return (cont % 3 == 0 && cont != cadena.length) ? `.${x}` : x
-			});
-
-			return arreglo.reverse().join("");
+			return cadena.replace(/\B(?=(\d{3})+(?!\d))/g, '.');      // Agrega punto cada 3 digitos desde la derecha
 		}
-		
+
 		function formatearNumeroDecimal(cadena, cantidadDecimales = 5)
 		{
-			let primerCaracter = cadena.charAt(0);
-			let cantidadComasNumero = (cadena.match(/,/g) || []).length;
-			let primerosDosCaracteres = cadena.substring(0, 2);
-			let decimales = cadena.split(",")[1];
+			// formatearNumeroDecimal("12345678,99") -> "12.345.678,99"
 
-			if (primerosDosCaracteres == "0,")  // En caso de ser un cero, decimales ... Ej: 0,5
-			{
-				decimales = decimales.replace(/[^0-9]/g, '');                    // Limpia los decimales
-				
-				if (decimales.length > cantidadDecimales) decimales = decimales.substr(0, cantidadDecimales);   // Limita la cantidad de decimales si el usuario escribe mas de lo permitido
-				
-				cadena = "0," + decimales;
-			}
-			else 
-			{
-				if (primerCaracter == "0" && cadena.length == 1) {
-					cadena = primerCaracter;
-				}
-				else if (isNaN(primerCaracter) || cantidadComasNumero > 1) {
-					cadena = formatearNumeroEntero(cadena).replace(",", "");   // Remueve solo una coma
-				}
-				else 
-				{
-					if (!cadena.includes(","))   // Si no se agrego la coma
-					{
-						cadena = formatearNumeroEntero(cadena)
-					}
-					else  // Si se agrego la coma
-					{
-						decimales = decimales.replace(/[^0-9]/g, '');  // Limpia los decimales
+			if (!cadena.includes(",")) return formatearNumeroEntero(cadena);   // Si no se agrego la coma
 
-						if (decimales.length > cantidadDecimales) decimales = decimales.substr(0, cantidadDecimales);   // Limita la cantidad de decimales si el usuario escribe mas de lo permitido
+			let partes = cadena.split(",");
+			let cuerpoNumero = formatearNumeroEntero(partes[0]) || "0";       // ",5" -> "0,5"
 
-						let cuerpoNumero = cadena.split(",")[0];
-						cadena = `${formatearNumeroEntero(cuerpoNumero)},${decimales}`;
-					}
-				}
-			}
-			
-			return cadena;
+			let decimales = partes.slice(1).join("")                           // Una segunda coma se ignora, no se pierden los decimales
+				.replace(/[^0-9]/g, '')                                        // Limpia los decimales
+				.substring(0, cantidadDecimales);                              // Limita la cantidad de decimales
+
+			return `${cuerpoNumero},${decimales}`;
+		}
+
+		function limpiarNumeroEntero(numero) {
+			return numero.replaceAll(".", "");
+		}
+
+		function limpiarNumeroDecimal(numero) {
+			return numero.replaceAll(".", "").replaceAll(",", ".");
+		}
+
+		function poblarConDatos()
+		{
+			document.querySelector("#ejemploForm [name='txtNumeroEntero']").value = formatearNumeroEntero("123456789");
+			document.querySelector("#ejemploForm [name='txtNumeroDecimal']").value = formatearNumeroDecimal("12345678,99");
+		}
+
+		function simularEnvio()
+		{
+			let numeroEntero = document.querySelector("#ejemploForm [name='txtNumeroEntero']").value;
+			let numeroDecimal = document.querySelector("#ejemploForm [name='txtNumeroDecimal']").value;
+
+			numeroEntero = limpiarNumeroEntero(numeroEntero);
+			numeroDecimal = limpiarNumeroDecimal(numeroDecimal);
+
+			console.log("numeroEntero", numeroEntero);
+			console.log("numeroDecimal", numeroDecimal);
 		}
 
     </script>
