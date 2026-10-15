@@ -121,9 +121,16 @@
 							
 							<div class="col-md-4 mb-4"> 
 								<div class="md-form">
-								<input placeholder="Probando_3" type="text" class="form-control">
-								<label class="active">Probando 3</label>
+									<input placeholder="Probando_3" type="text" class="form-control">
+									<label class="active">Probando 3</label>
 								</div> 
+							</div>
+
+							<div class="col-md-4 mb-4">
+								<div class="md-form">
+									<div id="tablaDescripcionFisica"></div>
+									<label class="active">Descripcion Fisica</label>
+								</div>
 							</div>
 
 						</div>
@@ -182,8 +189,31 @@
 
         window.onload = () =>
         {
-
+            llenarGrillaDesdeString({ 
+                querySelector: "#tablaDescripcionFisica",
+                cadena: "(DE-599)ZDB2432685-9<|>(OCoLC)228142903<|>(CONSER) 2008247639<|>(CKB)954927516540<|>(DE-599)2432685-9<|>(DE-599)2463871-7<|>(EXLCZ)99954927516540<|>991000762978906726",
+	            separador: "<|>"
+            });
         };
+
+		function llenarGrillaDesdeString(datos) 
+		{
+			document.querySelector(datos.querySelector).innerHTML = "<p>Sin Información</p>";
+
+			if (datos.cadena != null && datos.cadena != "") {
+				let arreglo = datos.cadena.split(datos.separador);
+
+				if (arreglo.length > 0) {
+					document.querySelector(datos.querySelector).innerHTML = `<div style="max-height: 200px; overflow-y: auto;">
+					<table class="table table-bordered table-striped mb-0 mt-1">
+						<tbody>
+							${arreglo.map(x => `<tr><td>${x}</td></tr>`).join("")}
+						</tbody>
+					</table>
+				</div>`;
+				}
+			}
+		}
 
     </script>
 
